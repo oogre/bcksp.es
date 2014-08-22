@@ -3,17 +3,7 @@
   "private": true,
   "version": "0.5.0",
   "description": "The Backcpace Archive",
-  "keywords": [
-    "backspace", "bckspace", "bcksp", "bcksp.es", 
-    "supprimer", "delete", "del.it", "arease", "érosion", "sable", "granular", "granulart",
-    "identity", "meteorised",
-    "archive", "data", "database",
-    "art", "digitalart", "bookart", 
-    "privacy", "vie privée",
-    "ordure", "trash", "poubelle", 
-    "book", "livre", 
-    "text", "typo", "typographie", "caracter", "caracters", "print", "lettre", "lettres", "imprimer"
-  ],
+  "keywords": ["backspace", "bckspace", "bcksp", "bcksp.es", "supprimer", "delete", "del.it", "arease", "érosion", "sable", "granular", "granulart", "identity", "meteorised", "archive", "data", "database", "art", "digitalart", "bookart", "privacy", "vie privée", "ordure", "trash", "poubelle", "book", "livre", "text", "typo", "typographie", "typography", "caracter", "caracters", "print", "lettre", "lettres", "imprimer"],
   "dependencies": {
     "bcrypt": "^0.8.0",
     "ejs": "~0.8.4",
