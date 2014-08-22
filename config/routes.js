@@ -36,10 +36,10 @@ module.exports.routes = {
     view: 'static/index'
   },
 
-  "/static/faq" : {
+  "/faq" : {
     view : 'static/faq'
   },
-  "/static/app" : {
+  "/app" : {
     view : 'static/app'
   },
 
