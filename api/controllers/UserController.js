@@ -242,7 +242,7 @@ module.exports = {
 							if(err)return next(err);
 							// SEND mailPwdRecovery VIEW AS EMAIL
 							res.render('mailPwdRecovery', {
-								link : req.protocol + '://' + req.headers.host + "/user/pwdNew/"+user.id+"?token="+encodeURIComponent(user.passwordRecoveryToken)
+								link : req.protocol + '://' + req.headers.host + "/pwd/new/"+user.id+"?token="+encodeURIComponent(user.passwordRecoveryToken)
 							}, function (err, html) {
 								require('nodemailer')
 								.createTransport(require('nodemailer-smtp-transport')(sails.config.mail.transporter))
