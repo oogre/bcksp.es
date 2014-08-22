@@ -9,7 +9,10 @@ var bcrypt = require("bcrypt");
 
 module.exports = {
 	"new" : function(req, res){
+		console.log(sails.config.mail);
 		res.view();
+
+
 	},
 
 	"confirmation" : function(req, res, next){
