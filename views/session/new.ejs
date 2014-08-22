@@ -1,0 +1,60 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-offset-4 col-sm-4 highlight">
+			<form action="/session/create" method="post" class="form-signin" class="signup-form">
+				<h2 class="form-signin-heading"><%= __('form_signin_title') %></h2>
+				
+				<% 
+					if(flash && flash.err){
+					var errorName = flash.err.error;
+					var errorData = flash.err.data || false;
+					%>
+						<div class="alert alert-danger">
+							<div class="row">
+								<div class="col-sm-2">
+									<i class="fa fa-exclamation-triangle fa-3x pull-left"></i>
+								</div>
+								<div class="col-sm-10">
+									 <%= __(errorName) %>
+								</div>
+							</div>
+						</div>
+				<% 	
+					}
+
+					if(flash && flash.ok){
+						var messageName = flash.ok.message;
+						var messageData = flash.ok.data || false;
+				%>
+							<div class="alert alert-success">
+								<div class="row">
+									<div class="col-sm-2">
+										<i class="fa fa-flag fa-3x pull-left"></i>
+									</div>
+									<div class="col-sm-10">
+										 <%= __(messageName) %>
+									</div>
+								</div>
+							</div>
+				<% 	
+						} 
+				%>
+
+				<div class="form-group">
+					<label for="inputEmail"><%= __('form_signin_email_label') %> :</label>
+					<input id="inputEmail" type="email" class="form-control" placeholder="<%= __('form_signin_email') %>" name="email" value="<%= errorData && errorData.email ? errorData.email : '' %>"/>
+				</div>
+				<div class="form-group">
+					<label for="inputPW"><%= __('form_signin_pw_label') %> :</label>
+					<input id="inputPW" type="password" class="form-control" placeholder="<%= __('form_signin_pw') %>" name="password"/>
+					<a href="/user/pwd" class="btn btn-sm btn-nobg" ><%= __('form_signin_forgot_pw') %>" <a/>
+				</div>
+				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<div class="form-group">
+					<input type="submit" class="btn btn-lg btn-success" value="<%= __('form_signin_submit') %>" />
+					<a href="/user/new" class="btn btn-sm btn-nobg" ><%= __('form_signup_submit') %>" <a/>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

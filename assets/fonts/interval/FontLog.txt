@@ -1,0 +1,22 @@
+FONTLOG for Interval
+------- --- ----------
+This file provides detailed information on the Interval Font Software.
+This information should be distributed along with the Interval fonts
+and any derivative works.
+
+Basic Font Information
+----- ---- -----------
+Interval is a monospaced typeface created during a workshop with Thomas Huot-Marchand. I wanted to question the current use of monospaced characters (without the constraint related to the technique) applying a logic of “double letters” (m = n + n | w = v + v. ..) which I draw on a double-space, creating weird typographical monsters. 
+
+The package currently contains the Regular and Bold weights, which both come in a slanted version.
+
+ChangeLog
+---------
+16 sept. 2012
+- Initial version of Interval.
+
+Acknowledgements
+----------------
+N: Alex Chavot
+E: a.chavot@gmail.com
+W: http://www.alexchavot.fr

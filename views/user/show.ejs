@@ -1,0 +1,104 @@
+<script type="text/javascript">
+	<% 
+		var backspace = "";
+		
+		_.each(user.backspace, function(origine){ 
+			_.each(origine.content, function(content, key){
+				backspace = content + " " + backspace;
+			});
+		});
+		var date = new Date(user.createdAt).toGMTString();
+		var updateDate = new Date(user.updatedAt).toGMTString(); 
+	%>
+
+	var populateLastBackspace = function(data){
+		$(".lastbackspace pre").html(data + " " + $(".lastbackspace pre").html());
+		$(".backspace_length").html($(".lastbackspace pre").html().length);
+	}
+
+	window.addEventListener("load", function subscribeAndListen(){
+		// When the document loads, send a request to users.testSocket
+		// The controller code will subscribe you to all of the 'users' model instances (records)
+		io.socket.get('/backspace/subscribe/<%= user.id %>');
+
+		// Listen for the event called 'user'
+		io.socket.on('backspace', function(obj){
+			console.log(obj);
+			populateLastBackspace(obj.data.backspcaced);
+		});
+	}, false);
+
+</script>
+
+</script>
+<div class="container">
+	<% 
+		if(flash && flash.err){
+			var errorName = flash.err.error;
+			var errorData = flash.err.data || false;
+		%>
+			<div class="row">
+				<div class="col-sm-offset-4 col-sm-4">
+					<div class="alert alert-danger">
+						<div class="row">
+							<div class="col-sm-2">
+								<i class="fa fa-exclamation-triangle fa-3x pull-left"></i>
+							</div>
+							<div class="col-sm-10">
+								 <%= __(errorName) %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<% 	
+		}
+
+		if(flash && flash.ok){
+			var messageName = flash.ok.message;
+			var messageData = flash.ok.data || false;
+		%>
+			<div class="row">
+				<div class="col-sm-offset-4 col-sm-4">
+					<div class="alert alert-success">
+						<div class="row">
+							<div class="col-sm-2">
+								<i class="fa fa-flag fa-3x pull-left"></i>
+							</div>
+							<div class="col-sm-10">
+								 <%= __(messageName) %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<% 	
+		} 
+	%>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h1><%= user.email %></h1>
+			<table class="table">
+				<tr>
+					<th>email</th>
+					<th><%= __('user_show_since') %></th>
+					<th><%= __('user_show_last') %></th>
+					<th><%= __('user_show_bcksp_length') %></th>
+				</tr>
+				<tr data-id="<%= user.id %>" data-model="user">
+					<td><%= user.email %></td>
+					<td><%= date %></td>
+					<td><%= updateDate %></td>
+					<td><span class="backspace_length"><%= backspace.length %><span> <%= __('user_show_bcksp_unity') %></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="lastbackspace highlight">
+			<h4><%= __('user_show_backspace') %> : <small><%= __('live') %></small></h4>
+			<pre><%= backspace %></pre>
+		</div>
+	</div>
+</div>

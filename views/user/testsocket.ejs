@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    window.onload = function subscribeAndListen(){
+        // When the document loads, send a request to users.testSocket
+        // The controller code will subscribe you to all of the 'users' model instances (records)
+        io.socket.get('/user/testsocket/');
+
+        // Listen for the event called 'user'
+        io.socket.on('user',function(obj){
+            if (obj.verb == 'updated') {
+                var previous = obj.previous;
+                var data = obj.data;
+                console.log(obj);
+                //console.log('User '+previous.email+' has been updated to '+data.email);
+            }
+        });
+    };
+
+    function doEdit(){
+        // Send the name to the testSocket action on the 'Users' contoller
+        io.socket.get('/user/testsocket',{
+            email:'vincent@ogre.be'
+        });
+    }
+</script>
+<div class="addButton" onClick="doEdit()" style="margin-top:200px">Click Me to add a new User! </div>

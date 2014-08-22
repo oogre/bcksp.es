@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>New Sails App</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--  
+        Stylesheets and Preprocessors
+        ==============================
+
+        You can always bring in CSS files manually with `<link>` tags, or asynchronously
+        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
+        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+        By default, stylesheets from your `assets/styles` folder are included
+        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+        are supported. In production, your styles will be minified and concatenated into
+        a single file.
+        
+        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+            
+            + Change the order of your CSS files
+            + Import stylesheets from other directories
+            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+    -->
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <!--STYLES END-->
+    <script type="text/javascript">
+      window.bcksp = {
+        csrf : "<%= _csrf %>"
+      };
+      window.addEventListener("load", function(){
+        $('body').popover({
+          selector: '[rel=popover]',
+          trigger: 'click',
+        });
+
+        if(inIframe()){
+          $('.hideInIframe').hide();
+          $('.cancelMarginOnIframe').css({
+            margin: 0
+          });
+        }
+      }, false);
+      function inIframe () {
+        try {
+          return window.self !== window.top;
+        } catch (e) {
+          return false;
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">bcksp.es</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <% if(session.authenticated) { %>
+                <li class="active">
+                  <a href="/user/show/<%= session.User.id %>"><%= session.User.email %></a>
+                </li>
+              <% } %>
+              <% if(session.authenticated && session.User.admin) { %>
+                <li><a href="/user"><%= __('menu_admin') %></a></li>
+              <% } %>
+              <% if(session.authenticated) { %>
+                <li><a href="/app"><%= __('menu_download') %></a></li>
+              <% } %>
+                <li><a href="/static/faq"><%= __('menu_faq') %></a></li>
+            </ul>
+            <div class="navbar-right">
+              <% if(session.authenticated) { %>
+                <form class="navbar-form navbar-right" action="/session/destroy" method="POST">
+                  <input type="hidden" name="_methiod" value="delete" />
+                  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                  <input type="submit" class="btn btn-nobg" value="<%= __('form_signout_submit')%>"></input>
+                </form>
+              <% } %>
+            </div>
+            <% if(!session.authenticated) { %>
+
+              <form class="navbar-form navbar-right" action="/session/create" method="POST">
+                <div class="form-group">
+                  <input type="email" placeholder="<%= __('form_signin_email') %>" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="<%= __('form_signin_pw') %>" name="password" class="form-control">
+                </div>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                <input type="submit" class="btn btn-success" value="<%= __('form_signin_submit')%>"></input>
+                <a href="/user/new" class="btn btn-nobg"><%= __('form_signup_submit')%></a>
+              </form>
+             
+            <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <header class="text-center">
+        <div class="container">
+          <div class="row">
+            <h1 class="col-sm-offset-2 col-sm-8">
+              <%= __('title') %><br/>
+              <i><%= __('description1')%></i>
+            </h1>
+          </div>  
+        </div>  
+        <button type="button" class="btn btn-sm btn-gradiant" rel="popover" data-toggle="popover"  data-title="<%= __('description2_title') %>" data-content="<%= __('description2') %>" data-placement="bottom" ><i class="fa fa-question-circle fa-3x pull-left"></i> <%= __('description2_button') %></button>
+      </header>
+
+
+      <%- body %>
+    </div>
+
+    <div class="container">
+      <hr>
+        <footer class="footer pull-right">
+          <div>
+            <a href="http://bcksp.es">bcksp.es</a>
+            <div>bcksp.es description</div>
+          </div>
+        </footer>
+    </div>
+
+
+    <!--
+        Client-side Templates
+        ========================
+
+        HTML templates are important prerequisites of modern, rich client applications.
+        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+        that you load these templates client-side.
+
+        By default, your Gruntfile is configured to automatically load and precompile
+        client-side JST templates in your `assets/templates` folder, then
+        include them here automatically (between TEMPLATES and TEMPLATES END).
+        
+        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Import templates from other directories
+            + Use a different template engine (handlebars, jade, dust, etc.)
+            + Internationalize your client-side templates using a server-side
+              stringfile before they're served.
+    -->
+
+    <!--TEMPLATES-->
+    <script type="text/javascript" src="/jst.js"></script>
+    <!--TEMPLATES END-->
+
+
+    <!--
+
+      Client-side Javascript
+      ========================
+
+      You can always bring in JS files manually with `script` tags, or asynchronously
+      on the client using a solution like AMD (RequireJS).  Or, if you like, you can 
+      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, files in your `assets/js` folder are included here
+      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+      and concatenated into a single file.
+      
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+          
+          + Change the order of your scripts
+          + Import scripts from other directories
+          + Use a different preprocessor, like TypeScript
+
+    -->
+
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/1.jquery.js"></script>
+    <script src="/js/2.jquery-validate.js"></script>
+    <script src="/js/3.customValidate.js"></script>
+    <script src="/js/4.bootstrap.min.js"></script>
+    <script src="/js/5.underscore-min.js"></script>
+    <!--SCRIPTS END-->
+  </body>
+</html>
