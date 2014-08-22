@@ -9,10 +9,7 @@ var bcrypt = require("bcrypt");
 
 module.exports = {
 	"new" : function(req, res){
-		console.log(req.headers.host);
 		res.view();
-
-
 	},
 
 	"confirmation" : function(req, res, next){
@@ -38,7 +35,7 @@ module.exports = {
 						if(err)return next(err);
 						// SEND mailUserConfirmation VIEW AS EMAIL
 						res.render('mailUserConfirmation', {
-							link : req.protocol + '://' + req.get('host') + "/user/create?token="+encodeURIComponent(encryptedToken)
+							link : req.protocol + '://' + req.headers.host + "/user/create?token="+encodeURIComponent(encryptedToken)
 						}, function (err, html) {
 							require('nodemailer')
 							.createTransport(require('nodemailer-smtp-transport')(sails.config.mail.transporter))
@@ -241,7 +238,7 @@ module.exports = {
 						if(err)return next(err);
 						// SEND mailPwdRecovery VIEW AS EMAIL
 						res.render('mailPwdRecovery', {
-							link : req.protocol + '://' + req.get('host') + "/user/pwdNew/"+user.id+"?token="+encodeURIComponent(user.passwordRecoveryToken)
+							link : req.protocol + '://' + req.headers.host + "/user/pwdNew/"+user.id+"?token="+encodeURIComponent(user.passwordRecoveryToken)
 						}, function (err, html) {
 							require('nodemailer')
 							.createTransport(require('nodemailer-smtp-transport')(sails.config.mail.transporter))
