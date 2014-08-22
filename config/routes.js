@@ -39,6 +39,9 @@ module.exports.routes = {
   "/static/faq" : {
     view : 'static/faq'
   },
+  "/static/app" : {
+    view : 'static/app'
+  },
 
 /* SessionController  */
   "get /session/new/?" : 'SessionController.new',
