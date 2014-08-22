@@ -59,7 +59,9 @@ module.exports = {
 
 	"last" : function(req, res, next){
 		LastBackspace.find().exec(function(err, lastBackspace){
-			res.json(lastBackspace[0].content.join(""));
+			if(lastBackspace){
+				res.json(lastBackspace[0].content.join(""));
+			}
 		});
 	},
 
