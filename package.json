@@ -12,7 +12,7 @@
     "privacy", "vie privée",
     "ordure", "trash", "poubelle", 
     "book", "livre", 
-    "text", "typo", "typographie", "caracter", "caracters", "print", "lettre", "lettres", "imprimer", 
+    "text", "typo", "typographie", "caracter", "caracters", "print", "lettre", "lettres", "imprimer"
   ],
   "dependencies": {
     "bcrypt": "^0.8.0",
