@@ -33,7 +33,6 @@ module.exports.policies = {
     "new" : "flash",
     "confirmation" : "flash",
     "create" : "flash",
-    "testsocket" : "flash",
     "subscribe" : ["flash", "authenticated"],
     "show" : ["flash", "userCanSeeProfile"],
     "edit" : "userCanSeeProfile",
@@ -42,7 +41,6 @@ module.exports.policies = {
     "pwdrecovery" : "flash",
     "pwdnew" : "flash",
     "pwdsubmit" : "flash",
-    "test" : "flash",
     "*" : "admin"
   },
 

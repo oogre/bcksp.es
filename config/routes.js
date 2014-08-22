@@ -60,7 +60,6 @@ module.exports.routes = {
   "post /pwd/submit/?" : 'UserController.pwdsubmit',
   "post /user/destroy/?" : 'UserController.destroy',
   "get /user/subscribe/?" : 'UserController.subscribe',
-  "get /user/test/?" : 'UserController.test',
 
 /* BackspaceController */
   "get /backspace/token/?" : 'BackspaceController.token',

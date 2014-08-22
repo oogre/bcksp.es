@@ -49,12 +49,12 @@ module.exports.sockets = {
   * flashsockets by adding 'flashsocket' to this list:                       *
   *                                                                          *
   ***************************************************************************/
-  transports: [
-    'websocket',
-    'htmlfile',
-    'xhr-polling',
-    'jsonp-polling'
-  ],
+  //transports: [
+  //  'websocket',
+  //  'htmlfile',
+  //  'xhr-polling',
+  //  'jsonp-polling'
+  //],
 
   /***************************************************************************
   *                                                                          *
@@ -173,7 +173,7 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  grant3rdPartyCookie: true,
+  //grant3rdPartyCookie: false,
 
   /***************************************************************************
   *                                                                          *
@@ -182,11 +182,5 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  origins: '*:*/',
-  authorization: false
-  /*function authorizeAttemptedSocketConnection(reqObj, cb) {
-     console.log(reqObj);
-    //some parameter lookup
-    cb(null, true);
-  },*/
+  //origins: '*:*/'
 };
