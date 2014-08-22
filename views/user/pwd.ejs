@@ -29,8 +29,7 @@
 				</div>
 				<div class="form-group">
 					<label for="inputCaptcha"><%= __('form_pwd_recovery_captcha_label') %> :</label>
-					<img class="captcha" src="<%= captcha.uri %>" />
-					<input id="inputCaptcha" type="text" class="form-control" placeholder="<%= __('form_pwd_recovery_captcha')%>" name="captcha" data-required/>
+					<%-recaptcha_form %>
 				</div>
 
 				<input type="hidden" name="_csrf" value="<%= _csrf %>" />

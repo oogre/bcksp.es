@@ -183,9 +183,10 @@ module.exports.sockets = {
   ***************************************************************************/
 
   origins: '*:*/',
-  authorization: function authorizeAttemptedSocketConnection(reqObj, cb) {
+  authorization: false
+  /*function authorizeAttemptedSocketConnection(reqObj, cb) {
      console.log(reqObj);
     //some parameter lookup
     cb(null, true);
-  },
+  },*/
 };

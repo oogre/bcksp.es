@@ -83,13 +83,11 @@
 				<tr>
 					<th>email</th>
 					<th><%= __('user_show_since') %></th>
-					<th><%= __('user_show_last') %></th>
 					<th><%= __('user_show_bcksp_length') %></th>
 				</tr>
 				<tr data-id="<%= user.id %>" data-model="user">
 					<td><%= user.email %></td>
 					<td><%= date %></td>
-					<td><%= updateDate %></td>
 					<td><span class="backspace_length"><%= backspace.length %><span> <%= __('user_show_bcksp_unity') %></td>
 				</tr>
 			</table>

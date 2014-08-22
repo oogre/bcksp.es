@@ -59,7 +59,7 @@ module.exports = {
 
 	"last" : function(req, res, next){
 		LastBackspace.find().exec(function(err, lastBackspace){
-			if(lastBackspace){
+			if(lastBackspace && lastBackspace[0]){
 				res.json(lastBackspace[0].content.join(""));
 			}
 		});
