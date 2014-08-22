@@ -39,9 +39,9 @@ module.exports.policies = {
     "edit" : "userCanSeeProfile",
     "update" : "userCanSeeProfile",
     "pwd" : "flash",
-    "pwdRecovery" : "flash",
-    "pwdNew" : "flash",
-    "pwdSubmit" : "flash",
+    "pwdrecovery" : "flash",
+    "pwdnew" : "flash",
+    "pwdsubmit" : "flash",
     "test" : "flash",
     "*" : "admin"
   },

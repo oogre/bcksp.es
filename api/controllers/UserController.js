@@ -203,7 +203,7 @@ module.exports = {
 		});
 	},
 
-	"pwdRecovery" : function(req, res, next){
+	"pwdrecovery" : function(req, res, next){
 		var data = {
 			remoteip:  req.connection.remoteAddress,
 			challenge: req.param("recaptcha_challenge_field"),
@@ -219,12 +219,11 @@ module.exports = {
 						data : null
 					}
 				}
-				return res.redirect("/user/pwd");
+				return res.redirect("/pwd");
 			} else {
 				User.findOne({
 					email : req.param("email")
 				}, function userFound(err, user){
-					console.log(user);
 					if(err) return next(err);
 					if(!user){
 						req.session.flash = {
@@ -233,7 +232,7 @@ module.exports = {
 								data : null
 							}
 						}
-						return res.redirect("/user/pwd");
+						return res.redirect("/pwd");
 					}
 					var token = user.email;
 					bcrypt.hash( token, 10, function passwordEncrypted(err, encryptedToken){
@@ -273,7 +272,7 @@ module.exports = {
 		});
 	},
 
-	"pwdNew" : function(req, res, next){
+	"pwdnew" : function(req, res, next){
 		User.findOne(req.param("id")).exec(function foundUser(err, user){
 			if(req.param("token") == user.passwordRecoveryToken){
 				req.session.pwdRecovery = user.id;
@@ -285,12 +284,12 @@ module.exports = {
 						data : null
 					}
 				}
-				return res.redirect("/user/pwd");
+				return res.redirect("/pwd");
 			};
 		});
 	},
 
-	"pwdSubmit" : function(req, res, next){
+	"pwdsubmit" : function(req, res, next){
 		if(req.session.pwdRecovery){
 			User.findOne(req.session.pwdRecovery).exec(function foundUser(err, user){
 				if(err) return next(err);
@@ -302,7 +301,7 @@ module.exports = {
 							data : null
 						}
 					};
-					return res.redirect('/user/pwd');
+					return res.redirect('/pwd');
 				}else{
 					user.password = req.param("password");
 					user.confirmation = req.param("confirmation");
@@ -327,7 +326,7 @@ module.exports = {
 					data : null
 				}
 			}
-			return res.redirect('/user/pwd');
+			return res.redirect('/pwd');
 		}
 	},
 
