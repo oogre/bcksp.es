@@ -9,7 +9,7 @@ var bcrypt = require("bcrypt");
 
 module.exports = {
 	"new" : function(req, res){
-		console.log(sails.config.mail);
+		console.log(req.headers.host);
 		res.view();
 
 
