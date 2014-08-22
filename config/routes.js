@@ -56,7 +56,7 @@ module.exports.routes = {
   "get /user/index/?" : 'UserController.index',
   "get /pwd/?" : 'UserController.pwd',
   "post /pwd/recovery/?" : 'UserController.pwdrecovery',
-  "get /pwd/new/?" : 'UserController.pwdnew',
+  "get /pwd/new/:id?" : 'UserController.pwdnew',
   "post /pwd/submit/?" : 'UserController.pwdsubmit',
   "post /user/destroy/?" : 'UserController.destroy',
   "get /user/subscribe/?" : 'UserController.subscribe',
