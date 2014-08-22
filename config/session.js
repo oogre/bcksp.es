@@ -52,11 +52,11 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  host: 'jack.redistogo.com',
-  port: 10837,
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  db: process.env.REDIS_DB,
+  pass: process.env.REDIS_PASS,
   // ttl: <redis session TTL in seconds>,
-  db: "redistogo",
-  pass: "4d0a5f339a8d53358dbbecbee128e24d",
   // prefix: 'sess:'
 
 
