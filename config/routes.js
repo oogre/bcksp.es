@@ -60,10 +60,12 @@ module.exports.routes = {
   "post /pwd/submit/?" : 'UserController.pwdsubmit',
   "post /user/destroy/?" : 'UserController.destroy',
   "get /user/subscribe/?" : 'UserController.subscribe',
+  "get /user/online/?" : 'UserController.online',
+
 
 /* BackspaceController */
   "get /backspace/token/?" : 'BackspaceController.token',
-  "put /backspace/append/?" : 'BackspaceController.append',
+  "post /backspace/append/?" : 'BackspaceController.append',
   "get /backspace/last/?" : 'BackspaceController.last',
   "get /backspace/watch/?" : 'BackspaceController.watch',
   "get /backspace/subscribe/:id?" : 'BackspaceController.subscribe',

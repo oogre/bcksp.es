@@ -8,7 +8,6 @@
 module.exports = {
 
 	"token" : function(req, res){
-		console.log(req.csrfToken());
 		return res.json({
 			status : "ok",
 			data : {
@@ -68,7 +67,6 @@ module.exports = {
 	"watch" : function(req, res, next){
 		if (req.isSocket){
 			Backspace.watch(req.socket);
-			console.log('User with socket id '+req.socket.id+' is now subscribed to all of the model instances in \'backspace\'.');
 		} else {
 			res.view();
 		}
@@ -80,7 +78,6 @@ module.exports = {
 			User.find({id : req.param("id")}, function userFound (err, user){
 				if(err) return next(err);
 				Backspace.subscribe(req.socket, user);
-				console.log('User with socket id '+req.socket.id+' is now subscribed to all of the model instances in \'backspace\'.');
 			});
 		} else {
 			res.view();

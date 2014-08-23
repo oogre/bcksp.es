@@ -349,29 +349,23 @@ module.exports = {
 				if(err) return next(err);
 				User.watch(req.socket);
 				User.subscribe(req.socket, users);
-				console.log('User with socket id '+req.socket.id+' is now subscribed to all of the model instances in \'users\'.');
 			});
 		} else {
 			res.view();
 		}
 	},
 
-	"test" : function(req, res){
-		var session = req.session;
-		if (req.isSocket) {
-			var handshake = req.socket.manager.handshaken[req.socket.id];
-			if (handshake) {
-				session = handshake.session;
-				return console.log("yeah");
-			}
-			else{
-				console.log("no");
-			}
+	"online" : function(req, res){
+		if(req.session.User && req.session.User.online){
+			return res.json({
+				status : "ok"
+			});	
+		}else{
+			return res.json({
+				status : "ko"
+			});	
 		}
-		else{
-			console.log("shit");
-			res.json({});
-		}
-	}
+		
+	},
 };
 

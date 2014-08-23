@@ -34,6 +34,7 @@ module.exports.policies = {
     "confirmation" : "flash",
     "create" : "flash",
     "subscribe" : ["flash", "authenticated"],
+    "online" : "flash",
     "show" : ["flash", "userCanSeeProfile"],
     "edit" : "userCanSeeProfile",
     "update" : "userCanSeeProfile",
