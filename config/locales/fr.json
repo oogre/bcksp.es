@@ -55,6 +55,7 @@
 
 	"live" : "(en direct)",
 	"title" : "bcksp.es",
+	"name" : "[BCKSP.ES]",
 	"description1" : "prononcez le “backspace”",
 	"description2_button" : "“backspace”",
 	"description2_title" : "– Info –",
@@ -66,7 +67,7 @@
 	"intention0" : "Lorsque vous utilisez la touche backspace une part de vous s'en envole avec ces mots perdus.",
 	"intention1" : "La pratique de l'écriture est pareille à un monde en formation. Soumis à l'érosion, les idées s'affinent pour former des phrases. Les tranches les moins solides de vos idées s'envolent sous la forme d'un sable subtile. Ce sable forme le paysage d'un désert du néant.",
 	"intention2" : "Bcksp.es est conçu pour capturer ces idées supprimées. Nous archivons pour vous ces poussières de pensée dans un livre.",
-	"intention3" : "Nous enregistrons vos backspace et vous les renvoyons sous forme de livre.",
+	"intention3" : "Nous enregistrons vos backspaces et les transformons en livres.",
 
 	"user_show_since" : "inscription",
 	"user_show_last" : "mis à jour",
