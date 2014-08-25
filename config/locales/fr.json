@@ -20,6 +20,7 @@
 	"form_signup_pw" : "mot de passe",
 	"form_signup_pw_conf" : "confirmer mot de passe",
 	"form_signup_submit" : "inscription",
+	"form_signup_button" : "inscription",
 
 	"form_pwd_recovery_title" : "Retrouvez votre compte",
 	"form_pwd_entry_title" : "Mise à jour du mot de passe",
