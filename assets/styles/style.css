@@ -96,3 +96,11 @@ pre{
 	border-radius: 10px;
 	margin: 0 0 10px 10px;
 }
+
+dt{
+	font-size: 1.2em;
+}
+
+dd{
+	margin-bottom: 15px;
+}

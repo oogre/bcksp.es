@@ -1,9 +1,8 @@
 {
-	"Welcome": "Bienvenue",
-	"A brand new app.": "Une toute nouvelle application.",
 	"menu_admin" : "Administration",
 	"menu_download" : "Téléchargement",
 	"menu_faq" : "FAQ",
+
 
 	"form_signin_title" : "Connectez-vous",
 	"form_signin_email_label" : "Votre email",
@@ -39,10 +38,12 @@
 	"proceduralError" : "La procédure a échoué, réessayez...",
 	"captchaError" : "Vous avez mal lu le captcha",
 
+
 	"pwdRecoveryOk" : "Votre mot de passe à été correctement mis à jour",
 	"accountFoundOk" : "Nous vous avons envoyé un email contenant un lien qui vous permettra de mettre à jour votre mot de passe. Si vous ne voyez rien venir, vérifiez votre dossier de spam.",
 	"accountCreationOnGoingOk" : "Nous vous avons envoyé un email contenant un lien qui vous permettra de finaliser la création de votre compte. Si vous ne voyez rien venir, vérifiez votre dossier de spam.",
 	"accountCreationOk" : "Félicitation, votre compte est créé et activé! Télécharger l'application pour allimenter votre archive... si ce n'est déjà fait.",
+
 
 	"mail_hello" : "Salut,",
 	"mail_not_for_you" : "Si cet email ne vous concerne pas, ignorez le.",
@@ -53,6 +54,7 @@
 	"mail_pwd_recovery_subject" : "[bcksp.es] Mise à jour de votre mot de pass",
 	"mail_pwd_recovery_content" : "Vous pouvez utiliser le lien ci-dessous pour mettre à jour votre mot de passe : ",
 
+
 	"live" : "(en direct)",
 	"title" : "bcksp.es",
 	"name" : "[BCKSP.ES]",
@@ -60,18 +62,30 @@
 	"description2_button" : "“backspace”",
 	"description2_title" : "– Info –",
 	"description2" : "Backspace est la touche du clavier informatique située au-dessus de la touche “Enter”. Elle est utilisée pour effacer les derniers caractères saisi, ceux situés à gauche du curseur d'écriture.",
-	"whatwedo1" : "bcksp.es enregistre ce que vous supprimez",
-	"whatwedo2" : "&",
-	"whatwedo3" : "le transforme en livre",
-	
 	"intention0" : "Lorsque vous utilisez la touche backspace une part de vous s'en envole avec ces mots perdus.",
 	"intention1" : "La pratique de l'écriture est pareille à un monde en formation. Soumis à l'érosion, les idées s'affinent pour former des phrases. Les tranches les plus sensibles de vos idées s'envolent sous la forme du sable subtile pour finir dans le désert du néant.",
 	"intention2" : "Nous archivons pour vous ces poussières de pensée dans un livre. Bcksp.es est conçu pour capturer ces idées supprimées. Lorsque votre archive est pleine nous vous proposons d'acheter votre livre.",
 	"intention3" : "Nous enregistrons vos backspaces et les transformons en livres.",
 
+
 	"user_show_since" : "inscription",
 	"user_show_last" : "mis à jour",
 	"user_show_bcksp_length" : "volume archivé",
 	"user_show_bcksp_unity" : "lettres",
-	"user_show_backspace" : "Vos backspaces"
+	"user_show_backspace" : "Vos backspaces",
+
+
+	"FAQ_title" : "Quelques réponses à vos questions",
+	"FAQ_question_1" : "Quel est la finalité du projet? Pourquoi voudrais-je archiver ce que je souhaites voir disparaître?",
+	"FAQ_question_2" : "Comment ça fonctionne? / Que dois-je faire?",
+	"FAQ_question_3" : "Y a-t-il un risque pour mes données sensible (Mot de passe, visa, ...) ?",
+	"FAQ_question_4" : "Quand pourrais-je imprimer mon livre?",
+	"FAQ_answer_1" : "Notre souhait est de mettre en lumière une part intime et sombre par nature de l'Homme. Il nous parait que l'intérêt de ce projet tient dans l'observation de la mécanique cérébrale travaillant pour former une communication par l'écriture. Nous récupérons et imprimons les restes des nombreux accidents de l'écriture, rien de plus. Celà est déjà tout un programme...",
+	"FAQ_answer_2" : "Lorsque vous êtes inscrit sur le site de bcksp.es et que vous avez installé une de nos extension de programme, il n'y a plus rien à faire. Le mieux est alors d'oublier notre existence, nous nous rappelerons à vous lorsque vous aurez suffisement complété votre archive pour l'imprimer. Bcksp.es est autonome : lorsque vous supprimerez du texte uniquement à l'aide de la touche “Backspace”, nous enregistrons ce qui disparaît et l'envoyons sur votre compte en ligne. Vous pouvez donc suivre à tout moment sur notre site l'ensemble de ce que vous avez supprimé depuis votre inscription.",
+	"FAQ_answer_3" : "Tout d'abord, avez-vous déjà supprimé un mot de passe entier et correctement écrit, ainsi que l'identifiant qui l'accompagne? Et quand bien même le feriez vous... cela ne nous intéresse pas. Nous somme motivé par l'amour du texte et de sa forme. Jamais nous ne tirerions profits de données que vous nous confié en dehors d'un cadre artistique, littéraire. Et n'ayez crainte de la pub, du fishing ou du hacking de vos comptes, nous n'allimenterons que et rien que notre base de donnée.",
+	"FAQ_answer_4" : "Le système d'impression de livre n'est pas encore finalisé. Commencez déjà à remplir votre archive, je vous parie qu'il sera finit avant que vous puissiez atteindre le contenus d'un petit roman de poche."
+
+
+
+
 }
