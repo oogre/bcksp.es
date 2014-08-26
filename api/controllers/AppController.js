@@ -6,12 +6,12 @@
  */
 
 module.exports = {
-	_config : {
-		blueprints : {
-			action : false,
-			rest : false,
-			shortcuts : false
-		}
-	},
+	"index" : function(req, res, next){
+		App.find(function foundUsers(err, apps){
+			res.view({
+				apps : apps
+			})
+		});
+	}
 };
 

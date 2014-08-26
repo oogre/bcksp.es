@@ -6,9 +6,27 @@
 */
 
 module.exports = {
-
-  attributes: {
-
-  }
+	schema:true,
+	attributes: {
+	/* SHORT DATA */
+		extension_id :{
+			type: "String",
+			required: true
+		},
+		application_name:{
+			type:"String"
+		},
+		store_name:{
+			type:"String"
+		},
+		extension_link: {
+			type: "string"
+		},
+		help_link:{
+				type: "string"
+		},
+		devlink:{
+			type: "string"
+		}
+	}
 };
-

@@ -90,7 +90,21 @@
 
 	"download_title" : "Téléchargement",
 	"download_extension_web_browser" : "bcksp.es sur votre navigateur",
+	"download_extension_google_chrome" : "bcksp.es pour Chrome",
+	"download_extension_firefox" : "bcksp.es pour Firefox",
+	"download_extension_safari" : "bcksp.es pour Safari",
 	"download_header" : "Sauvez vos backspace. Installez bcksp.es sur vos applications préférées grâce à nos extensions.",
-	"download_help_annouce" : "Besoin d'aide à propos des extensions&nbsp;?"
+	"download_help_annouce" : "Besoin d'aide à propos des extensions&nbsp;?",
+
+	"download_title" : "Extensions",
+	"download_status" : "Status",
+	"download_link" : "Lien",
+	"download_app" : "Application",
+	"download_install" : "Installation",
+	"download_help_us" : "Aidez nous",
+	"download_help" : "Besoin d'aide&nbsp;?",
+	"download_fork" : "Developpez-le",
+
+	"dev_proposition" : "Vous voulez bcksp.es pour une autre application&nbsp;? Dites-le nous"
 
 }

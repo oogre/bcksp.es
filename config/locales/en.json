@@ -90,8 +90,21 @@
 
 	"download_title" : "Download",
 	"download_extension_web_browser" : "bcksp.es on your web browser",
+	"download_extension_google_chrome" : "bcksp.es for Chrome",
+	"download_extension_firefox" : "bcksp.es for Firefox",
+	"download_extension_safari" : "bcksp.es for Safari",
 	"download_header" : "Start to save your backspace. Install bcksp.es on your favorites applications thanks to our extensions.",
-	"download_help_annouce" : "Some helps about extensions&nbsp;?"
+	"download_help_annouce" : "Some helps about extensions&nbsp;?",
 
 
+	"download_title" : "Extensions",
+	"download_status" : "Status",
+	"download_link" : "Link",
+	"download_app" : "Application",
+	"download_install" : "Installation",
+	"download_help_us" : "Help us",
+	"download_help" : "help&nbsp;?",
+	"download_fork" : "Develop it",
+
+	"dev_proposition" : "Do you want bcksp.es for another application&nbsp;? Tell us"
 }

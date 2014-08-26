@@ -51,8 +51,10 @@
           $(".navbar-collapse.collapse").toggleClass('in');
         });
 
-        $(".popover-trigger").on("click blur", function(){
+        $(".popover-trigger").on("click", function(){
           $(".popover").toggleClass('in');
+        }).on("blur", function(){
+          $(".popover").removeClass('in');
         });
 
         $('body').popover({
