@@ -38,6 +38,22 @@ body{
 	line-height: 36px;
 	border-radius: 10px;
 }
+
+#popover682348{
+	display: none;
+	left: 50%;
+	transform-origin: 50% 50%;
+	top: inherit;
+}
+
+#popover682348.in{
+	display: block;
+}
+
+#popover682348.popover.bottom>.arrow {
+	left: 10%;
+}
+
 header{
 	background-image: url("/images/original.jpg");
 	background-size: cover;
@@ -63,6 +79,11 @@ header h1 i{
 	border: 1px solid #e1e1e8;
 	border-radius: 4px;
 }
+.highlight.bg-primary{
+	color: #fff;
+	background-color: #428bca;
+}
+
 .highlight h4{
 	color: #444;
 	text-transform: uppercase;
@@ -103,4 +124,8 @@ dt{
 
 dd{
 	margin-bottom: 15px;
+}
+
+.install span{
+	line-height: 2.1em;
 }

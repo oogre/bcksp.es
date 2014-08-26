@@ -43,7 +43,7 @@
 	"pwdRecoveryOk" : "Votre mot de passe à été correctement mis à jour",
 	"accountFoundOk" : "Nous vous avons envoyé un email contenant un lien qui vous permettra de mettre à jour votre mot de passe. Si vous ne voyez rien venir, vérifiez votre dossier de spam.",
 	"accountCreationOnGoingOk" : "Nous vous avons envoyé un email contenant un lien qui vous permettra de finaliser la création de votre compte. Si vous ne voyez rien venir, vérifiez votre dossier de spam.",
-	"accountCreationOk" : "Félicitation, votre compte est créé et activé! Télécharger l'application pour allimenter votre archive... si ce n'est déjà fait.",
+	"accountCreationOk" : "Félicitation, votre compte est créé et activé! Téléchargez l'application pour allimenter votre archive... si ce n'est déjà fait.",
 
 
 	"mail_hello" : "Salut,",
@@ -76,10 +76,10 @@
 	"user_show_backspace" : "Vos backspaces",
 
 
-	"FAQ_title" : "Quelques réponses à vos questions : ",
+	"FAQ_title" : "Quelques réponses à vos questions&nbsp;:",
 	"FAQ_question_1" : "Quel est la finalité du projet? Pourquoi voudrais-je archiver ce que je souhaite voir disparaître?",
 	"FAQ_question_2" : "Comment ça fonctionne? / Que dois-je faire?",
-	"FAQ_question_3" : "Y a-t-il un risque pour mes données sensible (Mot de passe, visa, ...) ?",
+	"FAQ_question_3" : "Y a-t-il un risque pour mes données sensible (Mot de passe, visa, ...)&nbsp;?",
 	"FAQ_question_4" : "Quand pourrais-je faire imprimer mon livre?",
 	"FAQ_answer_1" : "Notre souhait est de mettre en lumière une part intime et sombre par nature de l'Homme. Il nous parait que l'intérêt de ce projet tient dans l'observation de la mécanique cérébrale travaillant pour former une communication par l'écriture. Nous récupérons et imprimons les restes des nombreux accidents de l'écriture, rien de plus. Celà est déjà tout un programme... La curiosité, la soif de découverte et de connaissance de soi sont des raisons suffisantes pour se lancer avec nous dans l'aventure bcksp.es ",
 	"FAQ_answer_2" : "Lorsque vous êtes inscrit sur le site de bcksp.es et que vous avez installé une de nos extension de programme, il n'y a plus rien à faire. Le mieux est alors d'oublier notre existence. Nous nous rappelerons à vous lorsque vous aurez suffisement complété votre archive pour l'imprimer. Bcksp.es est autonome : lorsque vous supprimerez du texte uniquement à l'aide de la touche “Backspace”, nous enregistrons ce qui disparaît et l'envoyons sur votre compte en ligne. Vous pouvez donc suivre à tout moment sur “www.bcksp.es/user” ce que vous avez supprimé depuis votre inscription.",
@@ -88,7 +88,8 @@
 
 
 	"download_title" : "Téléchargement",
-	"download_extension" : "Application"
-
+	"download_extension_web_browser" : "bcksp.es sur votre navigateur",
+	"download_header" : "Sauvez vos backspace. Installez bcksp.es sur vos applications préférées grâce à nos extensions.",
+	"download_help_annouce" : "Besoin d'aide à propos des extensions&nbsp;?"
 
 }

@@ -79,14 +79,18 @@
 	"FAQ_title" : "Answers to your questions : ",
 	"FAQ_question_1" : "What is the goal of this project? Why would I archive what I want to get rid off?",
 	"FAQ_question_2" : "How does it work? / What do I have to do?",
-	"FAQ_question_3" : "Is there a risk for my sensitive data (password, visa etc.)?",
+	"FAQ_question_3" : "Is there a risk for my sensitive data (password, visa etc.)&nbsp;?",
 	"FAQ_question_4" : "When will I be able to print my book?",
 	"FAQ_answer_1" : "Our wish is to highlight an intimate and naturally dark side of man. This project is about the observation of the brain mechanisms that work to create communication through writing. We pick up and print the leftovers of several writing accidents, that's it. This is already quite a big deal. Curiosity and thirst for discovery and self-awareness are sufficient reasons to plunge into the bcksp.es adventure.",
 	"FAQ_answer_2" : "When you have signed up and installed one of our program extensions, you are ready to go. Just forget our existence. We will get back to you when your archive is big enough to be printed. Bcksp.es is autonomus : when you erase text thanks to the “Backspace” key, we save what disappears and send it to your online account. To follow what you have deleted since you signed up, you simply need to visit www.bcksp.es/user whenever you want.",
 	"FAQ_answer_3" : "First of all, have you ever deleted a full password that was written correctly along with your username? Does that make sense? Anyway, this is not what we are interested in. We are only motivated by the love of text and its shape. We would never make profit out of the data you have confided to us outside the context of art/literature. Do not be afraid of advertising, fishing or hacking. We will only feed our own database.",
-	"FAQ_answer_4" : "Fill up your archive first. We will find out by the time your contents reach the size of a small paperback."
+	"FAQ_answer_4" : "Fill up your archive first. We will find out by the time your contents reach the size of a small paperback.",
 
 
+	"download_title" : "Download",
+	"download_extension_web_browser" : "bcksp.es on your web browser",
+	"download_header" : "Start to save your backspace. Install bcksp.es on your favorites applications thanks to our extensions.",
+	"download_help_annouce" : "Some helps about extensions&nbsp;?"
 
 
 }

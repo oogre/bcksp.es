@@ -41,11 +41,11 @@
 				%>
 
 				<div class="form-group">
-					<label for="inputEmail"><%= __('form_signin_email_label') %> :</label>
+					<label for="inputEmail"><%= __('form_signin_email_label') %>&nbsp;:</label>
 					<input id="inputEmail" type="email" class="form-control" placeholder="<%= __('form_signin_email') %>" name="email" value="<%= errorData && errorData.email ? errorData.email : '' %>"/>
 				</div>
 				<div class="form-group">
-					<label for="inputPW"><%= __('form_signin_pw_label') %> :</label>
+					<label for="inputPW"><%= __('form_signin_pw_label') %>&nbsp;:</label>
 					<input id="inputPW" type="password" class="form-control" placeholder="<%= __('form_signin_pw') %>" name="password"/>
 					<a href="/pwd" class="btn btn-sm btn-nobg" ><%= __('form_signin_forgot_pw') %>" <a/>
 				</div>
