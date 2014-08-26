@@ -88,9 +88,8 @@
               <% if(session.authenticated && session.User.admin) { %>
                 <li><a href="/user"><%= __('menu_admin') %></a></li>
               <% } %>
-              <% if(session.authenticated) { %>
+              
                 <li><a href="/app"><%= __('menu_download') %></a></li>
-              <% } %>
                 <li><a href="/faq"><%= __('menu_faq') %></a></li>
             </ul>
             <div class="navbar-right">
@@ -98,7 +97,7 @@
                 <form class="navbar-form navbar-right" action="/session/destroy" method="POST">
                   <input type="hidden" name="_methiod" value="delete" />
                   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-                  <input type="submit" class="btn btn-nobg" value="<%= __('form_signout_submit')%>"></input>
+                  <input type="submit" class="btn btn-link" value="<%= __('form_signout_submit')%>"></input>
                 </form>
               <% } %>
             </div>
@@ -113,7 +112,7 @@
                 </div>
                 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
                 <input type="submit" class="btn btn-success" value="<%= __('form_signin_submit')%>"></input>
-                <a href="/user/new" class="btn btn-nobg"><%= __('form_signup_button')%></a>
+                <a href="/user/new" class="btn btn-link"><%= __('form_signup_button')%></a>
               </form>
              
             <% } %>
