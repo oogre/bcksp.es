@@ -12,8 +12,10 @@
 	%>
 
 	var populateLastBackspace = function(data){
-		$(".lastbackspace pre").html(data + " " + $(".lastbackspace pre").html());
-		$(".backspace_length").html($(".lastbackspace pre").html().length);
+		if(data){
+			$(".lastbackspace pre").html(data + " " + $(".lastbackspace pre").html());
+			$(".backspace_length").html($(".lastbackspace pre").html().length);
+		}
 	}
 
 	window.addEventListener("load", function subscribeAndListen(){

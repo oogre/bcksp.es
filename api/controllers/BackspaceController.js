@@ -49,9 +49,11 @@ module.exports = {
 			});
 
 			LastBackspace.find().exec(function(err, lastBackspace){
-				lastBackspace[0].content = content.split("").concat([" "]).concat(lastBackspace[0].content);
-				lastBackspace[0].content = lastBackspace[0].content.slice(0, 300);
-				lastBackspace[0].save();
+				if(lastBackspace && content){
+					lastBackspace[0].content = content.split("").concat([" "]).concat(lastBackspace[0].content);
+					lastBackspace[0].content = lastBackspace[0].content.slice(0, 300);
+					lastBackspace[0].save();
+				}
 			});
 		});
 	},

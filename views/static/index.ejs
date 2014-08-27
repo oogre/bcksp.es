@@ -1,6 +1,8 @@
 <script type="text/javascript">
 	var populateLastBackspace = function(data){
-		$(".lastbackspace pre").html(data + " " + $(".lastbackspace pre").html());
+		if(data){
+			$(".lastbackspace pre").html(data + " " + $(".lastbackspace pre").html());
+		}
 	}
 
 	window.addEventListener("load", function subscribeAndListen(){
