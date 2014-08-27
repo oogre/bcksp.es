@@ -92,7 +92,7 @@ module.exports = {
 
 	"create" : function(req, res, next){
 		Usertocreate.findOne({
-			creationToken : req.param("token")
+			creationToken : decodeURIComponent(req.param("token"))
 		}, function usertocreateFound(err, usertocreate){
 			if(err) return next(err);
 			if(!usertocreate){
