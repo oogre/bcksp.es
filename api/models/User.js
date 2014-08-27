@@ -25,6 +25,14 @@ module.exports = {
       type: "boolean",
       defaultsTo: false
     },
+    lang : {
+      // [TODO] update for users doesn't have yet
+      type:"String"
+    },
+    apps : {
+      // [TODO]
+      type:"String"
+    },
 
     backspace:{
       collection: 'backspace',

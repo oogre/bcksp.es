@@ -123,7 +123,8 @@ module.exports = {
 					else{
 						User.create({
 							email : usertocreate.email,
-							encryptedPassword : usertocreate.encryptedPassword
+							encryptedPassword : usertocreate.encryptedPassword,
+							lang : req.locale
 						}, function userCreated(err, user){
 							if(err) return next(err);
 							Usertocreate.destroy(usertocreate.id, function userDestroyed(err){
