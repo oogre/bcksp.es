@@ -19,34 +19,65 @@ module.exports = {
 
 	// policies to pass through  : [authenticated]
 	"append" : function(req, res, next){
-		Backspace.findOne({
-			owner : req.session.User.id
-		},function foundBackspace(err, backspcace){
-			var content = req.param("content");
+		User.findOne({
+			id : req.session.User.id
+		})
+		.populate('backspace')
+		.exec(function foundUserBackspace(err, userBackspace){
+			var content = req.param("content") || "";
 			var date = new Date().getTime();
 
-			backspcace.content[date] = backspcace.content[date] ? (content+backspcace.content[date]) : content;
+			userBackspace.backspace[0].content[date] = userBackspace.backspace[0].content[date] ? (content+userBackspace.backspace[0].content[date]) : content;
+
+			if(!userBackspace.volume || 0 == userBackspace.volume){
+				userBackspace.volume = 0;
+				for(var k in userBackspace.backspace[0].content){
+					if(userBackspace.backspace[0].content[k]){
+						userBackspace.volume += userBackspace.backspace[0].content[k].length;
+					}
+				}
+			}else if(content){
+				userBackspace.volume += content.length;
+			}
 
 			Backspace.update({
-				id : backspcace.id
+				owner : req.session.User.id
 			}, {
-				content : backspcace.content
+				content : userBackspace.backspace[0].content
 			}, 
-			function updatedBackspcace (err, backspcace){
-				res.json({
-					status : "ok"
+			function updatedBackspace (err, backspace){
+				if(err){
+					res.json({
+						status : "ko"
+					});
+				}
+				else{
+					res.json({
+						status : "ok"
+					});	
+				}
+				
+			});
+
+			User.update(req.session.User.id, {
+				volume : userBackspace.volume
+			}, function(err, user){
+				User.publishUpdate(req.session.User.id,{ 
+					volume : userBackspace.volume
+				});
+
+				Backspace.publishUpdate(req.session.User.id, {
+					id : req.session.User.id,
+					volume : userBackspace.volume,
+					backspcaced : content
+				});
+
+				Backspace.publishCreate({
+					id : req.session.User.id,
+					backspcaced : content
 				});
 			});
 
-			Backspace.publishCreate({
-				id : req.session.User.id,
-				backspcaced : content
-			});
-
-			Backspace.publishUpdate(req.session.User.id, {
-				id : req.session.User.id,
-				backspcaced : content
-			});
 
 			LastBackspace.find().exec(function(err, lastBackspace){
 				if(lastBackspace && content){

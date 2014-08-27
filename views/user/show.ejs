@@ -13,8 +13,7 @@
 
 	var populateLastBackspace = function(data){
 		if(data){
-			$(".lastbackspace pre").html(data + " " + $(".lastbackspace pre").html());
-			$(".backspace_length").html($(".lastbackspace pre").html().length);
+			$(".lastbackspace pre").text(data + " " + $(".lastbackspace pre").text());
 		}
 	}
 
@@ -25,8 +24,14 @@
 
 		// Listen for the event called 'user'
 		io.socket.on('backspace', function(obj){
-			console.log(obj);
-			populateLastBackspace(obj.data.backspcaced);
+			 if (obj.verb == 'updated') {
+                if(obj.data.backspcaced){
+					populateLastBackspace(obj.data.backspcaced);
+				}
+				if(obj.data.volume){
+					$(".backspace_length").text(obj.data.volume);
+				}
+			}
 		});
 	}, false);
 
@@ -105,7 +110,7 @@
 				<tr data-id="<%= user.id %>" data-model="user">
 					<td><%= user.email %></td>
 					<td><%= date %></td>
-					<td><span class="backspace_length"><%= backspace.length %><span> <%= __('user_show_bcksp_unity') %></td>
+					<td><span class="backspace_length"><%= user.volume || "-" %></span> <%= __('user_show_bcksp_unity') %></td>
 				</tr>
 			</table>
 		</div>

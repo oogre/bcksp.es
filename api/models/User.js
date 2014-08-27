@@ -25,6 +25,12 @@ module.exports = {
       type: "boolean",
       defaultsTo: false
     },
+
+    volume : {
+      type : "integer",
+        defaultsTo: 0
+    },
+
     lang : {
       // [TODO] update for users doesn't have yet
       type:"String"

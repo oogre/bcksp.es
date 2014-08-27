@@ -6,12 +6,14 @@
 
         // Listen for the event called 'user'
         io.socket.on('user',function(obj){
-        	console.log(obj);
             if (obj.verb == 'updated') {
                 if(true === obj.data.online){
                 	$("[data-id='"+obj.id+"'] .onlineoffline").removeClass("fa-minus-circle").addClass("fa-check-circle");
                 }else if(false === obj.data.online){
                 	$("[data-id='"+obj.id+"'] .onlineoffline").removeClass("fa-check-circle").addClass("fa-minus-circle");
+                }
+                if(obj.data.volume){
+                	$("[data-id='"+obj.id+"'] .volume").text(obj.data.volume);
                 }
             }
             else if(obj.verb == "created"){
@@ -50,6 +52,7 @@
 			<th></th>
 			<th>ID</th>
 			<th>email</th>
+			<th>volume</th>
 			<th>admin</th>
 			<th></th>
 			<th></th>
@@ -59,6 +62,7 @@
 			<td><i class="onlineoffline fa <% if(user.online) { %>fa-check-circle<% } else {%>fa-minus-circle<%}%>"></i></td>
 			<td><%= user.id %></td>
 			<td><%= user.email %></td>
+			<td class="volume"><%= user.volume || "-" %></td>
 			<% if(user.admin) { %>
 				<td><i class="fa fa-star"></i></td>
 			<% } else { %>
