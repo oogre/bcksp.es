@@ -24,6 +24,16 @@ module.exports = {
 		})
 		.populate('backspace')
 		.exec(function foundUserBackspace(err, userBackspace){
+			if(err){
+				console.log(err);
+				return res.json({
+					status : "ko"
+				});
+			}else if(!userBackspace){
+				return res.json({
+					status : "ko"
+				});
+			}
 			var content = req.param("content") || "";
 			var date = new Date().getTime();
 
@@ -45,45 +55,48 @@ module.exports = {
 			}, {
 				content : userBackspace.backspace[0].content
 			}, 
-			function updatedBackspace (err, backspace){
+			function updatedBackspace (err){
 				if(err){
-					res.json({
+					console.log(err);
+					return res.json({
 						status : "ko"
 					});
 				}
 				else{
-					res.json({
+					User.update(req.session.User.id, {
+						volume : userBackspace.volume
+					}, function(err){
+						if(err) console.log(err);
+
+						User.publishUpdate(req.session.User.id,{ 
+							volume : userBackspace.volume
+						});
+
+						Backspace.publishUpdate(req.session.User.id, {
+							id : req.session.User.id,
+							volume : userBackspace.volume,
+							backspcaced : content
+						});
+
+						Backspace.publishCreate({
+							id : req.session.User.id,
+							backspcaced : content
+						});
+					});
+
+					LastBackspace.find()
+					.exec(function(err, lastBackspace){
+						if(err) console.log(err);
+						if(lastBackspace && content){
+							lastBackspace[0].content = content.split("").concat([" "]).concat(lastBackspace[0].content);
+							lastBackspace[0].content = lastBackspace[0].content.slice(0, 300);
+							lastBackspace[0].save();
+						}
+					});
+
+					return res.json({
 						status : "ok"
 					});	
-				}
-				
-			});
-
-			User.update(req.session.User.id, {
-				volume : userBackspace.volume
-			}, function(err, user){
-				User.publishUpdate(req.session.User.id,{ 
-					volume : userBackspace.volume
-				});
-
-				Backspace.publishUpdate(req.session.User.id, {
-					id : req.session.User.id,
-					volume : userBackspace.volume,
-					backspcaced : content
-				});
-
-				Backspace.publishCreate({
-					id : req.session.User.id,
-					backspcaced : content
-				});
-			});
-
-
-			LastBackspace.find().exec(function(err, lastBackspace){
-				if(lastBackspace && content){
-					lastBackspace[0].content = content.split("").concat([" "]).concat(lastBackspace[0].content);
-					lastBackspace[0].content = lastBackspace[0].content.slice(0, 300);
-					lastBackspace[0].save();
 				}
 			});
 		});
