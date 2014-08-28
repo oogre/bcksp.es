@@ -51,9 +51,12 @@ module.exports = {
 					}
 					return res.redirect("/session/new");
 				}
-				 req.session.authenticated = true;
-				 req.session.User = user;
-				 user.online = true;
+				var oldDate = new Date()
+				var newDate = new Date(oldDate.getTime() + (1000 * 60 * 60 * 24 * 365));
+				req.session.cookie.expires = newDate;
+				req.session.authenticated = true;
+				req.session.User = user.cleanSession();
+				user.online = true;
 
 				 user.save(function userSaved(err, user){
 				 	if(err) return next(err);

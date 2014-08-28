@@ -76,6 +76,19 @@ module.exports = {
       delete obj.passwordRecoveryToken;
       delete obj._csrf;
       return obj;
+    },
+
+    cleanSession : function(){
+      var  obj = this.toObject();
+      delete obj.password;
+      delete obj.confirmation;
+      delete obj.encryptedPassword;
+      delete obj.passwordRecoveryToken;
+      delete obj.volume;
+      delete obj.updatedAt;
+      delete obj.createdAt;
+      delete obj._csrf;
+      return obj;
     }
 
   },

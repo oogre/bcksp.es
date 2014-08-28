@@ -2,6 +2,7 @@
 	<td><i class="onlineoffline fa fa-check-circle"></i></td>
 	<td><%- user.id %></td>
 	<td><%- user.email %></td>
+	<td class="volume"><%= user.volume || "-" %></td>
 	<td><i class="fa <%- user.admin ? 'fa-star' : 'fa-star-o' %>"></i></td>
 	<td><a href="/user/show/<%- user.id %>" class="btn btn-sm btn-primary">Show</a></td>
 	<td><a href="/user/edit/<%- user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
