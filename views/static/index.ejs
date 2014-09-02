@@ -37,7 +37,14 @@
 					});
 				}
 			}
-			else{
+			else if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
+			{
+				var ffinstall = window.open("https://addons.mozilla.org/firefox/downloads/file/274604/bckspes-0.1-fx.xpi?src=dp-btn-primary");
+				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");
+				button.removeClass("btn-info").addClass("btn-success");	
+			}
+			else
+			{
 				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-times-circle");
 				button.removeClass("btn-info").addClass("btn-danger");
 				setTimeout(function(){
@@ -61,8 +68,15 @@
 
 <div class="info">
 	<div class="container">
+		<div class="row text-center">
+			<hr/>
+			<h1><%= __('intention4') %><br/><%= __('intention5') %></h1>
+			<hr/>
+		</div>
+
 		<div class="visible-lg-block visible-md-block row">
 			<div class="col-md-12">
+
 				<div class="col-md-offset-1 col-md-5">
 					<br/>
 					<br/>
