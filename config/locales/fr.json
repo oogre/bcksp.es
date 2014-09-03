@@ -25,50 +25,50 @@
 	"form_pwd_recovery_title" : "Retrouvez votre compte",
 	"form_pwd_entry_title" : "Mise à jour du mot de passe",
 	"form_pwd_entry_pw_label" : "Votre nouveau mot de passe",
-	"form_pwd_entry_submit" : "validez",
-	"form_pwd_recovery_captcha_label" : "Transcrivez le text de l'image",
-	"form_pwd_recovery_captcha" : "text de l'image",
+	"form_pwd_entry_submit" : "valider",
+	"form_pwd_recovery_captcha_label" : "Transcrivez le texte de l'image",
+	"form_pwd_recovery_captcha" : "texte de l'image",
 
 
-	"userEmailPasswordRequiredError" : "Vous devez inscrire votre email et votre mot de passe",
-	"userEmailPasswordMismatchError" : "Ce mot de passe n'est pas correct",
-	"userEmailAlredyExistError" : "Cette email est déjà utilisé",
-	"noAccountError" : "Cette adresse email n'est pas reconnue",
+	"userEmailPasswordRequiredError" : "Vous devez inscrire votre email et votre mot de passe.",
+	"userEmailPasswordMismatchError" : "Ce mot de passe n'est pas correct.",
+	"userEmailAlredyExistError" : "Cette adresse email est déjà utilisée.",
+	"noAccountError" : "Cette adresse email n'est pas reconnue.",
 	"noAdminError" : "Vous devez être administrateur pour voir cette page.",
 	"noSessionError" : "Vous devez être connecté pour voir cette page.",
 	"proceduralError" : "La procédure a échoué, réessayez...",
-	"captchaError" : "Vous avez mal lu le captcha",
+	"captchaError" : "Vous avez mal lu le captcha.",
 
 
-	"pwdRecoveryOk" : "Votre mot de passe à été correctement mis à jour",
+	"pwdRecoveryOk" : "Votre mot de passe a été correctement mis à jour.",
 	"accountFoundOk" : "Nous vous avons envoyé un email contenant un lien qui vous permettra de mettre à jour votre mot de passe. Si vous ne voyez rien venir, vérifiez votre dossier de spam.",
 	"accountCreationOnGoingOk" : "Nous vous avons envoyé un email contenant un lien qui vous permettra de finaliser la création de votre compte. Si vous ne voyez rien venir, vérifiez votre dossier de spam.",
-	"accountCreationOk" : "Félicitation, votre compte est créé et activé! Téléchargez l'application pour allimenter votre archive... si ce n'est déjà fait.",
+	"accountCreationOk" : "Félicitations, votre compte est créé et activé! Téléchargez l'application pour alimenter votre archive... si ce n'est déjà fait.",
 
 
 	"mail_hello" : "Salut,",
-	"mail_not_for_you" : "Si cet email ne vous concerne pas, ignorez le.",
+	"mail_not_for_you" : "Si cet email ne vous concerne pas, ignorez-le.",
 	"mail_signature" : "Amicalement, bcksp.es",
-	"mail_user_confirmation_subject" : "[bcksp.es] Valider votre adresse email",
+	"mail_user_confirmation_subject" : "[bcksp.es] Validez votre adresse email",
 	"mail_user_confirmation_hello":"Bienvenue,",
 	"mail_user_confirmation_content":"Vous pouvez utiliser le lien ci-dessous pour créer votre compte : ",
-	"mail_pwd_recovery_subject" : "[bcksp.es] Mise à jour de votre mot de pass",
+	"mail_pwd_recovery_subject" : "[bcksp.es] Mise à jour de votre mot de passe",
 	"mail_pwd_recovery_content" : "Vous pouvez utiliser le lien ci-dessous pour mettre à jour votre mot de passe : ",
 
 
 	"live" : "(en direct)",
 	"title" : "bcksp.es",
 	"name" : "[BCKSP.ES]",
-	"description1" : "prononcez le “backspace”",
+	"description1" : "prononcez-le “backspace”",
 	"description2_button" : "“backspace”",
 	"description2_title" : "– Info –",
 	"description2" : "Backspace est la touche du clavier informatique située au-dessus de la touche “Enter”. Elle est utilisée pour effacer les derniers caractères saisis, ceux situés à gauche du curseur d'écriture.",
-	"intention0" : "Lorsque vous utilisez la touche backspace une part de vous s'en envole avec ces mots perdus.",
-	"intention1" : "La pratique de l'écriture est pareille à un monde en formation. Soumis à l'érosion, les idées s'affinent pour former des phrases. Les tranches les plus sensibles de vos idées s'envolent sous la forme du sable subtile pour finir dans le désert du néant.",
+	"intention0" : "Lorsque vous utilisez la touche backspace, une part de vous s'en envole avec ces mots perdus.",
+	"intention1" : "La pratique de l'écriture est pareille à un monde en formation. Soumis à l'érosion, les idées s'affinent pour former des phrases. Les tranches les plus sensibles de vos idées s'envolent sous la forme du sable subtil pour finir dans le désert du néant.",
 	"intention2" : "Nous archivons pour vous ces poussières de pensée dans un livre. Bcksp.es est conçu pour capturer ces idées supprimées. Lorsque votre archive est pleine nous vous proposons d'acheter votre livre.",
 	"intention3" : "Nous sauvons vos backspaces et les transformons en livre.",
 	"intention4" : "Nous sauvons vos backspaces",
-	"intention5" : "et nous en faisons des livres",
+	"intention5" : "et nous en faisons des livres.",
 
 
 	"user_show_since" : "inscription",
@@ -80,14 +80,14 @@
 
 
 	"FAQ_title" : "Quelques réponses à vos questions&nbsp;:",
-	"FAQ_question_1" : "Quel est la finalité du projet? Pourquoi voudrais-je archiver ce que je souhaite voir disparaître?",
+	"FAQ_question_1" : "Quelle est la finalité du projet? Pourquoi voudrais-je archiver ce que je souhaite voir disparaître?",
 	"FAQ_question_2" : "Comment ça fonctionne? / Que dois-je faire?",
-	"FAQ_question_3" : "Y a-t-il un risque pour mes données sensible (Mot de passe, visa, ...)&nbsp;?",
-	"FAQ_question_4" : "Quand pourrais-je faire imprimer mon livre?",
-	"FAQ_answer_1" : "Notre souhait est de mettre en lumière une part intime et sombre par nature de l'Homme. Il nous parait que l'intérêt de ce projet tient dans l'observation de la mécanique cérébrale travaillant pour former une communication par l'écriture. Nous récupérons et imprimons les restes des nombreux accidents de l'écriture, rien de plus. Celà est déjà tout un programme... La curiosité, la soif de découverte et de connaissance de soi sont des raisons suffisantes pour se lancer avec nous dans l'aventure bcksp.es ",
-	"FAQ_answer_2" : "Lorsque vous êtes inscrit sur le site de bcksp.es et que vous avez installé une de nos extension de programme, il n'y a plus rien à faire. Le mieux est alors d'oublier notre existence. Nous nous rappelerons à vous lorsque vous aurez suffisement complété votre archive pour l'imprimer. Bcksp.es est autonome : lorsque vous supprimerez du texte uniquement à l'aide de la touche “Backspace”, nous enregistrons ce qui disparaît et l'envoyons sur votre compte en ligne. Vous pouvez donc suivre à tout moment sur “www.bcksp.es/user” ce que vous avez supprimé depuis votre inscription.",
-	"FAQ_answer_3" : "Tout d'abord, avez-vous déjà supprimé un mot de passe entier et correctement écrit ainsi que l'identifiant qui l'accompagne? Et quand bien même le feriez vous... cela ne nous intéresse pas. Nous sommes motivé par l'amour du texte et de sa forme. Jamais nous ne tirerions profits (en dehors d'un cadre artistique/littéraire) de donnée que vous nous avez confié. N'ayez crainte de la pub, du fishing ou du hacking de vos comptes, nous n'allimenterons que et rien que notre base de donnée.",
-	"FAQ_answer_4" : "Le système d'impression de livre n'est pas encore finalisé. Commencez déjà à remplir votre archive, je vous parie qu'il sera finit avant que vous ne puissiez atteindre le contenus d'un petit roman de poche.",
+	"FAQ_question_3" : "Y a-t-il un risque pour mes données sensibles (mot de passe, visa, ...)&nbsp;?",
+	"FAQ_question_4" : "Quand pourrai-je faire imprimer mon livre?",
+	"FAQ_answer_1" : "Notre souhait est de mettre en lumière une part intime et sombre par nature de l'Homme. Il nous paraît que l'intérêt de ce projet tient dans l'observation de la mécanique cérébrale travaillant pour former une communication par l'écriture. Nous récupérons et imprimons les restes des nombreux accidents de l'écriture, rien de plus. Cela est déjà tout un programme... La curiosité, la soif de découverte et de connaissance de soi sont des raisons suffisantes pour se lancer avec nous dans l'aventure bcksp.es ",
+	"FAQ_answer_2" : "Lorsque vous êtes inscrit sur le site de bcksp.es et que vous avez installé une de nos extensions de programme, il n'y a plus rien à faire. Le mieux est alors d'oublier notre existence. Nous nous rappelerons à vous lorsque vous aurez suffisamment complété votre archive pour l'imprimer. Bcksp.es est autonome : lorsque vous supprimez du texte uniquement à l'aide de la touche “Backspace”, nous enregistrons ce qui disparaît et l'envoyons sur votre compte en ligne. Vous pouvez donc suivre à tout moment sur “www.bcksp.es/user” ce que vous avez supprimé depuis votre inscription.",
+	"FAQ_answer_3" : "Tout d'abord, avez-vous déjà supprimé un mot de passe entier et correctement écrit ainsi que l'identifiant qui l'accompagne? Et quand bien même le feriez-vous... cela ne nous intéresse pas. Nous sommes motivés par l'amour du texte et de sa forme. Jamais nous ne tirerions profit (en dehors d'un cadre artistique/littéraire) de données que vous nous auriez confiées. N'ayez crainte de la pub, du fishing ou du hacking de vos comptes, nous n'alimenterons que, et rien que, notre base de donnée.",
+	"FAQ_answer_4" : "Le système d'impression de livre n'est pas encore finalisé. Commencez déjà à remplir votre archive, je vous parie qu'il sera fini avant que vous ne puissiez atteindre le contenu d'un petit roman de poche.",
 
 
 	"download_title" : "Téléchargement",
@@ -103,10 +103,10 @@
 	"download_link" : "Lien",
 	"download_app" : "Application",
 	"download_install" : "Installation",
-	"download_help_us" : "Aidez nous",
+	"download_help_us" : "Aidez-nous",
 	"download_help" : "Besoin d'aide&nbsp;?",
 	"download_fork" : "Developpez-le",
 
-	"dev_proposition" : "Vous voulez bcksp.es pour une autre application&nbsp;? Dites-le nous"
+	"dev_proposition" : "Vous voulez bcksp.es pour une autre application&nbsp;? Dites-le nous."
 
 }
