@@ -23,7 +23,7 @@
 			button.removeClass("btn-warning").addClass("btn-info");
 			icon.removeClass("fa-download").addClass("fa-circle-o-notch").addClass("fa-spin");
 			
-			if(typeof(chrome) != "undefined"){
+			if(navigator.userAgent.toLowerCase().indexOf('chrome') > -1){
 				if(!chrome.app.isInstalled){
 					chrome.webstore.install('', function(data){
 						icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");

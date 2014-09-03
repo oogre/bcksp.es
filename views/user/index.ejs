@@ -8,21 +8,35 @@
         io.socket.on('user',function(obj){
             if (obj.verb == 'updated') {
                 if(true === obj.data.online){
+					var onlineUser = $(".user-online");
+					onlineUser.text((parseInt(onlineUser.text()) || 0)+1);
                 	$("[data-id='"+obj.id+"'] .onlineoffline").removeClass("fa-minus-circle").addClass("fa-check-circle");
                 }else if(false === obj.data.online){
+
+					var onlineUser = $(".user-online");
+					onlineUser.text((parseInt(onlineUser.text()) || 0)-1);
                 	$("[data-id='"+obj.id+"'] .onlineoffline").removeClass("fa-check-circle").addClass("fa-minus-circle");
                 }
                 if(obj.data.volume){
-                	$("[data-id='"+obj.id+"'] .volume").text(obj.data.volume);
+					var elem = $("[data-id='"+obj.id+"'] .volume");
+					var total = $(".volume-total");
+					var oldTotalVolume = parseInt(total.text()) || 0;
+					var elemOldVolume = parseInt(elem.text()) || 0;
+					total.text(oldTotalVolume - elemOldVolume + parseInt(obj.data.volume));
+					elem.text(obj.data.volume);
                 }
             }
             else if(obj.verb == "created"){
+				var totalUser = $(".user-total");
+				totalUser.text((parseInt(totalUser.text()) || 0)+1);
 				$("tr:last").after(JST["assets/templates/insertUser.ejs"]({
 					user: obj.data,
 					csrf: window.bcksp.csrf || ""
 				}));
 				$('tr:last .destroyForm').submit(destroyForm);
 			}else if(obj.verb == "destroyed"){
+				var totalUser = $(".user-total");
+				totalUser.text((parseInt(totalUser.text()) || 0)-1);
 				$("tr[data-id='"+obj.id+"']").remove();
 			}
 		});
@@ -57,9 +71,17 @@
 			<th></th>
 			<th></th>
 		</tr>
-		<% _.each(users, function(user){ %>
+		<% 
+		var totalVolume = 0;
+		var offline = 0;
+
+		_.each(users, function(user){ 
+
+			totalVolume += (user.volume || 0);
+
+		%>
 		<tr data-id="<%= user.id %>" data-model="user">
-			<td><i class="onlineoffline fa <% if(user.online) { %>fa-check-circle<% } else {%>fa-minus-circle<%}%>"></i></td>
+			<td><i class="onlineoffline fa <% if(user.online) { %>fa-check-circle<% } else { offline ++; %>fa-minus-circle<%}%>"></i></td>
 			<td><%= user.id %></td>
 			<td><%= user.email %></td>
 			<td class="volume"><%= user.volume || "-" %></td>
@@ -78,5 +100,17 @@
 			</form></td>
 		</tr>
 		<% }) %>
+		<tr>
+		</tr>
+		<tr id="total">
+			<td>Total</td>
+			<td>users : <span class="user-total"><%= users.length %></span></td>
+			<td>online : <span class="user-online"><%= users.length - offline %></span></td>
+			<td class="volume-total"><%= totalVolume || "-" %></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
 	</table>
 </div>
