@@ -68,7 +68,8 @@
 	"intention2" : "Nous archivons pour vous ces poussières de pensée dans un livre. Bcksp.es est conçu pour capturer ces idées supprimées. Lorsque votre archive est pleine nous vous proposons d'acheter votre livre.",
 	"intention3" : "Nous sauvons vos backspaces et les transformons en livre.",
 	"intention4" : "Nous sauvons vos backspaces",
-	"intention5" : "et nous en faisons des livres.",
+	"intention5" : "et en faisons des livres",
+	"intention6" : "nous les tweetons aussi.",
 
 
 	"user_show_since" : "inscription",
@@ -107,6 +108,9 @@
 	"download_help" : "Besoin d'aide&nbsp;?",
 	"download_fork" : "Developpez-le",
 
-	"dev_proposition" : "Vous voulez bcksp.es pour une autre application&nbsp;? Dites-le nous."
+	"dev_proposition" : "Vous voulez bcksp.es pour une autre application&nbsp;? Dites-le nous.",
 
+	"twitter_follow" : "Suivez @bckspes sur Twitter",
+	"facebook_follow" : "Likez nous sur Facebook",
+	"github_follow" : "Forkez nous sur Github"
 }
