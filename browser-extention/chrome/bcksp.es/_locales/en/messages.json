@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "bcksp.es",
+    "description": "The title of the application, displayed in the web store"
+  },
+  "appDesc": {
+    "message": "Archive your backspaces | We turn these into book", 
+    "description":"The title of the application, displayed in the web store"
+  }
+}
