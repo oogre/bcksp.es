@@ -84,13 +84,43 @@ module.exports = {
 						});
 					});
 
-					LastBackspace.find()
+					LastBackspace.findOne({
+						name : "last"
+					})
 					.exec(function(err, lastBackspace){
 						if(err) console.log(err);
 						if(lastBackspace && content){
-							lastBackspace[0].content = content.split("").concat([" "]).concat(lastBackspace[0].content);
-							lastBackspace[0].content = lastBackspace[0].content.slice(0, 300);
-							lastBackspace[0].save();
+							lastBackspace.content = content.split("").concat([" "]).concat(lastBackspace.content);
+							lastBackspace.content = lastBackspace.content.slice(0, 600);
+							lastBackspace.save();
+						}
+					});
+					LastBackspace.findOne({
+						name : "twitter"
+					})
+					.exec(function(err, twitterBackspace){
+						if(err) console.log(err);
+						if(twitterBackspace && content){
+							twitterBackspace.content = content.split("").concat(twitterBackspace.content);
+							if(twitterBackspace.content.length < 140){
+								twitterBackspace.save();
+							}else{
+								var twitter = new require('node-twitter-api')(sails.config.twitter.app);
+								twitter.statuses("update", {
+										status: twitterBackspace.content.slice(0, 140).join("")
+									},
+									sails.config.twitter.user.token,
+									sails.config.twitter.user.secret,
+									function(error, data, response) {
+										if (error) {
+										    console.log(error);
+										} else {
+											twitterBackspace.content = [];
+											twitterBackspace.save();
+										}
+									}
+								);
+							}							
 						}
 					});
 
@@ -103,9 +133,11 @@ module.exports = {
 	},
 
 	"last" : function(req, res, next){
-		LastBackspace.find().exec(function(err, lastBackspace){
-			if(lastBackspace && lastBackspace[0]){
-				res.json(lastBackspace[0].content.join(""));
+		LastBackspace.findOne({
+			name : "last"
+		}).exec(function(err, lastBackspace){
+			if(lastBackspace){
+				res.json(lastBackspace.content.join(""));
 			}
 		});
 	},

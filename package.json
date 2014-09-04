@@ -27,7 +27,8 @@
     "sails-disk": "~0.10.0",
     "sails-mongo": "^0.10.4",
     "connect-redis": "1.4.5",
-    "re-captcha": "0.0.3"
+    "re-captcha": "0.0.3",
+    "node-twitter-api" : "1.2.4"
   },
   "scripts": {
     "start": "node app.js",

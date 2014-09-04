@@ -10,6 +10,9 @@ module.exports = {
 	attributes: {
 		content : {
 			type: "array"
+		},
+		name : {
+			type : "string"
 		}
 	}
 };
