@@ -362,7 +362,7 @@ module.exports = {
 	},
 
 	"online" : function(req, res){
-		if(req.session.User && req.session.User.online){
+		if(req.session.User){
 			return res.json({
 				status : "ok"
 			});	
