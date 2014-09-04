@@ -52,11 +52,7 @@ module.exports.policies = {
     "subscribe" : ["flash", "authenticated", "userCanSeeProfile"],
     "getLast" : ["flash"]
   }
-/*
-  "twitter" : {
-    "index" : ["flash", "authenticated"]
-  }
-*/
+
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

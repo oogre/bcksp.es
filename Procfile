@@ -1,1 +1,1 @@
-web: NODE_ENV=production node bcksp.es/app.js
+web: NODE_ENV=production node app.js
