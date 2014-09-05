@@ -30,7 +30,7 @@
     "re-captcha": "0.0.3",
     "node-twitter-api" : "1.2.4",
     "passport-facebook" : "1.1.2",
-    "passport" : "0.2.1",
+    "passport" : "0.2.1"
   },
   "scripts": {
     "start": "node app.js",
