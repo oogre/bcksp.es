@@ -88,4 +88,7 @@ module.exports.session = {
   // ssl: false,
   // stringify: true
 
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 365
+  }
 };

@@ -37,7 +37,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/OGRE/api.bcksp.es.git"
+    "url": "https://github.com/oogre/bcksp.es.git"
   },
   "author": "OGRE",
   "license": ""
