@@ -69,6 +69,10 @@ module.exports.routes = {
   "get /backspace/watch/?" : 'BackspaceController.watch',
   "get /backspace/subscribe/:id?" : 'BackspaceController.subscribe',
 
+/* AuthController */
+  "get /auth/facebook" : "AuthController.facebook",
+  "get /auth/facebook/callback" : "AuthController.facebook/callback",
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

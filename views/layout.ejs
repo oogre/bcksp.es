@@ -115,18 +115,10 @@
               <% } %>
             </div>
             <% if(!session.authenticated) { %>
-
-              <form class="navbar-form navbar-right" action="/session/create" method="POST">
-                <div class="form-group">
-                  <input type="email" placeholder="<%= __('form_signin_email') %>" name="email" class="form-control visible-md-block visible-lg-block">
-                </div>
-                <div class="form-group">
-                  <input type="password" placeholder="<%= __('form_signin_pw') %>" name="password" class="form-control visible-md-block visible-lg-block">
-                </div>
-                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-                <input type="submit" class="btn btn-success" value="<%= __('form_signin_submit')%>"></input>
+              <div class="navbar-form navbar-right">
+                <a href="/session/new" class="btn btn-success"><%= __('form_signin_submit')%>"</a>
                 <a href="/user/new" class="btn btn-link"><%= __('form_signup_button')%></a>
-              </form>
+              </div>
              
             <% } %>
         </div>
@@ -159,12 +151,24 @@
 
     <div class="container">
       <hr>
-        <footer class="footer pull-right text-right">
-          <div>
-            <%= __("twitter_follow")%> : <a href="https://twitter.com/bckspes" target="_blank">@bckspes</a><br/>
-            <%= __("facebook_follow")%> : <a href="https://www.facebook.com/bcksp.es" target="_blank">bcksp.es</a><br/>
-            <%= __("github_follow")%> : <a href="https://github.com/oogre/bcksp.es" target="_blank">bcksp.es</a>
-          </div>
+        <footer class="footer text-center">
+          <ul class="list-inline">
+            <li>
+            <a href="https://twitter.com/bckspes" target="_blank" class="btn btn-md btn-block btn-twitter">
+              <i class="fa fa-2x pull-left fa-twitter-square"></i><%= __("twitter_follow")%>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/bcksp.es" target="_blank" class="btn btn-md btn-block btn-fb">
+              <i class="fa fa-2x pull-left fa-facebook-square"></i><%= __("facebook_follow")%>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/oogre/bcksp.es" target="_blank" class="btn btn-md btn-block btn-github">
+              <i class="fa fa-2x pull-left fa-github-square"></i><%= __("github_follow")%>
+            </a>
+          </li>
+        </ul>
         </footer>
     </div>
 

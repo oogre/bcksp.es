@@ -70,7 +70,7 @@
 	<div class="container">
 		<div class="row text-center">
 			<hr/>
-			<h1><%= __('intention4') %><br/><%= __('intention5') %><br/><%= __('intention6') %></h1>
+			<h1><%= __('intention4') %><br/><%= __('intention5') %></h1>
 			<hr/>
 		</div>
 
@@ -125,6 +125,26 @@
 			<div class="col-md-6 bg-primary highlight">
 				<form action="/user/confirmation" method="POST" class="form-signin" id="signup-form">
 					<h2 class="form-signin-heading"><%= __('form_signup_title') %></h2>
+					<hr/>
+					<div class="row">
+						<div class="col-xs-12 text-center">
+							<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i> <%= __("facebook_connect") %></a>
+							<small><%= __("facebook_note") %></small>
+						</div>
+					</div>
+					<div class="row">
+
+					<div class="col-xs-5">
+						<hr/>
+					</div>
+					<div class="col-xs-2 text-center line-height">
+						<%= __("form_signup_or") %>
+					</div>
+					<div class="col-xs-5">
+						<hr/>
+					</div>
+					</div>
+					
 					<div class="form-group">
 						<label for="inputEmail"><%= __('form_signup_email_label') %>&nbsp;:</label>
 						<input id="inputEmail"type="email" class="form-control input-lg" placeholder="<%= __('form_signup_email')%>" name="email" data-required data-pattern="^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$"/>
@@ -138,10 +158,11 @@
 					</div>
 					<br/>
 					<div class="form-group">
+						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 						<input type="submit" class="btn btn-lg btn-success" value="<%= __('form_signup_submit') %>" />
 					</div>
-					<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 				</form>
+				<hr/>
 			</div>
 		</div>
 		<div class="row visible-sm-block visible-xs-block">

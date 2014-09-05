@@ -19,6 +19,51 @@ body{
 	font-size: 14px;
 }
 
+
+footer li{
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+
+.btn-twitter{
+	color: #fff;
+	background-color: #55ACEE;
+	line-height: 2.1em;
+}
+.btn-twitter:hover{
+	color: #fff;
+	text-decoration: none;
+	background-color: #4A9CDA;
+}
+
+.btn-github{
+	color: #fff;
+	background-color: #333333;
+	line-height: 2.1em;
+}
+
+.btn-github:hover{
+	color: #fff;
+	text-decoration: none;
+	background-color: #252525;
+}
+
+.btn-fb{
+	color: #fff;
+	background-color: #4c66a4;
+	line-height: 2.1em;
+}
+.btn-fb:hover{
+	color: #fff;
+	text-decoration: none;
+	background-color: #3B5594;
+}
+
+.line-height{
+	line-height: 2.9em;
+}
+
 .navbar .btn-nobg:hover{
 	color: #fff;
 }

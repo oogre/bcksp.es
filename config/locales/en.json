@@ -21,6 +21,10 @@
 	"form_signup_pw_conf" : "confirm password",
 	"form_signup_submit" : "submit",
 	"form_signup_button" : "Sign up",
+	"form_signup_or" : "or",
+	"facebook_connect" : "Connect",
+	"facebook_note" : "We don't publish on your wall.",
+
 
 	"form_pwd_recovery_title" : "Find your account",
 	"form_pwd_entry_title" : "Update password",
@@ -111,7 +115,8 @@
 
 	"dev_proposition" : "Do you want bcksp.es for another application&nbsp;? Tell us",
 
+
 	"twitter_follow" : "Follow @bckspes on Twitter",
-	"facebook_follow" : "Like us on Facebook",
-	"github_follow" : "Fork it on Github"
+	"facebook_follow" : "Like bcksp.es on Facebook",
+	"github_follow" : "Fork bcksp.es on Github"
 }

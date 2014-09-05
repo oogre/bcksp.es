@@ -21,7 +21,7 @@ module.exports.http = {
   *                                                                           *
   ****************************************************************************/
 
-  // middleware: {
+  middleware: {
 
   /***************************************************************************
   *                                                                          *
@@ -30,23 +30,57 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
-    // order: [
-    //   'startRequestTimer',
-    //   'cookieParser',
-    //   'session',
-    //   'myRequestLogger',
-    //   'bodyParser',
-    //   'handleBodyParserError',
-    //   'compress',
-    //   'methodOverride',
-    //   'poweredBy',
-    //   '$custom',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    //   '404',
-    //   '500'
-    // ],
+    startFacebookPassportStrategy : function(req, res, next){
+      if(req.url!="/" && req.url!="/session/new" && req.url!="/user/new" && !req.url.toLowerCase().match(/\/auth\/facebook\//)){
+        return next();
+      }
+      console.log('Express Middleware -- Start Facebook Passport Strategy');
+      
+      var FacebookStrategy = require('passport-facebook').Strategy
+      var passport = require('passport')
+      passport.serializeUser(function (user, done) {
+        done(null, user);
+      });
+      passport.deserializeUser(function (user, done) {
+          done(null, user)
+      });
+
+      passport.use(new FacebookStrategy({
+            clientID: sails.config.facebook.appId,
+            clientSecret: sails.config.facebook.appSecret,
+            callbackURL: sails.config.facebook.callbackURL,
+        },
+        function (accessToken, refreshToken, profile, done) {
+          process.nextTick(function () {
+            profile.accessToken = accessToken;
+            profile.refreshToken = refreshToken;
+            return done(null, profile);
+          });
+      }));
+
+      passport.initialize();
+      passport.session();
+      return next();
+    },
+
+    order: [
+      'startRequestTimer',
+      'cookieParser',
+      'session',
+      'myRequestLogger',
+      'bodyParser',
+      'handleBodyParserError',
+      'compress',
+      'methodOverride',
+      'poweredBy',
+      '$custom',
+      "startFacebookPassportStrategy",
+      'router',
+      'www',
+      'favicon',
+      '404',
+      '500'
+    ],
 
   /****************************************************************************
   *                                                                           *
@@ -54,10 +88,10 @@ module.exports.http = {
   *                                                                           *
   ****************************************************************************/
 
-    // myRequestLogger: function (req, res, next) {
+    //RequestLogger: function (req, res, next) {
     //     console.log("Requested :: ", req.method, req.url);
-    //     return next();
-    // }
+     //    return next();
+     //}
 
 
   /***************************************************************************
@@ -71,7 +105,7 @@ module.exports.http = {
 
     // bodyParser: require('skipper')
 
-  // },
+  },
 
   /***************************************************************************
   *                                                                          *

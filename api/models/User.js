@@ -31,6 +31,10 @@ module.exports = {
         defaultsTo: 0
     },
 
+    facebook : {
+      type : "json"
+    },
+
     lang : {
       // [TODO] update for users doesn't have yet
       type:"String"

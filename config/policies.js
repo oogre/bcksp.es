@@ -51,6 +51,11 @@ module.exports.policies = {
     "watch" : ["flash"],
     "subscribe" : ["flash", "authenticated", "userCanSeeProfile"],
     "getLast" : ["flash"]
+  },
+
+  "auth" : {
+    "facebook/callback" : ["flash"],
+    "facebook" : ["flash"]
   }
 
   /***************************************************************************
