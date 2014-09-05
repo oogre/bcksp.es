@@ -29,7 +29,7 @@
     "connect-redis": "1.4.5",
     "re-captcha": "0.0.3",
     "node-twitter-api" : "1.2.4",
-    "passport-facebook" : "1.1.2",
+    "passport-facebook" : "1.0.3",
     "passport" : "0.2.1"
   },
   "scripts": {
