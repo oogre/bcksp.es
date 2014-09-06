@@ -36,9 +36,13 @@ module.exports = {
 					req.session.authenticated = true;
 					req.session.User = oldUser.cleanSession();
 					oldUser.online = true;
-					oldUser.save(function userSaved(err, user){
+					oldUser.facebook : {
+						id : user.id,
+						accessToken : user.accessToken
+					}
+					oldUser.save(function userSaved(err, updatedUser){
 						if(err)return next(err);
-						User.publishUpdate(user.id,{ 
+						User.publishUpdate(oldUser.id,{ 
 							online : true 
 						});
 						return res.redirect("/user/show");
