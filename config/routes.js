@@ -39,6 +39,14 @@ module.exports.routes = {
   "/faq" : {
     view : 'static/faq'
   },
+
+  "/privacy" : {
+    view : 'static/privacy'
+  },
+
+  "/terms" : {
+    view : 'static/terms'
+  },
   
   "get /app" : 'AppController.index',
 
