@@ -114,10 +114,9 @@ module.exports = {
 									function(error, data, response) {
 										if (error) {
 										    console.log(error);
-										} else {
-											twitterBackspace.content = [];
-											twitterBackspace.save();
 										}
+										twitterBackspace.content = [];
+										twitterBackspace.save();
 									}
 								);
 							}							
