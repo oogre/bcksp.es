@@ -34,6 +34,7 @@ module.exports = {
 					bcrypt.hash( token, 10, function passwordEncrypted(err, encryptedToken){
 						if(err)return next(err);
 						// SEND mailUserConfirmation VIEW AS EMAIL
+						console.log(req.protocol + '://' + req.headers.host + "/user/create?token="+encryptedToken)
 						res.render('mailUserConfirmation', {
 							link : req.protocol + '://' + req.headers.host + "/user/create?token="+encodeURIComponent(encryptedToken)
 						}, function (err, html) {
@@ -190,16 +191,18 @@ module.exports = {
 			});
 		});
 	},
-
+*/
 	"update" : function(req, res, next){
-		User.update(req.param("id"), req.params.all(), function userUpdate(err){
-			if(err){
-				return res.redirect("/user/edit/"+req.param("id"));
-			}
-			res.redirect("/user/show/"+req.param("id"));
+		var params = req.params.all();
+		delete params._csrf;
+		delete params.id;
+		User.update(req.param("id"), params, function userUpdate(err){
+			if(err)return res.send(403);
+			return res.json({
+				status : "ok"
+			});
 		});
 	},
-*/
 
 	"pwd" : function(req, res, next){
 		var Recaptcha = require('re-captcha');
@@ -363,15 +366,27 @@ module.exports = {
 
 	"online" : function(req, res){
 		if(req.session.User){
-			return res.json({
-				status : "ok"
-			});	
+			User
+			.findOne(req.session.User.id)
+			.exec(function userFound(err, user){
+				if(err) return res.send(500);
+				if(!user)return res.send(404);
+				return res.json({
+					status : "ok",
+					data : {
+						appConfig : {
+							captureEmail : user.captureEmail,
+							capturePassword : user.capturePassword,
+							captureBlacklist : user.captureBlacklist
+						}
+					}
+				});
+			})
 		}else{
 			return res.json({
 				status : "ko"
 			});	
-		}
-		
+		}	
 	},
 };
 

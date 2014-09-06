@@ -33,6 +33,37 @@
 				}
 			}
 		});
+
+		$("#backspace-option-form").on("submit", function(event){
+			var button = $(this).find("button[type='submit']");
+			var icon = button.find(".fa");
+			button.removeClass("btn-primary").addClass("btn-info");
+			icon.removeClass("fa-download").addClass("fa-circle-o-notch").addClass("fa-spin");
+			
+			var request = {};
+			for(var i = 0 ; i < event.target.length ; i++){
+				var name = event.target[i].name;
+				if(name != "submit"){
+					if($(event.target[i]).attr('type') == "checkbox"){
+						request[name] = event.target[i].checked
+					}	
+					else{
+						request[name] = $(event.target[i]).val();
+					}
+				}
+			}
+
+			$.post(event.target.action, request)
+			.done(function(){
+				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");
+				button.removeClass("btn-info").addClass("btn-success");
+			})
+			.fail(function(){
+				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-times-circle");
+				button.removeClass("btn-info").addClass("btn-danger");
+			});
+			return false;
+		});
 	}, false);
 
 </script>
@@ -81,26 +112,57 @@
 			</div>
 		<% 	
 		} 
-	%>
 
-	<div class="row">
-		<div class="col-sm-offset-4 col-sm-4">
-			<div class="alert alert-info">
-				<div class="row">
-					<div class="col-sm-2">
-						<i class="fa fa-info-circle fa-3x pull-left"></i>
-					</div>
-					<div class="col-sm-10">
-						 <%= __("user_show_stay_connected") %>
+		if(0 == user.volume || undefined == user.volume){ %>
+			<div class="row">
+				<div class="col-sm-offset-4 col-sm-4">
+					<div class="alert alert-info">
+						<div class="row">
+							<div class="col-sm-2">
+								<i class="fa fa-info-circle fa-3x pull-left"></i>
+							</div>
+							<div class="col-sm-10">
+								 <%= __("user_show_stay_connected") %>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		<% } %>
 
 	<div class="row">
 		<div class="col-sm-12">
 			<h1><%= user.email %></h1>
+			<hr/>
+			<form action="/user/update/<%= user.id %>" method="POST" class="form-signin" id="backspace-option-form">
+				<h4 class="form-backspace-option-heading"><%= __("backspace_option_form_title") %></h4>
+				
+				<div class="form-group">
+					<label><%= __("backspace_option_form_capture")%>&nbsp;:</label>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="true" name="captureEmail" value="true" <% if(user.captureEmail){%>checked="checked"<% } %> ><%= __("backspace_option_form_captureEmail")%>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="true" name="capturePassword" value="true" <% if(user.capturePassword){%>checked="checked"<% } %>><%= __("backspace_option_form_capturePassword")%>
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="blacklisted"><%= __("backspace_option_form_blacklist")%>&nbsp;:<small> (<%= __("backspace_option_form_exemple") %>&nbsp;:&nbsp;google.com, facebook.com)</small></label>
+					<textarea id="blacklisted" class="form-control" name="captureBlacklist" placeholder="<%= __("backspace_option_form_exemple") %>&nbsp;:&nbsp;google.com, facebook.com"><%= user.captureBlacklist || "" %></textarea>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-md btn-primary" name="submit" >
+						<i class="fa fa-2x pull-right"></i><span class="line-height-small">save</span>
+					</button>
+				</div>
+				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+			</form>
+			<hr/>
+
 			<table class="table">
 				<tr>
 					<th>email</th>

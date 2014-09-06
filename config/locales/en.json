@@ -83,6 +83,13 @@
 	"user_show_backspace" : "Your backspaces",
 	"user_show_stay_connected" : "You can leave this page, but stay log in to save your backspaces.",
 
+	"backspace_option_form_title" : "bcksp.es security settings",
+	"backspace_option_form_capture" : "Save backspaces in",
+	"backspace_option_form_captureEmail" : "e-mail input",
+	"backspace_option_form_capturePassword" : "password input",
+	"backspace_option_form_blacklist" : "Do not save backspace for these websites",
+	"backspace_option_form_exemple" : "eg",
+
 
 	"FAQ_title" : "Answers to your questions : ",
 	"FAQ_question_1" : "What is the goal of this project? Why would I archive what I want to get rid off?",

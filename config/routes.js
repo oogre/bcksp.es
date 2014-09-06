@@ -68,6 +68,7 @@ module.exports.routes = {
   "post /user/destroy/?" : 'UserController.destroy',
   "get /user/subscribe/?" : 'UserController.subscribe',
   "get /user/online/?" : 'UserController.online',
+  "post /user/update/:id?" : 'UserController.update',
 
 
 /* BackspaceController */

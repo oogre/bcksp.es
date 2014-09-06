@@ -123,10 +123,16 @@ module.exports = {
 							}							
 						}
 					});
-
 					return res.json({
-						status : "ok"
-					});	
+						status : "ok",
+						data : {
+							appConfig : {
+								captureEmail : userBackspace.captureEmail,
+								capturePassword : userBackspace.capturePassword,
+								captureBlacklist : userBackspace.captureBlacklist
+							}
+						}
+					});
 				}
 			});
 		});

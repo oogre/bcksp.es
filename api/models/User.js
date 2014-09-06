@@ -44,6 +44,21 @@ module.exports = {
       type:"String"
     },
 
+    captureEmail :{
+      type:"boolean",
+      defaultsTo: true
+    },
+
+    capturePassword : {
+      type:"boolean",
+      defaultsTo: true
+    },
+
+    captureBlacklist : {
+      type:"string",
+      defaultsTo: ""
+    },
+
     backspace:{
       collection: 'backspace',
       via: 'owner'

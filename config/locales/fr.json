@@ -85,6 +85,12 @@
 	"user_show_backspace" : "Vos backspaces",
 	"user_show_stay_connected" : "Vous pouvez continuer votre navigation, mais restez connecté pour sauver vos backspaces.",
 
+	"backspace_option_form_title" : "bcksp.es configuration de sécurité",
+	"backspace_option_form_capture" : "Sauver les backspaces dans",
+	"backspace_option_form_captureEmail" : "champs email",
+	"backspace_option_form_capturePassword" : "champs mot de passe",
+	"backspace_option_form_blacklist" : "Ne pas sauver de backspace sur",
+	"backspace_option_form_exemple" : "ex",
 
 	"FAQ_title" : "Quelques réponses à vos questions&nbsp;:",
 	"FAQ_question_1" : "Quelle est la finalité du projet? Pourquoi voudrais-je archiver ce que je souhaite voir disparaître?",
