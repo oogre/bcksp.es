@@ -3,7 +3,7 @@
     "name": "__MSG_appName__",
     "short_name": "bcksp",
     "description": "__MSG_appDesc__",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "default_locale": "en",
     "permissions": [
         "cookies",

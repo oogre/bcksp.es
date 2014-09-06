@@ -47,11 +47,19 @@
 					if($(event.target[i]).attr('type') == "checkbox"){
 						request[name] = event.target[i].checked
 					}	
+					else if(name == "captureBlacklist"){
+						var value = $(event.target[i]).val();
+						request[name] = _.compact(value.split(",").map(function(u){
+							return (u.split(/\:\/\//)[1]||u).split(/\//)[0].trim().replace(/www\./, "") ;
+						})).join(", ");
+						$(event.target[i]).val(request[name]);
+					}
 					else{
 						request[name] = $(event.target[i]).val();
 					}
 				}
 			}
+			console.log(request);
 
 			$.post(event.target.action, request)
 			.done(function(){
@@ -151,7 +159,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="blacklisted"><%= __("backspace_option_form_blacklist")%>&nbsp;:<small> (<%= __("backspace_option_form_exemple") %>&nbsp;:&nbsp;google.com, facebook.com)</small></label>
+					<label for="blacklisted"><%= __("backspace_option_form_blacklist")%>&nbsp;:<small> (<%= __("backspace_option_form_rules") %>)</small></label>
 					<textarea id="blacklisted" class="form-control" name="captureBlacklist" placeholder="<%= __("backspace_option_form_exemple") %>&nbsp;:&nbsp;google.com, facebook.com"><%= user.captureBlacklist || "" %></textarea>
 				</div>
 				<div class="form-group">

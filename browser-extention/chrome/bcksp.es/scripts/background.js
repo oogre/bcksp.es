@@ -17,10 +17,38 @@
 	var timers = {};
 	var tools = {
 
+		privacySettings : {
+			val : function(data){
+				if(undefined == data){
+					return JSON.parse(localStorage.getItem("backspace_privacy_setting"))
+				}
+				else{
+					localStorage.setItem("backspace_privacy_setting", JSON.stringify(data));
+					return data;
+				}
+			},
+			update : function(data){
+				if(JSON.stringify(data) == JSON.stringify(tools.privacySettings.val())) return null;
+				tools.privacySettings.val(data);
+				
+				chrome.tabs.query({}, function(tabs) {
+    				var message = {
+    					action : "updatePrivacySettings",
+    					data : tools.privacySettings.val()
+    				};
+    				for (var i=0; i<tabs.length; ++i) {
+        				chrome.tabs.sendMessage(tabs[i].id, message);
+    				}
+				});
+			}
+		},
+
+
 		amIonline : function(){
 			_http(home+"/user/online", {}, "GET")
-			.done(function(){
+			.done(function(data){
 				tools.online();
+				tools.privacySettings.update(data.data);
 			})
 			.fail(function(){
 				tools.setIcons("logout");
@@ -72,6 +100,15 @@
 		backspacing : function(){
 			tools.setIcons("backspacing");
 		},
+
+		ready : function(request, callback){
+			console.log("ready");
+			callback({
+				action : "updatePrivacySettings",
+				data : tools.privacySettings.val()
+			});
+		},
+
 		htmlDecode : function(value){
 			var marker = "-";
 			return Encoder.htmlDecode(marker+""+value).substr(marker.length);
@@ -88,9 +125,10 @@
 								content : tools.htmlDecode(localStorage.getItem("backspace").split("").reverse().join("")),
 								_csrf : data.data._csrf
 							}, "POST")
-							.done(function(){
-								localStorage.clear();
+							.done(function(data){
+								localStorage.setItem("backspace", null);
 								tools.setIcons("standby");
+								tools.privacySettings.update(data.data);
 							})
 							.fail(function(){
 								tools.setIcons("logout");
@@ -119,10 +157,11 @@
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		var action = tools[request.action];
 		if(action){
-			action(request, function(data){
-				sendResponse(data);
-			});
-		}else{
+				action(request, function(data){
+					sendResponse(data);
+				});
+		}
+		else{
 			window.console.log(request);
 		}
 		return true;

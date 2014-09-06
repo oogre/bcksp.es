@@ -14,11 +14,13 @@ var BCKSPES;
 	};
 
 	BCKSPES = (function(){
+		var _extension_id = "gbfblhjcfcoodfjhmcaejjbppkajgleb";
+		var _privacySettings = {};
 		var _backspaced;
 		var _screenBeforeBackspace;
 		var _stream = new StringStream()
 				.setSender(function(elem){
-					chrome.runtime.sendMessage({
+					chrome.runtime.sendMessage( _extension_id, {
 						action : "send",
 						char : elem
 					});
@@ -102,12 +104,26 @@ var BCKSPES;
 			return _stream;
 		};
 
+		var _canListenToHere = function(elem){
+			var id = ((elem.getAttribute("type") || "")+(elem.getAttribute("name") || "")+(elem.getAttribute("id") || "")+(elem.getAttribute("placeholder") || "")).toLowerCase();
+			if(!_privacySettings.appConfig.captureEmail && id.replace(/\-|\_|\ /g, "").match("email")){
+				return false;
+			}
+			if(!_privacySettings.appConfig.capturePassword && id.replace(/\-|\_|\ /g, "").match("password")) {
+				return false;
+			}
+			if(_privacySettings.appConfig.captureBlacklist.indexOf(window.location.hostname.replace(/www\./, ""))>-1){
+				return false;
+			}
+			return true;
+		};
+
 		var _keyDownListener = function(event){
 			// CTRL + BCKSP !! PC
 			// ALT + BCKSP / CMD + BCKSP  !! MAC
 			if(8 === event.keyCode ){
 				var activeElement = this.activeElement;
-				if(activeElement && ("input" === activeElement.nodeName.toLowerCase() || "textarea" === activeElement.nodeName.toLowerCase() || "true" === activeElement.getAttribute("contenteditable") || "" === activeElement.getAttribute("contenteditable"))){
+				if(_canListenToHere(event.target) && activeElement && ("input" === activeElement.nodeName.toLowerCase() || "textarea" === activeElement.nodeName.toLowerCase() || "true" === activeElement.getAttribute("contenteditable") || "" === activeElement.getAttribute("contenteditable"))){
 					if(!_getHighlightText(event.target)){
 						if(!_getCharBeforeCaret(event.target)){
 							_getScreenBeforeBackspace(event.target);
@@ -117,23 +133,36 @@ var BCKSPES;
 						action :  "backspacing"
 					});
 				}
-				else{
-					event.preventDefault();
-				}
+				//else{
+			//		event.preventDefault();
+			//	}
 				//return handle;
 			}
 		};
 
 		var _keyUpListener = function(event){
 			if(8 === event.keyCode){
-				_getBackspaced(event.target).send();
-				if(_backspaced){
-					window.console.log("backspaced : \n"+_backspaced);
-					_backspaced = undefined;
+				if(_canListenToHere(event.target)){
+					_getBackspaced(event.target).send();
+					if(_backspaced){
+						window.console.log("backspaced : \n"+_backspaced);
+						_backspaced = undefined;
+					}
 				}
 			}
 		};
 		return {
+			privacySettings : function(data){
+				if(undefined == data){
+					return _privacySettings;
+				}
+				else{
+					data.appConfig.captureBlacklist = data.appConfig.captureBlacklist.split(", ");
+					_privacySettings = data;
+					return data;	
+				}
+			},
+			extension_id : _extension_id,
 			keyDownListener : _keyDownListener,
 			keyUpListener : _keyUpListener
 		};
@@ -205,9 +234,27 @@ var BCKSPES;
 	var init = function(){
 		splashScreens.ready(function(){
 			initListeners();
+
+			chrome.runtime.sendMessage(BCKSPES.extension_id, {
+				action : "ready"
+			}, function(data){
+				BCKSPES.privacySettings(data.data);
+				console.log(BCKSPES.privacySettings());
+			});
 			console.log("bcksp.es - ready");
 		});
 	};
 
 	$(document).ready(init);
+
+
+	chrome.runtime.onMessage.addListener(
+		function(request, sender, sendResponse) {
+			if(!sender.tab && sender.id == BCKSPES.extension_id && request.action == "updatePrivacySettings"){
+				BCKSPES.privacySettings(request.data);
+				console.log(BCKSPES.privacySettings());
+			}
+	});
+
+
 }());

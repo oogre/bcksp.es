@@ -89,6 +89,7 @@
 	"backspace_option_form_capturePassword" : "password input",
 	"backspace_option_form_blacklist" : "Do not save backspace for these websites",
 	"backspace_option_form_exemple" : "eg",
+	"backspace_option_form_rules" : "hostanme only - no “http://” - no “www.”",
 
 
 	"FAQ_title" : "Answers to your questions : ",

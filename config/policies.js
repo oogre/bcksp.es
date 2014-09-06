@@ -35,7 +35,7 @@ module.exports.policies = {
     "create" : "flash",
     "subscribe" : ["flash", "authenticated"],
     "online" : "flash",
-    "show" : ["flash", "authenticated", "userCanSeeProfile"],
+    "show" : ["flash", "userCanSeeProfile"],
     "update" : ["flash", "authenticated", "userCanSeeProfile"],
     "pwd" : "flash",
     "pwdrecovery" : "flash",
