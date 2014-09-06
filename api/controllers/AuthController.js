@@ -36,10 +36,10 @@ module.exports = {
 					req.session.authenticated = true;
 					req.session.User = oldUser.cleanSession();
 					oldUser.online = true;
-					oldUser.facebook : {
+					oldUser.facebook = {
 						id : user.id,
 						accessToken : user.accessToken
-					}
+					};
 					oldUser.save(function userSaved(err, updatedUser){
 						if(err)return next(err);
 						User.publishUpdate(oldUser.id,{ 
