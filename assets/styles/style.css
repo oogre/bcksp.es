@@ -64,6 +64,10 @@ footer li{
 	line-height: 2.9em;
 }
 
+.line-height-small{
+	line-height: 2em;
+}
+
 .navbar .btn-nobg:hover{
 	color: #fff;
 }

@@ -17,6 +17,12 @@
 			}
 		});
 
+		$(".btn-fb").on("click", function(event){
+			var button = $(this);
+			var icon = button.find(".fa:last-child");
+			icon.removeClass("fa-download").addClass("fa-circle-o-notch").addClass("fa-spin");
+		});
+
 		$(".install").on("click", function(){
 			var button = $(this);
 			var icon = button.find(".fa-download");
@@ -128,7 +134,7 @@
 					<hr/>
 					<div class="row">
 						<div class="col-xs-12 text-center">
-							<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i> <%= __("facebook_connect") %></a>
+							<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i><i class="fa fa-2x pull-right"></i> <%= __("facebook_connect") %></a>
 							<small><%= __("facebook_note") %></small>
 						</div>
 					</div>

@@ -1,3 +1,13 @@
+<script type="text/javascript">
+	window.addEventListener("load", function subscribeAndListen(){
+		$(".btn-fb").on("click", function(event){
+			var button = $(this);
+			var icon = button.find(".fa:last-child");
+			icon.removeClass("fa-download").addClass("fa-circle-o-notch").addClass("fa-spin");
+		});
+	});
+</script>
+
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8 bg-primary highlight">
@@ -43,7 +53,7 @@
 				<hr/>
 				<div class="row">
 					<div class="col-xs-12 text-center">
-						<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i> <%= __("facebook_connect") %></a>
+						<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i><i class="fa fa-2x pull-right"></i> <%= __("facebook_connect") %></a>
 					</div>
 					<div class="col-xs-8">
 						
