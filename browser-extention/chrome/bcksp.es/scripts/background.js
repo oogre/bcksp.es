@@ -3,10 +3,6 @@
 	/*global chrome:false */
 	/*global _http:false */
 
-
-	//var home = "http://www.bcksp.es";
-	var home = "http://localhost:1337";
-	
 	var connectTimeout = 6000;
 	var senderTimeout = 6000;
 
@@ -101,7 +97,7 @@
 			tools.setIcons("backspacing");
 		},
 
-		ready : function(request, callback){
+		bckspesready : function(request, callback){
 			console.log("ready");
 			callback({
 				action : "updatePrivacySettings",

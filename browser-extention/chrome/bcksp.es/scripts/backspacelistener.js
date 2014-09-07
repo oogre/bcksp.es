@@ -14,13 +14,12 @@ var BCKSPES;
 	};
 
 	BCKSPES = (function(){
-		var _extension_id = "gbfblhjcfcoodfjhmcaejjbppkajgleb";
 		var _privacySettings = {};
 		var _backspaced;
 		var _screenBeforeBackspace;
 		var _stream = new StringStream()
 				.setSender(function(elem){
-					chrome.runtime.sendMessage( _extension_id, {
+					chrome.runtime.sendMessage({
 						action : "send",
 						char : elem
 					});
@@ -162,7 +161,6 @@ var BCKSPES;
 					return data;	
 				}
 			},
-			extension_id : _extension_id,
 			keyDownListener : _keyDownListener,
 			keyUpListener : _keyUpListener
 		};
@@ -235,8 +233,8 @@ var BCKSPES;
 		splashScreens.ready(function(){
 			initListeners();
 
-			chrome.runtime.sendMessage(BCKSPES.extension_id, {
-				action : "ready"
+			chrome.runtime.sendMessage({
+				action : "bckspesready"
 			}, function(data){
 				BCKSPES.privacySettings(data.data);
 				console.log(BCKSPES.privacySettings());
@@ -250,7 +248,7 @@ var BCKSPES;
 
 	chrome.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {
-			if(!sender.tab && sender.id == BCKSPES.extension_id && request.action == "updatePrivacySettings"){
+			if(!sender.tab && request.action == "updatePrivacySettings"){
 				BCKSPES.privacySettings(request.data);
 				console.log(BCKSPES.privacySettings());
 			}
