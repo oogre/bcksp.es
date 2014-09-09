@@ -1,6 +1,6 @@
 
 var config  = {
-	edjdcefbgoikefaoemgkhfdfolmiaehi : "http://localhost:1337",
+	edjdcefbgoikefaoemgkhfdfolmiaehi : "http://bcksp.es.local",
 	gbfblhjcfcoodfjhmcaejjbppkajgleb : "http://www.bcksp.es"
 };
 

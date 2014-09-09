@@ -5,7 +5,8 @@
 
 	var connectTimeout = 6000;
 	var senderTimeout = 6000;
-
+	
+	localStorage.setItem("backspace", localStorage.getItem("backspace") || "");
 
 	var isArray = function(object){
 		return Object.prototype.toString.call( object ) === "[object Array]";
@@ -122,7 +123,7 @@
 								_csrf : data.data._csrf
 							}, "POST")
 							.done(function(data){
-								localStorage.setItem("backspace", null);
+								localStorage.setItem("backspace", "");
 								tools.setIcons("standby");
 								tools.privacySettings.update(data.data);
 							})
