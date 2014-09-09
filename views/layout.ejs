@@ -95,7 +95,7 @@
             <ul class="nav navbar-nav">
               <% if(session.authenticated) { %>
                 <li class="active">
-                  <a href="/user/show/<%= session.User.id %>"><%= session.User.email %></a>
+                  <a href="/user/show"><%= session.User.email %></a>
                 </li>
               <% } %>
               <% if(session.authenticated && session.User.admin) { %>

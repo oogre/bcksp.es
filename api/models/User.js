@@ -103,11 +103,72 @@ module.exports = {
       delete obj.confirmation;
       delete obj.encryptedPassword;
       delete obj.passwordRecoveryToken;
+      delete obj.captureBlacklist;
+      delete obj.capturePassword;
+      delete obj.captureEmail;
       delete obj.volume;
       delete obj.updatedAt;
       delete obj.createdAt;
       delete obj._csrf;
       return obj;
+    },
+
+    initSession : function(session){
+      var birthDate = new Date()
+      var deathDate = new Date(birthDate.getTime() + sails.config.session.cookie.maxAge);
+      session.cookie.expires = deathDate;
+      session.authenticated = true;
+      session.User = this.cleanSession();
+      this.online = true;
+      return this;
+    },
+
+    destroySession : function(session){
+      this.online = false;
+      session.destroy();
+      return this;
+    },
+
+    signup : function(session, next){
+      this
+      .initSession(session)
+      .save(function saved(err, user){
+        if(err){
+          user.destroySession(session);
+          return next(err);
+        }
+        User.publishCreate(user.toJSON());
+        return next(null, user);
+      });
+    },
+
+    signin : function(session, next){
+      this
+      .initSession(session)
+      .save(function saved(err, user){
+        if(err){
+          user.destroySession(session);
+          return callback(err); 
+        }
+        User.publishUpdate(user.id,{ 
+          online : user.online 
+        });
+        return next(null, user);
+      });
+    },
+
+    signout : function (session, next){
+      this
+      .destroySession(session)
+      .save(function saved(err, user){
+        if(err){
+          return next(err);
+        }
+        User.publishUpdate(user.id, { 
+          online : user.online 
+        });
+        return next(null, user);
+      });
     }
 
   },

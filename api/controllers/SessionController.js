@@ -51,20 +51,10 @@ module.exports = {
 					}
 					return res.redirect("/session/new");
 				}
-				var oldDate = new Date()
-				var newDate = new Date(oldDate.getTime() + (1000 * 60 * 60 * 24 * 365));
-				req.session.cookie.expires = newDate;
-				req.session.authenticated = true;
-				req.session.User = user.cleanSession();
-				user.online = true;
-
-				 user.save(function userSaved(err, user){
-				 	if(err) return next(err);
-			 		User.publishUpdate(user.id,{ 
-						online : true 
-					});
+				user.signin(req.session, function (err, onlineUser){
+					if(err) return next(err);
 					return res.redirect("/user/show");
-				 });
+				});
 			});
 		});
 	},
@@ -72,18 +62,12 @@ module.exports = {
 		try{
 			User.findOne(req.session.User.id, function foundUser (err, user){
 				if(user){
-					var userId = req.session.User.id;
-					User.update(userId, {
-						online:false
-					}, function updatedUser(err){
-						if(err)next(err);
-						User.publishUpdate(userId,{ 
-							online : false 
-						});
-						req.session.destroy();
+					user.signout(req.session, function (err, offlineUser){
+						if(err)return next(err);
+						console.log("bar");
 						return res.redirect("/");
 					});
-				}else{
+				}else{;
 					req.session.destroy();
 					return res.redirect("/");
 				}
