@@ -91,7 +91,7 @@
 	"backspace_option_form_capturePassword" : "champs mot de passe",
 	"backspace_option_form_blacklist" : "Ne pas sauver de backspace sur",
 	"backspace_option_form_exemple" : "ex",
-	"backspace_option_form_rules" : "hostanme only - no “http://” no “www.”",
+	"backspace_option_form_rules" : "hostname only - no “http://” no “www.”",
 
 	"FAQ_title" : "Quelques réponses à vos questions&nbsp;:",
 	"FAQ_question_1" : "Quelle est la finalité du projet? Pourquoi voudrais-je archiver ce que je souhaite voir disparaître?",
@@ -109,7 +109,7 @@
 	"download_extension_google_chrome" : "bcksp.es pour Chrome",
 	"download_extension_firefox" : "bcksp.es pour Firefox",
 	"download_extension_safari" : "bcksp.es pour Safari",
-	"download_header" : "Sauvez vos backspace. Installez bcksp.es sur vos applications préférées grâce à nos extensions.",
+	"download_header" : "Sauvez vos backspaces. Installez bcksp.es sur vos applications préférées grâce à nos extensions.",
 	"download_help_annouce" : "Besoin d'aide à propos des extensions&nbsp;?",
 
 	"download_title" : "Extensions",
