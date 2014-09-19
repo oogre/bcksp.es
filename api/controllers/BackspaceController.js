@@ -143,27 +143,21 @@ module.exports = {
 		}).exec(function(err, lastBackspace){
 			if(lastBackspace){
 				res.json(lastBackspace.content.join(""));
+			}else{
+				res.send(404);
 			}
 		});
 	},
 
 	"watch" : function(req, res, next){
-		if (req.isSocket){
-			Backspace.watch(req.socket);
-		} else {
-			res.view();
-		}
+		Backspace.watch(req.socket);
 	},
 
 	// policies to pass through  : [flash, authenticated, userCanSeeProfile]
 	"subscribe" : function(req, res, next){
-		if (req.isSocket){
-			User.find({id : req.param("id")}, function userFound (err, user){
-				if(err) return next(err);
-				Backspace.subscribe(req.socket, user);
-			});
-		} else {
-			res.view();
-		}
+		User.find({id : req.param("id")}, function userFound (err, user){
+			if(err) return next(err);
+			Backspace.subscribe(req.socket, user);
+		});
 	}
 };

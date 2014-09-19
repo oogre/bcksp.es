@@ -33,7 +33,7 @@ module.exports.policies = {
     "new" : "flash",
     "confirmation" : "flash",
     "create" : "flash",
-    "subscribe" : ["flash", "authenticated"],
+    "subscribe" : ["flash", "socket", "authenticated", "userCanSeeProfile"],
     "online" : "flash",
     "show" : ["flash", "userCanSeeProfile"],
     "update" : ["flash", "authenticated", "userCanSeeProfile"],
@@ -47,8 +47,8 @@ module.exports.policies = {
   "backspace" : {
     "token" : "authenticated",
     "append" : "authenticated",
-    "watch" : ["flash"],
-    "subscribe" : ["flash", "authenticated", "userCanSeeProfile"],
+    "watch" : ["flash", "socket"],
+    "subscribe" : ["flash", "socket","authenticated", "userCanSeeProfile"],
     "getLast" : ["flash"]
   },
 

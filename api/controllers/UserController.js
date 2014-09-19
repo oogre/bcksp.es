@@ -344,15 +344,11 @@ module.exports = {
 	},
 
 	"subscribe" : function(req, res, next){
-		if (req.isSocket){
-			User.find(function usersFound (err, users){
-				if(err) return next(err);
-				User.watch(req.socket);
-				User.subscribe(req.socket, users);
-			});
-		} else {
-			res.view();
-		}
+		User.find(function usersFound (err, users){
+			if(err) return next(err);
+			User.watch(req.socket);
+			User.subscribe(req.socket, users);
+		});
 	},
 
 	"online" : function(req, res){
