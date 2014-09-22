@@ -1,71 +1,37 @@
-// STEPPER CONTROLLER
-#include <Stepper.h>
-#define  STEPS                     48
-#define  STEPPER_PIN_0             28
-#define  STEPPER_PIN_1             26
-#define  STEPPER_PIN_2             24
-#define  STEPPER_PIN_3             22
-#define  SETP_BY_LINE              62
-#define  STEPPER_SPEED             300
-Stepper stepper(STEPS, STEPPER_PIN_0, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3);
-
 // PUBLISHING SETTING
-#define  MCPL       29       // Maximum Characters Per Line
-#define  MLPP       28       // Maximum Line Per Page
-#define  FOLIOMT    2
-#define  MR         5        // Margin Right
-#define  MT         1        // Margin Top
-#define  MB         3        // Margin Bottom
-int      ML       = 5; // 46 // Margin Left
-int      CPLCnt   = 0;       // Character Per Line Counter
-int      LCnt     = 0;       // Line Counter
-int      FOLIOCnt = 1; 
-String   FOLIO    = "prout";
-int      FOLIOML  = 2;
+#define  SWIDTH     80          // Sheet Width  (char)
+#define  SHEIGHT    70          // Sheet Height (char)
+#define  PWIDTH     SWIDTH/2    // Page Width   (char)
+#define  PHEIGHT    SHEIGHT/2   // Page Height  (char)
 
-// ASCII CONVERTER
-#define  SOH        1
-#define  ACK        6
-#define  BEL        7
-#define  BS         8
-#define  LF         10
-#define  FF         12
-#define  CR         13
-#define  ESC        27
-#define  QUOTE      34
-#define  CIRCUM     94
-#define  GRAVE      96
-#define  ACUTE      39
+String   HEAD  [] =    {"bcksp.es", "septembre 2014"};
+int      HMARGIN[]=    { 0 , 0 } ;     // ABSOLUTE Head Margin TOP LEFT
+int      FMARGIN[]=    { 1 , 3 };      // ABSOLUTE Folio Margin TOP LEFT
+#define  TWIDTH     30                 // Text Width
+#define  THEIGHT    27                 // Text Height
+int      TMARGIN[]=    { 2 , 5 } ;     // ABSOLUTE Text Margin TOP LEFT 
 
-// EASY COMMAND
+int      folioCounter     = 1;
+int      currentPage      = 0;    // Per Book
+int      lineCounter      = 0;    // Per Page
+int      charCounter      = 0;    // Per Line
+int      currentMargin [] = { 0, 0 };
+
+// PRINTER 
+  //COMMAND COMMAND
 byte RESET       [] = { 
-  ESC, 'E' };
+  27, 'E' };           // ESC + E
 
 byte RINGTHEBELL [] = { 
-  BEL };
+  7 };                 // BEL
 
 byte NEWLINE     [] = { 
-  LF, CR };
-
-byte PRINT     [] = { 
-  CR };
+  10, 13 };            // LF + CR
 
 byte NEWPAGE     [] = { 
-  FF, CR };
+  12, 13 };            // FF + CR
 
-byte ACUTEACCENT [] = { 
-  BS, ACUTE };
-
-byte UMLAUTACCENT [] = { 
-  BS, QUOTE };
-
-byte GRAVEACCENT [] = { 
-  BS, GRAVE };
-
-byte CIRCUMACCENT[] = { 
-  BS, CIRCUM };
-
-// PARALLEL PORT TO ARDUINO PIN
+  // PARALLEL PORT TO ARDUINO PIN
 #define  nStrobe    2
 #define  data_0     3
 #define  data_1     4
@@ -77,8 +43,126 @@ byte CIRCUMACCENT[] = {
 #define  data_7     10
 #define  nAck       11
 #define  busy       12
-// MICROSECONDS TO STROBE FOR
-#define  strobeWait 2
+#define  strobeWait 2 // MICROSECONDS TO STROBE FOR
+
+
+// STEPPER CONTROLLER
+#include <Stepper.h>
+#define  STEPS                     48
+#define  STEPPER_PIN_0             28
+#define  STEPPER_PIN_1             26
+#define  STEPPER_PIN_2             24
+#define  STEPPER_PIN_3             22
+#define  SETP_BY_LINE              62
+#define  STEPPER_SPEED             300
+Stepper stepper(STEPS, STEPPER_PIN_0, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3);
+
+
+typedef struct PAGE{
+  boolean recto;       // true : RECTO  false : VERSO
+  boolean top;         // true : TOP  false : bottom
+  boolean left;        // true : LEFT  false : right
+  String head;
+  int headMargin [2];
+  int textMargin [2];
+  int folioMargin [2];
+};
+
+PAGE rectoTopLeft = {
+  true,
+  true,
+  true,
+  HEAD[0],
+  { HMARGIN[0], HMARGIN[1] + PWIDTH/2 - HEAD[0].length() / 2 },
+  { TMARGIN[0], TMARGIN[1] },
+  { FMARGIN[0], FMARGIN[1] }
+};
+
+PAGE rectoTopRight = {
+  true,
+  true,
+  false,
+  HEAD[1],
+  { HMARGIN[0], PWIDTH + HMARGIN[1] + PWIDTH/2 - HEAD[1].length() / 2 },
+  { TMARGIN[0], PWIDTH + TMARGIN[1] },
+  { FMARGIN[0], SWIDTH - FMARGIN[1]}
+};
+
+PAGE rectoBottomLeft = {
+  true,
+  false,
+  true,
+  HEAD[0],
+  { HMARGIN[0], HMARGIN[1] + PWIDTH/2 - HEAD[0].length() / 2 },
+  { TMARGIN[0], TMARGIN[1] },
+  { FMARGIN[0], FMARGIN[1] }
+};
+
+PAGE rectoBottomRight = {
+  true,
+  false,
+  false,
+  HEAD[1],
+  { HMARGIN[0], PWIDTH + HMARGIN[1] + PWIDTH/2 - HEAD[1].length() / 2 },
+  { TMARGIN[0], PWIDTH + TMARGIN[1] },
+  { FMARGIN[0], SWIDTH - FMARGIN[1]}
+};
+
+PAGE versoTopLeft = {
+  false,
+  true,
+  true,
+  HEAD[0],
+  { HMARGIN[0], HMARGIN[1] + PWIDTH/2 - HEAD[0].length() / 2 },
+  { TMARGIN[0], TMARGIN[1] },
+  { FMARGIN[0], FMARGIN[1] }
+};
+
+PAGE versoTopRight = {
+  false,
+  true,
+  false,
+  HEAD[1],
+  { HMARGIN[0], PWIDTH + HMARGIN[1] + PWIDTH/2 - HEAD[1].length() / 2 },
+  { TMARGIN[0], PWIDTH + TMARGIN[1] },
+  { FMARGIN[0], SWIDTH - FMARGIN[1]}
+};
+
+PAGE versoBottomLeft = {
+  false,
+  false,
+  true,
+  HEAD[0],
+  { HMARGIN[0], HMARGIN[1] + PWIDTH/2 - HEAD[0].length() / 2 },
+  { TMARGIN[0], TMARGIN[1] },
+  { FMARGIN[0], FMARGIN[1] }
+};
+
+PAGE versoBottomRight = {
+  false,
+  false,
+  false,
+  HEAD[1],
+  { HMARGIN[0], PWIDTH + HMARGIN[1] + PWIDTH/2 - HEAD[1].length() / 2 },
+  { TMARGIN[0], PWIDTH + TMARGIN[1] },
+  { FMARGIN[0], SWIDTH - FMARGIN[1]}
+};
+
+
+#define PAGETYPELENGTH 8
+typedef struct PRINT{
+  PAGE pages [PAGETYPELENGTH];
+};
+
+PRINT print = {
+  { rectoTopRight, versoTopLeft, versoTopRight, rectoTopLeft, 
+    rectoBottomRight, versoBottomLeft, versoBottomRight, rectoBottomLeft
+  }
+};
+
+// FORK Version : https://github.com/oogre/StackArray/archive/master.zip
+#include <StackArray.h>
+StackArray <byte> buffer;
 
 void setup() {
   // STEPPER INIT
@@ -100,58 +184,178 @@ void setup() {
   pinMode(data_6, OUTPUT);
   pinMode(data_7, OUTPUT);
   pinMode(nAck, INPUT);     // is active LOW
-  pinMode(busy, INPUT);  
+  pinMode(busy, INPUT);
 
   delay(1000);
-  CMD(RESET);
-  CMD(RINGTHEBELL);
+  printHead();
 }
 
 void loop() {
-  if(Serial.available()){
-    byte message  = Serial.read();
-    if(message < 129){
-      CMD(RESET);
-      int result = printMessage(message);
-      CMD(RESET);
-      switch(result){
-      case 0:
-        break;
-      case 1:
-        CMD(NEWLINE);
-        LCnt ++;
-        delay(10);
-        CPLCnt = 0;
-        Serial.println("");
-        break;
-      case 2:
-        CMD(RESET);
-        printFolio(String(FOLIOCnt++));
-        CMD(RESET);
-        if(ML == 5){
-          CMD(NEWLINE);
-          LCnt ++;
-          delay(1000);
-          backline();
-          ML = (ML + MCPL + MR) + ML;
-          FOLIOML = (ML + MCPL + MR) + (ML + MCPL + MR) - FOLIOML;
-          LCnt = 0;
-          CPLCnt = 0;
+  if(Serial.available() && 4096>buffer.count()){
+    buffer.unshift(Serial.read());
+  }
+  if(buffer.count() >= TWIDTH){
+    printText();
+    
+    if(lineCounter >= THEIGHT + print.pages[currentPage].textMargin[0]){
+      delay(1000);
+      int nextPage = (currentPage+1) % PAGETYPELENGTH;
+
+      if( print.pages[currentPage].recto != print.pages[nextPage].recto){
+        newPage();
+        if(!print.pages[nextPage].top){
+          largeTopToBottom();
         }
-        else{
-          CMD(RESET);
-          CMD(NEWPAGE);
-          CMD(RESET);
-          ML = 5;
-          FOLIOML = 2;
-          LCnt = 0;
-          CPLCnt = 0;
-        }
-        break;
       }
+      else if( print.pages[currentPage].top && !print.pages[nextPage].top ){
+        delay(5000);
+        smallTopToBottom();
+      }
+      else if( !print.pages[currentPage].top && print.pages[nextPage].top ){
+        newPage();
+      }
+      else if(print.pages[currentPage].left && !print.pages[nextPage].left){
+        delay(5000);
+        rewind();
+      }
+      currentPage = nextPage;
+      charCounter = 0;
+      lineCounter = 0;
+      printHead();
     }
   }
 }
+
+void newPage(){
+  CMD(RESET);
+  CMD(RINGTHEBELL);
+  CMD(RESET);
+  CMD(NEWPAGE);
+  CMD(RESET);
+  delay(15000);
+}
+
+void largeTopToBottom(){
+  String message = ".";
+  setCursorPosition(1, 3);
+  for(int i = 0 ; i < message.length() ; i ++){
+    printMessage(message[i]);
+  }
+  CMD(NEWLINE);
+  Serial.println("");
+  delay(10000);
+  stepper.step( -1 * SETP_BY_LINE * (PHEIGHT-2) );
+  resetSetpper();
+}
+void smallTopToBottom(){
+  stepper.step( -1 * SETP_BY_LINE * 6 );
+  resetSetpper();
+}
+
+void rewind(){
+  stepper.step(SETP_BY_LINE * (lineCounter - 1) );
+  resetSetpper();
+}
+
+void resetSetpper(){
+  delay(5000);
+  digitalWrite(STEPPER_PIN_0, LOW);
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  delay(500);
+  digitalWrite(STEPPER_PIN_0, LOW);
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  delay(500);
+}
+
+void printHead(){
+  setCursorPosition(print.pages[currentPage].headMargin[0], print.pages[currentPage].headMargin[1]);
+  for(int i = 0 ; i < print.pages[currentPage].head.length() ; i ++){
+    printMessage(print.pages[currentPage].head[i]);
+  }
+  CMD(NEWLINE);
+  Serial.println("");
+  delay(500);
+  lineCounter++;
+  charCounter = 0;
+  printFolio();
+}
+
+void printFolio(){
+  String folio = String(folioCounter++);
+
+  int marginLeft = print.pages[currentPage].folioMargin[1];
+
+  if(!print.pages[currentPage].left){
+    marginLeft-=folio.length();
+  }
+  else{
+    marginLeft = marginLeft;
+  }
+
+  setCursorPosition(print.pages[currentPage].folioMargin[0], marginLeft);
+   for(int i = 0 ; i < folio.length() ; i ++){
+    printMessage(folio[i]);
+  }
+  CMD(NEWLINE);
+  Serial.println("");
+  delay(500);
+  lineCounter++;
+  charCounter = 0;
+}
+
+void printText(){
+  setCursorPosition(print.pages[currentPage].textMargin[0], print.pages[currentPage].textMargin[1]);
+  for(int i = 0 ; i < TWIDTH ; i ++){
+    if(printMessage(buffer.pop())){
+      break;
+    }
+  }
+  if(charCounter >= TWIDTH + print.pages[currentPage].textMargin[1]){
+    CMD(NEWLINE);
+    lineCounter++;
+    charCounter = 0;
+    Serial.println("");
+  }
+}
+
+void setCursorPosition(int x, int y){
+  while(lineCounter < x){
+    for(int c = 0 ; c < PWIDTH ; c++){
+      Serial.print('.');
+    }
+    CMD(NEWLINE);
+    lineCounter ++;
+    Serial.println("");
+    delay(500);
+  }
+  // MARGIN LEFT
+  while(charCounter < y){
+    charCounter++;
+    printByte(' ');
+    Serial.print('.');
+  }
+}
+
+boolean printMessage(byte message) {
+  CMD(RESET);
+  if(message == 10){
+    CMD(NEWLINE);
+    lineCounter ++;
+    charCounter = 0;
+    Serial.println("");
+  }else{
+    printByte(message);
+    Serial.print(getChar(message));
+    charCounter ++;
+  }
+  CMD(RESET);
+  return message == 10;
+}
+
 
 void CMD(byte CMD []){
   for(int i = 0 ; i < sizeof(CMD) ; i++){
@@ -178,90 +382,39 @@ void printByte(byte inByte) {
   while(digitalRead(busy) == HIGH);
 }
 
-// return 
-// '0' => Nothing
-// '1' => End Line
-// '2' => End Page
-int printMessage(byte message) {
-  // MARGIN TOP
-  while(LCnt < MT){
-    CMD(NEWLINE);
-    LCnt ++;
-    Serial.println('*');
-  }
-  // MARGIN LEFT
-  while(CPLCnt < ML){
-    printByte(' ');
-    CPLCnt ++;
-    Serial.print('.');
-  }
-  if( message != LF){
-    printByte(message);
-    CPLCnt ++;
-    Serial.print(char(message));
-  }
+String simpleQuote = "'";
+char characters [] = {
+  ' ', 
+  '!', '"', '#', '$', '%', '&', simpleQuote.charAt(0), '(', ')', '*',
+  '+', ',', '-', '.', '/', '0', '1', '2', '3', '4',
+  '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', 
+  '?', 'à', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
+  'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 
+  'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '°', 'ç', 
+  '§', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f',
+  'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 
+  'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
+  'é', 'ù', 'è', '¨', ' ',  'Ç', 'ü', 'é', 'â', 'ä', 
+  'à', 'å', 'ç', 'ê', 'ë', 'è', 'ï', 'î', 'ì', 'Ä', 
+  'Â', 'É', 'æ', 'Æ', 'ô', 'ö', 'ò', 'û', 'ù', 'ÿ', 
+  'Ö', 'Ü', '€', '£', '¥', ' ' , '⨍', 'á', 'í', 'ó',
+  'ú', 'ñ', 'Ñ', 'ª', 'º', '¿', '⌐', '¬', '½', '¼',
+  '¡', '«', '»', '░', '▒', '▓', '|', '⊣', '⫤', '⫣', 
+  '╖', '╕', '╣', 'ǁ', '╗', '╝', '╜', '╛', '┐', '└',
+  '┴', '┬', '├', '─', '†', '╞', '╟', '╚', '╔', '╩', 
+  '╦', '╠', '═', '╬', '╧', '╧', '╤', '╥', '╙', '╘',
+  '╒', '╓', '╫', '╪', '┘', '┌', '▉', '▄', '▌', '▐',
+  '▀', 'α', 'β', 'Γ', 'π', 'Σ', 'σ', 'μ', 'τ', 'Φ',
+  'θ', 'Ω', 'δ', '∞', 'Ø', '∈', '⋂', '≡', '±', '≥',
+  '≤', '⎧', '⎭', '÷', '≈', '°', '•', '·', '√', 'ⁿ',
+  '²', '⬝'
+};
 
-  // if line complete || if End Line
-  if(CPLCnt >= MCPL+ML || message == LF){
-    // if page complete
-    if(LCnt >= MLPP+MT){
-      return 2;
-    }
-    return 1;
+char getChar(byte b){
+  if(b<=200){
+    return characters[b-32];
+  }  
+  else{
+    return ' ';
   }
-  return 0;
 }
-
-void printFolio(String folio) {
-  for(int i = 0 ; i < FOLIOMT ; i ++){
-    CMD(NEWLINE);
-    LCnt ++;
-    Serial.println('*');
-  }
-  // MARGIN LEFT
-  for(int i = 0 ; i < FOLIOML ; i ++){
-    printByte(' ');
-    Serial.print('.');
-  }
-  for(int i = 0 ; i < folio.length() ; i++){
-    printByte(folio[i]);
-    Serial.print(char(folio[i]));
-  }
-      Serial.println("");
-  CMD(NEWLINE);
-  LCnt ++;
-}
-
-void busyLowDuring(int maxWait, int bump){
-   long initbump = millis();
-   long init = millis();
-   while(millis()-init<maxWait){
-     
-     Serial.println(millis()-init);
-     if(millis()-initbump>bump){
-       break;
-     }
-     if(digitalRead(busy) == HIGH){
-       Serial.println("!");
-       init = millis();
-     }
-   }
-} 
-  
-   
-void backline(){
-  busyLowDuring(3000, 20000);
-  stepper.step(SETP_BY_LINE * (LCnt - 1) );
-  delay(5000);
-  Serial.println("LOW");
-  digitalWrite(STEPPER_PIN_0, LOW);
-  digitalWrite(STEPPER_PIN_1, LOW);
-  digitalWrite(STEPPER_PIN_2, LOW);
-  digitalWrite(STEPPER_PIN_3, LOW);
-}
-
-
-
-
-
-
