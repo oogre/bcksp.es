@@ -411,7 +411,8 @@ char characters [] = {
 };
 
 char getChar(byte b){
-  if(b<=200){
+  b-=32;
+  if(b >= 0 && b < 200){
     return characters[b-32];
   }  
   else{
