@@ -68,8 +68,12 @@ footer li{
 	line-height: 2em;
 }
 
-.navbar .btn-nobg:hover{
+.btn-nobg{
 	color: #fff;
+}
+
+.btn-nobg:hover{
+	color: #ddd;
 }
 .navbar .navbar-form .form-control{
 	max-width: 156px;

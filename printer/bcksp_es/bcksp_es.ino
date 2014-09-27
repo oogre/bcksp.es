@@ -4,18 +4,22 @@
 #define  PWIDTH     SWIDTH/2    // Page Width   (char)
 #define  PHEIGHT    SHEIGHT/2   // Page Height  (char)
 
-String   HEAD  [] =    {"bcksp.es", "septembre 2014"};
+String   HEAD  [] =    {"bcksp.es", "introduction"};
 int      HMARGIN[]=    { 0 , 0 } ;     // ABSOLUTE Head Margin TOP LEFT
 int      FMARGIN[]=    { 1 , 3 };      // ABSOLUTE Folio Margin TOP LEFT
 #define  TWIDTH     30                 // Text Width
 #define  THEIGHT    27                 // Text Height
 int      TMARGIN[]=    { 2 , 5 } ;     // ABSOLUTE Text Margin TOP LEFT 
 
+boolean  hasToPrintHead = true;
+boolean  hasToPrintFolio = false;
+
 int      folioCounter     = 1;
 int      currentPage      = 0;    // Per Book
 int      lineCounter      = 0;    // Per Page
 int      charCounter      = 0;    // Per Line
 int      currentMargin [] = { 0, 0 };
+
 
 // PRINTER 
   //COMMAND COMMAND
@@ -191,10 +195,12 @@ void setup() {
 }
 
 void loop() {
+  byte message = 0;
   if(Serial.available() && 4096>buffer.count()){
-    buffer.unshift(Serial.read());
+    message = Serial.read();
+    buffer.unshift(message);
   }
-  if(buffer.count() >= TWIDTH){
+  if(buffer.count() >= TWIDTH || message == 10){
     printText();
     
     if(lineCounter >= THEIGHT + print.pages[currentPage].textMargin[0]){
@@ -274,7 +280,11 @@ void resetSetpper(){
 void printHead(){
   setCursorPosition(print.pages[currentPage].headMargin[0], print.pages[currentPage].headMargin[1]);
   for(int i = 0 ; i < print.pages[currentPage].head.length() ; i ++){
-    printMessage(print.pages[currentPage].head[i]);
+    if(hasToPrintHead){
+      printMessage(print.pages[currentPage].head[i]);
+    }else{
+      printMessage(' ');
+    }
   }
   CMD(NEWLINE);
   Serial.println("");
@@ -298,7 +308,11 @@ void printFolio(){
 
   setCursorPosition(print.pages[currentPage].folioMargin[0], marginLeft);
    for(int i = 0 ; i < folio.length() ; i ++){
-    printMessage(folio[i]);
+    if(hasToPrintFolio){
+      printMessage(folio[i]);
+    }else{
+      printMessage(' ');
+    } 
   }
   CMD(NEWLINE);
   Serial.println("");
@@ -309,7 +323,7 @@ void printFolio(){
 
 void printText(){
   setCursorPosition(print.pages[currentPage].textMargin[0], print.pages[currentPage].textMargin[1]);
-  for(int i = 0 ; i < TWIDTH ; i ++){
+  for(int i = 0 ; i < TWIDTH && !buffer.isEmpty(); i ++){
     if(printMessage(buffer.pop())){
       break;
     }
@@ -349,7 +363,7 @@ boolean printMessage(byte message) {
     Serial.println("");
   }else{
     printByte(message);
-    Serial.print(getChar(message));
+    Serial.print(message);
     charCounter ++;
   }
   CMD(RESET);
@@ -382,40 +396,6 @@ void printByte(byte inByte) {
   while(digitalRead(busy) == HIGH);
 }
 
-String simpleQuote = "'";
-char characters [] = {
-  ' ', 
-  '!', '"', '#', '$', '%', '&', simpleQuote.charAt(0), '(', ')', '*',
-  '+', ',', '-', '.', '/', '0', '1', '2', '3', '4',
-  '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', 
-  '?', 'à', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
-  'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 
-  'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '°', 'ç', 
-  '§', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f',
-  'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 
-  'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
-  'é', 'ù', 'è', '¨', ' ',  'Ç', 'ü', 'é', 'â', 'ä', 
-  'à', 'å', 'ç', 'ê', 'ë', 'è', 'ï', 'î', 'ì', 'Ä', 
-  'Â', 'É', 'æ', 'Æ', 'ô', 'ö', 'ò', 'û', 'ù', 'ÿ', 
-  'Ö', 'Ü', '€', '£', '¥', ' ' , '⨍', 'á', 'í', 'ó',
-  'ú', 'ñ', 'Ñ', 'ª', 'º', '¿', '⌐', '¬', '½', '¼',
-  '¡', '«', '»', '░', '▒', '▓', '|', '⊣', '⫤', '⫣', 
-  '╖', '╕', '╣', 'ǁ', '╗', '╝', '╜', '╛', '┐', '└',
-  '┴', '┬', '├', '─', '†', '╞', '╟', '╚', '╔', '╩', 
-  '╦', '╠', '═', '╬', '╧', '╧', '╤', '╥', '╙', '╘',
-  '╒', '╓', '╫', '╪', '┘', '┌', '▉', '▄', '▌', '▐',
-  '▀', 'α', 'β', 'Γ', 'π', 'Σ', 'σ', 'μ', 'τ', 'Φ',
-  'θ', 'Ω', 'δ', '∞', 'Ø', '∈', '⋂', '≡', '±', '≥',
-  '≤', '⎧', '⎭', '÷', '≈', '°', '•', '·', '√', 'ⁿ',
-  '²', '⬝'
-};
 
-char getChar(byte b){
-  b-=32;
-  if(b >= 0 && b < 200){
-    return characters[b-32];
-  }  
-  else{
-    return ' ';
-  }
-}
+
+
