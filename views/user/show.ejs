@@ -156,6 +156,11 @@
 					</div>
 				</div>
 			</div>
+
+		<% 
+		}
+		
+		if(!user.volume){ %>
 			<div class="row">
 				<div class="col-sm-offset-4 col-sm-4 highlight">
 					<h2 class=""><%= __('download_title') %></h2>
@@ -176,7 +181,7 @@
 		<% 	
 		} 
 
-		if(0 == user.volume || undefined == user.volume){ %>
+		else { %>
 			<div class="row">
 				<div class="col-sm-offset-4 col-sm-4">
 					<div class="alert alert-info">
