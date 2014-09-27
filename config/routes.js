@@ -78,6 +78,7 @@ module.exports.routes = {
   "get /backspace/last/?" : 'BackspaceController.last',
   "get /backspace/watch/?" : 'BackspaceController.watch',
   "get /backspace/subscribe/:id?" : 'BackspaceController.subscribe',
+  "get /backspace/index/:id?" : 'BackspaceController.index',
 
 /* AuthController */
   "get /auth/facebook" : "AuthController.facebook",

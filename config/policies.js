@@ -49,7 +49,8 @@ module.exports.policies = {
     "append" : "authenticated",
     "watch" : ["flash", "socket"],
     "subscribe" : ["flash", "socket","authenticated", "userCanSeeProfile"],
-    "getLast" : ["flash"]
+    "getLast" : ["flash"],
+    "index" : ["flash", "authenticated", "userCanSeeProfile"]
   },
 
   "auth" : {

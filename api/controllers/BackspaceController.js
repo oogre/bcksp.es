@@ -159,5 +159,46 @@ module.exports = {
 			if(err) return next(err);
 			Backspace.subscribe(req.socket, user);
 		});
+	},
+	"index" : function(req, res, next){
+
+		if(req.param("id")){
+			User.findOne({id : req.param("id")})
+			.populate('backspace')
+			.exec(function foundUserBackspace(err, userBackspace){
+				if(err) return next(err);
+				if(!userBackspace && !userBackspace.backspace && !userBackspace.backspace[0] && userBackspace.backspace[0].content) 
+					return res.send(404);
+				return res.json({
+					status : "ok",
+					data : userBackspace.backspace[0].content
+				});
+			});
+		}
+		else if(req.session.User.admin){
+			Backspace.find(function(err, backspaces){
+				if(err) return next(err);
+				if(!backspaces) return res.send(404);
+				backspaces = backspaces.map(function(backspace){
+					return backspace.content
+				});
+				return res.json({
+					status : "ok",
+					data : backspaces
+				});
+			});
+		}else{
+			User.findOne({id : req.session.User.id})
+			.populate('backspace')
+			.exec(function foundUserBackspace(err, userBackspace){
+				if(err) return next(err);
+				if(!userBackspace && !userBackspace.backspace && !userBackspace.backspace[0] && userBackspace.backspace[0].content) 
+					return res.send(404);
+				return res.json({
+					status : "ok",
+					data : userBackspace.backspace[0].content
+				});
+			});
+		}		
 	}
 };
