@@ -42,14 +42,12 @@
 		});
 
         var destroyForm = function(event){
-        	$.ajax({
-				url : event.target.action,
-				method : event.target.method,
-				data : {
+        	if(confirm("Would you want to DELETE this user ?")){
+	        	$.post(event.target.action, {
 					_method : event.target._method.value,
 					_csrf : event.target._csrf.value
-				}
-			});
+				});
+        	}
 			return false;
         };
         
