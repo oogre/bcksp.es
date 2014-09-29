@@ -149,6 +149,11 @@ header h1 i{
 	border: 0;
 	max-height: 1000px;
 }
+@media screen and (max-width: 730px){
+	.lastbackspace div.book{
+		width: 350px;
+	}
+}
 .lastbackspace .book{
 
 	-webkit-column-width: 175px;
