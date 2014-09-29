@@ -14,7 +14,7 @@ module.exports = {
 				req.logIn(user, 
 					function (err) {
 						if(err) return next(err);
-						return res.redirect('/');
+						return res.redirect('/'+req.session.locale);
 					}
 				);
 			}
@@ -22,7 +22,7 @@ module.exports = {
 	},
 	'facebook/callback': function (req, res, next) {
 		require('passport').authenticate('facebook', function (err, user) { 
-			if(!user || !user._json || !user._json.email)return res.redirect("/");	
+			if(!user || !user._json || !user._json.email)return res.redirect("/"+req.session.locale);	
 			var userMail = user._json.email;
 
 			User.findOne({
@@ -36,7 +36,7 @@ module.exports = {
 					};
 					oldUser.signin(req.session, function(err, onlineUser){
 						if(err)return next(err);
-						return res.redirect("/user/show");
+						return res.redirect("/"+req.session.locale+"/user/show");
 					});
 				}
 				else{
@@ -57,7 +57,7 @@ module.exports = {
 								origin : 'Chrome', 
 								owner : user.id
 							}, function backspaceCreated(err, backspace){
-								if(err) return res.redirect('/session/destroy');
+								if(err) return res.redirect('/'+req.session.locale+'/session/destroy');
 								user.signup(req.session, function(err, onlineUser){
 									if(err)return next(err);
 									req.session.flash = {
@@ -66,7 +66,7 @@ module.exports = {
 											data : null
 										}
 									};
-									return res.redirect('/user/show');
+									return res.redirect('/'+req.session.locale+'/user/show');
 								});
 							});
 						});

@@ -26,21 +26,21 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': 'flash',
+  '*': ['flash', 'localize'],
 
   'user' : {
-    "isAuthenticated" : "flash",
-    "new" : "flash",
-    "confirmation" : "flash",
-    "create" : "flash",
-    "subscribe" : ["flash", "socket", "authenticated", "userCanSeeProfile"],
-    "online" : "flash",
-    "show" : ["flash", "userCanSeeProfile"],
-    "update" : ["flash", "authenticated", "userCanSeeProfile"],
-    "pwd" : "flash",
-    "pwdrecovery" : "flash",
-    "pwdnew" : "flash",
-    "pwdsubmit" : "flash",
+    "isAuthenticated" :   ["flash", "localize"],
+    "new" :               ["flash", "localize"],
+    "confirmation" :      ["flash", "localize"],
+    "create" :            ["flash", "localize"],
+    "subscribe" :         ["flash", "localize","socket", "authenticated", "userCanSeeProfile"],
+    "online" :            ["flash", "localize"],
+    "show" :              ["flash", "localize", "userCanSeeProfile"],
+    "update" :            ["flash", "localize", "authenticated", "userCanSeeProfile"],
+    "pwd" :               ["flash", "localize"],
+    "pwdrecovery" :       ["flash", "localize"],
+    "pwdnew" :            ["flash", "localize"],
+    "pwdsubmit" :         ["flash", "localize"],
     "*" : "admin"
   },
 
@@ -54,8 +54,8 @@ module.exports.policies = {
   },
 
   "auth" : {
-    "facebook/callback" : ["flash"],
-    "facebook" : ["flash"]
+    "facebook/callback" : ["flash", "localize"],
+    "facebook" : ["flash", "localize"]
   }
 
   /***************************************************************************

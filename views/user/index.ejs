@@ -89,8 +89,8 @@
 				<td><i class="fa fa-star-o"></i></td>
 			<% } %>
 
-			<td><a href="/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></td>
-			<td><a href="/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
+			<td><a href="/<%= req.session.locale %>/user/show/<%= user.id %>" class="btn btn-sm btn-primary">Show</a></td>
+			<td><a href="/<%= req.session.locale %>/user/edit/<%= user.id %>" class="btn btn-sm btn-warning">Edit</a></td>
 			<td><form class="destroyForm" action="/user/destroy/<%= user.id %>"  method="POST" >
 				<input type="hidden" name="_method" value="delete" />
 				<input type="hidden" name="_csrf" value="<%= _csrf %>" />

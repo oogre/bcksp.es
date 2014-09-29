@@ -27,16 +27,16 @@ module.exports = {
 							}
 						}
 					}
-					return res.redirect("/user/new");
+					return res.redirect('/'+req.session.locale+"/user/new");
 				}
 				else{
 					var token = req.param("email");
 					bcrypt.hash( token, 10, function passwordEncrypted(err, encryptedToken){
 						if(err)return next(err);
 						// SEND mailUserConfirmation VIEW AS EMAIL
-						console.log(req.protocol + '://' + req.headers.host + "/user/create?token="+encryptedToken)
+						console.log(req.protocol + '://' + req.headers.host + '/'+req.session.locale+"/user/create?token="+encryptedToken)
 						res.render('mailUserConfirmation', {
-							link : req.protocol + '://' + req.headers.host + "/user/create?token="+encodeURIComponent(encryptedToken)
+							link : req.protocol + '://' + req.headers.host + '/'+req.session.locale+"/user/create?token="+encodeURIComponent(encryptedToken)
 						}, function (err, html) {
 							require('nodemailer')
 							.createTransport(require('nodemailer-smtp-transport')(sails.config.mail.transporter))
@@ -54,7 +54,7 @@ module.exports = {
 											data : null
 										}
 									}
-									return res.redirect("/user/new");
+									return res.redirect('/'+req.session.locale+"/user/new");
 								}
 								else{
 									console.log(info);
@@ -71,7 +71,7 @@ module.exports = {
 												data : null
 											}
 										};
-										return res.redirect("/session/new");
+										return res.redirect('/'+req.session.locale+"/session/new");
 									});
 								}
 							});
@@ -87,7 +87,7 @@ module.exports = {
 					data : null
 				}
 			}
-			return res.redirect("/user/new");
+			return res.redirect('/'+req.session.locale+"/user/new");
 		}
 	},
 
@@ -103,7 +103,7 @@ module.exports = {
 						data : null
 					}
 				}
-				return res.redirect("/user/new");
+				return res.redirect('/'+req.session.locale+"/user/new");
 			}
 			else{
 				User.findOne({
@@ -119,7 +119,7 @@ module.exports = {
 								}
 							}
 						}
-						return res.redirect("/user/new");
+						return res.redirect('/'+req.session.locale+"/user/new");
 					}
 					else{
 						User.create({
@@ -135,7 +135,7 @@ module.exports = {
 								origin : 'Chrome', 
 								owner : user.id
 							}, function backspaceCreated(err, backspace){
-								if(err) return res.redirect('/session/destroy');
+								if(err) return res.redirect('/'+req.session.locale+'/session/destroy');
 								user.signup(req.session, function (err, onlineUser){
 									if(err) return next(err);
 									req.session.flash = {
@@ -144,7 +144,7 @@ module.exports = {
 											data : null
 										}
 									};
-									return res.redirect('/user/show');
+									return res.redirect('/'+req.session.locale+'/user/show');
 								});
 							});
 						});
@@ -158,7 +158,7 @@ module.exports = {
 		var userIdToShow = req.param("id") ? req.param("id") : req.session.User.id;
 		User.findOne(userIdToShow).populate('backspace').exec(
 			function foundUserBackspace (err, userBackspace){
-				if(!userBackspace) return res.redirect('/session/destroy');
+				if(!userBackspace) return res.redirect('/'+req.session.locale+'/session/destroy');
 				res.view({
 					user : userBackspace
 				});
@@ -219,7 +219,7 @@ module.exports = {
 						data : null
 					}
 				}
-				return res.redirect("/pwd");
+				return res.redirect('/'+req.session.locale+"/pwd");
 			} else {
 				User.findOne({
 					email : req.param("email")
@@ -232,7 +232,7 @@ module.exports = {
 								data : null
 							}
 						}
-						return res.redirect("/pwd");
+						return res.redirect('/'+req.session.locale+"/pwd");
 					}
 					var token = user.email;
 					bcrypt.hash( token, 10, function passwordEncrypted(err, encryptedToken){
@@ -242,7 +242,7 @@ module.exports = {
 							if(err)return next(err);
 							// SEND mailPwdRecovery VIEW AS EMAIL
 							res.render('mailPwdRecovery', {
-								link : req.protocol + '://' + req.headers.host + "/pwd/new/"+user.id+"?token="+encodeURIComponent(user.passwordRecoveryToken)
+								link : req.protocol + '://' + req.headers.host + '/'+req.session.locale+"/pwd/new/"+user.id+"?token="+encodeURIComponent(user.passwordRecoveryToken)
 							}, function (err, html) {
 								require('nodemailer')
 								.createTransport(require('nodemailer-smtp-transport')(sails.config.mail.transporter))
@@ -284,7 +284,7 @@ module.exports = {
 						data : null
 					}
 				}
-				return res.redirect("/pwd");
+				return res.redirect('/'+req.session.locale+"/pwd");
 			};
 		});
 	},
@@ -301,7 +301,7 @@ module.exports = {
 							data : null
 						}
 					};
-					return res.redirect('/pwd');
+					return res.redirect('/'+req.session.locale+'/pwd');
 				}else{
 					user.password = req.param("password");
 					user.confirmation = req.param("confirmation");
@@ -314,7 +314,7 @@ module.exports = {
 								data : null
 							}
 						};
-						res.redirect('/session/new');
+						res.redirect('/'+req.session.locale+'/session/new');
 					});
 				}
 			});
@@ -326,20 +326,20 @@ module.exports = {
 					data : null
 				}
 			}
-			return res.redirect('/pwd');
+			return res.redirect('/'+req.session.locale+'/pwd');
 		}
 	},
 
 	"destroy" : function(req, res, next){
 		User.findOne(req.param("id"), function foundUser(err, user){
 			if(err) return next(err);
-			if(!user) return res.redirect('/session/destroy');
+			if(!user) return res.redirect('/'+req.session.locale+'/session/destroy');
 
 			User.destroy(req.param("id"), function userDestroyed(err){
 				if(err) return next(err);
 				User.publishDestroy(user.id);
 			})
-			res.redirect("/user");
+			res.redirect('/'+req.session.locale+"/user");
 		}); 
 	},
 

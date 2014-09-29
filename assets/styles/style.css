@@ -149,18 +149,30 @@ header h1 i{
 	border: 0;
 	max-height: 1000px;
 }
-pre{
-	display: block;
-	padding: 9.5px;
-	margin: 0 0 10px;
-	font-size: 13px;
-	line-height: 1.42857143;
-	color: #333;
+.lastbackspace .book{
+
+	-webkit-column-width: 175px;
+	-webkit-column-gap: 100px;
+	-webkit-column-rule: solid 1px #ccc;
+
+	-moz-column-width: 175px;
+	-moz-column-gap: 100px;
+	-moz-column-rule: solid 1px #ccc;
+	column-width: 175px;
+	column-gap: 100px;
+	column-rule: solid 1px #ccc;
+	-o-column-width: 175px;
+	-o-column-gap: 100px;
+	-o-column-rule: solid 1px #ccc;
+	margin: 0 auto;
+	padding: 75px 50px 50px 50px;
+	width: 701px;
+	height: 567px;
 	word-break: break-all;
-	word-wrap: break-word;
-	background-color: #f5f5f5;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+	overflow: scroll;
+	border: solid 1px #ccc;
+	background: #fff;
+	color: #333;
 }
 
 .captcha{

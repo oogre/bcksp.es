@@ -32,44 +32,38 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'static/index'
-  },
-
-  "/faq" : {
-    view : 'static/faq'
-  },
-
-  "/privacy" : {
-    view : 'static/privacy'
-  },
-
-  "/terms" : {
-    view : 'static/terms'
-  },
+  "get /" : 'staticController.index',
+  "get /:lang" : 'staticController.index',
+  "get /:lang/static/lang" : 'staticController.lang',
+  "get /:lang/faq" : 'staticController.faq',
+  "get /:lang/privacy" : 'staticController.privacy',
+  "get /:lang/terms" : 'staticController.terms',
   
-  "get /app" : 'AppController.index',
+  "get /:lang/app" : 'AppController.index',
 
 /* SessionController  */
-  "get /session/new/?" : 'SessionController.new',
-  "post /session/create/?" : 'SessionController.create',
-  "post /session/destroy/?" : 'SessionController.destroy',
+  "get  /session/new/?" : 'SessionController.new',
+  "get /:lang/session/new/?" : 'SessionController.new',
+  "post /:lang/session/create/?" : 'SessionController.create',
+  "post /:lang/session/destroy/?" : 'SessionController.destroy',
+
 
 /* UserController  */
-  "get /user/new/?" : 'UserController.new',
-  "post /user/confirmation/?" : 'UserController.confirmation',
-  "get /user/create/?" : 'UserController.create',
+  "get /:lang/user/new/?" : 'UserController.new',
+  "post /:lang/user/confirmation/?" : 'UserController.confirmation',
+  "get /:lang/user/create/?" : 'UserController.create',
   "get /user/show/:id?" : 'UserController.show',
-  "get /user/index/?" : 'UserController.index',
-  "get /pwd/?" : 'UserController.pwd',
-  "post /pwd/recovery/?" : 'UserController.pwdrecovery',
-  "get /pwd/new/:id?" : 'UserController.pwdnew',
-  "post /pwd/submit/?" : 'UserController.pwdsubmit',
+  "get /:lang/user/show/:id?" : 'UserController.show',
+  "get /:lang/user/index/?" : 'UserController.index',
+  "get /:lang/pwd/?" : 'UserController.pwd',
+  "post /:lang/pwd/recovery/?" : 'UserController.pwdrecovery',
+  "get /:lang/pwd/new/:id?" : 'UserController.pwdnew',
+  "post /:lang/pwd/submit/?" : 'UserController.pwdsubmit',
   "post /user/destroy/:id?" : 'UserController.destroy',
   "delete /user/destroy/:id?" : 'UserController.destroy',
   "get /user/subscribe/?" : 'UserController.subscribe',
   "get /user/online/?" : 'UserController.online',
-  "post /user/update/:id?" : 'UserController.update',
+  "post /:lang/user/update/:id?" : 'UserController.update',
 
 
 /* BackspaceController */
@@ -81,7 +75,7 @@ module.exports.routes = {
   "get /backspace/index/:id?" : 'BackspaceController.index',
 
 /* AuthController */
-  "get /auth/facebook" : "AuthController.facebook",
+  "get /:lang/auth/facebook" : "AuthController.facebook",
   "get /auth/facebook/callback" : "AuthController.facebook/callback",
 
   /***************************************************************************

@@ -47,6 +47,20 @@
       };
       window.addEventListener("load", function(){
 
+
+        if(window.location.pathname.match("/user/show")){
+          $("li a[href$='/user/show']").parent("li").addClass("active");
+        }
+        else if(window.location.pathname.match("/user/index")){
+          $("li a[href$='/user/index']").parent("li").addClass("active");
+        }
+        else if(window.location.pathname.match("/app")){
+          $("li a[href$='/app']").parent("li").addClass("active");
+        }
+        else if(window.location.pathname.match("/faq")){
+          $("li a[href$='/faq']").parent("li").addClass("active");
+        }
+
         $(".navbar-toggle").on('click ', function(){
           $(".navbar-collapse.collapse").toggleClass('in');
         });
@@ -89,25 +103,29 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">bcksp.es</a>
+            <a class="navbar-brand" href="/<%= req.session.locale %>">bcksp.es</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <% if(session.authenticated) { %>
-                <li class="active">
-                  <a href="/user/show"><%= session.User.email %></a>
+                 <li>
+                  <a href="/<%= req.session.locale %>/user/show"><%= session.User.email %></a>
                 </li>
               <% } %>
               <% if(session.authenticated && session.User.admin) { %>
-                <li><a href="/user"><%= __('menu_admin') %></a></li>
+                <li>
+                  <a href="/<%= req.session.locale %>/user/index"><%= __('menu_admin') %></a></li>
               <% } %>
-              
-                <li><a href="/app"><%= __('menu_download') %></a></li>
-                <li><a href="/faq"><%= __('menu_faq') %></a></li>
+                <li>
+                  <a href="/<%= req.session.locale %>/app"><%= __('menu_download') %></a>
+                </li>
+                <li>
+                  <a href="/<%= req.session.locale %>/faq"><%= __('menu_faq') %></a>
+                </li>
             </ul>
             <div class="navbar-right">
               <% if(session.authenticated) { %>
-                <form class="navbar-form navbar-right" action="/session/destroy" method="POST">
+                <form class="navbar-form navbar-right" action="/<%= req.session.locale %>/session/destroy" method="POST">
                   <input type="hidden" name="_methiod" value="delete" />
                   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
                   <input type="submit" class="btn btn-link" value="<%= __('form_signout_submit')%>"></input>
@@ -116,12 +134,22 @@
             </div>
             <% if(!session.authenticated) { %>
               <div class="navbar-form navbar-right">
-                <a href="/session/new" class="btn btn-success"><%= __('form_signin_submit')%>"</a>
-                <a href="/user/new" class="btn btn-link"><%= __('form_signup_button')%></a>
+                <a href="/<%= req.session.locale %>/session/new" class="btn btn-success"><%= __('form_signin_submit')%>"</a>
+                <a href="/<%= req.session.locale %>/user/new" class="btn btn-link"><%= __('form_signup_button')%></a>
               </div>
              
             <% } %>
+             <ul class="nav navbar-nav navbar-right">
+                <li class=<% if(req.session.locale=='en'){%>"active"<%}%>>
+                  <a href="/en/static/lang">EN</a>
+                </li>
+                  <li class=<% if(req.session.locale=='fr'){%>"active"<%}%>>
+                    <a href="/fr/static/lang">FR</a>
+                    </li>
+                  </ul>
         </div>
+        
+
       </div>
     </div>
 

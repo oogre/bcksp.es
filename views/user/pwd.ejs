@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-4 col-sm-4 highlight">
-			<form action="/pwd/recovery" method="POST">
+			<form action="/<%= req.session.locale %>/pwd/recovery" method="POST">
 
 				<h2 class="form-signin-heading"><%= __('form_pwd_recovery_title') %></h2>
 				

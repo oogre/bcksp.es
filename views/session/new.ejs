@@ -11,7 +11,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8 bg-primary highlight">
-			<form action="/session/create" method="post" class="form-signin" class="signup-form">
+			<form action="/<%= req.session.locale %>/session/create" method="post" class="form-signin" class="signup-form">
 				<h2 class="form-signin-heading"><%= __('form_signin_title') %></h2>
 				
 				<% 
@@ -53,7 +53,7 @@
 				<hr/>
 				<div class="row">
 					<div class="col-xs-12 text-center">
-						<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i><i class="fa fa-2x pull-right"></i> <%= __("facebook_connect") %></a>
+						<a href="/<%= req.session.locale %>/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i><i class="fa fa-2x pull-right"></i> <%= __("facebook_connect") %></a>
 					</div>
 					<div class="col-xs-8">
 						
@@ -79,12 +79,12 @@
 				<div class="form-group">
 					<label for="inputPW"><%= __('form_signin_pw_label') %>&nbsp;:</label>
 					<input id="inputPW" type="password" class="form-control" placeholder="<%= __('form_signin_pw') %>" name="password"/>
-					<a href="/pwd" class="btn btn-sm btn-nobg" ><%= __('form_signin_forgot_pw') %>" <a/>
+					<a href="/<%= req.session.locale %>/pwd" class="btn btn-sm btn-nobg" ><%= __('form_signin_forgot_pw') %>" <a/>
 				</div>
 				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 				<div class="form-group">
 					<input type="submit" class="btn btn-lg btn-success" value="<%= __('form_signin_submit') %>" />
-					<a href="/user/new" class="btn btn-sm btn-nobg" ><%= __('form_signup_button') %>" <a/>
+					<a href="/<%= req.session.locale %>/user/new" class="btn btn-sm btn-nobg" ><%= __('form_signup_button') %>" <a/>
 				</div>
 			</form>
 		</div>
