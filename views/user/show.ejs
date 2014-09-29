@@ -71,6 +71,13 @@
 			});
 			return false;
 		});
+		$(".twitter-share-button").on("click", function(){
+			var url = "<%= sails.config.twitter.share.url%>";
+			var text = window.getSelection().toString() || $(".book").text() || "";
+			url = url.replace('[TWEET_TEXT]', encodeURIComponent(text.slice(0, <%= sails.config.twitter.share.length %>)));
+			window.open(url);
+			return false;
+		});
 	}, false);
 
 </script>
@@ -188,6 +195,9 @@
 	<div class="row">
 		<div class="lastbackspace highlight">
 			<h4><%= __('user_show_backspace') %> : <small><%= __('live') %></small></h4>
+				<a href="#" class="pull-left twitter-share-button btn btn-md btn-twitter">
+	              <i class="fa fa-2x pull-left fa-twitter-square"></i>Tweet
+	          	</a>
 			<div class="book"><%= backspace %></div>
 		</div>
 	</div>
