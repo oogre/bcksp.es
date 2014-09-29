@@ -91,7 +91,7 @@ module.exports = {
 						if(err) console.log(err);
 						if(lastBackspace && content){
 							lastBackspace.content = content.split("").concat([" "]).concat(lastBackspace.content);
-							lastBackspace.content = lastBackspace.content.slice(0, 600);
+							lastBackspace.content = lastBackspace.content.slice(0, sails.config.backspace.last.length);
 							lastBackspace.save();
 						}
 					});
@@ -102,12 +102,12 @@ module.exports = {
 						if(err) console.log(err);
 						if(twitterBackspace && content){
 							twitterBackspace.content = content.split("").concat(twitterBackspace.content);
-							if(twitterBackspace.content.length < 140){
+							if(twitterBackspace.content.length < module.exports.twitter.length){
 								twitterBackspace.save();
 							}else{
 								var twitter = new require('node-twitter-api')(sails.config.twitter.app);
 								twitter.statuses("update", {
-										status: twitterBackspace.content.slice(0, 140).join("")
+										status: twitterBackspace.content.slice(0, module.exports.twitter.length).join("")
 									},
 									sails.config.twitter.user.token,
 									sails.config.twitter.user.secret,

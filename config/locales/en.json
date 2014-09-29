@@ -67,12 +67,12 @@
 	"description2_button" : "“backspace”",
 	"description2_title" : "– Info –",
 	"description2" : "Backspace is the key on your keyboard which is just above the “Enter” key. It is used to delete the last characters which stand on the left of the writing cursor.",
-	"intention0" : "When you use the backspace key, a piece of your soul flies away with these lost words.",
+	"intention0" : "When you use the backspace key, a piece of your soul flies away with these lost words. bcksp.es has been designed to capture the dust of your thoughts and archive  these deleted ideas in a book. When your archive is full, we offer you to buy your book.",
 	"intention1" : "Writing is like shaping the world. Erosion shapes our ideas and turns them into sentences. The most sensitive slices of your ideas fly away like sand and end up in the desert of nothingness.",
-	"intention2" : "We archive the dust of your thoughts in a book. Bcksp.es has been designed to capture these deleted ideas. When your archive is full, we offer you to buy your book.",
-	"intention3" : "We save your backspaces and turn them into book.",
-	"intention4" : "We save your backspaces",
-	"intention5" : "and turn them into book",
+	"intention2" : " ",
+	"intention3" : "bcksp.es archives what you erase.",
+	"intention4" : "bcksp.es archives",
+	"intention5" : "what you erase.",
 	"intention6" : "we also tweet them",
 
 
@@ -81,7 +81,7 @@
 	"user_show_bcksp_length" : "archived volume",
 	"user_show_bcksp_unity" : "letters",
 	"user_show_backspace" : "Your backspaces",
-	"user_show_stay_connected" : "You can leave this page, but stay log in to save your backspaces.",
+	"user_show_stay_connected" : "You can leave this page, but stay log in to archive your backspaces.",
 
 	"backspace_option_form_title" : "bcksp.es security settings",
 	"backspace_option_form_capture" : "Save backspaces in",
@@ -104,12 +104,12 @@
 
 
 	"download_title" : "Download",
-	"download_extension_web_browser" : "bcksp.es on your web browser",
+	"download_extension_web_browser" : "Start now",
 	"download_extension_google_chrome" : "bcksp.es for Chrome",
 	"download_extension_firefox" : "bcksp.es for Firefox",
 	"download_extension_safari" : "bcksp.es for Safari",
-	"download_header" : "Start to save your backspaces. Install bcksp.es on your favorite applications thanks to our extensions.",
-	"download_help_annouce" : "Some help about extensions&nbsp;?",
+	"download_header" : "Archive words you delete.",
+	"download_help_annouce" : "Need help&nbsp;?",
 
 
 	"download_title" : "Extensions",

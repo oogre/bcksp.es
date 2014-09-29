@@ -69,12 +69,12 @@
 	"description2_button" : "“backspace”",
 	"description2_title" : "– Info –",
 	"description2" : "Backspace est la touche du clavier informatique située au-dessus de la touche “Enter”. Elle est utilisée pour effacer les derniers caractères saisis, ceux situés à gauche du curseur d'écriture.",
-	"intention0" : "Lorsque vous utilisez la touche backspace, une part de vous s'en envole avec ces mots perdus.",
+	"intention0" : "Lorsque vous utilisez la touche backspace, une part de vous s'en envole avec les mots perdus. bcksp.es capture ces poussières de pensée et les archive dans un livre. Lorsque votre archive est pleine bcksp.es vous propose d'acheter votre livre.",
 	"intention1" : "La pratique de l'écriture est pareille à un monde en formation. Soumis à l'érosion, les idées s'affinent pour former des phrases. Les tranches les plus sensibles de vos idées s'envolent sous la forme du sable subtil pour finir dans le désert du néant.",
-	"intention2" : "Nous archivons pour vous ces poussières de pensée dans un livre. Bcksp.es est conçu pour capturer ces idées supprimées. Lorsque votre archive est pleine nous vous proposons d'acheter votre livre.",
-	"intention3" : "Nous sauvons vos backspaces et les transformons en livre.",
-	"intention4" : "Nous sauvons vos backspaces",
-	"intention5" : "et en faisons des livres",
+	"intention2" : " ",
+	"intention3" : "bcksp.es archive ce que vous supprimez.",
+	"intention4" : "bcksp.es archive",
+	"intention5" : "ce que vous supprimez",
 	"intention6" : "nous les tweetons aussi.",
 
 
@@ -83,7 +83,7 @@
 	"user_show_bcksp_length" : "volume archivé",
 	"user_show_bcksp_unity" : "lettres",
 	"user_show_backspace" : "Vos backspaces",
-	"user_show_stay_connected" : "Vous pouvez continuer votre navigation, mais restez connecté pour sauver vos backspaces.",
+	"user_show_stay_connected" : "Vous pouvez continuer votre navigation, mais restez connecté pour archiver vos backspaces.",
 
 	"backspace_option_form_title" : "bcksp.es configuration de sécurité",
 	"backspace_option_form_capture" : "Sauver les backspaces dans",
@@ -105,12 +105,12 @@
 
 
 	"download_title" : "Téléchargement",
-	"download_extension_web_browser" : "bcksp.es sur votre navigateur",
+	"download_extension_web_browser" : "Commencez",
 	"download_extension_google_chrome" : "bcksp.es pour Chrome",
 	"download_extension_firefox" : "bcksp.es pour Firefox",
 	"download_extension_safari" : "bcksp.es pour Safari",
-	"download_header" : "Sauvez vos backspaces. Installez bcksp.es sur vos applications préférées grâce à nos extensions.",
-	"download_help_annouce" : "Besoin d'aide à propos des extensions&nbsp;?",
+	"download_header" : "Archivez les textes que vous supprimez.",
+	"download_help_annouce" : "Besoin d'aide&nbsp;?",
 
 	"download_title" : "Extensions",
 	"download_status" : "Status",

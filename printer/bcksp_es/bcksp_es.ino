@@ -4,7 +4,7 @@
 #define  PWIDTH     SWIDTH/2    // Page Width   (char)
 #define  PHEIGHT    SHEIGHT/2   // Page Height  (char)
 
-String   HEAD  [] =    {"bcksp.es", "introduction"};
+String   HEAD  [] =    {"bcksp.es", "livesteam"};
 int      HMARGIN[]=    { 0 , 0 } ;     // ABSOLUTE Head Margin TOP LEFT
 int      FMARGIN[]=    { 1 , 3 };      // ABSOLUTE Folio Margin TOP LEFT
 #define  TWIDTH     30                 // Text Width
@@ -12,7 +12,7 @@ int      FMARGIN[]=    { 1 , 3 };      // ABSOLUTE Folio Margin TOP LEFT
 int      TMARGIN[]=    { 2 , 5 } ;     // ABSOLUTE Text Margin TOP LEFT 
 
 boolean  hasToPrintHead = true;
-boolean  hasToPrintFolio = false;
+boolean  hasToPrintFolio = true;
 
 int      folioCounter     = 1;
 int      currentPage      = 0;    // Per Book

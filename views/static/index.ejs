@@ -1,8 +1,48 @@
 <script type="text/javascript">
+	var tempscript;
+	var onFetchComplete = function (data) {
+		var getFirstProp = function (obj) {
+			for (var i in obj) return obj[i];
+		}
+		var stripTags = function (s) {
+			return s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, "");
+		}
+		document.body.removeChild(tempscript);
+		tempscript = null
+		var s = getFirstProp(data.query.pages).extract;
+		s = stripTags(s).replace("...", "");
+		var start = Math.floor(Math.random()*s.length);
+		s = s.slice(start, start+Math.floor(Math.random()*s.length));
+		populateLastBackspace(s);
+    }
+
+	var randomBackspace = function (length){
+		tempscript = document.createElement("script");
+		tempscript.type = "text/javascript";
+		tempscript.id = new Date().getTime();
+		tempscript.src = "http://en.wikipedia.org/w/api.php"
+        + "?action=query&generator=random&prop=extracts"
+        + "&exchars="+length+"&format=json&callback=onFetchComplete&requestid="
+        + Math.floor(Math.random()*999999).toString();
+      	document.body.appendChild(tempscript);
+	}
+
+	
+	var autoBackspace = function(){
+		randomBackspace(Math.floor(Math.random() * 50));
+	};
+	var timerAutoBackspace;
+	var resetAutoBackspace = function(){
+		clearTimeout(timerAutoBackspace);
+		timerAutoBackspace = undefined;
+		timerAutoBackspace = setTimeout(autoBackspace, Math.random()*10000);		
+	}
+	
 	var populateLastBackspace = function(data){
 		if(data){
-			$(".lastbackspace pre").text(data + " " + $(".lastbackspace pre").text());
+			$(".lastbackspace .book").text(data + " " + $(".lastbackspace .book").text());
 		}
+		resetAutoBackspace();
 	}
 
 	window.addEventListener("load", function subscribeAndListen(){
@@ -34,17 +74,30 @@
 					chrome.webstore.install('', function(data){
 						icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");
 						button.removeClass("btn-info").addClass("btn-success");
+
+						setTimeout(function(){
+							<% if(session.authenticated) { %>
+								document.location = "/<%= req.session.locale %>/user/show";
+							<% }else { %>
+								document.location = "/<%= req.session.locale %>/user/new";
+							<% }%>
+						}, 200);
+
 					}, function(data){
 						icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-times-circle");
 						button.removeClass("btn-info").addClass("btn-danger");
-						setTimeout(function(){
-							document.location = "/app";
-						}, 200);
 					});
 				}
 			}
 			else if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
 			{
+				setTimeout(function(){
+					<% if(session.authenticated) { %>
+						document.location = "/<%= req.session.locale %>/user/show";
+					<% }else { %>
+						document.location = "/<%= req.session.locale %>/user/new";
+					<% }%>
+				}, 200);
 				var ffinstall = window.open("https://addons.mozilla.org/fr/firefox/addon/bckspes/");
 				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");
 				button.removeClass("btn-info").addClass("btn-success");	
@@ -53,9 +106,6 @@
 			{
 				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-times-circle");
 				button.removeClass("btn-info").addClass("btn-danger");
-				setTimeout(function(){
-					document.location = "/app";
-				}, 200);
 			}
 			return false;
 		});
@@ -63,6 +113,10 @@
 		$.ajax("/backspace/last").done(function(data){
 			populateLastBackspace(data);
 		});
+
+
+		
+
 	}, false)  	
 </script>
 
@@ -78,115 +132,18 @@
 			<hr/>
 			<h1><%= __('intention4') %><br/><%= __('intention5') %></h1>
 			<hr/>
-		</div>
-
-		<div class="visible-lg-block visible-md-block row">
-			<div class="col-md-12">
-
-				<div class="col-md-offset-1 col-md-5">
-					<br/>
-					<br/>
-					<blockquote class="blockquote-reverse"><%= __('intention1') %></blockquote>
-				</div>
-				<div class="col-md-6 lead">
-					<%= __('intention0') %>
-					<br/>
-					<br/>
-					<span class="lead"><%= __('intention2') %></span>
-				</div>
-			</div>
-		</div>
-		<div class="visible-sm-block visible-xs-block row">
-			<div class="col-xs-12">
-				<div class="lead">
-					<%= __('intention0') %>
-				</div>
-				<div class="lead">
-					<span class="lead"><%= __('intention2') %></span>
-				</div>
-				<blockquote><p><%= __('intention1') %></p></blockquote>
-			</div>
-		</div>
-		
+		</div>		
 		<div class="row">
-			<div class="col-md-6 visible-lg-block visible-md-block">
-				<hr/>
-				<div class="highlight">
-					<h2 class=""><%= __('download_title') %></h2>
-					<p>
-						<%= __("download_header") %>
-					</p>
-					<hr/>
-					<p class="text-center">
-					<a href="#" class="btn btn-md btn-warning install">
-						<i class="fa fa-download fa-2x pull-left"></i><span><%= __('download_extension_web_browser') %></span>
-					</a>
-					<span class="help-block">
-						<a href="/app" class="btn btn-link"><%= __("download_help_annouce") %></a>
-					</span>
-					</p>
-				</div>
-				<hr/>
-			</div>
-			<div class="col-md-6 bg-primary highlight">
-				<form action="/user/confirmation" method="POST" class="form-signin" id="signup-form">
-					<h2 class="form-signin-heading"><%= __('form_signup_title') %></h2>
-					<hr/>
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<a href="/auth/facebook" class="btn btn-md btn-fb"><i class="fa fa-2x pull-left fa-facebook-square"></i><i class="fa fa-2x pull-right"></i> <%= __("facebook_connect") %></a>
-							<small><%= __("facebook_note") %></small>
-						</div>
-					</div>
-					<div class="row">
-
-					<div class="col-xs-5">
-						<hr/>
-					</div>
-					<div class="col-xs-2 text-center line-height">
-						<%= __("form_signup_or") %>
-					</div>
-					<div class="col-xs-5">
-						<hr/>
-					</div>
-					</div>
-					
-					<div class="form-group">
-						<label for="inputEmail"><%= __('form_signup_email_label') %>&nbsp;:</label>
-						<input id="inputEmail"type="email" class="form-control input-lg" placeholder="<%= __('form_signup_email')%>" name="email" data-required data-pattern="^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$"/>
-					</div>
-					<div class="form-group">
-						<label for="password"><%= __('form_signup_pw_label') %>&nbsp;:</label>
-						<input id="password" type="password" class="form-control input-sm" placeholder="<%= __('form_signup_pw')%>" name="password" minlength="6" data-required />
-					</div>
-					<div class="form-group">
-						<input id="passwordConf" type="password" class="form-control input-sm" placeholder="<%= __('form_signup_pw_conf')%>" name="confirmation" minlength="6" data-required data-conditional="confirmation"/>
-					</div>
-					<br/>
-					<div class="form-group">
-						<input type="hidden" name="_csrf" value="<%= _csrf %>" />
-						<input type="submit" class="btn btn-lg btn-success" value="<%= __('form_signup_submit') %>" />
-					</div>
-				</form>
-				<hr/>
-			</div>
-		</div>
-		<div class="row visible-sm-block visible-xs-block">
-			<div class="highlight">
-				<h2 class=""><%= __('download_title') %></h2>
-				<p>
-					<%= __("download_header") %>
-				</p>
-				<hr/>
-				<p class="text-center">
-				<a href="#" class="btn btn-md btn-warning install">
-					<i class="fa fa-download fa-2x pull-left"></i><span><%= __('download_extension_web_browser') %></span>
-				</a>
-				<span class="help-block">
-					<a href="/app" class="btn btn-link"><%= __("download_help_annouce") %></a>
-				</span>
-				</p>
-			</div>
+			<p class="text-center">
+				<%= __("download_header") %>
+				<br/><br/>
+			<a href="#" class="btn btn-lg btn-success install">
+				<i class="fa fa-download fa-2x pull-left"></i><span><%= __('download_extension_web_browser') %></span>
+			</a>
+			<span class="help-block">
+				<a href="/<%= req.session.locale %>/faq" class="btn btn-link"><%= __("download_help_annouce") %></a>
+			</span>
+			</p>
 		</div>
 	</div>
 </div>
@@ -194,6 +151,25 @@
 <div class="container">
 	<div class="row lastbackspace highlight">
 		<h4>backspace : <small><%= __('live') %></small></h4>
-		<pre></pre>
+		<div class="book"></div>
+	</div>
+	<div class="row">
+		<hr/>
+	</div>
+</div>
+
+
+<div class=" row text-center">
+	<div class="col-sm-6 col-sm-offset-3">
+
+		<div class="lead">
+			<span class="lead"><%= __('intention1') %></span>
+		</div>	
+		<div class="lead">
+			<%= __('intention0') %>
+		</div>
+		<div class="lead">
+			<span class="lead"><%= __('intention2') %></span>
+		</div>
 	</div>
 </div>

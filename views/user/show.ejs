@@ -71,45 +71,6 @@
 			});
 			return false;
 		});
-
-	$(".install").on("click", function(){
-			var button = $(this);
-			var icon = button.find(".fa-download");
-			button.removeClass("btn-warning").addClass("btn-info");
-			icon.removeClass("fa-download").addClass("fa-circle-o-notch").addClass("fa-spin");
-			
-			if(navigator.userAgent.toLowerCase().indexOf('chrome') > -1){
-				if(!chrome.app.isInstalled){
-					chrome.webstore.install('', function(data){
-						icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");
-						button.removeClass("btn-info").addClass("btn-success");
-					}, function(data){
-						icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-times-circle");
-						button.removeClass("btn-info").addClass("btn-danger");
-						setTimeout(function(){
-							document.location = "/app";
-						}, 200);
-					});
-				}
-			}
-			else if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
-			{
-				var ffinstall = window.open("https://addons.mozilla.org/fr/firefox/addon/bckspes/");
-				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-check-circle");
-				button.removeClass("btn-info").addClass("btn-success");	
-			}
-			else
-			{
-				icon.removeClass("fa-circle-o-notch").removeClass("fa-spin").addClass("fa-times-circle");
-				button.removeClass("btn-info").addClass("btn-danger");
-				setTimeout(function(){
-					document.location = "/app";
-				}, 200);
-			}
-			return false;
-		});
-
-
 	}, false);
 
 </script>
@@ -161,27 +122,6 @@
 		}
 		
 		if(!user.volume){ %>
-			<div class="row">
-				<div class="col-sm-offset-4 col-sm-4 highlight">
-					<h2 class=""><%= __('download_title') %></h2>
-					<p>
-						<%= __("download_header") %>
-					</p>
-					<hr/>
-					<p class="text-center">
-					<a href="#" class="btn btn-md btn-warning install">
-						<i class="fa fa-download fa-2x pull-left"></i><span><%= __('download_extension_web_browser') %></span>
-					</a>
-					<span class="help-block">
-						<a href="/app" class="btn btn-link"><%= __("download_help_annouce") %></a>
-					</span>
-					</p>
-				</div>
-			</div>
-		<% 	
-		} 
-
-		else { %>
 			<div class="row">
 				<div class="col-sm-offset-4 col-sm-4">
 					<div class="alert alert-info">
