@@ -102,12 +102,12 @@ module.exports = {
 						if(err) console.log(err);
 						if(twitterBackspace && content){
 							twitterBackspace.content = content.split("").concat(twitterBackspace.content);
-							if(twitterBackspace.content.length < module.exports.twitter.length){
+							if(twitterBackspace.content.length < sails.config.twitter.length){
 								twitterBackspace.save();
 							}else{
 								var twitter = new require('node-twitter-api')(sails.config.twitter.app);
 								twitter.statuses("update", {
-										status: twitterBackspace.content.slice(0, module.exports.twitter.length).join("")
+										status: twitterBackspace.content.slice(0, sails.config.twitter.length).join("")
 									},
 									sails.config.twitter.user.token,
 									sails.config.twitter.user.secret,
