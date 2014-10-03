@@ -3,7 +3,7 @@
     "name": "__MSG_appName__",
     "short_name": "bcksp",
     "description": "__MSG_appDesc__",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "default_locale": "en",
     "permissions": [
         "cookies",
@@ -38,8 +38,7 @@
             "48": "icon/48/standby.png",
             "128": "icon/128/standby.png"
         },
-        "default_title": "bcksp.es",
-        "default_popup": "popup/index.html"
+        "default_title": "bcksp.es"
     },
     "icons": { 
         "19": "icon/19/logout.png",

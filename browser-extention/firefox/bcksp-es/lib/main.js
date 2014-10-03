@@ -13,6 +13,7 @@ var Encoder = require('./Encoder').Encoder();
 var ss = require("sdk/simple-storage");
 
 ss.storage.backspace = ss.storage.backspace || "";
+ss.storage.backspace_privacy_setting = ss.storage.backspace_privacy_setting || "{}";
 
 var isArray = function(object){
 	return Object.prototype.toString.call( object ) === "[object Array]";
@@ -20,6 +21,24 @@ var isArray = function(object){
 var timers = {};
 
 var tools = {
+
+	privacySettings : {
+		val : function(data){
+			if(undefined == data){
+				return JSON.parse(ss.storage.backspace_privacy_setting)
+			}
+			else{
+				ss.storage.backspace_privacy_setting = JSON.stringify(data);
+				return data;
+			}
+		},
+		update : function(data){
+			if(JSON.stringify(data) == JSON.stringify(tools.privacySettings.val())) return null;
+			tools.privacySettings.val(data);
+		}
+	},
+
+
 	amIonline : function(){
 		_http(home+"/user/online", {}, "GET")
 		.done(function(){
@@ -95,9 +114,10 @@ var tools = {
 							content : tools.htmlDecode(ss.storage.backspace.split("").reverse().join("")),
 							_csrf : data.data._csrf
 						}, "POST")
-						.done(function(){
+						.done(function(reply){
 							ss.storage.backspace = "";
 							tools.setIcons("standby");
+							tools.privacySettings.update(reply.data);
 						})
 						.fail(function(){
 							tools.setIcons("logout");
@@ -149,7 +169,8 @@ require("sdk/page-mod").PageMod({
 							self.data.url("stringStream.js"),
 							self.data.url("backspacelistener.js") ],
 	onAttach: function(worker) {
-    	worker.port
+		worker.port.emit("updatePrivacySettings", JSON.parse(ss.storage.backspace_privacy_setting));
+		worker.port
     	.on("backspacing", function() {
 			tools.setIcons("backspacing")
 		})

@@ -13,6 +13,12 @@ var BCKSPES;
 	};
 
 	BCKSPES = (function(){
+		var _privacySettings = {};
+		self.port.on("updatePrivacySettings", function(message){
+			BCKSPES.privacySettings(message);
+			console.log("Privacy Settings : " + JSON.stringify(BCKSPES.privacySettings()));
+		});
+
 		var _backspaced;
 		var _screenBeforeBackspace;
 		var _stream = new StringStream()
@@ -56,19 +62,24 @@ var BCKSPES;
 
 		// Gets the high lighted text
 		var _getHighlightText = function(elem){
-
-			_backspaced = elem.value.substring(elem.selectionStart, elem.selectionEnd);
-			_stream.add(_backspaced ? _backspaced.split("").reverse().join("") : "");
-			if(_backspaced){
-				window.console.log("get highLight text");
-			}
+				if(elem.tagName.toLowerCase () == "textarea" || elem.tagName.toLowerCase () == "input") {
+					_backspaced = elem.value.substring (elem.selectionStart, elem.selectionEnd);
+				}
+				else {
+                    _backspaced = window.getSelection().toString();
+                }
+				_stream.add(_backspaced ? _backspaced.split("").reverse().join("") : "");
+				if(_backspaced){
+					window.console.log("get highLight text");
+				}
 			return _backspaced;
 		};
 
 		//Get the character before the cursor
 		var _getCharBeforeCaret = function(elem){
+			var value = $(elem).text() || $(elem).val();
 			var caretPosition = _getCaretPosition(elem);
-			_backspaced = caretPosition && elem.value.charAt(caretPosition-1);
+			_backspaced = caretPosition && value.charAt(caretPosition-1);
 			_stream.add(_backspaced ? _backspaced : "");
 			if(_backspaced){
 				window.console.log("get character before caret");
@@ -100,12 +111,26 @@ var BCKSPES;
 			return _stream;
 		};
 
+		var _canListenToHere = function(elem){
+			var id = ((elem.getAttribute("type") || "")+(elem.getAttribute("name") || "")+(elem.getAttribute("id") || "")+(elem.getAttribute("placeholder") || "")).toLowerCase();
+			if(_privacySettings.appConfig && !_privacySettings.appConfig.captureEmail && id.replace(/\-|\_|\ /g, "").match("email")){
+				return false;
+			}
+			if(_privacySettings.appConfig && !_privacySettings.appConfig.capturePassword && id.replace(/\-|\_|\ /g, "").match("password")) {
+				return false;
+			}
+			if(_privacySettings.appConfig && _privacySettings.appConfig.captureBlacklist.indexOf(window.location.hostname.replace(/www\./, ""))>-1){
+				return false;
+			}
+			return true;
+		};
+
 		var _keyDownListener = function(event){
 			// CTRL + BCKSP !! PC
 			// ALT + BCKSP / CMD + BCKSP  !! MAC
 			if(8 === event.keyCode ){
-				var activeElement = this.activeElement;
-				if(activeElement && ("input" === activeElement.nodeName.toLowerCase() || "textarea" === activeElement.nodeName.toLowerCase() || "true" === activeElement.getAttribute("contenteditable") || "" === activeElement.getAttribute("contenteditable"))){
+				var activeElement = event.target;
+				if(_canListenToHere(event.target) && activeElement && ("input" === activeElement.nodeName.toLowerCase() || "textarea" === activeElement.nodeName.toLowerCase() || "true" === activeElement.getAttribute("contenteditable") || "" === activeElement.getAttribute("contenteditable") || "true" === activeElement.getAttribute("g_editable"))){
 					if(!_getHighlightText(event.target)){
 						if(!_getCharBeforeCaret(event.target)){
 							_getScreenBeforeBackspace(event.target);
@@ -113,23 +138,31 @@ var BCKSPES;
 					}
 					self.port.emit("backspacing");
 				}
-				else{
-					event.preventDefault();
-				}
-				//return handle;
 			}
 		};
 
 		var _keyUpListener = function(event){
 			if(8 === event.keyCode){
-				_getBackspaced(event.target).send();
-				if(_backspaced){
-					window.console.log("backspaced : \n"+_backspaced);
-					_backspaced = undefined;
+				if(_canListenToHere(event.target)){
+					_getBackspaced(event.target).send();
+					if(_backspaced){
+						window.console.log("backspaced : \n"+_backspaced);
+						_backspaced = undefined;
+					}
 				}
 			}
 		};
 		return {
+			privacySettings : function(data){
+				if(undefined == data){
+					return _privacySettings;
+				}
+				else if(data.appConfig){
+					data.appConfig.captureBlacklist = data.appConfig.captureBlacklist.split(", ");
+					_privacySettings = data;
+					return data;	
+				}
+			},
 			keyDownListener : _keyDownListener,
 			keyUpListener : _keyUpListener
 		};
@@ -166,7 +199,7 @@ var BCKSPES;
 	});
 	
 	var setupListener = function(target){
-		if("IFRAME" ===  target.nodeName){
+		if("iframe" === target.nodeName.toLowerCase()){
 				try{
 						target.contentWindow.document.addEventListener("keydown", BCKSPES.keyDownListener, true);
 						target.contentWindow.document.addEventListener("keyup", BCKSPES.keyUpListener, true);
@@ -183,19 +216,19 @@ var BCKSPES;
 	};
 
 	var initListeners = function (){
-		document.addEventListener("DOMSubtreeModified", function(event) {
-			setupListener(event.target);
-			if(event.target){
-				try{
-					var iframes = event.target.querySelectorAll("iframe");
-					if(iframes){
-						iframes.map(function(iframe){
-							setupListener(iframe);
-						});
-					}
-				}catch(error){}
+	setupListener(document);
+	document.addEventListener("DOMNodeInserted", function (ev) {
+		setupListener(document);
+		try{
+			var iframes = document.querySelectorAll("iframe");
+			if(iframes){
+				iframes.map(function(iframe){
+					setupListener(iframe);
+				});
 			}
-		}, false);
+		}catch(error){}
+	}, false);
+
 	};
 
 	var init = function(){

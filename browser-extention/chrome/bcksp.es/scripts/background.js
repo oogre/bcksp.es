@@ -29,13 +29,13 @@
 				tools.privacySettings.val(data);
 				
 				chrome.tabs.query({}, function(tabs) {
-    				var message = {
-    					action : "updatePrivacySettings",
-    					data : tools.privacySettings.val()
-    				};
-    				for (var i=0; i<tabs.length; ++i) {
-        				chrome.tabs.sendMessage(tabs[i].id, message);
-    				}
+					var message = {
+						action : "updatePrivacySettings",
+						data : tools.privacySettings.val()
+					};
+					for (var i=0; i<tabs.length; ++i) {
+						chrome.tabs.sendMessage(tabs[i].id, message);
+					}
 				});
 			}
 		},
@@ -150,6 +150,12 @@
 	};
 
 	tools.offline();
+
+	chrome.browserAction.onClicked.addListener(function(activeTab)
+	{
+    	chrome.tabs.create({ url: home });
+	});
+
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		var action = tools[request.action];

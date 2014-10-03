@@ -250,7 +250,7 @@ var BCKSPES;
 		function(request, sender, sendResponse) {
 			if(!sender.tab && request.action == "updatePrivacySettings"){
 				BCKSPES.privacySettings(request.data);
-				console.log(BCKSPES.privacySettings());
+				console.log("Privacy Settings : " + JSON.stringify(BCKSPES.privacySettings()));
 			}
 	});
 

@@ -4,7 +4,7 @@
     "description": "The title of the application, displayed in the web store"
   },
   "appDesc": {
-    "message": "Archivez vos backspaces | Nous les transformons en livre", 
+    "message": "bcksp.es archive ce que vous supprimez", 
     "description":"The title of the application, displayed in the web store"
   }
 }
