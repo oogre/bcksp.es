@@ -1,0 +1,138 @@
+<!--<script src="http://bcksp.es.local/js/dependencies/sails.io.js"></script>-->
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+
+<script>
+        var tempscript;
+    var onFetchComplete = function (data) {
+        var getFirstProp = function (obj) {
+            for (var i in obj) return obj[i];
+        }
+        var stripTags = function (s) {
+            return s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, "");
+        }
+        document.body.removeChild(tempscript);
+        tempscript = null
+        var s = getFirstProp(data.query.pages).extract;
+        s = stripTags(s).replace("...", "");
+        var start = Math.floor(Math.random()*s.length);
+        s = s.slice(start, start+Math.floor(Math.random()*s.length));
+        newMessage(s);
+    }
+
+    var randomBackspace = function (length){
+        tempscript = document.createElement("script");
+        tempscript.type = "text/javascript";
+        tempscript.id = new Date().getTime();
+        tempscript.src = "http://en.wikipedia.org/w/api.php"
+        + "?action=query&generator=random&prop=extracts"
+        + "&exchars="+length+"&format=json&callback=onFetchComplete&requestid="
+        + Math.floor(Math.random()*999999).toString();
+        document.body.appendChild(tempscript);
+    }
+
+    
+    var autoBackspace = function(){
+        randomBackspace(Math.floor(Math.random() * 50));
+    };
+    var timerAutoBackspace;
+    var resetAutoBackspace = function(){
+        clearTimeout(timerAutoBackspace);
+        timerAutoBackspace = undefined;
+        timerAutoBackspace = setTimeout(autoBackspace, 1000+Math.random()*5000);        
+    }
+
+
+
+
+    String.prototype.replaceAt=function(index, character) {
+        return this.substr(0, index) + character + this.substr(index+character.length);
+    }
+
+    window.newMessage = function(message){
+        console.log(message);
+        resetAutoBackspace();
+       $.ajax({
+            url : "/message/new",
+            async : false,
+            data : {
+                message : message
+            },
+        });
+    }
+
+    window.connectToLive = function(){
+        var b = io.connect('http://www.bcksp.es');
+        b.on('connect', function socketConnected() {
+            b.get('/backspace/watch');
+            b.on('backspace', function(obj){
+                if(obj.verb == "created"){
+                    newMessage(obj.data.backspcaced);
+                }
+            });
+        });
+    };
+
+    var toSend;
+
+
+    window.addEventListener("load", function subscribeAndListen(){
+        window.connectToLive();
+        resetAutoBackspace();
+        //toSend = dataTransform(data);
+        //toSend = preface.match(/.{1,30}/g);
+        //toSend = debut.match(/.{1,30}/g);
+        return ;
+        console.log(toSend);
+
+
+        var lineCounter = 0;        
+        var lineInterval;
+
+        var lineSender = function(){
+
+            lineCounter++;
+            console.log(lineCounter);
+            if(lineCounter >= 27){
+                clearInterval(lineInterval);
+                delete lineInterval;
+                lineInterval = undefined;
+                lineCounter = 0; 
+            }
+            var message = toSend.shift();
+            if(undefined === message){
+                message = "\n";
+            }
+                if(message.length<30 && message.charAt(message.length-1)!= "\n"){
+                    message += "\n";
+                }
+                newMessage(message);
+        }
+
+        $("#printapage").on("click", function(){
+            if(toSend.length>0){
+                lineInterval = setInterval(lineSender, 500);    
+            }else{
+                alert("FINISH");
+            }
+        });
+
+        $("#printaline").on("click", function(){
+            if(toSend.length>0){
+                lineSender();
+                lineCounter = 0; 
+             }else{
+                alert("FINISH");
+            }
+        });
+    });
+    
+</script>
+
+<h1>SOCKET TEST</h1>
+
+<!--
+<button id="printapage" class="btn btn-xl btn-success">Print a page</button>
+<button id="printaline" class="btn btn-xl btn-success">Print a line</button>
+-->
+<button id="PAUSE" class="btn btn-xl btn-success">Pause</button>
