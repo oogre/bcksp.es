@@ -1,4 +1,3 @@
 module.exports.arduino = {
-    adress : "/dev/tty.usbmodem1421"
-   }
+	adress : "/dev/tty.usbmodem1421"
 }
