@@ -54,7 +54,7 @@ var converter = function(char){
 };
 var width = 70;
 var height = 60;
-var charcounter = 10;
+var charcounter = 0;
 var linecounter = 0;
 var angle = 2 * Math.PI / 10;
 var getPosition = function(length){
@@ -62,7 +62,7 @@ var getPosition = function(length){
 	var y = Math.floor(linecounter);
 	charcounter+= length + (Math.random() * length);
 	if(charcounter >= width){
-		charcounter = 10;
+		charcounter = Math.random() * length;
 		linecounter ++;
 	}
 	if(linecounter >= height){
