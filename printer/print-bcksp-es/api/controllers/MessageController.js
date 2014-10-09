@@ -95,6 +95,10 @@ var messageToByteArray = function(message){
 };
 
 var commandArduino = function(message){
+
+	if(/^win/.test(process.platform)){
+		return commandArduinoFromWindows(message);
+	}
 		console.log(message);
 		try{
 			var SerialPort = require("serialport").SerialPort;
@@ -115,6 +119,18 @@ var commandArduino = function(message){
   		}catch(e){
   			console.log("KO");
   		}
+}
+
+var commandArduinoFromWindows = function(message){
+	var fs = require('fs');
+	var wstream = fs.createWriteStream("\\\\.\\COM3");
+
+	var bytes = new Buffer(message.length);          // Create a new buffer of 256 bytes
+	for(var i = 0; i < bytes.length; i++) // Loop through the indexes
+	    bytes[i] = message[i];  
+
+	wstream.write(bytes);
+	wstream.end();
 }
 
 module.exports = {
