@@ -1,0 +1,14 @@
+
+<% 
+		var backspace = "";
+		backspace.content.map(function())
+		_.each(user.backspace, function(origine){ 
+			_.each(origine.content, function(content, key){
+				backspace = content + " " + backspace;
+			});
+		});
+		var date = new Date(user.createdAt).toGMTString();
+		var updateDate = new Date(user.updatedAt).toGMTString(); 
+	%>
+
+<%= JSON.stringify(backspace) %>

@@ -195,8 +195,11 @@
 	<div class="row">
 		<div class="lastbackspace highlight">
 			<h4><%= __('user_show_backspace') %> : <small><%= __('live') %></small></h4>
-				<a href="#" class="pull-left twitter-share-button btn btn-md btn-twitter">
+				<a href="#" class="pull-left twitter-share-button btn btn-md btn-twitter btn-content-lg">
 	              <i class="fa fa-2x pull-left fa-twitter-square"></i>Tweet
+	          	</a>
+	          	<a href="/<%= req.session.locale %>/print/poster" class="pull-left print-button btn btn-md btn-default btn-content-lg">
+	              <i class="fa fa-2x pull-left fa-print"></i>Print
 	          	</a>
 			<div class="book"><%= backspace %></div>
 		</div>

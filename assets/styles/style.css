@@ -25,11 +25,14 @@ footer li{
 	padding-top: 5px;
 }
 
+.btn-content-lg{
+	line-height: 2.1em;
+}
 
 .btn-twitter{
 	color: #fff;
 	background-color: #55ACEE;
-	line-height: 2.1em;
+	
 }
 .btn-twitter:hover{
 	color: #fff;

@@ -56,6 +56,11 @@ module.exports.policies = {
   "auth" : {
     "facebook/callback" : ["flash", "localize"],
     "facebook" : ["flash", "localize"]
+  },
+
+  "print" : {
+    "poster" : "flash",
+    "*" : ["flash", "authenticated"]
   }
 
   /***************************************************************************

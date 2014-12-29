@@ -30,7 +30,9 @@
     "re-captcha": "0.0.3",
     "node-twitter-api" : "1.2.4",
     "passport-facebook" : "1.0.3",
-    "passport" : "0.2.1"
+    "passport" : "0.2.1",
+    "pdfkit" : "0.7.0",
+    "scp2" : "0.2.0"
   },
   "scripts": {
     "start": "node app.js",
