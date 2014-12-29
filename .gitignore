@@ -96,6 +96,7 @@ lib-cov
 *.log
 *.out
 *.pid
+*.pdf
 npm-debug.log
 
 
