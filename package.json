@@ -36,7 +36,8 @@
     "promised-io" : "0.3.4",
     "underscore" : "1.7.0",
     "underscore.string" : "2.4.0",
-    "colors" : "1.0.3"
+    "colors" : "1.0.3",
+    "fs-extra" : "0.11.1"
   },
   "scripts": {
     "start": "node app.js",
