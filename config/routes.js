@@ -32,8 +32,22 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  "get /" : 'staticController.index',
-  "get /:lang" : 'staticController.index',
+
+  
+  
+  '/': {
+    controller: 'static',
+    action : "index"
+  },
+  'r|^\/fr$|lang': {
+    controller: 'static',
+    action : "index"
+  },
+  'r|^\/en$|lang': {
+    controller: 'static',
+    action : "index"
+  },
+  
   "get /:lang/static/lang" : 'staticController.lang',
   "get /:lang/faq" : 'staticController.faq',
   "get /:lang/privacy" : 'staticController.privacy',
@@ -87,6 +101,11 @@ module.exports.routes = {
   'get /public/files/*': function(req, res, next) {
     return res.sendfile(sails.config.appPath+req.path);
   },
+
+
+
+/* PaymentController */
+  "get /:lang/payment/success/:id?" : "PaymentController.success",
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

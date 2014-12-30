@@ -299,8 +299,21 @@ module.exports.poster = {
 				align : "right",
 				width : doc.page.width*5/7
 			})
-			.fontSize(30)
-			.moveDown()
+		})
+		.template("signature", function(doc, data){
+			var transformeDate = function(value){
+				return new Date(parseInt(value)).toGMTString();
+			};
+			var dateStart = transformeDate(data[0].date[0]);
+			var dateEnd = transformeDate(data[0].date[data[0].date.length-1]);
+			doc.y -= 52;
+			doc
+			.fontSize(13)
+			.font("DejaVuSans")
+			.text( data[0].user + " : " + dateStart + " - " + dateEnd, {
+				align : "center",
+				width : doc.page.width*5/7
+			});
 		})
 		.template("text", function(doc, data){
 			doc.y = doc.page.height - 295;

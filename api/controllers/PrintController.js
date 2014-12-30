@@ -45,11 +45,12 @@ module.exports = {
 		var PDF = require("../modules/pdf.js");
 		var poster = sails.config.poster;
 		var maxLine = 4;
-		var maxLength = Math.ceil( 200*Math.random() );
+		var maxLength = 200;
 		pdf = new PDF(poster.config);
 		pdf = poster.templates(pdf);
 
-		var finish = function(sentence){
+		var finish = function(err, sentence, users){
+			if(err) return next(err);
 			if(!_.isString(sentence)){
 				return next(sentence);
 			}
@@ -58,52 +59,52 @@ module.exports = {
 						.slice(0, maxLine)
 						.join("\n")
 						.substr(0, maxLength);
+
 			pdf
 			.template("shape", 10)
-			.template("sentence", sentence)
+			.template("sentence", sentence);
+			if(users){
+				pdf.template("signature", users);
+			}
+			pdf
 			.template("text", poster.txt.fr)
 			.template("footer", ["bcksp.es", "we archive backspace"])
-			.end();
-
-			setTimeout(function(){
-				var client = require('scp2');
-				var scp_config = sails.config.scp;
-				var filename = new Date().getTime()+".pdf";
-				sails.config.scp.path += filename;
-				client.scp(pdf.getUrl(), sails.config.scp, function(err) {
-					if(!err){
-						var fs = require('fs-extra');
-						fs.unlink(__dirname+"/../../"+pdf.getUrl(), function(){
-							return res.view({
-								url : "http://archive.bcksp.es/poster/"+filename
-							});
-						});
-					}else{
-						console.log(err);
-					}
+			.end(function(pdf){
+				require("../modules/scp.js")({
+					conf : sails.config.scp,
+					filename : "poster/"+new Date().getTime()+".pdf",
+					src  : pdf.getUrl(),
+					dest : sails.config.scp.path
+				}, function(err, filename){
+					if(err) return next(err);
+					return res.view({
+						sentence : sentence,
+						url : sails.config.scp.url+filename
+					});
 				});
-			}, 500);
-
+			});
 		};
 
 		var sentence = req.param("txt");
 		var id = req.param("id");
 
 		if(sentence){
-			return finish(sentence);
+			return finish(sentence, false);
 		}
 		else if(id){
+			maxLength = Math.ceil( 200*Math.random() );
 			return Backspace.getRandom({
 				owner : id
-			}, maxLength, finish);
+			}, true, maxLength, finish);
 		}
 		else{
+			maxLength = Math.ceil( 200*Math.random() );
 			var date = new Date();
 			date = new Date(date.getFullYear(), date.getMonth(), date.getDay());
 			return Backspace.getRandom({
 				updatedAt : {
 					">=" : date}
-			}, maxLength, finish);
+			}, false, maxLength, finish);
 		}
 
 	}

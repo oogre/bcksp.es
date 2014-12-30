@@ -32,7 +32,11 @@
     "passport-facebook" : "1.0.3",
     "passport" : "0.2.1",
     "pdfkit" : "0.7.0",
-    "scp2" : "0.2.0"
+    "scp2" : "0.2.0",
+    "promised-io" : "0.3.4",
+    "underscore" : "1.7.0",
+    "underscore.String" : "2.4.0",
+    "colors" : "1.0.3"
   },
   "scripts": {
     "start": "node app.js",

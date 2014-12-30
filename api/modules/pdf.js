@@ -29,7 +29,8 @@ module.exports = function(param){
 		size : param.page.size
 	});
 	
-	doc.pipe(fs.createWriteStream(param.dest));
+	var writeStream = fs.createWriteStream(param.dest);
+	doc.pipe(writeStream);
 	doc.page.margins = param.page.margins;
 	
 	param.fonts.map(function(font){
@@ -39,8 +40,13 @@ module.exports = function(param){
 	var _templates = {};
 
 	return {
-		end : function(){
+		end : function(next){
+			var _this = this;
 			doc.end();
+			writeStream
+			.on('finish', function () {
+				next(_this);
+			});
 			return this;
 		},
 		doc : function(){

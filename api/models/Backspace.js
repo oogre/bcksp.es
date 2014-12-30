@@ -22,8 +22,10 @@ module.exports = {
             model:'user'
         }
 	},
-	getRandom : function(where, maxlength, next){
+	getRandom : function(where, signed, maxlength, next){
 		var sentence = "";
+		var users = [];
+		var dates = [];
 		this
 		.find()
 		.where(where)
@@ -36,15 +38,55 @@ module.exports = {
 				if(typeof(backspace) == typeof(undefined) || ( Math.random()*10 > 8 && backspaces.length > 0 )){
 					var bckspLen = backspaces.length;
 					var id = Math.floor(bckspLen*Math.random());
-					var backspace = backspaces.splice(Math.floor(bckspLen*Math.random()), 1)[0].content;
-					var keys = _.keys(backspace);
+					var backspace = backspaces.splice(Math.floor(bckspLen*Math.random()), 1)[0];
+					var content = backspace.content;
+					var keys = _.keys(content);
 					var keyId = Math.floor(Math.random()*keys.length);
+					if(signed){
+						users.push( User
+									.findOne()
+									.where({
+										id : backspace.owner
+									})
+									.then(function(user){
+										return {
+											id : user.id,
+											email : user.email
+										};
+									}));
+						dates.unshift({
+							user : backspace.owner,
+							date : []
+						})
+					}
 				}
-				sentence += _.stripTags(backspace[keys[keyId]]).replace(/llun/g, "");
+				if(signed){
+					dates[0].date.push(keys[keyId]);
+				}
+				sentence += _.stripTags(content[keys[keyId]]).replace(/llun/g, "");
 				keyId++;
-				keyId = keyId%(keys.length);
+				if(keyId>=keys.length){
+					break;
+				}
 			}
-			return next(sentence);
+			var promise = require('promised-io/promise');
+			promise
+			.all(users)
+			.then(function(users){
+				if(signed){
+					users =	users
+							.map(function(user){
+								var date =	_.find(dates, function(date){ return date.user == user.id})
+								date.user = user.email;
+								return date;
+							})
+							.reverse()
+				}
+				else{
+					users = false;
+				}
+				return next(null, sentence, users);
+			});
 		})
 		.catch(function(err){
 			return next(err);
