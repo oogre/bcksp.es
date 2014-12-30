@@ -1,5 +1,5 @@
 module.exports = function(param){
-	var _ = require('lodash');
+	var _ = require('underscore');
 	var fs = require('fs-extra');
 	var PDFKit = require('pdfkit');
 	var _param = {
