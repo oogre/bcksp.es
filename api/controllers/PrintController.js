@@ -89,7 +89,7 @@ module.exports = {
 		var id = req.param("id");
 
 		if(sentence){
-			return finish(sentence, false);
+			return finish(null, sentence, false);
 		}
 		else if(id){
 			maxLength = Math.ceil( 200*Math.random() );
