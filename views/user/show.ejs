@@ -1,3 +1,14 @@
+<style type="text/css">
+	a.btn.showPrint{
+		float: left;
+		margin: 0 5px 3px 0;
+	}
+
+	#prints .table>tbody>tr>td{
+		max-width: 100px;
+		word-wrap: break-word;
+	}
+</style>
 <script type="text/javascript">
 	<% 
 		var backspace = "";
@@ -78,6 +89,28 @@
 			window.open(url);
 			return false;
 		});
+
+		$(".newposter").on("click", function(){
+			var text = window.getSelection().toString() || false;
+			if(text){
+				window.location = $(this).attr("href").split("?")[0]+"?txt="+text;
+			}else{
+				window.location = $(this).attr("href");
+			}
+			return false;
+		})
+
+		$("body").on("mouseup", function(){
+			var selected = window.getSelection().toString() || false;
+			console.log(selected);
+			$(".newposter, .twitter-share-button")
+			.each(function(n, button){
+				console.log(button);
+				var b = $(button);
+				b.html(b.html().split(" (*)")[0])
+				if(selected) b.html(b.html()+" (*)");
+			});
+		})
 	}, false);
 
 </script>
@@ -193,6 +226,44 @@
 		</div>
 	</div>
 	<div class="row">
+		<h4><%= __("poster_generator")%>
+		<a href="/<%= req.session.locale %>/poster/generator/<%= req.session.User.id %>" class="btn btn-md newposter btn-content-lg btn-warning">
+			<%= __("generator_btn")%>
+		</a></h4>
+	</div>
+	<div class="row" id="prints">
+		<table class="table">
+			<tr>
+				<th></th>
+				<th>type</th>
+				<th>title</th>
+				<th>viewed</th>
+				<th>print</th>
+				<th></th>
+			</tr>
+			
+			<% (user.print||[]).map(function(print){ 
+
+				%>
+				<tr data-id="<%= print.id %>" data-model="print">
+					<td></td>
+					<td><%= _.find(printTypes, function(printType){return printType.id == print.type}).name %></td>
+					<td><%= print.sentence %></td>
+					<td><%= print.viewed %></td>
+					<td><%= print.print %></td>
+					<td>
+						<a href="/<%= req.session.locale %>/poster/show/<%= print.id %>" class="btn btn-sm btn-primary showPrint"><%= __('show_btn')%></a>
+						<form class="destroyForm" action="/print/destroy/<%= print.id %>"  method="POST" >
+							<input type="hidden" name="_method" value="delete" />
+							<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+							<input type="submit" class="btn btn-sm btn-danger" value="<%= __('destroy_btn') %>" />
+						</form>
+					</td>
+				</tr>
+			<% }) %>
+		</table>
+	</div>
+	<div class="row">
 		<div class="lastbackspace highlight">
 			<h4><%= __('user_show_backspace') %> : <small><%= __('live') %></small></h4>
 				<a href="#" class="pull-left twitter-share-button btn btn-md btn-twitter btn-content-lg">
@@ -204,4 +275,5 @@
 			<div class="book"><%= backspace %></div>
 		</div>
 	</div>
+	
 </div>

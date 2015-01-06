@@ -34,7 +34,7 @@ module.exports = {
 		},
 		owner : {
 			collection : "user",
-			via : "id"
+			via : "print"
 		}
 	}
 };

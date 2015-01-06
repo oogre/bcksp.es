@@ -88,9 +88,16 @@ module.exports = {
 						})
 						.then(function(print){
 							(users||[]).map(function(user){
-								print.owner.add(user.id);
+								User
+								.findOne()
+								.where({
+									id : user.id
+								})
+								.then(function(user){
+									user.print.add(print.id);
+									user.save();
+								})
 							});
-							print.save();
 							return print;
 						})
 						.catch(function(err){
@@ -111,7 +118,11 @@ module.exports = {
 		var sentence = req.param("txt");
 		var id = req.param("id");
 		if(sentence){
-			return finish(null, sentence, false);
+			return finish(null, sentence, [{
+				user : req.session.User.email,
+				id  : req.session.User.id,
+				date : [ new Date().getTime()]
+			}]);
 		}
 		else if(id){
 			maxLength = Math.ceil( 200*Math.random() );
@@ -136,6 +147,7 @@ module.exports = {
 			id : req.param("id")
 		})
 		.populate("type")
+		.populate("owner")
 		.then(function(print){
 			if(!print)return res.notFound();
 			print.viewed++;
@@ -144,6 +156,30 @@ module.exports = {
 		})
 		.catch(function(err){
 			return res.next(err);
+		});
+	},
+	"destroy" : function(req, res, next){
+		Print
+		.findOne()
+		.where({
+			id : req.param("id")
+		})
+		.then(function foundUser(print){
+			if(!print) return res.redirect('/'+req.session.locale+"/user/show");
+
+			Print
+			.destroy(print.id)
+			.then(function userDestroyed(){
+				return res.redirect('/'+req.session.locale+"/user/show");
+			})
+			.catch(function(err){
+				console.warn(err);
+				return res.redirect('/'+req.session.locale+"/user/show");
+			});
+		})
+		.catch(function(err){
+			console.warn(err);
+			return res.redirect('/'+req.session.locale+"/user/show");
 		});
 	}
 };

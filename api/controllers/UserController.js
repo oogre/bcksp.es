@@ -156,13 +156,29 @@ module.exports = {
 
 	"show" : function(req, res, next){
 		var userIdToShow = req.param("id") ? req.param("id") : req.session.User.id;
-		User.findOne(userIdToShow).populate('backspace').exec(
-			function foundUserBackspace (err, userBackspace){
-				if(!userBackspace) return res.redirect('/'+req.session.locale+'/session/destroy');
-				res.view({
+		User
+		.findOne()
+		.where({
+			id : userIdToShow
+		})
+		.populateAll()
+		.then(function foundUserBackspace (userBackspace){
+			if(!userBackspace) return res.redirect('/'+req.session.locale+'/session/destroy');
+			PrintType
+			.find()
+			.then(function(printTypes){
+				return res.view({
+					printTypes : printTypes,
 					user : userBackspace
 				});
-			});
+			})
+			.catch(function(err){
+				return next(err);
+			})			
+		})
+		.catch(function(err){
+			return next(err);
+		})
 	}, 
 
 	"index" : function(req, res, next){

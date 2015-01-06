@@ -127,5 +127,24 @@
 
 	"twitter_follow" : "Suivez @bckspes sur Twitter",
 	"facebook_follow" : "Likez bcksp.es sur Facebook",
-	"github_follow" : "Forkez bcksp.es sur Github"
+	"github_follow" : "Forkez bcksp.es sur Github",
+
+	"poster_generator_intro_first_part" : "Ce poster à été créé par un algorythme qui archive tout le texte que ",
+	"poster_generator_intro_second_part_author" : "vous supprimez sur le web.",
+	"poster_generator_intro_default_author" : "quelqu'un ",
+	"poster_generator_intro_second_part": " supprime sur le web.",
+
+	"poster_generator_share_author" : "Vous pouvez partager ce lien, dans ce cas toute le monde pourra voir, partager et acheter ce poster.",
+	"poster_generator_share_first_part" :"Vous pouvez voir, partager et acheter le poster de ",
+	"poster_generator_share_second_part" :" car il/elle a volontairement partager ce lien.",
+
+	"poster_generator_buy" : "Vous pouvez acheter ce poster imprimé en couleur au format 40 x 59.4cm pour",
+	"buy_now" : "Acheter",
+	"generator_btn" : "Commencez",
+	"show_btn" : "voir",
+	"destroy_btn" : "supprimer",
+	"poster_generator" : "Générerateur de poster",
+	"poster_generator_new" : "Nouveau poster",
+	"poster_generator_change_background" : "Changer le fond",
+	"poster_generator_share" : "Partager"
 }

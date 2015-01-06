@@ -7,10 +7,11 @@
 		background: #fff;
 		display: block;
 	}
+
 </style>
 
+
 <script type="text/javascript">
-	console.log("<%= id %>");
 	window.addEventListener("load", function subscribeAndListen(){
 		$(".newposter").on("click", function(){
 			window.location = window.location.protocol+"//"+window.location.host+window.location.pathname;
@@ -19,12 +20,18 @@
 
 		$("<a[href='#paypal']")
 		.replaceWith(JST["assets/templates/paypal.ejs"]({
-			item_name : "<%= url %>"
+			item_name : "<%= url %>",
+			label : "<%= __('buy_now') %>"
 		}));
+
+		var shareUrl = window.location.protocol+"//"+window.location.host+"/<%= req.session.locale||'en' %>/poster/show/<%= id %>";
+		$("#share").attr("href", shareUrl);
+
+
 		$(".twitter-share-button").on("click", function(){
 			var url = "<%= sails.config.twitter.share.url%>";
 			var text = "<%= sails.config.twitter.tweet.poster %>";
-			text = text.replace("[POSTER_URL]", window.location.protocol+"//"+window.location.host+"/<%= req.session.locale||'en' %>/poster/show/<%= id %>");
+			text = text.replace("[POSTER_URL]", shareUrl);
 			url = url.replace('[TWEET_TEXT]', encodeURIComponent(text.slice(0, <%= sails.config.twitter.share.length %>)));
 			window.open(url);
 			return false;
@@ -33,22 +40,25 @@
 </script>
 
 
+
+
 <div class="container">
 	<div class="row highlight">
 		<h4>poster : </h4>
 		<div class="row text-center">
-			
-			<a href="#" class="btn btn-md newposter btn-content-lg btn-warning">
-				<i class="fa fa-2x pull-left fa-refresh"></i>new poster
-			</a>
-			<a href="?txt=<%= sentence %>" class="btn btn-md btn-content-lg btn-info">
-				<i class="fa fa-2x pull-left fa-repeat"></i>change backcground
-			</a>
-			<a href="#" class="twitter-share-button btn btn-md btn-twitter btn-content-lg">
-              <i class="fa fa-2x pull-left fa-twitter-square"></i>Tweet
-          	</a>
-			<span><a href="#paypal"></a></span>
-			
+			<div>
+				<a href="#" class="btn btn-md newposter btn-content-lg btn-warning">
+					<i class="fa fa-2x pull-left fa-refresh"></i><%= __("poster_generator_new")%>
+				</a>
+				<a href="?txt=<%= sentence %>" class="btn btn-md btn-content-lg btn-info">
+					<i class="fa fa-2x pull-left fa-repeat"></i><%= __("poster_generator_change_background")%>
+				</a>
+				<a href="#" id="share" class="btn btn-md btn-primary btn-content-lg">
+					<i class="fa fa-2x pull-left fa-share-alt"></i><%= __("poster_generator_share") %>
+				</a>
+
+				<span><a href="#paypal"></a></span>
+			</div>
 		</div>
 		<div class="row">
 			<iframe id="poster" src="<%= url %>"></iframe>

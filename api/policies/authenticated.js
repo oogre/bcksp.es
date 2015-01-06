@@ -7,6 +7,6 @@ module.exports = function(req, res, next){
 		return next();
 	}
 	else{
-		res.send(403);
+		return res.redirect("/session/new");
 	}
 };

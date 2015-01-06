@@ -94,12 +94,13 @@ module.exports.routes = {
 
 
 /* PrintController */
-  "get /:lang/print/index/:id?" : "PrintController.index",
+  "post /print/destroy/:id?" : "PrintController.destroy",
+  "delete /print/destroy/:id?" : "PrintController.destroy",
   "get /:lang/poster/generator/:id?" : "PrintController.poster",
   "get /:lang/poster/show/:id?" : "PrintController.postershow",
 
 /* public file */
-  'get /public/files/*': function(req, res, next) {
+  'get /public/*': function(req, res, next) {
     return res.sendfile(sails.config.appPath+req.path);
   },
 

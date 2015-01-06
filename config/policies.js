@@ -59,9 +59,10 @@ module.exports.policies = {
   },
 
   "print" : {
-    "poster" : "flash",
-    "postershow" : "flash",
-    "*" : ["flash", "authenticated"]
+    "destroy" : ["flash", "authenticated"],
+    "poster" : ["flash","localize", "authenticated", "userCanSeeProfile"],
+    "postershow" : ["flash","localize"],
+    "*" : ["flash", "authenticated", "localize"]
   },
   "payment" : {
     "*" : ["flash"]

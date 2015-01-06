@@ -63,6 +63,12 @@ module.exports = {
       collection: 'backspace',
       via: 'owner'
     },
+
+    print:{
+      collection: 'print',
+      via: 'owner',
+      dominant: true
+    },
     passwordRecoveryToken:{
       type:"String"
     },

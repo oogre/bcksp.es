@@ -126,5 +126,25 @@
 
 	"twitter_follow" : "Follow @bckspes on Twitter",
 	"facebook_follow" : "Like bcksp.es on Facebook",
-	"github_follow" : "Fork bcksp.es on Github"
+	"github_follow" : "Fork bcksp.es on Github",
+
+	"poster_generator_intro_first_part" : "This poster has been created by an archivist algorythm. Its jobs is to save erased online text from ",
+	"poster_generator_intro_second_part_author" : "you.",
+	"poster_generator_intro_default_author" : "someone ",
+	"poster_generator_intro_second_part": ".",
+
+	"poster_generator_share_author" : "You can share this link, in this case everybody could see, share and buy your poster.",
+	"poster_generator_share_first_part" :"You can see, share and buy",
+	"poster_generator_share_second_part" :"'s poster, cause he/she has shared this link.",
+	
+	"poster_generator_buy" : "You can buy this poster color printed (40 x 59.4cm) at ",	
+	
+	"buy_now" : "Buy now",
+	"generator_btn" : "Start now",
+	"show_btn" : "show",
+	"destroy_btn" : "delete",
+	"poster_generator" : "Poster generator",
+	"poster_generator_new" : "New poster",
+	"poster_generator_change_background" : "Change background",
+	"poster_generator_share" : "Share"
 }
