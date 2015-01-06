@@ -51,9 +51,6 @@ module.exports = {
 
 		var finish = function(err, sentence, users){
 			if(err) return next(err);
-			if(!_.isString(sentence)){
-				return next(sentence);
-			}
 			sentence = 	sentence
 						.split("\n")
 						.slice(0, maxLine)
@@ -77,9 +74,35 @@ module.exports = {
 					dest : sails.config.scp.path
 				}, function(err, filename){
 					if(err) return next(err);
-					return res.view({
-						sentence : sentence,
-						url : sails.config.scp.url+filename
+
+					PrintType
+					.findOne()
+					.where({
+						name : "poster"
+					})
+					.then(function(printType){
+						var print = Print.create({
+							sentence : sentence,
+							url : sails.config.scp.url+filename,
+							type : printType.id
+						})
+						.then(function(print){
+							(users||[]).map(function(user){
+								print.owner.add(user.id);
+							});
+							print.save();
+							return print;
+						})
+						.catch(function(err){
+							return res.next(err);
+						});
+						return [print];
+					})
+					.spread(function(print){
+						return res.view(print);
+					})
+					.catch(function(err){
+						return res.next(err);
 					});
 				});
 			});
@@ -87,7 +110,6 @@ module.exports = {
 
 		var sentence = req.param("txt");
 		var id = req.param("id");
-
 		if(sentence){
 			return finish(null, sentence, false);
 		}
@@ -100,13 +122,29 @@ module.exports = {
 		else{
 			maxLength = Math.ceil( 200*Math.random() );
 			var date = new Date();
-			date = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+			date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 			return Backspace.getRandom({
 				updatedAt : {
 					">=" : date}
 			}, false, maxLength, finish);
 		}
 
+	},
+	"postershow" : function(req, res, next){
+		Print.findOne()
+		.where({
+			id : req.param("id")
+		})
+		.populate("type")
+		.then(function(print){
+			if(!print)return res.notFound();
+			print.viewed++;
+			print.save();
+			return res.view(print);
+		})
+		.catch(function(err){
+			return res.next(err);
+		});
 	}
 };
 

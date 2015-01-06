@@ -7,8 +7,34 @@
 
 module.exports = {
 
-  attributes: {
-
-  }
+	attributes: {
+		type : {
+			model : "printType",
+			required : true
+		},
+		sentence : {
+			type : "string",
+			required : true	
+		},
+		viewed : {
+			type : "integer",
+			defaultsTo : 1,
+		},
+		print : {
+			type : "integer",
+			defaultsTo : 0,
+		},
+		sold : {
+			type : "integer",
+			defaultsTo : 0,
+		},
+		url : {
+			type : "string",
+			required : true
+		},
+		owner : {
+			collection : "user",
+			via : "id"
+		}
+	}
 };
-

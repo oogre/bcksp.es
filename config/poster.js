@@ -304,26 +304,30 @@ module.exports.poster = {
 			var transformeDate = function(value){
 				return new Date(parseInt(value)).toGMTString();
 			};
-			var dateStart = transformeDate(data[0].date[0]);
-			var dateEnd = transformeDate(data[0].date[data[0].date.length-1]);
+			signature = "";
+			(data||[]).map(function(d){
+				var dateStart = transformeDate(d.date[0]);
+				var dateEnd = transformeDate(d.date[d.date.length-1]);
+				signature += d.user + " : " + dateStart + " - " + dateEnd + "\n";
+			})
 			doc.y -= 52;
 			doc
 			.fontSize(13)
 			.font("DejaVuSans")
-			.text( data[0].user + " : " + dateStart + " - " + dateEnd, {
+			.text( signature, {
 				align : "center",
 				width : doc.page.width*5/7
 			});
 		})
 		.template("text", function(doc, data){
-			doc.y = doc.page.height - 295;
-			doc.x = 793.70 - 56.7;
+			doc.y = doc.page.height - 209;
+			doc.x = 793.70 - 56.7 + 120;
 			doc
 			.font("DejaVuSans")
-			.fontSize(15)
+			.fontSize(10)
 			.text( data, {
 				align : "justify",
-				width : 366.84
+				width : 366.84 - 120
 			})
 			.fontSize(30)
 			.moveDown()
@@ -350,14 +354,14 @@ module.exports.poster = {
 			.font("DejaVuSans")
 			.fontSize(40)
 			.text( data[0], {
-				align : "left",
+				align : "center",
 				width : doc.page.width/3,
 			})	
 			doc.y = doc.page.height - doc.page.margins.bottom - doc.page.margins.top - 25;
 			doc
 			.fontSize(20)
 			.text( data[1], {
-				align : "left",
+				align : "center",
 				width : doc.page.width/3,
 			})
 		});

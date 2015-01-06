@@ -32,7 +32,7 @@ module.exports = {
 		.then(function(backspaces){
 			if(backspaces.length == 0){
 				var cheater = sails.config.poster.txt.cheater;
-				return next(cheater[Math.floor(Math.random()*cheater.length)]);
+				return next(null, cheater[Math.floor(Math.random()*cheater.length)]);
 			}
 			while(sentence.length < maxlength){
 				if(typeof(backspace) == typeof(undefined) || ( Math.random()*10 > 8 && backspaces.length > 0 )){
@@ -78,6 +78,7 @@ module.exports = {
 							.map(function(user){
 								var date =	_.find(dates, function(date){ return date.user == user.id})
 								date.user = user.email;
+								date.id = user.id;
 								return date;
 							})
 							.reverse()

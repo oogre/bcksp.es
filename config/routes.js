@@ -95,7 +95,8 @@ module.exports.routes = {
 
 /* PrintController */
   "get /:lang/print/index/:id?" : "PrintController.index",
-  "get /:lang/print/poster/:id?" : "PrintController.poster",
+  "get /:lang/poster/generator/:id?" : "PrintController.poster",
+  "get /:lang/poster/show/:id?" : "PrintController.postershow",
 
 /* public file */
   'get /public/files/*': function(req, res, next) {

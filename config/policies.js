@@ -60,6 +60,7 @@ module.exports.policies = {
 
   "print" : {
     "poster" : "flash",
+    "postershow" : "flash",
     "*" : ["flash", "authenticated"]
   },
   "payment" : {
