@@ -102,10 +102,8 @@
 
 		$("body").on("mouseup", function(){
 			var selected = window.getSelection().toString() || false;
-			console.log(selected);
 			$(".newposter, .twitter-share-button")
 			.each(function(n, button){
-				console.log(button);
 				var b = $(button);
 				b.html(b.html().split(" (*)")[0])
 				if(selected) b.html(b.html()+" (*)");
@@ -242,7 +240,9 @@
 				<th></th>
 			</tr>
 			
-			<% (user.print||[]).map(function(print){ 
+			<%
+			console.log(user.print);
+			 (user.print||[]).map(function(print){ 
 
 				%>
 				<tr data-id="<%= print.id %>" data-model="print">
@@ -262,6 +262,20 @@
 				</tr>
 			<% }) %>
 		</table>
+		<nav>
+			<ul class="pagination">
+				<li>
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
 	<div class="row">
 		<div class="lastbackspace highlight">

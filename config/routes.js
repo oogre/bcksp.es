@@ -43,7 +43,15 @@ module.exports.routes = {
     controller: 'static',
     action : "index"
   },
+  'r|^\/fr\/$|lang': {
+    controller: 'static',
+    action : "index"
+  },
   'r|^\/en$|lang': {
+    controller: 'static',
+    action : "index"
+  },
+  'r|^\/en\/$|lang': {
     controller: 'static',
     action : "index"
   },
@@ -104,6 +112,8 @@ module.exports.routes = {
     return res.sendfile(sails.config.appPath+req.path);
   },
 
+/* ApiController */
+  "get /api/print" : "ApiController.findPrint",
 
 
 /* PaymentController */

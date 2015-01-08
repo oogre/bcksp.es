@@ -156,12 +156,19 @@ module.exports = {
 
 	"show" : function(req, res, next){
 		var userIdToShow = req.param("id") ? req.param("id") : req.session.User.id;
+		var skipPrint = req.param("skipprint") ? parseInt(req.param("skipprint")) : 0;
+
+		console.log(skipPrint);
 		User
 		.findOne()
 		.where({
 			id : userIdToShow
 		})
-		.populateAll()
+		.populate("backspace")
+		.populate("print", {
+			//limit: 3,
+			//skip : skipPrint
+		})
 		.then(function foundUserBackspace (userBackspace){
 			if(!userBackspace) return res.redirect('/'+req.session.locale+'/session/destroy');
 			PrintType
