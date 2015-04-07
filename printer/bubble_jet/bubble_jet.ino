@@ -68,10 +68,11 @@
 */
 
 #define  SWIDTH			80	// Sheet Width  (char)
-#define  SHEIGHT		70	// Sheet Height (char)
+#define  SHEIGHT		10	// Sheet Height (char)
 
+#define  NPM			254	// NEWPAGE MARKER
 #define  SOH			1	// START OF HEADING : HEADER
-#define  EOT			4	// END OF TRANSMISSION : FOOTER
+#define  EOT			255	// END OF TRANSMISSION : FOOTER
 #define  BEL			7	// RING THE BEL
 #define  BS				8	// BACKSPACE
 #define  LF				10	// NEW LINE
@@ -96,7 +97,7 @@ byte PRINT			[] = {	// CR
 byte NEWPAGE		[] = {	// FF + CR
 	FF, CR };
 
-#define BUFFERMAXSIZE SWIDTH + 4
+#define BUFFERMAXSIZE 85
 
 typedef struct BUFFER{
 	byte current;
@@ -107,7 +108,30 @@ typedef struct BUFFER{
 BUFFER buffer = {
 	0, 0, 
 	{ 
-		0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0
+	}
+};
+
+typedef struct CMD{
+  	byte newPage;
+	byte positionX;
+	byte positionY;
+	byte length;
+	byte characters [SWIDTH];
+};
+
+CMD cmd = {
+	0, 0, 0, 0, 
+	{
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -119,44 +143,21 @@ BUFFER buffer = {
 	}
 };
 
-typedef struct CMD{
-	byte positionX;
-	byte positionY;
-	byte length;
-	byte characters [SWIDTH];
-	boolean newPage;
-};
-
-CMD cmd = {
-	0, 0, 0, 
-	{
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
-	},
-	false
-};
-
 byte old_position_y = 0;
 boolean pageLoaded = false;
 
   // PARALLEL PORT TO ARDUINO PIN
-#define  nStrobe		2
-#define  data_0			3
-#define  data_1			4
-#define  data_2			5
-#define  data_3			6
-#define  data_4			7
-#define  data_5			8
-#define  data_6			9
-#define  data_7			10
-#define  nAck			11
-#define  busy			12
+#define  nStrobe		11//2
+#define  data_0			12//3
+#define  data_1			2//4
+#define  data_2			3//5
+#define  data_3			4//6
+#define  data_4			5//7
+#define  data_5			6//8
+#define  data_6			7//9
+#define  data_7			8//10
+#define  nAck			9//11
+#define  busy			10//12
 #define  strobeWait 	2 // MICROSECONDS TO STROBE FOR
 // STEPPER CONTROLLER
 #include <Stepper.h>
@@ -230,13 +231,14 @@ void readCommand()
 			if(buffer.current == EOT || buffer.cursor == BUFFERMAXSIZE)
 			{
 				buffer.cursor	= 0;
-				cmd.positionX	= buffer.buffer[0];
-				cmd.positionY	= buffer.buffer[1];
-				cmd.length		= buffer.buffer[2];
+				cmd.newPage	= buffer.buffer[0];//4+cmd.length
+				cmd.positionX	= buffer.buffer[1];
+				cmd.positionY	= buffer.buffer[2];
+				cmd.length	= buffer.buffer[3];
 				for(byte i = 0 ; i < cmd.length ; i++){
-					cmd.characters[i] = buffer.buffer[3+i];
+					cmd.characters[i] = buffer.buffer[4+i];
 				}
-				cmd.newPage	= buffer.buffer[4+cmd.length] == 1;
+
 				break;
 			}
 			else
@@ -258,6 +260,14 @@ void loadNewPage(){
 	delay(3000);
 }
 
+void ejectPage(){
+	printerFunction(RESET);
+	printerFunction(NEWPAGE);
+	delay(20);
+	printerFunction(NEWLINE);
+	delay(6000);
+}
+
 void printCommand(){
 	if(!pageLoaded){
 		loadNewPage();
@@ -272,12 +282,11 @@ void printCommand(){
 	printerFunction(PRINT);
 	printerFunction(RESET);
 	delay(1000);
-	if(cmd.newPage && false){
-		printerFunction(RESET);
-		printerFunction(NEWPAGE);
-		printerFunction(RESET);
+	if(cmd.newPage == NPM){
+                ejectPage();
 		pageLoaded = false;
-		delay(3000);
+		old_position_y = 0;
+		loadNewPage();
 	}
 }
 
@@ -297,11 +306,6 @@ void moveToPositionY(){
 	digitalWrite(STEPPER_PIN_3, LOW);
 	delay(500);
 	old_position_y = cmd.positionY;
-	if(cmd.positionY>= SHEIGHT){
-		pageLoaded = false;
-		old_position_y = 0;
-		loadNewPage();
-	}
 }
 
 void printerFunction(byte CMD []){
