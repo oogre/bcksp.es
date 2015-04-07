@@ -1,0 +1,115 @@
+
+<style type="text/css">
+	nav ul.pagination{
+		margin-top:  0;
+
+	}
+	table.prints{
+		margin-bottom:  0;		
+	}
+
+</style>
+<script type="text/javascript">
+		var prints = {};
+		window.skip = 0;
+		window.limit = 3;
+
+		var getPrint = function(skip, next){
+			$.ajax({
+				url :"/api/print/<%= user.id %>",
+				data : {
+					where : JSON.stringify({
+						owner : "<%= user.id %>"
+					}),
+					limit: '"'+limit+'"',
+					skip: '"'+skip+'"',
+					populates : JSON.stringify([{
+						name : "type"
+					}])
+				}
+			})
+			.done(function(data){
+				next(null, data.data);
+			})
+			.fail(function(err){
+				next(err);
+			})
+		};
+
+		var displayPrint = function(err, data){
+			if(err) return ;
+
+
+			var table = $("table.prints");
+			table
+			.next("nav")
+			.find("[aria-label]")
+			.parent()
+			.removeClass("disabled")
+			.removeClass("disabled");
+
+			if( 0 == skip){
+				$("[aria-label='Previous']")
+				.parent()
+				.addClass("disabled");
+			}
+			console.log(skip+" + "+data.prints.length+" >= "+data.length);
+			if( skip + data.prints.length >= data.length){
+				$("[aria-label='Next']")
+				.parent()
+				.addClass("disabled");
+			}
+
+
+			table
+			.find("tr:not(:first-child)")
+			.remove();
+			(data.prints||[]).map(function(print){
+				table
+				.append(JST["assets/templates/print.ejs"]({
+					_csrf : "<%= _csrf %>",
+					print : print,
+					user : JSON.parse(_("<%- JSON.stringify(user) %>").unescape()),
+					lang : "<%= lang %>",
+					labels : JSON.parse(_("<%- JSON.stringify(labels) %>").unescape())
+				}));
+			});
+		};
+
+		$("[aria-label='Previous']").on("click", function(){
+			if($(this).parent().hasClass("disabled")) return false;
+			getPrint(skip-=limit, displayPrint);
+			return false;
+		});
+		$("[aria-label='Next']").on("click", function(){
+			if($(this).parent().hasClass("disabled")) return false;
+			getPrint(skip+=limit, displayPrint);
+			return false;
+		});
+		getPrint(skip, displayPrint);
+</script>
+<table class="table prints">
+	<tr>
+		<th></th>
+		<th>type</th>
+		<th>title</th>
+		<th>viewed</th>
+		<th>print</th>
+		<th></th>
+	</tr>
+</table>
+<nav>
+	<ul class="pagination">
+		<li>
+			<a href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		<li>
+			<a href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+	</ul>
+</nav>
+<hr/>
