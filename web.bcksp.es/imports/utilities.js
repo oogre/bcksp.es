@@ -2,7 +2,7 @@
   web.bitRepublic - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:21:58
-  @Last Modified time: 2018-05-18 16:22:55
+  @Last Modified time: 2018-05-19 13:19:54
 \*----------------------------------------*/
 import { check } from 'meteor/check';
 import { config } from './startup/config.js';
@@ -33,4 +33,21 @@ export function genPubKey(){
 
 export function genPrivateKey(){
 	return Random.hexString(64);
+}
+
+export function APIerror(message){
+	return {
+		statusCode : 500,
+		headers : {
+			"Content-Type" : "text/plain",
+		},
+		body : message
+	}
+}
+
+export function APIsuccess(data){
+	return{
+		status : "success",
+		data : data
+	}
 }

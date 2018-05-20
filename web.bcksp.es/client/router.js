@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-05-18 16:13:38
+  @Last Modified time: 2018-05-20 18:21:48
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -13,6 +13,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+import App from '../imports/ui/App.js';
 
 FlowRouter.route( '/', {
 	name: 'home',
@@ -20,9 +21,7 @@ FlowRouter.route( '/', {
 		render(<App />, document.getElementById('render-target'));
 	},
 	subscriptions: function(params, queryParams) {
-		//this.register('public.bots', Meteor.subscribe('public.bots'));
-		//this.register('schedules', Meteor.subscribe('schedules'));
-		//this.register('targets', Meteor.subscribe('targets'));
-		//this.register('public.wallet', Meteor.subscribe('public.wallet'));
+		this.register('archive.public', Meteor.subscribe('archive.public'));
+		this.register('archive.private', Meteor.subscribe('archive.private'));
 	}
 });
