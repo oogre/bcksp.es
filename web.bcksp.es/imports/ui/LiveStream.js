@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-05-20 23:15:08
+  @Last Modified time: 2018-05-21 01:53:48
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -17,16 +17,21 @@ class LiveStream extends Component {
 		this.state = {
 			liveBackspaces : ""
 		};
-		if(this.props.type == "public"){
-			let self = this;
-			streamer.on('liveBackspaces', function(message) {
-				self.setState({
-					liveBackspaces : message + " " + self.state.liveBackspaces
+	}
+	componentDidMount(){
+		if(this.props.public){
+			streamer.on('liveBackspaces', message => {
+				this.setState({
+					liveBackspaces : message + " " + this.state.liveBackspaces
 				});
 			});
 		}
 	}
-
+	componentWillUnmount(){
+		if(this.props.public){
+			streamer.stop("liveBackspaces");
+		}
+	}
 	render() {
 		return (
 			<div className="stream">
@@ -37,10 +42,32 @@ class LiveStream extends Component {
 }
 
 export default withTracker(self => {
-	let isReady = FlowRouter.subsReady("archive.public");
-	if(!isReady)return{ isReady };
+	let isReady = false;
 	let archive;
-	if(self.type == "private"){
+	let public = self.type != "private";
+
+	if(public){
+		isReady = FlowRouter.subsReady("archive.public");
+		if(!isReady)return{ 
+			isReady ,
+			public
+		};
+		archive = Archives.findOne({
+			type : config.archives.public.type
+		},{
+			fields : {
+				longBuffer : 1
+			},
+			reactive : false
+		});
+		archive = archive.longBuffer;
+	}else{
+		isReady = FlowRouter.subsReady("archive.private");
+		if(!isReady)return{ 
+			isReady,
+			public
+		};
+	
 		archive = Archives.findOne({
 			type : config.archives.private.type,
 			owner : Meteor.userId()
@@ -51,18 +78,9 @@ export default withTracker(self => {
 			reactive : true
 		});
 		archive = archive.backspaces.join(" ");
-	}else{
-		archive = Archives.findOne({
-			type : config.archives.public.type
-		},{
-			fields : {
-				longBuffer : 1
-			},
-			reactive : false
-		});
-		archive = archive.longBuffer;
 	}
 	return {
+		public,
 		isReady,
 		archive
 	};

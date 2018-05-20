@@ -1,16 +1,15 @@
 /*----------------------------------------*\
-  web.bitRepublic - App.js
+  web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2018-05-21 01:51:14
+  @Date:   2018-05-21 00:58:47
+  @Last Modified time: 2018-05-21 01:04:43
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import  LiveStream from './LiveStream.js';
-import  UserLogIn from './user/login.js';
+import  LiveStream from './../LiveStream.js';
 
-// App component - represents the whole app
-class App extends Component {
+// UserProfile component
+class UserProfile extends Component {
 	constructor(props){
 		super(props);
 	}
@@ -18,17 +17,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="page page--home">
-				{ 
-					this.props.userId ? 
-						<a 	className="menu__item__link"
-							href={ FlowRouter.path("userProfile", { userId : Meteor.userId() }) }
-						>
-							{this.props.userMail}
-						</a>
-					:
-						<UserLogIn/>
-				}
-				<LiveStream/>
+				<LiveStream type="private"/>
 			</div>
 		);
 	}
@@ -42,4 +31,4 @@ export default withTracker(self => {
 		currentUser,
 		userMail
 	};
-})(App);
+})(UserProfile);
