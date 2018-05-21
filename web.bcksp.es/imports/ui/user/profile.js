@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2018-05-21 01:04:43
+  @Last Modified time: 2018-05-21 02:30:08
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -22,6 +22,7 @@ class UserProfile extends Component {
 		);
 	}
 }
+
 export default withTracker(self => {
 	let currentUser = Meteor.user();
 	let userMail = currentUser ? currentUser.emails[0].address : null;

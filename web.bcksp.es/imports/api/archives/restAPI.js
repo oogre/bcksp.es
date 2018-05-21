@@ -2,7 +2,7 @@
   web.bitRepublic - restAPI.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:52
-  @Last Modified time: 2018-05-20 16:25:22
+  @Last Modified time: 2018-05-21 02:35:12
 \*----------------------------------------*/
 
 import moment from 'moment';
@@ -100,7 +100,6 @@ if(Meteor.isServer){
 				if(myArchive<1){
 					return Utilities.APIerror("The data you ask access does not exists");
 				}
-
 
 				streamer.emit('liveBackspaces', this.bodyParams.text);
 
