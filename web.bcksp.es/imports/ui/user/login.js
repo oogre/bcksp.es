@@ -2,7 +2,7 @@
   web.bitRepublic - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 23:35:48
-  @Last Modified time: 2018-05-21 00:20:36
+  @Last Modified time: 2018-05-21 02:25:16
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
@@ -50,9 +50,7 @@ export default class UserLogIn extends Component {
 				this.setState({
 					'has-error' : true
 				});
-				console.log(err);
 				err.details.forEach((fieldError) => {
-
 					this.setState({
 						["error-"+fieldError.name] : fieldError.type
 					});
@@ -67,7 +65,6 @@ export default class UserLogIn extends Component {
 					'is-loading' : false
 				});
 				if(err){
-					console.log(err);
 					this.setState({
 						'has-error' : true,
 						error : err.reason
@@ -82,17 +79,18 @@ export default class UserLogIn extends Component {
 	}
 
 	render() {
-		let errors = i18n.createTranslator("error");
+		let errors = i18n.createTranslator("errors");
+		let forms = i18n.createTranslator("forms");
 		return (
 			<div>
 				<form className="login-user" onSubmit={this.handleLogin.bind(this)}>
 					<div className="fields-row">
 						<div className="fields-column">
 							<input
-								type="email"
-								ref="email"
-								name="email"
-								placeholder="Type your email"
+								type = "email"
+								ref = "email"
+								name = {forms("email", "name")}
+								placeholder = {forms("email", "placeholder")}
 							/>
 							{
 								this.state["error-email"] ?
@@ -107,8 +105,8 @@ export default class UserLogIn extends Component {
 							<input
 								type="password"
 								ref="password"
-								name="password"
-								placeholder="Type your password"
+								name = {forms("password", "name")}
+								placeholder = {forms("password", "placeholder")}
 							/>
 							{
 								this.state["error-password"] ?
@@ -129,7 +127,7 @@ export default class UserLogIn extends Component {
 								(this.state['has-error'] ? "error " : "")
 							}
 							type="submit"
-							value="Log in"
+							value={forms("submit", "login")}
 						/>
 						{ 
 							this.state["error"] ? 
