@@ -2,7 +2,7 @@
   web.bitRepublic - restAPI.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:52
-  @Last Modified time: 2018-05-21 02:35:12
+  @Last Modified time: 2018-05-21 16:10:30
 \*----------------------------------------*/
 
 import moment from 'moment';
@@ -10,8 +10,19 @@ import { Api } from '../restAPI.js';
 import { Archives } from './archives.js';
 import { config } from '../../startup/config.js';
 import * as Utilities from '../../utilities.js';
-import { streamer } from '../streamer.js';
-if(Meteor.isServer){	
+import { ArchiveAdd } from './methods.js';
+
+if(Meteor.isServer){
+	var wait = function(ms) {
+		var future = new Future;
+
+		setTimeout(function() {
+			future.return();
+		}, ms);
+
+		return future.wait();
+	}
+
 	Api.addRoute('archives', {
 		/**
 		* @api {get} /api/archives
@@ -78,31 +89,13 @@ if(Meteor.isServer){
 				if(_.isEmpty(this.bodyParams.text)){
 					return Utilities.APIerror("Need bodyParams text to be string");
 				}
-				
-				let myArchive = Archives.update({
-					type : config.archives.private.type,
-					owner : this.userId
-				},{
-					$inc : {
-						count : this.bodyParams.text.length
-					},
-					$push : {
-						backspaces : {
-							$position : 0,
-							$each : [this.bodyParams.text]
-						}
-					},
-					$set : {
-						updatedAt : new Date()
-					}
+
+				ArchiveAdd.call({
+					text : this.bodyParams.text
+				}, (err, res) => {
+					console.log(err, res);
 				});
-
-				if(myArchive<1){
-					return Utilities.APIerror("The data you ask access does not exists");
-				}
-
-				streamer.emit('liveBackspaces', this.bodyParams.text);
-
+				
 				return Utilities.APIsuccess("Backspaces saved");
 			}
 		}

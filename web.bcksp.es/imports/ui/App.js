@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2018-05-21 01:51:14
+  @Last Modified time: 2018-05-21 17:04:40
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -16,6 +16,7 @@ class App extends Component {
 	}
 
 	render() {
+		
 		return (
 			<div className="page page--home">
 				{ 

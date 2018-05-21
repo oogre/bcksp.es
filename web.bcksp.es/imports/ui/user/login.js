@@ -2,7 +2,7 @@
   web.bitRepublic - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 23:35:48
-  @Last Modified time: 2018-05-21 02:25:16
+  @Last Modified time: 2018-05-21 21:58:28
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';

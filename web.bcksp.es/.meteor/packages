@@ -30,3 +30,4 @@ react-meteor-data
 nimble:restivus
 rocketchat:streamer
 ddp-rate-limiter
+handtrix:chrome-extension-utils

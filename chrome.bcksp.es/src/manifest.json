@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "homepage_url": "http://local.bcksp.es",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/index.js"]
+    }
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": ["background/index.js"]
+  },
+  "permissions": [
+    "background",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/webpack-16.png",
+    "32": "icons/webpack-32.png",
+    "128": "icons/webpack-128.png"
+  },
+  "browser_action": {
+    "default_title": "bcksp.es",
+    "default_popup": "popup/index.html"
+  }
+}
