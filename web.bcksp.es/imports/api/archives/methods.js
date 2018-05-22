@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-05-21 21:38:15
+  @Last Modified time: 2018-05-23 00:58:09
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -13,9 +13,17 @@ import { streamer } from './../streamer.js';
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
-	validate: new SimpleSchema({
-		'text': { type: String },
-	}).validator({clean:true}),
+	validate({ text }) {
+		if(!_.isString(text) || _.isEmpty(text)){
+			throw new ValidationError([{
+				name: 'text',
+				type: 'not-a-string',
+				details: {
+				  value: text
+				}
+			}]);
+		}
+	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
 	
@@ -26,6 +34,7 @@ export const ArchiveAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ text }) {
+		console.log(text);
 		this.unblock();
 		if (!this.userId) {
 			// Throw errors with a specific error code

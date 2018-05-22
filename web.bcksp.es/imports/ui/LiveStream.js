@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-05-21 01:53:48
+  @Last Modified time: 2018-05-23 00:10:36
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -34,7 +34,7 @@ class LiveStream extends Component {
 	}
 	render() {
 		return (
-			<div className="stream">
+			<div className="stream" style={{whiteSpace: "pre-wrap"}}>
 				{this.state.liveBackspaces + " " + this.props.archive}
 			</div>
 		);

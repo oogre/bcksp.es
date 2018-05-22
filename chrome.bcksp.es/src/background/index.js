@@ -1,68 +1,52 @@
+import AsteroidHelper from "./AsteroidHelper.js";
+import * as Utilities from '../shared/utilities.js';
 
-import {createClass} from "asteroid";
-localStorage.clear();
+let timers = {};
+let senderTimeout = 6000;
 
-const Asteroid = createClass();
-// Connect to a Meteor backend
-const asteroid = new Asteroid({
-    endpoint: "ws://local.bcksp.es/websocket"
-});
-asteroid.logout().then(result => {
-	console.log("LOGOUT");
-}).catch(error => {
-	console.error("LOGOUT FAIL");
-});
+function ArchivesMethodsAdd(){
+	clearTimeout(timers.saveDB);
+	timers.saveDB = setTimeout(()=>{
+		AsteroidHelper.call("Archives.methods.add", {
+			text: Utilities.getArchiveBuffer().split("").reverse().join("")
+		}, (err, res)=>{
+			if(err) return console.log(err);
+			console.log(res);
+			Utilities.clearArchiveBuffer();
+		});
+	}, senderTimeout);
+}
 
 chrome.runtime.onMessage.addListener( (request,sender,sendResponse)=>{
     if( request.action === "login" ){
-        asteroid.loginWithPassword({
-			email : request.data.email,
-			password : request.data.pwd
-		}).then(data => {
-			let sub = asteroid.subscribe("archive.private.count");
-			asteroid.ddp.on("changed", ({collection, id, fields}) => {
-				let badgeText = fields.count;
-				if(badgeText > 999999){
-					badgeText = (badgeText / 1000000).toFixed(1);
-					if(badgeText.length > 3){
-						badgeText = badgeText.substr(0, badgeText.indexOf("."));
-					}
-					badgeText += "M";
-				}
-				if(badgeText > 999){
-					badgeText = (badgeText / 1000).toFixed(1);
-					if(badgeText.length > 3){
-						badgeText = badgeText.substr(0, badgeText.indexOf("."));
-					}
-					badgeText += "k";
-				}
-			    chrome.browserAction.setBadgeText({
-			    	text : ""+badgeText
-			    });
-			});
-			sub.on("ready", () => {
-				console.log("ready");
-			});
-			sendResponse({
-				result : "success",
-				data
+    	AsteroidHelper.login(request.data,(err, res)=>{
+			if(err) {
+				return sendResponse({
+					result : "fail",
+					error : err
+				});
+			}
+			
+			AsteroidHelper.on("changed", archiveSize =>{
+				chrome.browserAction.setBadgeText({ text : Utilities.prefixFormat(archiveSize) });	
 			});
 
-		}).catch(error => {
-			sendResponse({
-				result : "fail",
-				error
+			return sendResponse({
+				result : "success",
+				data : res
 			});
 		});
     }else if(request.action === "archive"){
-    	asteroid.call("Archives.methods.add", {
-			text : request.data.text
-		}).then(result => {
-		    console.log("Success");
-		    console.log(result);
-		}).catch(error => {
-		    console.log("Error");
-		    console.error(error);
+    	Utilities.addToArchiveBuffer(request.data);
+		ArchivesMethodsAdd();
+    }else if(request.action === "backspacing"){
+    	ArchivesMethodsAdd();
+    }else if(request.action === "backspaceup"){
+    	ArchivesMethodsAdd();
+    }else if(request.action === "logout"){
+    	AsteroidHelper.logout((err, res)=>{
+			if(err) return console.error("LOGOUT FAIL");
+			return console.error("LOGOUT");
 		});
     }
 });
