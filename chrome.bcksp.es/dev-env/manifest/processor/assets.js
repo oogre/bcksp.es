@@ -10,6 +10,7 @@ import * as Remove from '../../remove';
 const buildAssetsDir = "$assets"
 
 const processAsset = function(object, key, buildPath) {
+ 
   const assetPath = object[key]
 
   log.pending(`Processing asset '${assetPath}'`)
@@ -24,15 +25,30 @@ const processAsset = function(object, key, buildPath) {
   } catch(ex) {
     mkdirp.sync(buildAssetsDirPath)
   }
+  //ADDED TO include all icons as array 
+  if( Object.prototype.toString.call( assetPath ) === '[object Array]' ) {
+    for(let id in assetPath){
+      const assetSrcPath = path.join(paths.src, assetPath[id])
+      const buildAssetPath = path.join(buildAssetsDir, Remove.path(assetPath[id]))
+      const assetDestPath = path.join(buildPath, buildAssetPath)
 
-  const assetSrcPath = path.join(paths.src, assetPath)
-  const buildAssetPath = path.join(buildAssetsDir, Remove.path(assetPath))
-  const assetDestPath = path.join(buildPath, buildAssetPath)
+      fs.copySync(assetSrcPath, assetDestPath)
 
-  fs.copySync(assetSrcPath, assetDestPath)
+      if(id == 0){
+        object[key] = buildAssetPath
+      }
+    }
+  }else{
+  // END OF ADDED
+    const assetSrcPath = path.join(paths.src, assetPath)
+    const buildAssetPath = path.join(buildAssetsDir, Remove.path(assetPath))
+    const assetDestPath = path.join(buildPath, buildAssetPath)
 
-  object[key] = buildAssetPath
+    fs.copySync(assetSrcPath, assetDestPath)
 
+    object[key] = buildAssetPath
+  }
+  
   log.done(`Done`)
 
   return true
@@ -41,6 +57,7 @@ const processAsset = function(object, key, buildPath) {
 export default function(manifest, {buildPath}) {
 
   // Process icons
+
   if (manifest.icons && Object.keys(manifest.icons).length) {
     _.forEach(manifest.icons, (iconPath, name) => processAsset(manifest.icons, name, buildPath))
   }

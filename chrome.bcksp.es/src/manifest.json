@@ -19,9 +19,10 @@
     "storage"
   ],
   "icons": {
-    "16": "icons/webpack-16.png",
-    "32": "icons/webpack-32.png",
-    "128": "icons/webpack-128.png"
+    "19": ["icons/19.standby.png", "icons/19.logout.png", "icons/19.sending.png", "icons/19.backspacing_0.png", "icons/19.backspacing_1.png", "icons/19.backspacing_2.png", "icons/19.backspacing_3.png"],
+    "38": ["icons/38.standby.png", "icons/38.logout.png", "icons/38.sending.png", "icons/38.backspacing_0.png", "icons/38.backspacing_1.png", "icons/38.backspacing_2.png", "icons/38.backspacing_3.png"],
+    "48": ["icons/48.standby.png", "icons/48.logout.png", "icons/48.sending.png", "icons/48.backspacing_0.png", "icons/48.backspacing_1.png", "icons/48.backspacing_2.png", "icons/48.backspacing_3.png"],
+    "128": ["icons/128.standby.png", "icons/128.logout.png", "icons/128.sending.png", "icons/128.backspacing_0.png", "icons/128.backspacing_1.png", "icons/128.backspacing_2.png", "icons/128.backspacing_3.png"]
   },
   "browser_action": {
     "default_title": "bcksp.es",

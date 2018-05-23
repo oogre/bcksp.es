@@ -2,11 +2,12 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-05-23 00:26:47
+  @Last Modified time: 2018-05-23 18:44:55
 \*----------------------------------------*/
 import _ from 'underscore'
 import diffMatchPatch from "diff-match-patch";
 import Encoder from "htmlencode";
+import Data from "./Data.js";
 
 export function prefixFormat(input, base = 10){
 	let table = [{
@@ -38,6 +39,44 @@ export function prefixFormat(input, base = 10){
 		}
 	}
 	return ""+Math.round(input);
+}
+export function backToPreviousIcon(){
+	Data.getLastIconStatus();
+	setIcon(Data.getLastIconStatus());
+}
+export function setIcon(name){
+	if(name == Data.getCurrentIconStatus()) return;
+	console.log("setIcon", name);
+	let size = 19;
+	let icons = {
+		standby : "$assets/"+size+".standby.png",
+		sending : "$assets/"+size+".sending.png",
+		logout : "$assets/"+size+".logout.png",
+		backspacing : [
+			"$assets/"+size+".backspacing_1.png", 
+			"$assets/"+size+".backspacing_0.png", 
+			"$assets/"+size+".backspacing_1.png", 
+			"$assets/"+size+".backspacing_2.png",
+			"$assets/"+size+".backspacing_3.png", 
+			"$assets/"+size+".backspacing_2.png",
+			"$assets/"+size+".backspacing_3.png"
+		]
+	};
+	if(_.isString(icons[name])){
+		clearInterval(Data.timers.icons);
+		Data.timers.icons = undefined;
+		chrome.browserAction.setIcon({
+			path: icons[name]
+		});
+	}else if(_.isArray(icons[name]) && undefined === Data.timers.icons){
+		Data.timers.icons = setInterval(()=>{
+			chrome.browserAction.setIcon({
+				path: icons[name][0]
+			});
+			icons[name].push(icons[name].shift());
+		}, 500);
+	}
+	Data.addIconHistory(name);
 }
 
 export function getHighlightText(elem){
@@ -77,7 +116,7 @@ export function innerTEXT(elem){
 	if("INPUT" === elem.tagName){
 		return elem.value;
 	}else{
-		return elem.innerHTML.replace(/(<([^>]+)>)/ig, "\n");	
+		return elem.innerHTML.replace(/(<([^>]+)>)/ig, "");	
 	}
 };
 

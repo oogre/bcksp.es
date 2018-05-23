@@ -2,9 +2,10 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-22 20:34:44
+  @Last Modified time: 2018-05-23 18:35:24
 \*----------------------------------------*/
 import {createClass} from "asteroid";
+import * as Utilities from '../shared/utilities.js';
 
 class AsteroidHelper{
 	constructor(){
@@ -22,18 +23,27 @@ class AsteroidHelper{
 
 		this.asteroid.on("connected", () =>{
 			console.log("connected");
+			this.startSubsribtion();
 		});
 
 		this.asteroid.on("disconnected", () =>{
 			console.log("disconnected");
+			this.stopSubsribtion();
+			Utilities.setIcon("logout");
+
 		});
 		
 		this.asteroid.on("loggedIn", data =>{
 			console.log("loggedIn", data);
+			this.startSubsribtion();
+			Utilities.setIcon("standby");
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
 			console.log("loggedOut");
+			this.stopSubsribtion();
+			Utilities.setIcon("logout");
+			
 		});
 	}
 	logout(cb){
@@ -49,11 +59,17 @@ class AsteroidHelper{
 			email : data.email,
 			password : data.pwd
 		}).then(data => {
-			this.startSubsribtion();
 			cb(null, data);
 		}).catch(error => {
 			cb(error, null);
 		});
+	}
+	stopSubsribtion(){
+		console.log("stopSubsribtion");
+		this.subscribtionList.map(subscribtion => {
+			this.asteroid.unsubscribe(subscribtion);
+		});
+		this.subscribtionList = [];
 	}
 	startSubsribtion (){
 		this.subscribtionList = this.subscribtionAddressList.map(address =>{

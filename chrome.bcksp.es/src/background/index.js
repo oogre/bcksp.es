@@ -1,16 +1,30 @@
 import AsteroidHelper from "./AsteroidHelper.js";
 import * as Utilities from '../shared/utilities.js';
+import Data from "./../shared/Data.js";
+import _ from 'underscore'
 
-let timers = {};
 let senderTimeout = 6000;
 
+/*
+let icon = ["standby","sending","logout","backspacing"];
+setInterval(()=>{
+	Utilities.setIcon(_.sample(icon));
+}, 6000);
+
+*/
+
 function ArchivesMethodsAdd(){
-	clearTimeout(timers.saveDB);
-	timers.saveDB = setTimeout(()=>{
+	clearTimeout(Data.timers.saveDB);
+	Data.timers.saveDB = setTimeout(()=>{
+		Utilities.setIcon("sending");
 		AsteroidHelper.call("Archives.methods.add", {
 			text: Utilities.getArchiveBuffer().split("").reverse().join("")
 		}, (err, res)=>{
-			if(err) return console.log(err);
+			if(err) {
+				Utilities.setIcon("logout");
+				return console.log(err);
+			}
+			Utilities.setIcon("standby");
 			console.log(res);
 			Utilities.clearArchiveBuffer();
 		});
@@ -40,6 +54,7 @@ chrome.runtime.onMessage.addListener( (request,sender,sendResponse)=>{
     	Utilities.addToArchiveBuffer(request.data);
 		ArchivesMethodsAdd();
     }else if(request.action === "backspacing"){
+		Utilities.setIcon("backspacing");
     	ArchivesMethodsAdd();
     }else if(request.action === "backspaceup"){
     	ArchivesMethodsAdd();
