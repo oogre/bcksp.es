@@ -1,5 +1,5 @@
 import AsteroidHelper from "./AsteroidHelper.js";
-import * as Utilities from '../shared/utilities.js';
+import Utilities from '../shared/utilities.js';
 import Data from "./../shared/Data.js";
 import _ from 'underscore'
 
@@ -26,6 +26,7 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 			});
 		break;
 		case "archive" : 
+			console.log(request.data);
 			Utilities.addToArchiveBuffer(request.data);
 		case "backspacing" : 
 		case "backspaceup" : 

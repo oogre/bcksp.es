@@ -2,10 +2,10 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-25 17:41:55
+  @Last Modified time: 2018-05-26 00:16:55
 \*----------------------------------------*/
 import {createClass} from "asteroid";
-import * as Utilities from '../shared/utilities.js';
+import Utilities from '../shared/utilities.js';
 
 class AsteroidHelper{
 	constructor(){
@@ -92,7 +92,7 @@ class AsteroidHelper{
 			Utilities.clearArchiveBuffer();
 		}).catch(error => {
 			Utilities.setIcon("logout");
-			console.log(err);
+			console.log(error);
 		});
 	}
 	on(eventName, cb){

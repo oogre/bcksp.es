@@ -1,0 +1,78 @@
+/*----------------------------------------*\
+  bcksp.es - Utilities.backspace.js
+  @author Evrard Vincent (vincent@ogre.be)
+  @Date:   2018-05-25 23:56:21
+  @Last Modified time: 2018-05-26 00:22:41
+\*----------------------------------------*/
+import diffMatchPatch from "diff-match-patch";
+import UtilitiesArchive from "./utilities.archive.js";
+import _ from 'underscore';
+
+export default class UtilitiesBackspace extends UtilitiesArchive{
+	static getHighlightText(elem){
+		let highlighted = elem.ownerDocument.getSelection().toString();
+		if(_.isEmpty(highlighted)) return false;
+		return highlighted.split("").reverse().join("");
+	}
+
+	static getCaretPosition(elem){
+		try{
+			if (elem.selectionStart){
+				return elem.selectionStart;
+			}
+			else if (elem.ownerDocument.selection){
+				elem.focus();
+				let r = elem.ownerDocument.selection.createRange();
+				if (null === r){
+					return false;
+				}
+				let re = elem.createTextRange();
+				let rc = re.duplicate();
+				re.moveToBookmark(r.getBookmark());
+				rc.setEndPoint("EndToStart", re);
+				return rc.text.length;
+			}
+		}catch(e){}
+		return false;
+	}
+
+	static getCharBeforeCaret(elem){
+		let caretPosition = UtilitiesBackspace.getCaretPosition(elem);
+		if(!caretPosition) return false;
+		return elem.value.charAt(caretPosition-1);
+	}
+
+	static innerTEXT(elem){
+		if("INPUT" === elem.tagName){
+			return elem.value;
+		}else{
+			return elem.innerHTML.replace(/(<([^>]+)>)/ig, "");	
+		}
+	}
+
+	static diff(a, b){
+		let diff = new diffMatchPatch();
+		return diff.diff_main(a, b)
+		.map(function(elem, key){
+			return 1 == key ? elem[1] : null;
+		}).join("");
+	}
+
+	static isAcceptable(elem){
+		return 		elem && (  "input" === elem.nodeName.toLowerCase()
+						|| 	"textarea" === elem.nodeName.toLowerCase() 
+						|| 	    "true" === elem.getAttribute("contenteditable") 
+						|| 	        "" === elem.getAttribute("contenteditable") ) ; 
+	}
+
+	static getTarget(defaultValue){
+		switch(window.location.host){
+			case "docs.google.com" : 
+				return document.querySelector(".kix-appview-editor")
+			break;
+			default : 
+				return defaultValue;
+			break;
+		}
+	}
+}
