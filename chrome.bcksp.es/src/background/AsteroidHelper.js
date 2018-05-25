@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-23 18:35:24
+  @Last Modified time: 2018-05-25 17:41:55
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import * as Utilities from '../shared/utilities.js';
@@ -23,7 +23,6 @@ class AsteroidHelper{
 
 		this.asteroid.on("connected", () =>{
 			console.log("connected");
-			this.startSubsribtion();
 		});
 
 		this.asteroid.on("disconnected", () =>{
@@ -37,13 +36,13 @@ class AsteroidHelper{
 			console.log("loggedIn", data);
 			this.startSubsribtion();
 			Utilities.setIcon("standby");
+
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
 			console.log("loggedOut");
 			this.stopSubsribtion();
 			Utilities.setIcon("logout");
-			
 		});
 	}
 	logout(cb){
@@ -67,9 +66,11 @@ class AsteroidHelper{
 	stopSubsribtion(){
 		console.log("stopSubsribtion");
 		this.subscribtionList.map(subscribtion => {
-			this.asteroid.unsubscribe(subscribtion);
+			this.asteroid.unsubscribe(subscribtion.id);
+			this.asteroid.subscriptions.cache.del(subscribtion.id);
 		});
 		this.subscribtionList = [];
+		chrome.browserAction.setBadgeText({ text : "" });	
 	}
 	startSubsribtion (){
 		this.subscribtionList = this.subscribtionAddressList.map(address =>{
@@ -81,10 +82,23 @@ class AsteroidHelper{
 			return sub;
 		});
 	}
+	send(){
+		Utilities.setIcon("sending");
+		this.asteroid.call("Archives.methods.add", {
+			text: Utilities.getArchiveBuffer().split("").reverse().join("")
+		}).then(res => {
+			Utilities.setIcon("standby");
+			console.log(res);
+			Utilities.clearArchiveBuffer();
+		}).catch(error => {
+			Utilities.setIcon("logout");
+			console.log(err);
+		});
+	}
 	on(eventName, cb){
 		this.asteroid.ddp.on(eventName, ({collection, id, fields}) => {
 			console.log("ON : " + collection, id, fields);
-			cb(fields.count);
+			cb(fields);
 		});
 	}
 	call(methodName, ...params){

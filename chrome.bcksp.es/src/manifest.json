@@ -16,7 +16,8 @@
     "tabs",
     "http://*/*",
     "https://*/*",
-    "storage"
+    "storage",
+    "webNavigation"
   ],
   "icons": {
     "19": ["icons/19.standby.png", "icons/19.logout.png", "icons/19.sending.png", "icons/19.backspacing_0.png", "icons/19.backspacing_1.png", "icons/19.backspacing_2.png", "icons/19.backspacing_3.png"],

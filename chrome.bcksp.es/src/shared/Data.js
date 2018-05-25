@@ -2,7 +2,7 @@
   bcksp.es - Data.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 19:33:44
-  @Last Modified time: 2018-05-23 18:45:25
+  @Last Modified time: 2018-05-25 22:11:13
 \*----------------------------------------*/
 import _ from 'underscore';
 
@@ -24,6 +24,7 @@ class Protocol{
 
 class Data{
 	constructor(){
+		this.currentURLBlacklisted = false;
 		this.innerText = "";
 		this.downFlag = false;
 		this.protocol = new Protocol();
@@ -35,9 +36,6 @@ class Data{
 		if(this.iconHistory.length > 5){
 			this.iconHistory.shift()
 		}
-	}
-	getLastIconStatus(){
-		return this.iconHistory.pop();
 	}
 	getCurrentIconStatus(){
 		if(this.iconHistory.length == 0 ) return "";

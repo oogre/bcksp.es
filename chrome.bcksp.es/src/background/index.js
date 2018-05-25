@@ -5,63 +5,75 @@ import _ from 'underscore'
 
 let senderTimeout = 6000;
 
-/*
-let icon = ["standby","sending","logout","backspacing"];
-setInterval(()=>{
-	Utilities.setIcon(_.sample(icon));
-}, 6000);
+chrome.tabs.onActivated.addListener(({tabId}) => {
+	chrome.tabs.get(tabId, ({url}) => {
+		Data.currentURLBlacklisted = Utilities.getIntoBlackList(url) !== false;
+		Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
+	});
+});
 
-*/
-
-function ArchivesMethodsAdd(){
-	clearTimeout(Data.timers.saveDB);
-	Data.timers.saveDB = setTimeout(()=>{
-		Utilities.setIcon("sending");
-		AsteroidHelper.call("Archives.methods.add", {
-			text: Utilities.getArchiveBuffer().split("").reverse().join("")
-		}, (err, res)=>{
-			if(err) {
-				Utilities.setIcon("logout");
-				return console.log(err);
-			}
-			Utilities.setIcon("standby");
-			console.log(res);
-			Utilities.clearArchiveBuffer();
-		});
-	}, senderTimeout);
-}
-
-chrome.runtime.onMessage.addListener( (request,sender,sendResponse)=>{
-    if( request.action === "login" ){
-    	AsteroidHelper.login(request.data,(err, res)=>{
-			if(err) {
-				return sendResponse({
-					result : "fail",
-					error : err
+chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
+	if(sender.id != chrome.runtime.id)return;
+	switch(request.action){
+		case "login" : 
+			AsteroidHelper.login(request.data,(err, res) => {
+				if(err) {
+					sendResponse(AsteroidHelper.asteroid.loggedIn);
+				}
+				AsteroidHelper.on("changed", ({count}) => Utilities.setBadgeText(count) );
+				AsteroidHelper.on("added", ({count}) => Utilities.setBadgeText(count) );	
+				sendResponse(AsteroidHelper.asteroid.loggedIn);
+			});
+		break;
+		case "archive" : 
+			Utilities.addToArchiveBuffer(request.data);
+		case "backspacing" : 
+		case "backspaceup" : 
+			Utilities.setIcon("backspacing");
+			clearTimeout(Data.timers.saveDB);
+			Data.timers.saveDB = setTimeout(()=> AsteroidHelper.send(), senderTimeout);
+		break;
+		case "logout" : 
+			AsteroidHelper.logout((err, res) => {
+				if(err) console.error("LOGOUT FAIL");
+				else sendResponse(AsteroidHelper.asteroid.loggedIn);
+			});
+		break;
+		case "isLogin":
+			sendResponse(AsteroidHelper.asteroid.loggedIn);
+		break;
+		case "getUrl":
+			/*
+				Called everytime a page is loaded
+			*/
+			/*
+				+ true; => 1
+				+ false; => 0
+			*/
+			chrome.tabs.query({
+				'active': true, 
+				'lastFocusedWindow': true
+			}, tabs => {
+			    let url = tabs[0].url;
+			    Data.currentURLBlacklisted = Utilities.getIntoBlackList(url) !== false;
+			    Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
+			    sendResponse({
+					url : url,
+					blackListed : +Data.currentURLBlacklisted
 				});
-			}
-			
-			AsteroidHelper.on("changed", archiveSize =>{
-				chrome.browserAction.setBadgeText({ text : Utilities.prefixFormat(archiveSize) });	
 			});
+		break;
+		case "changeBWlist":
+			if(request.data.blacklisted) Utilities.addToBlackList(request.data.url);
+			else Utilities.removeToBlackList(request.data.url);
 
-			return sendResponse({
-				result : "success",
-				data : res
+			chrome.tabs.query({
+				'active': true, 
+				'lastFocusedWindow': true
+			}, tabs => {
+				chrome.tabs.reload(tabs[0].id);
 			});
-		});
-    }else if(request.action === "archive"){
-    	Utilities.addToArchiveBuffer(request.data);
-		ArchivesMethodsAdd();
-    }else if(request.action === "backspacing"){
-		Utilities.setIcon("backspacing");
-    	ArchivesMethodsAdd();
-    }else if(request.action === "backspaceup"){
-    	ArchivesMethodsAdd();
-    }else if(request.action === "logout"){
-    	AsteroidHelper.logout((err, res)=>{
-			if(err) return console.error("LOGOUT FAIL");
-			return console.error("LOGOUT");
-		});
-    }
+		break;
+	}
+	return true; //so i can use sendResponse later
 });

@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-05-23 18:44:55
+  @Last Modified time: 2018-05-25 22:46:40
 \*----------------------------------------*/
 import _ from 'underscore'
 import diffMatchPatch from "diff-match-patch";
@@ -40,11 +40,19 @@ export function prefixFormat(input, base = 10){
 	}
 	return ""+Math.round(input);
 }
-export function backToPreviousIcon(){
-	Data.getLastIconStatus();
-	setIcon(Data.getLastIconStatus());
+
+export function setDefaultIcon(loggedIn){
+	setIcon(loggedIn ? "standby" : "logout");
 }
+
+export function setBadgeText(value){
+	chrome.browserAction.setBadgeText({ 
+		text : prefixFormat(value) 
+	});	
+}
+
 export function setIcon(name){
+	if(name != "blackList" && Data.currentURLBlacklisted) return setIcon("blackList");
 	if(name == Data.getCurrentIconStatus()) return;
 	console.log("setIcon", name);
 	let size = 19;
@@ -52,6 +60,7 @@ export function setIcon(name){
 		standby : "$assets/"+size+".standby.png",
 		sending : "$assets/"+size+".sending.png",
 		logout : "$assets/"+size+".logout.png",
+		blackList : "$assets/"+size+".backspacing_3.png",
 		backspacing : [
 			"$assets/"+size+".backspacing_1.png", 
 			"$assets/"+size+".backspacing_0.png", 
@@ -135,6 +144,7 @@ export function getArchiveBuffer(){
 export function clearArchiveBuffer(){
 	localStorage.removeItem("archive");
 }
+
 export function decode(value){
 	var marker = "-";
 	return Encoder.htmlDecode(marker+""+value).substr(marker.length);
@@ -144,6 +154,32 @@ export function addToArchiveBuffer(data){
 	data = decode(data);
     localStorage.setItem("archive", getArchiveBuffer() + data);
 }
+
+export function getIntoBlackList(url){
+	let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
+	for(let i = 0 ; i < blackList.length ; i++){
+		if(blackList[i] == url){
+			return i;
+		}
+	}
+	return false;
+}
+
+export function addToBlackList(url){
+	let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
+	if(getIntoBlackList(url) !== false) return;
+	blackList.push(url);
+	localStorage.setItem("blackList", JSON.stringify(blackList));
+}
+
+export function removeToBlackList(url){
+	let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
+	let itemId = getIntoBlackList(url);
+	if(itemId === false) return;
+	blackList.splice(itemId, 1);
+	localStorage.setItem("blackList", JSON.stringify(blackList));
+}
+
 export function sendMessage(action, data){
 	if(!_.isEmpty(data)){
 		chrome.runtime.sendMessage({
@@ -152,6 +188,7 @@ export function sendMessage(action, data){
 		});
 	}
 }
+
 export function log(...data){
 	if(true){
 		console.log(data);
