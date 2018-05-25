@@ -2,14 +2,13 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-05-26 00:14:20
+  @Last Modified time: 2018-05-26 00:34:18
 \*----------------------------------------*/
 
 import _ from 'underscore';
 import Data from "./Data.js";
-import UtilitiesBackspace from "./utilities.backspace.js";
 
-export default class UtilitiesIcon extends UtilitiesBackspace {
+export default class UtilitiesIcon {
 	static prefixFormat(input, base = 10){
 		let table = [{
 				value : Math.pow(base, 3),

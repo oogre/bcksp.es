@@ -2,13 +2,12 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-05-26 00:22:41
+  @Last Modified time: 2018-05-26 00:34:25
 \*----------------------------------------*/
 import diffMatchPatch from "diff-match-patch";
-import UtilitiesArchive from "./utilities.archive.js";
 import _ from 'underscore';
 
-export default class UtilitiesBackspace extends UtilitiesArchive{
+export default class UtilitiesBackspace {
 	static getHighlightText(elem){
 		let highlighted = elem.ownerDocument.getSelection().toString();
 		if(_.isEmpty(highlighted)) return false;
