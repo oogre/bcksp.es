@@ -1,7 +1,7 @@
 import AsteroidHelper from "./AsteroidHelper.js";
 import Utilities from '../shared/utilities.js';
 import Data from "./../shared/Data.js";
-import _ from 'underscore'
+import _ from 'underscore';
 
 let senderTimeout = 6000;
 
@@ -20,8 +20,6 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 				if(err) {
 					sendResponse(AsteroidHelper.asteroid.loggedIn);
 				}
-				AsteroidHelper.on("changed", ({count}) => Utilities.setBadgeText(count) );
-				AsteroidHelper.on("added", ({count}) => Utilities.setBadgeText(count) );	
 				sendResponse(AsteroidHelper.asteroid.loggedIn);
 			});
 		break;
@@ -65,9 +63,8 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 			});
 		break;
 		case "changeBWlist":
-			if(request.data.blacklisted) Utilities.addToBlackList(request.data.url);
-			else Utilities.removeToBlackList(request.data.url);
-
+			AsteroidHelper.blacklist(request.data.blacklisted, request.data.url);
+			
 			chrome.tabs.query({
 				'active': true, 
 				'lastFocusedWindow': true

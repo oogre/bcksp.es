@@ -2,10 +2,11 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-26 00:16:55
+  @Last Modified time: 2018-05-26 13:31:19
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
+import _ from 'underscore';
 
 class AsteroidHelper{
 	constructor(){
@@ -16,7 +17,8 @@ class AsteroidHelper{
 		});
 
 		this.subscribtionAddressList = [
-			"archive.private.count"
+			"archive.private.count",
+			"settings.private.blacklist"
 		];
 		
 		this.subscribtionList = [];
@@ -34,6 +36,15 @@ class AsteroidHelper{
 		
 		this.asteroid.on("loggedIn", data =>{
 			console.log("loggedIn", data);
+			this.on("changed", {
+				counts : ({count}) => Utilities.setBadgeText(count)
+			});
+			this.on("added", {
+				counts : ({count}) => Utilities.setBadgeText(count) ,
+				blacklist : blacklist => {
+					_.each(blacklist, Utilities.addToBlackList)
+				}
+			});	
 			this.startSubsribtion();
 			Utilities.setIcon("standby");
 
@@ -42,6 +53,7 @@ class AsteroidHelper{
 		this.asteroid.on("loggedOut", () =>{
 			console.log("loggedOut");
 			this.stopSubsribtion();
+			localStorage.clear();
 			Utilities.setIcon("logout");
 		});
 	}
@@ -95,10 +107,21 @@ class AsteroidHelper{
 			console.log(error);
 		});
 	}
-	on(eventName, cb){
+	blacklist(add, url){
+		let action = add ? "Settings.Blacklist.Add" : "Settings.Blacklist.Remove";
+		this.asteroid.call(action, {
+			url : url
+		}).catch(error => {
+			Utilities.setIcon("logout");
+			console.log(error);
+		});
+		if(add) Utilities.addToBlackList(url);
+		else Utilities.removeToBlackList(url);
+	}
+	on(eventName, options){
 		this.asteroid.ddp.on(eventName, ({collection, id, fields}) => {
 			console.log("ON : " + collection, id, fields);
-			cb(fields);
+			if (_.isFunction(options[collection])) options[collection](fields);
 		});
 	}
 	call(methodName, ...params){
