@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 			});
 		break;
 		case "archive" : 
-			console.log(request.data);
+			Utilities.log(request.data);
 			Utilities.addToArchiveBuffer(request.data);
 		case "backspacing" : 
 		case "backspaceup" : 

@@ -2,7 +2,7 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-05-26 00:34:18
+  @Last Modified time: 2018-05-27 22:17:59
 \*----------------------------------------*/
 
 import _ from 'underscore';
@@ -54,7 +54,6 @@ export default class UtilitiesIcon {
 	static setIcon(name){
 		if(name != "blackList" && Data.currentURLBlacklisted) return UtilitiesIcon.setIcon("blackList");
 		if(name == Data.getCurrentIconStatus()) return;
-		console.log("setIcon", name);
 		let size = 19;
 		let icons = {
 			standby : "$assets/"+size+".standby.png",
@@ -78,7 +77,7 @@ export default class UtilitiesIcon {
 				path: icons[name]
 			});
 		}else if(_.isArray(icons[name]) && undefined === Data.timers.icons){
-			Data.timers.icons = setInterval(()=>{
+			Data.timers.icons = setInterval(() => {
 				chrome.browserAction.setIcon({
 					path: icons[name][0]
 				});

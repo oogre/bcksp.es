@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-05-26 12:09:58
+  @Last Modified time: 2018-05-27 16:59:31
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -34,14 +34,18 @@ export const ArchiveAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ text }) {
+		text = text.replace(/&nbsp;/g, " ");
 		console.log(text);
 		this.unblock();
 		if (!this.userId) {
 			// Throw errors with a specific error code
-			throw new Meteor.Error(
-				'Archives.methods.add.notLoggedIn',
-				'Must be logged in to add to private Archive.'
-			);
+			throw new ValidationError([{
+				name: 'userId',
+				type: 'not-logged-in',
+				details: {
+				  value: null
+				}
+			}]);
 		}
 		let myArchive = Archives.update({
 			type : config.archives.private.type,

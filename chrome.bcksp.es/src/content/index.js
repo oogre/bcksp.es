@@ -2,7 +2,7 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-05-25 23:15:47
+  @Last Modified time: 2018-05-27 22:16:34
 \*----------------------------------------*/
 import $ from 'jquery';
 import Utilities from '../shared/utilities.js';
@@ -32,15 +32,9 @@ class BackspaceListener{
 			}
 		}, false);
 
-		Data.protocol.add("default", target => {
-			if(!Data.protocol.exec("Highlight", target)){
-				if(!Data.protocol.exec("CharBeforeCaret", target)){
-					Data.protocol.exec("BrutCopy", target)
-				}
-			}
-		});
 
 		Data.protocol.add("Highlight", target => {
+			Utilities.log("Highlight");
 			let content = Utilities.getHighlightText(target);
 			if(_.isString(content)){
 				Utilities.sendMessage("archive", content);
@@ -49,6 +43,7 @@ class BackspaceListener{
 		});
 
 		Data.protocol.add("CharBeforeCaret", target => {
+			Utilities.log("CharBeforeCaret");
 			let content = Utilities.getCharBeforeCaret(target);
 			if(_.isString(content)){
 				Utilities.sendMessage("archive", content);
@@ -56,10 +51,13 @@ class BackspaceListener{
 			return content !== false;
 		});
 
-		Data.protocol.add("BrutCopy", target =>{
-			if(!Data.downFlag){
-				Data.innerText = Utilities.innerTEXT(target);
-				Data.downFlag = true;
+		Data.protocol.add("Diff", ({before, after}) =>{
+			Utilities.log("Diff");
+			let	content;
+			if(_.isEmpty(after)) content = before;
+			else content = Utilities.diff(before, after);
+			if(!_.isEmpty(content) && _.isString(content) ){
+				Utilities.sendMessage("archive", content.split("").reverse().join(""));
 			}
 		});
 	}
@@ -68,49 +66,98 @@ class BackspaceListener{
 		if(8 === event.keyCode ){
 			Utilities.sendMessage("backspacing", "true");
 			if(	Utilities.isAcceptable(this.activeElement) ){
-				switch(window.location.host){
-					case "docs.google.com" : 
-						return Data.protocol.exec("BrutCopy", document.querySelector(".kix-appview-editor"))
-					break;
-					default : 
-						return Data.protocol.exec("default", event.target);
-					break;
-				}
+				Utilities.selectProtocol({
+					"googleDocument" : () => {
+						if(!Data.downFlag){
+							Data.innerText = Utilities.innerTEXT(document.querySelector(".kix-appview-editor"));
+						}
+					},
+					"googleSpreadsheets" : () => {
+						if(!Data.downFlag){
+							Data.innerText = Utilities.innerTEXT(document.querySelector(".cell-input"));
+						}
+					},
+					"googlePresentation" : () => {
+						if(!Data.downFlag){
+							Data.innerText = _.chain(
+												document.querySelectorAll(".panel-right text")
+											).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
+											).value();
+						}
+					},
+					"googleDrawings" : () => {
+						if(!Data.downFlag){
+							Data.innerText = _.chain(
+												document.querySelectorAll("text")
+											).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
+											).value();
+						}
+					},
+					"default" : () => {
+						if(!Data.protocol.exec("Highlight", event.target)){
+							if(!Data.protocol.exec("CharBeforeCaret", event.target)){
+								if(!Data.downFlag){
+									Data.innerText = Utilities.innerTEXT(event.target);
+								}
+							}
+						}
+					}
+				});
 			}
+			Data.downFlag = true;
 		}
 	}
 	keyUpListener(event){
 		if(8 === event.keyCode ){
 			Utilities.sendMessage("backspaceup", "true");
-			Data.downFlag = false;
 			if(!_.isEmpty(Data.innerText)){
-				let afterInnerText = Utilities.innerTEXT(Utilities.getTarget(event.target));
-				let content;
-				if(_.isEmpty(afterInnerText)){
-					content = Data.innerText;
-				}else{
-					content = Utilities.diff(Data.innerText, afterInnerText);
-				}
-				content = content.split("").reverse().join("");
-				Utilities.sendMessage("archive", content.replace(/&nbsp;/g, " "));
+				Utilities.selectProtocol({
+					"googleDocument" : () => Data.protocol.exec("Diff", {
+						before : Data.innerText,
+						after : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
+					}),
+					"googleSpreadsheets" : () => Data.protocol.exec("Diff", {
+						before : Data.innerText,
+						after : Utilities.innerTEXT(document.querySelector(".cell-input"))
+					}),
+					"googlePresentation" : () => Data.protocol.exec("Diff", {
+						before : Data.innerText,
+						after : _.chain(
+									document.querySelectorAll(".panel-right text")
+								).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
+								).value()
+					}),
+					"googleDrawings" : () => Data.protocol.exec("Diff", {
+						before : Data.innerText,
+						after : _.chain(
+									document.querySelectorAll("text")
+								).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
+								).value()
+					}),
+					"default" : () => Data.protocol.exec("Diff", {
+						before : Data.innerText,
+						after : Utilities.innerTEXT(event.target)
+					})
+				});
 			}
+			Data.downFlag = false;
 			Data.innerText = "" 
 		}
 	}
 	setupListener(target){
-		if("IFRAME" ===  target.nodeName){
-			try{
-				this.addListeners(target.contentWindow.document);
-				target.addEventListener("load", event => {
-					this.addListeners(target.contentWindow.document);
-				}, false);
-			}catch(e){}
-		}else{
-			this.addListeners(document);
+		if("IFRAME" ===  target.nodeName) {
+			target.addEventListener("load", event => {
+				try{
+					this.addListeners(event.target.contentWindow.document)
+				}catch(e){
+					Utilities.error(e);
+				}
+			} , false);
 		}
+		else this.addListeners(document);
 	}
 	addListeners (element){
 		element.addEventListener("keydown", this.keyDownListener, true);
-		element.addEventListener("keyup", this.keyUpListener, true);
+		element.addEventListener("keyup", this.keyUpListener, true);	
 	}
 }

@@ -27,7 +27,6 @@ mdg:validated-method
 mdg:validation-error
 universe:i18n
 react-meteor-data
-nimble:restivus
 rocketchat:streamer
 ddp-rate-limiter
 handtrix:chrome-extension-utils

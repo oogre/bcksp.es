@@ -2,7 +2,7 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-05-26 00:34:25
+  @Last Modified time: 2018-05-27 22:05:14
 \*----------------------------------------*/
 import diffMatchPatch from "diff-match-patch";
 import _ from 'underscore';
@@ -51,10 +51,8 @@ export default class UtilitiesBackspace {
 
 	static diff(a, b){
 		let diff = new diffMatchPatch();
-		return diff.diff_main(a, b)
-		.map(function(elem, key){
-			return 1 == key ? elem[1] : null;
-		}).join("");
+		let d = diff.diff_main(a, b);
+		return _.chain(d).filter(elem => elem[0] == -1).reduce((memo, elem) => memo + elem[1], "").value();
 	}
 
 	static isAcceptable(elem){
@@ -73,5 +71,39 @@ export default class UtilitiesBackspace {
 				return defaultValue;
 			break;
 		}
+	}
+	static selectProtocol(obj){
+		if(!_.isObject(obj)) return;
+		let name = UtilitiesBackspace.getProtocolName();
+		if(!_.isString(name)) name = "default";
+		if(!_.isFunction(obj[name])) return;
+		obj[name]();
+	}
+
+	static getProtocolName(){
+		let location = window.location.toString();
+		let data = [{
+			regExp : /docs\.google\.com\/document/,
+			name : "googleDocument"
+		}, {
+			regExp : /docs\.google\.com\/spreadsheets/,
+			name : "googleSpreadsheets"
+		}, {
+			regExp : /docs\.google\.com\/presentation/,
+			name : "googlePresentation"
+		}, {
+			regExp : /docs\.google\.com\/drawings/,
+			name : "googleDrawings"
+		}, {
+			regExp : /.*/,
+			name : "default"
+		}];
+		return _.chain(
+					data
+				).find(elem => elem.regExp.test(location)
+				).pick("name"
+				).values(
+				).first(
+				).value();
 	}
 }
