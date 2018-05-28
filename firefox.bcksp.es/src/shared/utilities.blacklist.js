@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-05-28 02:02:12
+  @Last Modified time: 2018-05-26 00:23:43
 \*----------------------------------------*/
 
 export default class UtilitiesBlacklist {

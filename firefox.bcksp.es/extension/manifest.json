@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "bcksp.es",
+  "version": "0.2.0",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["dist/content.js"]
+    }
+  ],
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "48": "images/Watermelon-48.png",
+      "96": "images/Watermelon-96.png"
+    },
+    "default_title": "bcksp.es",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["dist/background.js"]
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "webRequest",
+    "http://*/*",
+    "https://*/*",
+    "storage"
+  ]
+}
