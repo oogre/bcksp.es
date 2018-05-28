@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:11:04
-  @Last Modified time: 2018-05-26 13:33:06
+  @Last Modified time: 2018-05-28 22:43:54
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Settings } from './settings.js';
@@ -22,10 +22,15 @@ if(Meteor.isServer){
 		let initializing = true;
 		const handle = Settings.find({ 
 			owner : Meteor.userId()
-		}).observe({
-			changed: (newSetting, oldSettings) => {
+		}, {
+			fields : {
+				blacklist : 1
+			}
+		}).observeChanges({
+			changed: (id, changedPrivateBlacklist) => {
 				if (!initializing) {
-					this.changed('blacklist', newSetting._id, newSetting.blacklist);
+					//console.log("changed", changedPrivateBlacklist);
+					this.changed('blacklist', id, changedPrivateBlacklist);
 				}
 			}
 		});
@@ -40,9 +45,14 @@ if(Meteor.isServer){
 
 		let settings = Settings.findOne({
 			owner : Meteor.userId()
+		}, {
+			fields : {
+				blacklist : 1
+			}
 		});
 		if(settings){
-			this.added('blacklist', settings._id, settings.blacklist);
+			//console.log("added", settings.blacklist);
+			this.added('blacklist', settings._id, settings);
 		}
 		this.ready();
 

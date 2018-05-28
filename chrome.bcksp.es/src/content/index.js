@@ -2,7 +2,7 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-05-27 22:16:34
+  @Last Modified time: 2018-05-29 01:23:51
 \*----------------------------------------*/
 import $ from 'jquery';
 import Utilities from '../shared/utilities.js';
@@ -11,16 +11,23 @@ import Data from "../shared/Data.js";
 
 $(document).ready(()=>{
 	chrome.runtime.sendMessage({
-		action : "getUrl",
-	}, ({url, blackListed}) => {
-		if(!blackListed){
+		action : "isLogin"
+	}, isLoggedIn =>{
+		if(!isLoggedIn) return;
+		chrome.runtime.sendMessage({
+			action : "getUrl",
+		}, ({blackListed}) => {
+			if(blackListed) return 
 			new BackspaceListener();
-		}
+		});
 	});
 });
 
+
+
 class BackspaceListener{
 	constructor(){
+		Utilities.log("BackspaceListener");
 		document.addEventListener("DOMSubtreeModified", event => {
 			this.setupListener(event.target);
 			if(event.target){

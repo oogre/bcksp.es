@@ -1,72 +1,65 @@
 /*----------------------------------------*\
-  web.bitRepublic - login.js
+  bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-05-20 23:35:48
-  @Last Modified time: 2018-05-25 22:38:55
+  @Date:   2018-05-29 00:52:06
+  @Last Modified time: 2018-05-29 01:27:50
 \*----------------------------------------*/
-import $ from 'jquery'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-$(document).ready(() => {
-	$(".login-user").on("submit", event => {
-		event.preventDefault();
+import Login from './login';
+import Config from './config';
+
+class Popup extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			loggedIn: false
+		};
+	}
+
+	componentDidMount() {
+		// Get the active tab and store it in component state.
+		//browser.tabs.query({active: true}).then(tabs => {
+		//	this.setState({activeTab: tabs[0]});
+		//});
 		chrome.runtime.sendMessage({
-			action : "login",
-			data : {
-				email : event.target[0].value,
-				pwd : event.target[1].value
-			}
-		}, response => {
-			toggleLogged(response);
-			if(response){
-				event.target[0].value = "";
-				event.target[1].value = "";
-			}
-	    });
-		return false;
-	});
+			action : "isLogin",
+		}, isLoggedIn => this.setState({loggedIn: isLoggedIn}));
 
-	$(".logout").on("click", event => {
 		
+	}
+	handleLogin(isLoggedIn){
+		this.setState({loggedIn: isLoggedIn});
+	}
+	handleLogout(event){
 		chrome.runtime.sendMessage({
 			action : "logout",
 			data : true
-		}, loggedIn => toggleLogged(loggedIn) );
-		return false;
-	});
-
-	$("input[name='currentURLreadable']").on("change", ({target}) => {
-		chrome.runtime.sendMessage({
-			action : "changeBWlist",
-			data : {
-				url : $("input[name='currentURL']").val(),
-				blacklisted : target.value == "1"
-			}
-		});	
-	});
-
-	chrome.runtime.sendMessage({
-		action : "getUrl",
-	}, ({url, blackListed}) => {
-		$("input[name='currentURL']").val(url);
-		$("input[name='currentURLreadable'][value='"+blackListed+"']").prop('checked', true);
-	});
-
-	chrome.runtime.sendMessage({
-		action : "isLogin",
-	}, loggedIn => {
-		toggleLogged(loggedIn);
-		if(typeof cb === "function"){
-			cb(loggedIn);
-		}
-	});	
-});
-
-function toggleLogged(flag){
-	if(flag){
-		$("#loggedIn").show();
-	    $("#loggedOut").hide();
-	}else{
-		$("#loggedIn").hide();
-	    $("#loggedOut").show();
+		}, isLoggedIn =>{
+			this.setState({loggedIn: isLoggedIn});
+		});
+	}
+	render() {
+		return (
+			<div>
+				{
+					this.state.loggedIn ? 
+						<div>
+							<Config />
+							<button 
+								className="button--secondary logout" 
+								onClick={this.handleLogout.bind(this)}
+							>
+								logout
+							</button>
+						</div>
+					:
+						<Login onSuccess={this.handleLogin.bind(this)}/>
+				}
+			</div>
+		);
 	}
 }
+
+ReactDOM.render(<Popup/>, document.getElementById('app'));

@@ -19,11 +19,7 @@ class Popup extends React.Component {
 		//});
 		browser.runtime.sendMessage({
 			action : "isLogin",
-		}).then(isLoggedIn =>{
-			this.setState({loggedIn: isLoggedIn});
-		}, error => {
-			console.log(error);
-		});
+		}).then(isLoggedIn => this.setState({loggedIn: isLoggedIn}), error => console.log(error) );
 
 		
 	}

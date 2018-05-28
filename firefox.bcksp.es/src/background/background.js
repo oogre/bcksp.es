@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-05-28 03:26:50
+  @Last Modified time: 2018-05-29 00:19:13
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -13,14 +13,14 @@ import _ from 'underscore';
 let senderTimeout = 6000;
 
 browser.tabs.onActivated.addListener(({tabId}) => {
-	chrome.tabs.get(tabId, ({url}) => {
+	browser.tabs.get(tabId, ({url}) => {
 		Data.currentURLBlacklisted = Utilities.getIntoBlackList(url) !== false;
 		Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 	});
 });
 
 browser.runtime.onMessage.addListener( (request, sender, sendResponse) => {
-	//if(sender.id != chrome.runtime.id)return;
+	if(sender.id != browser.runtime.id)return;
 	return new Promise(resolve => {
 		switch(request.action){
 			case "login" : 
@@ -70,12 +70,6 @@ browser.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 			break;
 			case "changeBWlist":
 				AsteroidHelper.blacklist(request.data.blacklisted, request.data.url);
-				browser.tabs.query({
-					'active': true, 
-					'lastFocusedWindow': true
-				}).then(tabs => {
-					browser.tabs.reload(tabs[0].id);
-				});
 			break;
 		}
 	});

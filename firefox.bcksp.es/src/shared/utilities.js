@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-05-28 01:02:24
+  @Last Modified time: 2018-05-28 23:14:02
 \*----------------------------------------*/
 import _ from 'underscore'
 import Multi from "./Multi.inherit.js";
@@ -63,4 +63,4 @@ Utilities.LOG_LVLS = {
 	LOG : 4
 };
 
-Utilities.LOG_LVL = Utilities.LOG_LVLS.OFF;
+Utilities.LOG_LVL = Utilities.LOG_LVLS.LOG;

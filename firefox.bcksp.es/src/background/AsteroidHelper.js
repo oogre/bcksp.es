@@ -2,10 +2,11 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-28 01:26:45
+  @Last Modified time: 2018-05-29 00:13:02
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
+import Data from "./../shared/Data.js";
 import _ from 'underscore';
 
 class AsteroidHelper{
@@ -34,15 +35,21 @@ class AsteroidHelper{
 
 		});
 		
+
 		this.asteroid.on("loggedIn", data =>{
-			Utilities.info("loggedIn", data);
+			Utilities.log("loggedIn", data);
 			this.on("changed", {
-				counts : ({count}) => Utilities.setBadgeText(count)
+				counts : ({count}) => Utilities.setBadgeText(count),
+				blacklist : settings => {
+					Utilities.log("changed", settings);
+					Utilities.setBlackList(settings.blacklist);
+				}
 			});
 			this.on("added", {
 				counts : ({count}) => Utilities.setBadgeText(count) ,
-				blacklist : blacklist => {
-					_.each(blacklist, Utilities.addToBlackList)
+				blacklist : settings => {
+					Utilities.log("added", settings);
+					Utilities.setBlackList(settings.blacklist);
 				}
 			});	
 			this.startSubsribtion();
@@ -51,9 +58,10 @@ class AsteroidHelper{
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
-			Utilities.info("loggedOut");
 			this.stopSubsribtion();
 			localStorage.clear();
+			Data.currentURLBlacklisted = false;
+			Utilities.log("loggedOut");
 			Utilities.setIcon("logout");
 		});
 	}
@@ -68,7 +76,7 @@ class AsteroidHelper{
 	}
 
 	login(data, cb){
-		Utilities.warn("AsteroidHelper.login : need to test data")
+		Utilities.log("AsteroidHelper.login : need to test data")
 		this.asteroid.loginWithPassword({
 			email : data.email,
 			password : data.pwd
@@ -87,7 +95,7 @@ class AsteroidHelper{
 			this.asteroid.subscriptions.cache.del(subscribtion.id);
 		});
 		this.subscribtionList = [];
-		chrome.browserAction.setBadgeText({ text : "" });	
+		Utilities.setBadgeText(false);
 	}
 
 	startSubsribtion (){
@@ -129,8 +137,6 @@ class AsteroidHelper{
 			Utilities.setIcon("logout");
 			Utilities.error(error);
 		});
-		if(add) Utilities.addToBlackList(url);
-		else Utilities.removeToBlackList(url);
 	}
 
 	on(eventName, options){

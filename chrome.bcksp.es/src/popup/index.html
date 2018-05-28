@@ -7,38 +7,4 @@
 		width: 300px;
 	}
 </style>
-
-<div id="loggedOut">
-	<form class="login-user">
-		<div class="fields-row">
-			<div class="fields-column">
-				<input type = "email" name = "email" placeholder ="type your email"/>
-			</div>
-			<div class="fields-column">
-				<input type="password" name="password" placeholder="type your password"/>
-			</div>
-		</div>
-		<div class="fields-row text-right">
-			<input class="button--secondary" type="submit" value="login"/>
-
-		</div>
-	</form>
-</div>
-<div id="loggedIn">
-	<form class="security">
-		<div class="fields-row">
-			<div class="fields-column">
-				<div class="btn-group" data-toggle="buttons">
-					<input type="text" name="currentURL" value="" disabled/>
-					<label class="btn btn-primary">
-						<input type="radio" name="currentURLreadable" value="0"/>Whitelisted
-					</label>
-					<label class="btn btn-primary">
-						<input type="radio" name="currentURLreadable" value="1"/>Blacklisted
-					</label>
-				</div>
-			</div>
-		</div>
-	</form>
-	<button class="button--secondary logout">logout</button>
-</div>
+<div id="app"></div>

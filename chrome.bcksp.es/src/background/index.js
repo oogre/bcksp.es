@@ -17,9 +17,6 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 	switch(request.action){
 		case "login" : 
 			AsteroidHelper.login(request.data,(err, res) => {
-				if(err) {
-					sendResponse(AsteroidHelper.asteroid.loggedIn);
-				}
 				sendResponse(AsteroidHelper.asteroid.loggedIn);
 			});
 		break;
@@ -31,6 +28,7 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 			Utilities.setIcon("backspacing");
 			clearTimeout(Data.timers.saveDB);
 			Data.timers.saveDB = setTimeout(()=> AsteroidHelper.send(), senderTimeout);
+			sendResponse(true);
 		break;
 		case "logout" : 
 			AsteroidHelper.logout((err, res) => {
@@ -64,13 +62,6 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 		break;
 		case "changeBWlist":
 			AsteroidHelper.blacklist(request.data.blacklisted, request.data.url);
-			
-			chrome.tabs.query({
-				'active': true, 
-				'lastFocusedWindow': true
-			}, tabs => {
-				chrome.tabs.reload(tabs[0].id);
-			});
 		break;
 	}
 	return true; //so i can use sendResponse later

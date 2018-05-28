@@ -2,7 +2,7 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-05-28 03:27:23
+  @Last Modified time: 2018-05-29 00:20:00
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -12,17 +12,22 @@ import Data from "../shared/Data.js";
 
 
 $(document).ready(()=>{
-	browser.runtime.sendMessage({
-		action : "getUrl",
-	}, ({url, blackListed}) => {
-		if(!blackListed){
-			new BackspaceListener();
-		}
+	Promise.all([
+		browser.runtime.sendMessage({
+			action : "isLogin"
+		}), 
+		browser.runtime.sendMessage({
+			action : "getUrl",
+		})
+	]).then(values => {
+		if(!values[0] || values[1].blackListed) return;
+		new BackspaceListener();
 	});
 });
 
 class BackspaceListener{
 	constructor(){
+		Utilities.log("BackspaceListener");
 		document.addEventListener("DOMSubtreeModified", event => {
 			this.setupListener(event.target);
 			if(event.target){

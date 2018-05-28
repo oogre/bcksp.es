@@ -2,7 +2,7 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-05-27 22:17:59
+  @Last Modified time: 2018-05-29 01:27:00
 \*----------------------------------------*/
 
 import _ from 'underscore';
@@ -47,7 +47,7 @@ export default class UtilitiesIcon {
 
 	static setBadgeText(value){
 		chrome.browserAction.setBadgeText({ 
-			text : UtilitiesIcon.prefixFormat(value) 
+			text: _.isNumber(value) && value != 0 ? UtilitiesIcon.prefixFormat(value) : ""
 		});	
 	}
 

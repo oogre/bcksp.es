@@ -2,11 +2,13 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-05-26 00:23:43
+  @Last Modified time: 2018-05-28 23:40:05
 \*----------------------------------------*/
+import _ from 'underscore';
+import Utilities from './utilities.js';
 
 export default class UtilitiesBlacklist {
-
+	
 	static getIntoBlackList(url){
 		let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 		for(let i = 0 ; i < blackList.length ; i++){
@@ -17,11 +19,29 @@ export default class UtilitiesBlacklist {
 		return false;
 	}
 
-	static addToBlackList(url){
-		let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
-		if(UtilitiesBlacklist.getIntoBlackList(url) !== false) return;
-		blackList.push(url);
-		localStorage.setItem("blackList", JSON.stringify(blackList));
+	static setBlackList(urls){
+		if(!_.isArray(urls)) return Utilities.error("setBlackList", "need array as parameter");
+		let oldBlackList = JSON.parse(localStorage.getItem("blackList") || "[]");
+
+		let blackliststed = _.difference(urls, oldBlackList);
+		let whiteliststed = _.difference(oldBlackList, urls);
+
+		Utilities.log("blackliststed", blackliststed);
+		Utilities.log("whiteliststed", whiteliststed);
+
+		localStorage.setItem("blackList", JSON.stringify(urls));
+		
+		_.chain(
+			blackliststed
+		).union(whiteliststed
+		).uniq(
+		).map( url => {
+			browser.tabs.query({
+				'url': url, 
+			}).then(tabs => {
+				tabs.forEach(tab => browser.tabs.reload(tab.id))
+			});
+		});
 	}
 
 	static removeToBlackList(url){

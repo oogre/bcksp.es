@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  runtime-examples - config.js
+  bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-05-28 01:30:46
-  @Last Modified time: 2018-05-28 23:00:16
+  @Date:   2018-05-29 01:02:18
+  @Last Modified time: 2018-05-29 01:27:23
 \*----------------------------------------*/
 import React from 'react';
 import _ from 'underscore';
@@ -17,15 +17,13 @@ export default class Config extends React.Component {
 	}
 
 	componentDidMount() {
-		browser.runtime.sendMessage({
+		chrome.runtime.sendMessage({
 			action : "getUrl"
-		}).then(({url, blackListed}) =>{
+		}, ({url, blackListed}) =>{
 			this.setState({
 				currentURL: url,
 				currentURLBlacklisted: !!blackListed ? "blacklisted" : "whitelisted"
 			});
-		}, error => {
-			console.log(error);
 		});
 	}
 
@@ -34,7 +32,7 @@ export default class Config extends React.Component {
 			currentURLBlacklisted: target.value
 		});
 		
-		browser.runtime.sendMessage({
+		chrome.runtime.sendMessage({
 			action : "changeBWlist",
 			data : {
 				url : this.state.currentURL,

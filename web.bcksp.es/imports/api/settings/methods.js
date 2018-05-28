@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2018-05-26 12:25:13
+  @Last Modified time: 2018-05-28 22:48:39
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -35,7 +35,6 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ url }) {
-		console.log(url);
 		this.unblock();
 		if (!this.userId) {
 			// Throw errors with a specific error code
@@ -56,6 +55,7 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 			}
 		});
 
+
 		if(!mySettings){
 			Settings.insert({
 				owner : this.userId,
@@ -65,7 +65,10 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 			});
 		}else{
 			Settings.update({
-				_id : mySettings._id
+				_id : mySettings._id,
+				blacklist : {
+					$nin: [url]
+				}
 			},{
 				$push : {
 					blacklist : url
@@ -101,7 +104,6 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ url }) {
-		console.log(url);
 		this.unblock();
 		if (!this.userId) {
 			// Throw errors with a specific error code
@@ -114,7 +116,10 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 			}]);
 		}
 		Settings.update({
-			owner : this.userId
+			owner : this.userId,
+			blacklist : {
+				$in: [url]
+			}
 		}, {
 			$pull : {
 				blacklist : url
