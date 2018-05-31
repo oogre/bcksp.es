@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Login from './login';
 import Config from './config';
+import Utilities from './../shared/utilities.js';
 
 class Popup extends React.Component {
 	constructor(props) {
@@ -17,24 +18,17 @@ class Popup extends React.Component {
 		//browser.tabs.query({active: true}).then(tabs => {
 		//	this.setState({activeTab: tabs[0]});
 		//});
-		browser.runtime.sendMessage({
-			action : "isLogin",
-		}).then(isLoggedIn => this.setState({loggedIn: isLoggedIn}), error => console.log(error) );
-
-		
+		Utilities.sendMessage("isLogin", "true")
+			.then(isLoggedIn => this.setState({loggedIn: isLoggedIn}))
+			.catch(error => console.log(error));
 	}
 	handleLogin(isLoggedIn){
 		this.setState({loggedIn: isLoggedIn});
 	}
 	handleLogout(event){
-		browser.runtime.sendMessage({
-			action : "logout",
-			data : true
-		}).then(isLoggedIn =>{
-			this.setState({loggedIn: isLoggedIn});
-		}, error => {
-			console.log(error);
-		});
+		Utilities.sendMessage("logout", "true")
+			.then(isLoggedIn => this.setState({loggedIn: isLoggedIn}))
+			.catch(error => console.log(error));
 	}
 	render() {
 		return (

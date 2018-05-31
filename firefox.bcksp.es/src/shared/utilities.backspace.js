@@ -2,7 +2,7 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-05-27 22:05:14
+  @Last Modified time: 2018-05-30 15:35:12
 \*----------------------------------------*/
 import diffMatchPatch from "diff-match-patch";
 import _ from 'underscore';
@@ -42,11 +42,10 @@ export default class UtilitiesBackspace {
 	}
 
 	static innerTEXT(elem){
-		if("INPUT" === elem.tagName){
-			return elem.value;
-		}else{
-			return elem.innerHTML.replace(/(<([^>]+)>)/ig, "");	
-		}
+		if(elem instanceof NodeList) return _.chain(elem).reduce((memo, e) => memo += UtilitiesBackspace.innerTEXT(e), "").value();
+		if(! (elem instanceof Element)) return "";
+		if("input" === elem.tagName.toLowerCase()) return elem.value;
+		return elem.innerHTML.replace(/(<([^>]+)>)/ig, "");	
 	}
 
 	static diff(a, b){

@@ -2,13 +2,14 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2018-05-29 01:27:50
+  @Last Modified time: 2018-05-31 09:45:53
 \*----------------------------------------*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Login from './login';
 import Config from './config';
+import Utilities from './../shared/utilities.js';
 
 class Popup extends React.Component {
 	constructor(props) {
@@ -23,22 +24,17 @@ class Popup extends React.Component {
 		//browser.tabs.query({active: true}).then(tabs => {
 		//	this.setState({activeTab: tabs[0]});
 		//});
-		chrome.runtime.sendMessage({
-			action : "isLogin",
-		}, isLoggedIn => this.setState({loggedIn: isLoggedIn}));
-
-		
+		Utilities.sendMessage("isLogin", "true")
+			.then(isLoggedIn => this.setState({loggedIn: isLoggedIn}))
+			.catch(error => console.log(error));
 	}
 	handleLogin(isLoggedIn){
 		this.setState({loggedIn: isLoggedIn});
 	}
 	handleLogout(event){
-		chrome.runtime.sendMessage({
-			action : "logout",
-			data : true
-		}, isLoggedIn =>{
-			this.setState({loggedIn: isLoggedIn});
-		});
+		Utilities.sendMessage("logout", "true")
+			.then(isLoggedIn => this.setState({loggedIn: isLoggedIn}))
+			.catch(error => console.log(error));
 	}
 	render() {
 		return (

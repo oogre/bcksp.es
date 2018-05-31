@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-29 01:29:53
+  @Last Modified time: 2018-05-31 09:36:57
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -26,15 +26,21 @@ class AsteroidHelper{
 
 		this.asteroid.on("connected", () =>{
 			Utilities.info("connected");
+			Data.setState({
+				connected : true
+			});
 		});
+
 
 		this.asteroid.on("disconnected", () =>{
 			Utilities.info("disconnected");
+			Data.setState({
+				connected : false
+			});
 			this.stopSubsribtion();
 			Utilities.setIcon("logout");
-
 		});
-		
+
 		this.asteroid.on("loggedIn", data =>{
 			Utilities.log("loggedIn", data);
 			this.on("changed", {
@@ -53,38 +59,17 @@ class AsteroidHelper{
 			});	
 			this.startSubsribtion();
 			Utilities.setIcon("standby");
-
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
 			this.stopSubsribtion();
 			localStorage.clear();
-			Data.currentURLBlacklisted = false;
+			Data.setState({
+				currentURLBlacklisted : false
+			});
 			Utilities.log("loggedOut");
-			Utilities.setIcon("logout");
 		});
-	}
-
-	logout(cb){
-		this.asteroid.logout().then(result => {
-			cb(null, result);
-		}).catch(error => {
-			Utilities.error(error);
-			cb(error, null);
-		});
-	}
-
-	login(data, cb){
-		Utilities.warn("AsteroidHelper.login : need to test data")
-		this.asteroid.loginWithPassword({
-			email : data.email,
-			password : data.pwd
-		}).then(data => {
-			cb(null, data);
-		}).catch(error => {
-			Utilities.error(error);
-			cb(error, null);
-		});
+		this.deferredPromise = undefined;
 	}
 
 	stopSubsribtion(){
@@ -108,41 +93,53 @@ class AsteroidHelper{
 		});
 	}
 
-	send(){
-		let archive = Utilities.getArchiveBuffer();
-		if(archive.length < 1) return Utilities.setDefaultIcon(this.asteroid.loggedIn);
-		Utilities.setIcon("sending");
-		this.asteroid.call("Archives.methods.add", {
-			text: archive.split("").reverse().join("")
-		}).then(res => {
-			Utilities.setIcon("standby");
-			Utilities.info(res);
-			Utilities.clearArchiveBuffer();
-		}).catch(error => {
-			Utilities.setIcon("logout");
-			Utilities.error(error);
-		});
-	}
-
-	blacklist(add, url){
-		let action = add ? "Settings.Blacklist.Add" : "Settings.Blacklist.Remove";
-		Utilities.setIcon("sending");
-		this.asteroid.call(action, {
-			url : url
-		}).then(res => {
-			Utilities.setIcon("standby");
-			Utilities.info(res);
-		}).catch(error => {
-			Utilities.setIcon("logout");
-			Utilities.error(error);
-		});
-	}
-
 	on(eventName, options){
 		this.asteroid.ddp.on(eventName, ({collection, id, fields}) => {
 			Utilities.info("ON : " + collection, id, fields);
 			if (_.isFunction(options[collection])) options[collection](fields);
 		});
+	}
+
+	async logout(){
+		if(!Data.state.connected) throw new Error("Server is not accessible");
+		return this.asteroid.logout()
+	}
+
+	async login({email, pwd}){
+		if(!Data.state.connected) throw new Error("Server is not accessible");
+		let data = await Utilities.isEmail(email);
+		data = await Utilities.isPwd(pwd, data);
+		return this.asteroid.loginWithPassword({ email : data.email, password : data.pwd })
+	}
+
+	async deferredArchiveAdd(time){
+		let isItTime = await Utilities.procrastinate(time, "deferredArchiveAdd")
+			.then(message => true).catch(message => false);
+		if(isItTime){
+			let archive = Utilities.getArchiveBuffer();
+			if(archive.length < 1) {
+				return new Error("Archive Add cancelled, casue local archive is empty");
+			}
+			return this.call("Archives.methods.add", { text: archive.split("").reverse().join("") });
+		}
+		return;
+	}
+
+	async blacklist(add, url){
+		let methode = add ? "Settings.Blacklist.Add" : "Settings.Blacklist.Remove";
+		return this.call(methode,  { url : url });
+	}
+
+	async call(methode, data){
+		Utilities.setIcon("sending");
+		return this.asteroid.call(methode, data)
+			.then(res => {
+				Utilities.info(res);
+			}).catch(error => {
+				Utilities.error(error);
+			}).finally(()=>{
+				Utilities.setDefaultIcon(this.asteroid.loggedIn);
+			});
 	}
 }
 

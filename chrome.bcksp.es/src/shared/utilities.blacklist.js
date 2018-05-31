@@ -2,13 +2,13 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-05-29 01:32:03
+  @Last Modified time: 2018-05-31 09:37:24
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
 
 export default class UtilitiesBlacklist {
-
+	
 	static getIntoBlackList(url){
 		let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 		for(let i = 0 ; i < blackList.length ; i++){
@@ -31,17 +31,19 @@ export default class UtilitiesBlacklist {
 
 		localStorage.setItem("blackList", JSON.stringify(urls));
 		
-		_.chain(
-			blackliststed
-		).union(whiteliststed
-		).uniq(
-		).map( url => {
-			chrome.tabs.query({
-				'url': url, 
-			}, tabs => {
-				tabs.forEach(tab => chrome.tabs.reload(tab.id))
+		_.chain(blackliststed)
+			.union(whiteliststed)
+			.uniq()
+			.map( url => {
+				new Promise((resolve, reject)=>{
+					chrome.tabs.query({'url': url}, (value, error)=>{
+						if(error)return reject(error);
+						resolve(value);
+					});
+				}).then(tabs => {
+					tabs.forEach(tab => chrome.tabs.reload(tab.id))
+				});
 			});
-		});
 	}
 
 	static removeToBlackList(url){

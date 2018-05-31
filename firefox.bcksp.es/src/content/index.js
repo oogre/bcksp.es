@@ -2,32 +2,33 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-05-29 00:20:00
+  @Last Modified time: 2018-05-30 21:04:14
 \*----------------------------------------*/
 
 import $ from 'jquery';
 import Utilities from '../shared/utilities.js';
 import _ from 'underscore';
 import Data from "../shared/Data.js";
-
+import Protocol from "../shared/Protocol.js";
 
 $(document).ready(()=>{
-	Promise.all([
-		browser.runtime.sendMessage({
-			action : "isLogin"
-		}), 
-		browser.runtime.sendMessage({
-			action : "getUrl",
+	Utilities.sendMessage("isLogin", "true")
+		.then(async (isLoggedIn) => {
+			if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
+			return true;
 		})
-	]).then(values => {
-		if(!values[0] || values[1].blackListed) return;
-		new BackspaceListener();
-	});
+		.then(() => Utilities.sendMessage("getUrl", "true"))
+		.then(async ({blackListed}) => {
+			if(blackListed) throw new Error('This web site is blacklisted, so here bcksp.es in not available');
+			return true;
+		})
+		.then(() => new BackspaceListener())
+		.catch(error => Utilities.error(error));
 });
 
 class BackspaceListener{
 	constructor(){
-		Utilities.log("BackspaceListener");
+		Utilities.log("BackspaceListener initializer");
 		document.addEventListener("DOMSubtreeModified", event => {
 			this.setupListener(event.target);
 			if(event.target){
@@ -40,25 +41,27 @@ class BackspaceListener{
 		}, false);
 
 
-		Data.protocol.add("Highlight", target => {
+		Protocol.add("Highlight", target => {
 			Utilities.log("Highlight");
 			let content = Utilities.getHighlightText(target);
+			console.log("content", content);
 			if(_.isString(content)){
 				Utilities.sendMessage("archive", content);
 			}
 			return content !== false;
 		});
 
-		Data.protocol.add("CharBeforeCaret", target => {
+		Protocol.add("CharBeforeCaret", target => {
 			Utilities.log("CharBeforeCaret");
 			let content = Utilities.getCharBeforeCaret(target);
+			console.log("content", content);
 			if(_.isString(content)){
 				Utilities.sendMessage("archive", content);
 			}
 			return content !== false;
 		});
 
-		Data.protocol.add("Diff", ({before, after}) =>{
+		Protocol.add("Diff", ({before, after}) =>{
 			Utilities.log("Diff");
 			let	content;
 			if(_.isEmpty(after)) content = before;
@@ -75,80 +78,82 @@ class BackspaceListener{
 			if(	Utilities.isAcceptable(this.activeElement) ){
 				Utilities.selectProtocol({
 					"googleDocument" : () => {
-						if(!Data.downFlag){
-							Data.innerText = Utilities.innerTEXT(document.querySelector(".kix-appview-editor"));
+						if(!Data.state.downFlag){
+							Data.setState({
+								innerText : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
+							});
 						}
 					},
 					"googleSpreadsheets" : () => {
-						if(!Data.downFlag){
-							Data.innerText = Utilities.innerTEXT(document.querySelector(".cell-input"));
+						if(!Data.state.downFlag){
+							Data.setState({
+								innerText : Utilities.innerTEXT(document.querySelector(".cell-input"))
+							});
 						}
 					},
 					"googlePresentation" : () => {
-						if(!Data.downFlag){
-							Data.innerText = _.chain(
-												document.querySelectorAll(".panel-right text")
-											).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
-											).value();
+						if(!Data.state.downFlag){
+							Data.setState({
+								innerText : Utilities.innerTEXT(document.querySelectorAll(".panel-right text"))
+							});
 						}
 					},
 					"googleDrawings" : () => {
-						if(!Data.downFlag){
-							Data.innerText = _.chain(
-												document.querySelectorAll("text")
-											).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
-											).value();
+						if(!Data.state.downFlag){
+							Data.setState({
+								innerText : Utilities.innerTEXT(document.querySelectorAll("text"))
+							});
 						}
 					},
 					"default" : () => {
-						if(!Data.protocol.exec("Highlight", event.target)){
-							if(!Data.protocol.exec("CharBeforeCaret", event.target)){
-								if(!Data.downFlag){
-									Data.innerText = Utilities.innerTEXT(event.target);
+						if(!Protocol.exec("Highlight", event.target)){
+							if(!Protocol.exec("CharBeforeCaret", event.target)){
+								if(!Data.state.downFlag){
+									Data.setState({
+										innerText : Utilities.innerTEXT(event.target)
+									});
 								}
 							}
 						}
 					}
 				});
 			}
-			Data.downFlag = true;
+			Data.setState({
+				downFlag : true
+			});
 		}
 	}
 	keyUpListener(event){
 		if(8 === event.keyCode ){
 			Utilities.sendMessage("backspaceup", "true");
-			if(!_.isEmpty(Data.innerText)){
+			if(!_.isEmpty(Data.state.innerText)){
 				Utilities.selectProtocol({
-					"googleDocument" : () => Data.protocol.exec("Diff", {
-						before : Data.innerText,
+					"googleDocument" : () => Protocol.exec("Diff", {
+						before : Data.state.innerText,
 						after : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
 					}),
-					"googleSpreadsheets" : () => Data.protocol.exec("Diff", {
-						before : Data.innerText,
+					"googleSpreadsheets" : () => Protocol.exec("Diff", {
+						before : Data.state.innerText,
 						after : Utilities.innerTEXT(document.querySelector(".cell-input"))
 					}),
-					"googlePresentation" : () => Data.protocol.exec("Diff", {
-						before : Data.innerText,
-						after : _.chain(
-									document.querySelectorAll(".panel-right text")
-								).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
-								).value()
+					"googlePresentation" : () => Protocol.exec("Diff", {
+						before : Data.state.innerText,
+						after : Utilities.innerTEXT(document.querySelectorAll(".panel-right text"))
 					}),
-					"googleDrawings" : () => Data.protocol.exec("Diff", {
-						before : Data.innerText,
-						after : _.chain(
-									document.querySelectorAll("text")
-								).reduce((memo, elem) => memo += Utilities.innerTEXT(elem), ""
-								).value()
+					"googleDrawings" : () => Protocol.exec("Diff", {
+						before : Data.state.innerText,
+						after : Utilities.innerTEXT(document.querySelectorAll("text"))
 					}),
-					"default" : () => Data.protocol.exec("Diff", {
-						before : Data.innerText,
+					"default" : () => Protocol.exec("Diff", {
+						before : Data.state.innerText,
 						after : Utilities.innerTEXT(event.target)
 					})
 				});
 			}
-			Data.downFlag = false;
-			Data.innerText = "" 
+			Data.setState({
+				downFlag : false,
+				innerText : "" 
+			});
 		}
 	}
 	setupListener(target){

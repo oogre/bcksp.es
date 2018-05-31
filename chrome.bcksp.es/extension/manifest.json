@@ -11,6 +11,8 @@
   "browser_action": {
     "browser_style": true,
     "default_icon": {
+      "19": "images/19.standby.png",
+      "38": "images/38.standby.png",
       "48": "images/48.standby.png",
       "128": "images/128.standby.png"
     },

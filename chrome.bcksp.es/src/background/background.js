@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  runtime-examples - background.js
+  runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-05-30 20:51:20
+  @Last Modified time: 2018-05-31 14:23:53
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -19,17 +19,19 @@ Data.on("currentURLBlacklisted", (value, name) =>{
 	Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 });
 
-browser.tabs.onActivated.addListener(({tabId}) => {
-	browser.tabs.get(tabId, ({url}) => {
+console.log(chrome);
+
+chrome.tabs.onActivated.addListener(({tabId}) => {
+	chrome.tabs.get(tabId, ({url}) => {
 		Data.setState({
 			currentURLBlacklisted : Utilities.getIntoBlackList(url) !== false
 		});
 	});
 });
 
-browser.runtime.onMessage.addListener( (request, sender, sendResponse) => {
-	if(sender.id != browser.runtime.id)return;
-	return new Promise((resolve, reject) => {
+chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
+	if(sender.id != chrome.runtime.id)return;
+	new Promise((resolve, reject) => {
 		switch(request.action){
 			case "login" : 
 				Utilities.isEmail(request.data.email)
@@ -67,8 +69,12 @@ browser.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 				resolve(AsteroidHelper.asteroid.loggedIn);
 			break;
 			case "getUrl": // Called everytime a page is loaded
-				browser.tabs.query({ 'active': true, 'lastFocusedWindow': true })
-					.then(async (tabs) => {
+				new Promise((resolve, reject) => {
+					chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, (value, error)=>{
+						if(error)return reject(error);
+						resolve(value);
+					});
+				}).then(async (tabs) => {
 						Utilities.log("tabs", tabs);
 						if(!_.isArray(tabs) || tabs.length <= 0 ) throw new Error("URL not found");
 						Data.setState({
@@ -88,6 +94,8 @@ browser.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 					.catch(error => reject(error));
 			break;
 		}
-	});
+	})
+	.then(data => sendResponse(data))
+	.catch(error => console.log(error));
 	return true; //so i can use sendResponse later
 });

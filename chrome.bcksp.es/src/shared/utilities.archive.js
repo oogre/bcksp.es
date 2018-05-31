@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:08:27
-  @Last Modified time: 2018-05-26 00:34:34
+  @Last Modified time: 2018-05-30 21:07:07
 \*----------------------------------------*/
 
 import Encoder from "htmlencode";

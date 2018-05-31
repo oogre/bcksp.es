@@ -2,7 +2,7 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-05-28 22:51:14
+  @Last Modified time: 2018-05-30 19:56:00
 \*----------------------------------------*/
 
 import _ from 'underscore';
@@ -52,7 +52,7 @@ export default class UtilitiesIcon {
 	}
 
 	static setIcon(name){
-		if(name != "blackList" && Data.currentURLBlacklisted) return UtilitiesIcon.setIcon("blackList");
+		if(name != "blackList" && Data.state.currentURLBlacklisted) return UtilitiesIcon.setIcon("blackList");
 		if(name == Data.getCurrentIconStatus()) return;
 		let size = 19;
 		let icons = {
@@ -70,20 +70,24 @@ export default class UtilitiesIcon {
 				"images/"+size+".backspacing_3.png"
 			]
 		};
+		let timers = Data.state.timers;
 		if(_.isString(icons[name])){
-			clearInterval(Data.timers.icons);
-			Data.timers.icons = undefined;
+			clearInterval(timers.icons);
+			timers.icons = undefined;
 			browser.browserAction.setIcon({
 				path: icons[name]
 			});
-		}else if(_.isArray(icons[name]) && undefined === Data.timers.icons){
-			Data.timers.icons = setInterval(() => {
+		}else if(_.isArray(icons[name]) && undefined === timers.icons){
+			timers.icons = setInterval(() => {
 				browser.browserAction.setIcon({
 					path: icons[name][0]
 				});
 				icons[name].push(icons[name].shift());
 			}, 500);
 		}
+		Data.setState({
+			timers : timers
+		});
 		Data.addIconHistory(name);
 	}
 }

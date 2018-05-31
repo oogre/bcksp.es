@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-05-28 23:40:05
+  @Last Modified time: 2018-05-30 16:50:41
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -31,17 +31,15 @@ export default class UtilitiesBlacklist {
 
 		localStorage.setItem("blackList", JSON.stringify(urls));
 		
-		_.chain(
-			blackliststed
-		).union(whiteliststed
-		).uniq(
-		).map( url => {
-			browser.tabs.query({
-				'url': url, 
-			}).then(tabs => {
-				tabs.forEach(tab => browser.tabs.reload(tab.id))
+		_.chain(blackliststed)
+			.union(whiteliststed)
+			.uniq()
+			.map( url => {
+				browser.tabs.query({'url': url})
+					.then(tabs => {
+						tabs.forEach(tab => browser.tabs.reload(tab.id))
+					});
 			});
-		});
 	}
 
 	static removeToBlackList(url){
