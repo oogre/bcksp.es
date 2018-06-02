@@ -2,7 +2,7 @@
   bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2018-05-30 22:56:31
+  @Last Modified time: 2018-06-01 20:54:12
 \*----------------------------------------*/
 import React from 'react';
 import _ from 'underscore';
@@ -69,6 +69,7 @@ export default class Config extends React.Component {
 								/>
 								Blacklisted
 							</label>
+							
 						</div>
 					</div>
 				</div>

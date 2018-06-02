@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-05-31 09:36:57
+  @Last Modified time: 2018-06-01 19:58:46
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -47,14 +47,18 @@ class AsteroidHelper{
 				counts : ({count}) => Utilities.setBadgeText(count),
 				blacklist : settings => {
 					Utilities.log("changed", settings);
-					Utilities.setBlackList(settings.blacklist);
+					Utilities.setBlackList(settings.blacklist)
+					.then(urls => Utilities.reloadTabs(urls))
+					.catch(error => Utilities.error(error));
 				}
 			});
 			this.on("added", {
 				counts : ({count}) => Utilities.setBadgeText(count) ,
 				blacklist : settings => {
 					Utilities.log("added", settings);
-					Utilities.setBlackList(settings.blacklist);
+					Utilities.setBlackList(settings.blacklist)
+					.then(urls => Utilities.reloadTabs(urls))
+					.catch(error => Utilities.error(error));
 				}
 			});	
 			this.startSubsribtion();

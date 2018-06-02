@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-05-31 09:37:24
+  @Last Modified time: 2018-06-02 16:14:18
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -19,7 +19,7 @@ export default class UtilitiesBlacklist {
 		return false;
 	}
 
-	static setBlackList(urls){
+	static async setBlackList(urls){
 		if(!_.isArray(urls)) return Utilities.error("setBlackList", "need array as parameter");
 		let oldBlackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 
@@ -31,19 +31,10 @@ export default class UtilitiesBlacklist {
 
 		localStorage.setItem("blackList", JSON.stringify(urls));
 		
-		_.chain(blackliststed)
-			.union(whiteliststed)
-			.uniq()
-			.map( url => {
-				new Promise((resolve, reject)=>{
-					chrome.tabs.query({'url': url}, (value, error)=>{
-						if(error)return reject(error);
-						resolve(value);
-					});
-				}).then(tabs => {
-					tabs.forEach(tab => chrome.tabs.reload(tab.id))
-				});
-			});
+		return _.chain(blackliststed)
+					.union(whiteliststed)
+					.uniq()
+					.value();
 	}
 
 	static removeToBlackList(url){
@@ -52,5 +43,20 @@ export default class UtilitiesBlacklist {
 		if(itemId === false) return;
 		blackList.splice(itemId, 1);
 		localStorage.setItem("blackList", JSON.stringify(blackList));
+	}
+
+	static async reloadTabs(urls){
+		return urls.map( url => {
+			return new Promise((resolve, reject)=>{
+				chrome.tabs.query({
+					'url': url + "*"
+				}, (value, error) => {
+					if(error)return reject(error);
+					resolve(value);
+				});
+			}).then(tabs => {
+				tabs.forEach(tab => chrome.tabs.reload(tab.id))
+			});
+		});
 	}
 }

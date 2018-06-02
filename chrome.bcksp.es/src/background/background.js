@@ -2,7 +2,7 @@
   runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-05-31 14:23:53
+  @Last Modified time: 2018-06-02 14:46:25
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -19,15 +19,12 @@ Data.on("currentURLBlacklisted", (value, name) =>{
 	Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 });
 
-console.log(chrome);
-
 chrome.tabs.onActivated.addListener(({tabId}) => {
-	chrome.tabs.get(tabId, ({url}) => {
-		Data.setState({
-			currentURLBlacklisted : Utilities.getIntoBlackList(url) !== false
-		});
-	});
+	updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
+	.then(data => console.log(data));
 });
+
+
 
 chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 	if(sender.id != chrome.runtime.id)return;
@@ -69,22 +66,7 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 				resolve(AsteroidHelper.asteroid.loggedIn);
 			break;
 			case "getUrl": // Called everytime a page is loaded
-				new Promise((resolve, reject) => {
-					chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, (value, error)=>{
-						if(error)return reject(error);
-						resolve(value);
-					});
-				}).then(async (tabs) => {
-						Utilities.log("tabs", tabs);
-						if(!_.isArray(tabs) || tabs.length <= 0 ) throw new Error("URL not found");
-						Data.setState({
-							currentURLBlacklisted : Utilities.getIntoBlackList(tabs[0].url) !== false
-						});
-						return {
-							url : tabs[0].url,
-							blackListed : +Data.state.currentURLBlacklisted  // +true => 1 | +false => 0
-						};
-					})
+				updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
 					.then(data => resolve(data))
 					.catch(error => reject(error));
 			break;
@@ -99,3 +81,25 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 	.catch(error => console.log(error));
 	return true; //so i can use sendResponse later
 });
+
+function updateCurrentUrl(request){
+	return new Promise((resolve, reject) => {
+		chrome.tabs.query(request, (value, error)=>{
+			if(error)return reject(error);
+			resolve(value);
+		});
+	}).then(async (tabs) => {
+		if(tabs.length == 0)throw new Error("Tab not found");
+		let regexp = /.+\:\/\/([^\/?#]+)(?:[\/?#]|$)/i
+		let url = (tabs[0].url.match(regexp)).shift();
+		url = _.isEmpty(url) ? tabs[0].url : url;
+		if(!_.isArray(tabs) || tabs.length <= 0 ) throw new Error("URL not found");
+		Data.setState({
+			currentURLBlacklisted : Utilities.getIntoBlackList(url) !== false
+		});
+		return {
+			url : url,
+			blackListed : +Data.state.currentURLBlacklisted  // +true => 1 | +false => 0
+		};
+	});
+}
