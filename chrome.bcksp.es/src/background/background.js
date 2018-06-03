@@ -2,13 +2,14 @@
   runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-06-02 14:46:25
+  @Last Modified time: 2018-06-02 17:55:45
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
 import Utilities from './../shared/utilities.js';
 import Data from "./../shared/Data.js";
 import _ from 'underscore';
+import $ from 'jquery';
 
 let senderTimeout = 6000;
 
@@ -21,7 +22,7 @@ Data.on("currentURLBlacklisted", (value, name) =>{
 
 chrome.tabs.onActivated.addListener(({tabId}) => {
 	updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
-	.then(data => console.log(data));
+		.then(data => console.log(data));
 });
 
 

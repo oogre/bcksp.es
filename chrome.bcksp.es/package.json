@@ -18,13 +18,13 @@
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "web-ext": "2.7.0",
-    "webpack": "3.10.0"
+    "webpack": "3.10.0",
+    "jquery": "^3.3.1"
   },
   "dependencies": {
     "asteroid": "^2.0.3",
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",
-    "jquery": "^3.3.1",
     "underscore": "^1.9.0"
   }
 }

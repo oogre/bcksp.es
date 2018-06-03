@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-05-27 16:59:31
+  @Last Modified time: 2018-06-02 19:05:03
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -10,6 +10,7 @@ import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { Archives } from './archives.js';
 import { config } from './../../startup/config.js';
 import { streamer } from './../streamer.js';
+
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',

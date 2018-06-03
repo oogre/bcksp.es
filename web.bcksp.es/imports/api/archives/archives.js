@@ -2,7 +2,7 @@
   web.bitRepublic - backspaces.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:01
-  @Last Modified time: 2018-05-27 16:59:46
+  @Last Modified time: 2018-06-02 19:00:20
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';

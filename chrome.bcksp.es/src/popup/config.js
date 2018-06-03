@@ -2,7 +2,7 @@
   bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2018-06-01 20:54:12
+  @Last Modified time: 2018-06-02 18:23:09
 \*----------------------------------------*/
 import React from 'react';
 import _ from 'underscore';
@@ -46,30 +46,34 @@ export default class Config extends React.Component {
 				<div class="fields-row">
 					<div class="fields-column">
 						<div class="btn-group" data-toggle="buttons">
-							<input type="text" name="currentURL" value={this.state.currentURL} disabled/>
-							<label>
-								<input 
-									readOnly
-									name="listed"
-									type="radio"
-									value="whitelisted" 
-									checked={this.state.currentURLBlacklisted === 'whitelisted'} 
-									onChange={this.handleBlacklistChange.bind(this)}
-								/>
-								Whitelisted
-							</label>
-							<label>
-								<input 
-									readOnly
-									name="listed"
-									type="radio" 
-									value="blacklisted"
-									checked={this.state.currentURLBlacklisted === 'blacklisted'} 
-									onChange={this.handleBlacklistChange.bind(this)}
-								/>
-								Blacklisted
-							</label>
-							
+							<div>
+								<input type="text" name="currentURL" value={this.state.currentURL} disabled/>
+							</div>
+							<div>
+								<label>This website is : </label>
+								<label>
+									<input 
+										readOnly
+										name="listed"
+										type="radio"
+										value="whitelisted" 
+										checked={this.state.currentURLBlacklisted === 'whitelisted'} 
+										onChange={this.handleBlacklistChange.bind(this)}
+									/>
+									Whitelisted
+								</label>
+								<label>
+									<input 
+										readOnly
+										type="radio" 
+										value="blacklisted"
+										checked={this.state.currentURLBlacklisted === 'blacklisted'} 
+										onChange={this.handleBlacklistChange.bind(this)}
+									/>
+									Blacklisted
+								</label>
+							</div>
+							<label> (any change of this, will reload the website) </label>
 						</div>
 					</div>
 				</div>

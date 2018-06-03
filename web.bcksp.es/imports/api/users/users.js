@@ -2,11 +2,12 @@
   web.bitRepublic - users.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:17:11
-  @Last Modified time: 2018-05-20 16:36:41
+  @Last Modified time: 2018-06-02 17:50:52
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
 import './startup.js';
+
 import { config } from '../../startup/config.js';
 import { Archives } from './../archives/archives.js';
 import * as Utilities from '../../utilities.js';

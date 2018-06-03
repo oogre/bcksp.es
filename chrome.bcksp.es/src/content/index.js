@@ -2,7 +2,7 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-05-31 09:37:01
+  @Last Modified time: 2018-06-02 18:06:01
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -45,7 +45,6 @@ class BackspaceListener{
 		Protocol.add("Highlight", target => {
 			Utilities.log("Highlight");
 			let content = Utilities.getHighlightText(target);
-			console.log("content", content);
 			if(_.isString(content)){
 				Utilities.sendMessage("archive", content);
 			}
@@ -55,7 +54,6 @@ class BackspaceListener{
 		Protocol.add("CharBeforeCaret", target => {
 			Utilities.log("CharBeforeCaret");
 			let content = Utilities.getCharBeforeCaret(target);
-			console.log("content", content);
 			if(_.isString(content)){
 				Utilities.sendMessage("archive", content);
 			}
