@@ -2,45 +2,37 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2018-05-21 17:04:40
+  @Last Modified time: 2018-09-13 19:19:53
 \*----------------------------------------*/
 import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import  LiveStream from './LiveStream.js';
-import  UserLogIn from './user/login.js';
+
+import LiveStream from './LiveStream.js';
+import HeaderMenu from './menu/header.js';
+import BannerBaseline from './banner/baseline.js';
+import AboutShort from './about/short.js';
+import HowtoList from './howto/list.js';
+import AboutPrivacy from './about/privacy.js';
+import MenuFooter from './menu/footer.js';
 
 // App component - represents the whole app
-class App extends Component {
+export default class App extends Component {
 	constructor(props){
 		super(props);
 	}
 
 	render() {
-		
 		return (
 			<div className="page page--home">
-				{ 
-					this.props.userId ? 
-						<a 	className="menu__item__link"
-							href={ FlowRouter.path("userProfile", { userId : Meteor.userId() }) }
-						>
-							{this.props.userMail}
-						</a>
-					:
-						<UserLogIn/>
-				}
-				<LiveStream/>
+				<HeaderMenu />
+				<div className="page__content">
+					<BannerBaseline/>
+					<LiveStream/>
+					<AboutShort/>
+					<HowtoList/>
+					<AboutPrivacy/>
+				</div>
+				<MenuFooter/>
 			</div>
 		);
 	}
 }
-export default withTracker(self => {
-	let currentUser = Meteor.user();
-	let userMail = currentUser ? currentUser.emails[0].address : null;
-	let userId = currentUser ? currentUser._id : null;
-	return {
-		userId,
-		currentUser,
-		userMail
-	};
-})(App);

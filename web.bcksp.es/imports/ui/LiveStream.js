@@ -2,21 +2,51 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-05-23 00:10:36
+  @Last Modified time: 2018-09-13 17:54:28
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../api/archives/archives.js';
 import { streamer } from '../api/streamer.js';
 import { config } from './../startup/config.js';
+import ButtonShare from './button/share.js';
+
+
 
 // LiveStream component
 class LiveStream extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			liveBackspaces : ""
+			liveBackspaces : "",
+			selectContent:"",
+			shareContent:"",
+			position : [0, 0]
 		};
+	}
+	onSelected(event){
+		let content = event.target.ownerDocument.getSelection().toString();
+		let boundingBox = event.target.ownerDocument.getSelection().getRangeAt(0).getBoundingClientRect()
+		if(!_.isEmpty(content)){
+			this.setState({
+				selectContent : content,
+				shareContent : this.state.selectContent,
+				position : [boundingBox.right, boundingBox.top]
+			});
+		}else{
+			this.setState({
+				selectContent : "",
+				shareContent : this.state.selectContent,
+				position : [0, 0]
+			});
+		}
+	}
+	onBlur(){
+		this.setState({
+			selectContent : "",
+			shareContent : this.state.selectContent,
+			position : [0, 0]
+		});
 	}
 	componentDidMount(){
 		if(this.props.public){
@@ -26,6 +56,7 @@ class LiveStream extends Component {
 				});
 			});
 		}
+		$(".stream2").attr("contenteditable", true);
 	}
 	componentWillUnmount(){
 		if(this.props.public){
@@ -34,8 +65,15 @@ class LiveStream extends Component {
 	}
 	render() {
 		return (
-			<div className="stream" style={{whiteSpace: "pre-wrap"}}>
-				{this.state.liveBackspaces + " " + this.props.archive}
+			<div>
+				
+				<div 	className="stream2" 
+						onBlur={this.onBlur.bind(this)} 
+						onSelect={this.onSelected.bind(this)} 
+				>
+					<ButtonShare left={this.state.position[0]} top={this.state.position[1]} content={this.state.shareContent}/>
+					{this.state.liveBackspaces + " " + this.props.archive} 	
+				</div>
 			</div>
 		);
 	}
