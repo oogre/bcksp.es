@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-09-13 19:25:34
+  @Last Modified time: 2018-09-13 19:37:47
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -42,6 +42,9 @@ export default class MenuFooter extends Component {
 						<div className="column">
 							<div className="column__content">
 								<ul className="menu menu--footer">
+									<li className="menu__item">
+										<a className="menu__item__link" href={FlowRouter.path("about")}>github</a>
+									</li>
 									<li className="menu__item">
 										<a className="menu__item__link" href={FlowRouter.path("about")}>facebook</a>
 									</li>
