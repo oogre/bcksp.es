@@ -25,8 +25,10 @@ i18n.addTranslation('en-US', {
 		signup : "sign up",
 		login : "log in",
 		loginNow : "log in now",
+		signupNow : "sign up now",
 		logout : "log out",
 		alreadyMember : "Already have an account?",
+		notMemberYet : "Don't have an account?",
 		email : "email",
 		password : "password",
 		passwordConfirm : "password conform",
@@ -39,6 +41,7 @@ i18n.addTranslation('en-US', {
 	menus: {
 		open : "open menu",
 		about : "about",
+		profile : "profile",
 		contact : "contact",
 		authors : "authors",
 		souvenir : "souvenir",

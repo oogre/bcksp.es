@@ -2,13 +2,14 @@
   web.bitRepublic - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 23:35:48
-  @Last Modified time: 2018-05-21 21:58:28
+  @Last Modified time: 2018-09-23 23:07:26
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { config } from '../../startup/config.js'
 import { LoginUser } from '../../api/users/methods.js';
+import HeaderMenu from './../menu/header.js';
 
 import MessageError from '../message/error.js';
 import T from './../../i18n/index.js';
@@ -74,6 +75,7 @@ export default class UserLogIn extends Component {
 				this.setState({
 					'has-success' : true
 				});
+				FlowRouter.go('home');
 			});
 		});
 	}
@@ -82,63 +84,67 @@ export default class UserLogIn extends Component {
 		let errors = i18n.createTranslator("errors");
 		let forms = i18n.createTranslator("forms");
 		return (
-			<div>
-				<form className="login-user" onSubmit={this.handleLogin.bind(this)}>
-					<div className="fields-row">
-						<div className="fields-column">
+			<div className="page page--signup">
+				<HeaderMenu noMain={true}/>
+				<div className="page__content">
+					<h2><T>forms.login</T></h2>
+					<form className="login-user" onSubmit={this.handleLogin.bind(this)}>
+						<div className="fields-row">
+							<div className="fields-column">
+								<label htmlFor="email"><T>forms.email</T></label>
+								<input id="email" type = "email" ref="email"name="email"/>
+								{
+									this.state["error-email"] ?
+										<MessageError
+											messages={errors("email", this.state["error-email"])}
+										/>
+									:
+										null
+								}
+							</div>
+							<div className="fields-column">
+								<label htmlFor="password"><T>forms.password</T></label>
+								<input id="password" type="password" ref="password" name="password"/>
+								{
+									this.state["error-password"] ?
+										<MessageError
+											messages={errors("password", this.state["error-password"])}
+										/>
+									:
+										null
+								}
+							</div>
+						</div>
+						<div className="fields-row text-right">
 							<input
-								type = "email"
-								ref = "email"
-								name = {forms("email", "name")}
-								placeholder = {forms("email", "placeholder")}
+								className={
+									"button--secondary " +
+									(this.state['is-loading'] ? "loading " : "") +
+									(this.state['has-success'] ? "success " : "") +
+									(this.state['has-error'] ? "error " : "")
+								}
+								type="submit"
+								value={forms("submit", "login")}
 							/>
-							{
-								this.state["error-email"] ?
-									<MessageError
-										messages={errors("email", this.state["error-email"])}
-									/>
-								:
-									null
+							{ 
+								this.state["error"] ? 
+									<MessageError 
+										messages={this.state["error"]} 
+									/> 
+								: 
+									null 
 							}
 						</div>
-						<div className="fields-column">
-							<input
-								type="password"
-								ref="password"
-								name = {forms("password", "name")}
-								placeholder = {forms("password", "placeholder")}
-							/>
-							{
-								this.state["error-password"] ?
-									<MessageError
-										messages={errors("password", this.state["error-password"])}
-									/>
-								:
-									null
-							}
-						</div>
+					</form>
+					<div>
+						<p>
+							<T>forms.notMemberYet</T>
+							<a href={FlowRouter.path("signup")}>
+								<T>forms.signupNow</T>
+							</a>
+						</p>	
 					</div>
-					<div className="fields-row text-right">
-						<input
-							className={
-								"button--secondary " +
-								(this.state['is-loading'] ? "loading " : "") +
-								(this.state['has-success'] ? "success " : "") +
-								(this.state['has-error'] ? "error " : "")
-							}
-							type="submit"
-							value={forms("submit", "login")}
-						/>
-						{ 
-							this.state["error"] ? 
-								<MessageError 
-									messages={this.state["error"]} 
-								/> 
-							: 
-								null 
-						}
-					</div>
-				</form>
+				</div>
 			</div>
 		);
 	}

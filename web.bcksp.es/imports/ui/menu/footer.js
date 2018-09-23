@@ -2,18 +2,20 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-09-23 19:08:57
+  @Last Modified time: 2018-09-23 23:19:03
 \*----------------------------------------*/
 import React, { Component } from 'react';
-
+import { withTracker } from 'meteor/react-meteor-data';
 import T from './../../i18n/index.js';
 //import { FacebookIcon, TwitterIcon } from 'react-share';
 
-export default class MenuFooter extends Component {
+class MenuFooter extends Component {
 	constructor(props){
 		super(props);
 	}
-
+	handleLogout(){
+		Meteor.logout();
+	}
 	render() {
 			return (
 			<footer className="main-footer">
@@ -42,11 +44,37 @@ export default class MenuFooter extends Component {
 											<T>menus.download</T>
 										</a>
 									</li>
-									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("signup")}>
-											<T>menus.signup</T>
-										</a>
-									</li>
+									{
+										this.props.userId ?
+											<li className="menu__item">
+												<a 	className="menu__item__link" 
+													href={ FlowRouter.path("userProfile", { userId : this.props.userId }) }
+												>
+													profile
+												</a>
+											</li>
+										: 
+											<li className="menu__item">
+												<a className="menu__item__link" href={FlowRouter.path("signup")}>
+													<T>menus.signup</T>
+												</a>
+											</li>
+									}
+
+									{
+										this.props.userId ?
+											<li className="menu__item">
+												<button className="menu__item__link" onClick={this.handleLogout.bind(this)}>
+													<T>forms.logout</T>
+												</button>
+											</li>
+										: 
+											<li className="menu__item">
+												<a className="menu__item__link" href={FlowRouter.path("login")}>
+													<T>menus.login</T>
+												</a>
+											</li>
+									}
 								</ul>
 							</div>
 						</div>
@@ -90,3 +118,8 @@ export default class MenuFooter extends Component {
 		);
 	}
 }
+export default withTracker(() => {
+	return {
+		userId : Meteor.userId()
+	};
+})(MenuFooter);

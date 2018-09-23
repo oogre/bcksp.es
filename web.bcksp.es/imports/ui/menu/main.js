@@ -2,19 +2,29 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-09-23 19:08:15
+  @Last Modified time: 2018-09-23 23:15:22
 \*----------------------------------------*/
 import React, { Component } from 'react';
-import T from './../../i18n/index.js';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class MenuMain extends Component {
+import T from './../../i18n/index.js';
+import * as Utilities from "./../../utilities.js";
+
+
+class MenuMain extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			mobileMenu: false,
-			extensionInstalled : false
+			extensionInstalled : Utilities.isExtensionInstalled()
 		}
+		window.addEventListener('load', ()=>{
+			this.setState({
+				extensionInstalled: Utilities.isExtensionInstalled()
+			});	
+		});
 	}
+
 	handleOpenMobileMenu(){
 		this.setState({
 			mobileMenu: !this.state.mobileMenu
@@ -22,9 +32,6 @@ export default class MenuMain extends Component {
 	}
 
 	render() {
-		let currentUser = Meteor.user();
-		let userConnected = (!_.isEmpty(currentUser)) && currentUser._id;
-		let extensionInstalled = this.state.extensionInstalled;
 		return (
 			<nav>
 				<button type="button" className="menu--header__mobile-trigger" onClick={this.handleOpenMobileMenu.bind(this)}>
@@ -52,19 +59,19 @@ export default class MenuMain extends Component {
 					</li>
 					<li className="menu__item">
 						{ 
-							extensionInstalled ? 
+							this.state.extensionInstalled ? 
 								(
-									userConnected ? 
+									this.props.userId ? 
 										<a 	className="menu__item__link" 
-											href={ FlowRouter.path("userProfile", { userId : userConnected }) }
+											href={ FlowRouter.path("userProfile", { userId : this.props.userId }) }
 										>
 											profile
 										</a>
 									:
 										<a  className="menu__item__link " 
-											href={FlowRouter.path("login")}
+											href={FlowRouter.path("signup")}
 										>
-											<T>menus.login</T>
+											<T>menus.signup</T>
 										</a>
 								)
 							:
@@ -80,3 +87,8 @@ export default class MenuMain extends Component {
 		);
 	}
 }
+export default withTracker(() => {
+	return {
+		userId : Meteor.userId()
+	};
+})(MenuMain);

@@ -2,7 +2,7 @@
   bcksp.es - signup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 19:28:56
-  @Last Modified time: 2018-09-23 20:31:53
+  @Last Modified time: 2018-09-23 23:07:33
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
@@ -83,6 +83,7 @@ export default class UserSignup extends Component {
 				this.setState({
 					'has-success' : true
 				});
+				FlowRouter.go('home');
 			});
 		})
 	}
@@ -91,7 +92,7 @@ export default class UserSignup extends Component {
 		let errors = i18n.createTranslator("errors");
 		let forms = i18n.createTranslator("forms");
 		return (
-			<div className="page page--home">
+			<div className="page page--signup">
 				<HeaderMenu noMain={true}/>
 				<div className="page__content">
 					<h2><T>forms.signup</T></h2>

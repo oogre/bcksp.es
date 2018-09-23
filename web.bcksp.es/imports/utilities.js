@@ -2,11 +2,12 @@
   web.bitRepublic - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:21:58
-  @Last Modified time: 2018-05-19 13:19:54
+  @Last Modified time: 2018-09-23 22:46:47
 \*----------------------------------------*/
 import { check } from 'meteor/check';
 import { config } from './startup/config.js';
 import { Random } from 'meteor/random';
+
 
 export function numberFormat(inputNumber, len){
 	check(inputNumber, Number);
@@ -45,6 +46,9 @@ export function APIerror(message){
 	}
 }
 
+export function isExtensionInstalled(){
+	return !!document.querySelector("[bcksp-es-extension-installed]");
+}
 export function APIsuccess(data){
 	return{
 		status : "success",

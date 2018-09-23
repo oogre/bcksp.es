@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-05-21 00:17:24
+  @Last Modified time: 2018-09-23 23:20:55
 \*----------------------------------------*/
 export const config = {
 	archives : {
