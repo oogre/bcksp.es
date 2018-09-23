@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-09-13 17:54:28
+  @Last Modified time: 2018-09-23 18:58:00
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -10,7 +10,7 @@ import { Archives } from './../api/archives/archives.js';
 import { streamer } from '../api/streamer.js';
 import { config } from './../startup/config.js';
 import ButtonShare from './button/share.js';
-
+import T from './../i18n/index.js';
 
 
 // LiveStream component

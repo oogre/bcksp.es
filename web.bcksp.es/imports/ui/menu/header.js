@@ -2,7 +2,7 @@
   bcksp.es - header.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:19:59
-  @Last Modified time: 2018-09-13 14:36:00
+  @Last Modified time: 2018-09-23 19:51:12
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -23,7 +23,12 @@ export default class MenuHeader extends Component {
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</a>
 					</h1>
-					<MenuMain />
+					{
+						!this.props.noMain?
+							<MenuMain />
+						:
+							null
+					}
 				</div>
 			</header>
 		);

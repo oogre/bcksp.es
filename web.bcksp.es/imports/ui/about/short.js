@@ -2,10 +2,11 @@
   bcksp.es - short.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:01:42
-  @Last Modified time: 2018-09-13 18:04:53
+  @Last Modified time: 2018-09-23 18:59:20
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
+import T from './../../i18n/index.js';
 
 // App component - represents the whole app
 export default class AboutShort extends Component {
@@ -17,12 +18,12 @@ export default class AboutShort extends Component {
 		return (
 			<div className="about">
 				<div className="container">
-					<h2>description</h2>
+					<h2><T>about.title</T></h2>
 					<div>
-						sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj.
+						<T>about.short</T>
 						<span>
 							<a href={FlowRouter.path("about")}>
-								learn more
+								<T>about.link</T>
 							</a>
 						</span>
 					</div>

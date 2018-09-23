@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-09-13 19:21:32
+  @Last Modified time: 2018-09-23 19:31:29
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -15,7 +15,7 @@ import { render } from 'react-dom';
 
 import App from '../imports/ui/App.js';
 import About from '../imports/ui/About.js';
-
+import UserSignup from '../imports/ui/user/signup.js';
 import UserProfile from '../imports/ui/user/profile.js';
 
 FlowRouter.route( '/', {
@@ -32,6 +32,16 @@ FlowRouter.route( '/about', {
 	name: 'about',
 	action( params ) {
 		render(<About />, document.getElementById('render-target'));
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+FlowRouter.route( '/signup', {
+	name: 'signup',
+	action( params ) {
+		render(<UserSignup />, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
 		

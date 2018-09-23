@@ -2,10 +2,11 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:56:40
-  @Last Modified time: 2018-09-13 19:08:57
+  @Last Modified time: 2018-09-23 19:04:43
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
+import T from './../../i18n/index.js';
 import HowtoStep from './step.js';
 
 // App component - represents the whole app
@@ -21,9 +22,9 @@ export default class HowtoList extends Component {
 					<HowtoStep k={0}>
 						<img className="logo--header__picture" src="/images/logo-animated.gif" />
 						<div>
-							<h3>1. get extension</h3>
-							<p>dslfkj;dslfkj sdlkfj dsflkjdfsl;kj fdsl</p>
-							<button>download</button>
+							<h3>1. <T>howto.step.0.title</T></h3>
+							<p><T>howto.step.0.desc</T></p>
+							<button><T>menus.download</T></button>
 						</div>
 					</HowtoStep>
 				</li>
@@ -31,8 +32,8 @@ export default class HowtoList extends Component {
 					<HowtoStep k={1}>
 						<img className="logo--header__picture" src="/images/logo-animated.gif" />
 						<div>
-							<h3>2. backspace your life</h3>
-							<p>dslfkj;dslfkj sdlkfj dsfdlskj dslfkjd sflkjdslkjdfslkdjsf llkjdfsl;kj fdsl</p>
+							<h3>2. <T>howto.step.1.title</T></h3>
+							<p><T>howto.step.1.desc</T></p>
 						</div>
 					</HowtoStep>
 				</li>
@@ -40,8 +41,8 @@ export default class HowtoList extends Component {
 					<HowtoStep k={2}>
 						<img className="logo--header__picture" src="/images/logo-animated.gif" />
 						<div>
-							<h3>3. see your archive grow</h3>
-							<p>dsflkj dsl;kj; sdf;dslfkj sdlkfj dsflkjdfsl;kj fdsl</p>
+							<h3>3. <T>howto.step.2.title</T></h3>
+							<p><T>howto.step.2.desc</T></p>
 						</div>
 					</HowtoStep>
 				</li>
@@ -49,9 +50,13 @@ export default class HowtoList extends Component {
 					<HowtoStep k={3}>
 						<img className="logo--header__picture" src="/images/logo-animated.gif" />
 						<div>
-							<h3>4. get your souvenir back</h3>
-							<p>dslfkj;sdlkj sdflkjdsf lkjdsflkdjfslkdsfjlkdsjf dslfkj sdlkfj dsflkjdfsl;kj fdsl</p>
-							<a href={FlowRouter.path("souvenir")}>Souvenir</a>
+							<h3>4. <T>howto.step.3.title</T></h3>
+							<p>
+								<T>howto.step.3.desc</T>
+							</p>
+							<a href={FlowRouter.path("souvenir")}>
+								<T>menus.souvenir</T>
+							</a>
 						</div>
 					</HowtoStep>
 				</li>

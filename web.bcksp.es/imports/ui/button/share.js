@@ -2,9 +2,11 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 17:45:05
-  @Last Modified time: 2018-09-13 17:55:16
+  @Last Modified time: 2018-09-23 19:01:46
 \*----------------------------------------*/
 import React, { Component } from 'react';
+
+import T from './../../i18n/index.js';
 
 export default class ButtonShare extends Component {
 	constructor(props){
@@ -27,7 +29,9 @@ export default class ButtonShare extends Component {
 						top: this.props.top+"px"
 					}}
 			>
-				<button onClick={this.onClick.bind(this)}> share </button>
+				<button onClick={this.onClick.bind(this)}>
+					<T>menus.share</T>
+				</button>
 			</div>
 		);
 	}

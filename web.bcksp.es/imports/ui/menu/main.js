@@ -2,9 +2,10 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-09-13 15:23:55
+  @Last Modified time: 2018-09-23 19:08:15
 \*----------------------------------------*/
 import React, { Component } from 'react';
+import T from './../../i18n/index.js';
 
 export default class MenuMain extends Component {
 	constructor(props){
@@ -30,26 +31,48 @@ export default class MenuMain extends Component {
 					<div className="bar"></div>
 					<div className="bar"></div>
 					<div className="bar"></div>
-					<span className="sr-only">Open Menu</span>
+					<span className="sr-only">
+						<T>menus.open</T>
+					</span>
 				</button>
 				<ul className={"menu menu--header" + " " + (this.state.mobileMenu ? "visible" : "")}>
 					<li className="menu__item">
-						<a className={"menu__item__link " + (FlowRouter.current().route.name == "about" ? "active" : "")} href={FlowRouter.path("about")}>About</a>
+						<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "about" ? "active" : "")} 
+							href={FlowRouter.path("about")}
+						>
+							<T>menus.about</T>
+						</a>
 					</li>
 					<li className="menu__item">
-						<a className={"menu__item__link " + (FlowRouter.current().route.name == "souvenir" ? "active" : "")} href={FlowRouter.path("souvenir")}>Souvenir</a>
+						<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "souvenir" ? "active" : "")} 
+							href={FlowRouter.path("souvenir")}
+						>
+							<T>menus.souvenir</T>
+						</a>
 					</li>
 					<li className="menu__item">
 						{ 
 							extensionInstalled ? 
 								(
 									userConnected ? 
-										<a 	className="menu__item__link" href={ FlowRouter.path("userProfile", { userId : userConnected }) }>profile</a>
+										<a 	className="menu__item__link" 
+											href={ FlowRouter.path("userProfile", { userId : userConnected }) }
+										>
+											profile
+										</a>
 									:
-										<a className="menu__item__link " href={FlowRouter.path("login")}>login</a>
+										<a  className="menu__item__link " 
+											href={FlowRouter.path("login")}
+										>
+											<T>menus.login</T>
+										</a>
 								)
 							:
-								<a className={"menu__item__link " + (FlowRouter.current().route.name == "download" ? "active" : "")} href={FlowRouter.path("download")} >Download</a>
+								<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "download" ? "active" : "")} 
+									href={FlowRouter.path("download")}
+								>
+									<T>menus.download</T>
+								</a>
 						}
 					</li>
 				</ul>

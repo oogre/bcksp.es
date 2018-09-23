@@ -2,10 +2,11 @@
   bcksp.es - privacy.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:14:26
-  @Last Modified time: 2018-09-13 19:14:49
+  @Last Modified time: 2018-09-23 18:56:46
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
+import T from './../../i18n/index.js';
 
 // App component - represents the whole app
 export default class AboutPrivacy extends Component {
@@ -17,9 +18,9 @@ export default class AboutPrivacy extends Component {
 		return (
 			<div className="about">
 				<div className="container">
-					<h2>about privacy</h2>
+					<h2><T>privacy.title</T></h2>
 					<div>
-						sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj.
+						<T>privacy.short</T>
 					</div>
 				</div>
 			</div>

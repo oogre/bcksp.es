@@ -2,10 +2,11 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-09-13 19:37:47
+  @Last Modified time: 2018-09-23 19:08:57
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
+import T from './../../i18n/index.js';
 //import { FacebookIcon, TwitterIcon } from 'react-share';
 
 export default class MenuFooter extends Component {
@@ -22,19 +23,29 @@ export default class MenuFooter extends Component {
 							<div className="column__content">
 								<ul className="menu menu--footer">
 									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("about")}>about</a>
+										<a className="menu__item__link" href={FlowRouter.path("about")}>
+											<T>menus.about</T>
+										</a>
 									</li>
 									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("contact")}>contact</a>
+										<a className="menu__item__link" href={FlowRouter.path("contact")}>
+											<T>menus.contact</T>
+										</a>
 									</li>
 									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("authors")}>authors</a>
+										<a className="menu__item__link" href={FlowRouter.path("authors")}>
+											<T>menus.authors</T>
+										</a>
 									</li>
 									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("download")}>download</a>
+										<a className="menu__item__link" href={FlowRouter.path("download")}>
+											<T>menus.download</T>
+										</a>
 									</li>
 									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("signup")}>signup</a>
+										<a className="menu__item__link" href={FlowRouter.path("signup")}>
+											<T>menus.signup</T>
+										</a>
 									</li>
 								</ul>
 							</div>
@@ -56,7 +67,9 @@ export default class MenuFooter extends Component {
 						</div>
 						<div className="column">
 							<div className="column__content">
-								<p className="menu--footer__title">Supported by</p>
+								<p className="menu--footer__title">
+									<T>menus.supportedBy</T>
+								</p>
 								<ul className="buttons-list buttons-list--footer">
 									<li className="buttons-list__item buttons-list__item--fsoa">
 										<a className="buttons-list__link--fsoa" target="_blank" href="http://www.kunstenenerfgoed.be/">
@@ -65,7 +78,7 @@ export default class MenuFooter extends Component {
 									</li>
 									<li className="buttons-list__item">
 										<a className="buttons-list__link buttons-list__link" target="_blank" href="http://www.vgc.be/ondersteuning/subsidies/cultuur/subsidies-kunsten">
-											want to help us?
+											<T>menus.helpUs</T>
 										</a>
 									</li>
 								</ul>
