@@ -2,7 +2,7 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-09-23 23:07:51
+  @Last Modified time: 2018-09-24 13:54:40
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -26,6 +26,19 @@ $(document).ready(()=>{
 		})
 		.then(() => new BackspaceListener())
 		.catch(error => Utilities.error(error));
+
+	window.addEventListener("message", function(event) {
+	    // We only accept messages from ourselves
+	    if (event.source != window)
+	        return;
+
+	    if (event.data.type && (event.data.type == "login")) {
+	        Utilities.sendMessage("login", event.data.token);
+	    }
+	    if (event.data.type && (event.data.type == "logout")) {
+	    	Utilities.sendMessage("logout", "true");
+	    }
+	});
 });
 
 class BackspaceListener{

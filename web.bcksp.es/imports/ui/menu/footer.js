@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-09-23 23:19:03
+  @Last Modified time: 2018-09-24 13:52:13
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -14,6 +14,9 @@ class MenuFooter extends Component {
 		super(props);
 	}
 	handleLogout(){
+		window.postMessage({
+			type : "logout"
+		}, "*");
 		Meteor.logout();
 	}
 	render() {

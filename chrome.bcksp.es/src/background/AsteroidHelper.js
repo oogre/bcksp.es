@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-06-02 17:57:37
+  @Last Modified time: 2018-09-24 13:49:29
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -108,12 +108,10 @@ class AsteroidHelper{
 		if(!Data.state.connected) throw new Error("Server is not accessible");
 		return this.asteroid.logout()
 	}
-
-	async login({email, pwd}){
+ 
+	async login({id, token}){
 		if(!Data.state.connected) throw new Error("Server is not accessible");
-		let data = await Utilities.isEmail(email);
-		data = await Utilities.isPwd(pwd, data);
-		return this.asteroid.loginWithPassword({ email : data.email, password : data.pwd })
+		return this.asteroid.loginWithToken({ id : id, token : token });
 	}
 
 	async deferredArchiveAdd(time){

@@ -2,7 +2,7 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2018-09-23 23:29:10
+  @Last Modified time: 2018-09-24 13:27:21
 \*----------------------------------------*/
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -27,7 +27,7 @@ class Popup extends React.Component {
 		
 		Utilities.sendMessage("isLogin", "true")
 			.then(isLoggedIn => {
-				//
+				
 				if(!isLoggedIn){
 					chrome.tabs.create({ url: "http://local.bcksp.es/signup" });	
 				}else{

@@ -2,7 +2,7 @@
   web.bitRepublic - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 23:35:48
-  @Last Modified time: 2018-09-23 23:07:26
+  @Last Modified time: 2018-09-24 13:33:47
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
@@ -76,6 +76,13 @@ export default class UserLogIn extends Component {
 					'has-success' : true
 				});
 				FlowRouter.go('home');
+				window.postMessage({
+					type : "login",
+					token : {
+						id : localStorage.getItem("Meteor.userId"),
+						token : localStorage.getItem("Meteor.loginToken")
+					}
+				}, "*");
 			});
 		});
 	}
