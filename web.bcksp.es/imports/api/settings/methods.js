@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2018-05-28 22:48:39
+  @Last Modified time: 2018-10-07 20:23:36
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -15,6 +15,7 @@ import { streamer } from './../streamer.js';
 export const SettingsBlacklistAdd = new ValidatedMethod({
 	name: 'Settings.Blacklist.Add',
 	validate({ url }) {
+		
 		if(!_.isString(url) || _.isEmpty(url)){
 			throw new ValidationError([{
 				name: 'url',
@@ -36,6 +37,8 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 	},
 	run({ url }) {
 		this.unblock();
+		console.log("Settings.Blacklist.Add : "+url)
+		console.log(this.userId);
 		if (!this.userId) {
 			// Throw errors with a specific error code
 			throw new ValidationError([{
@@ -105,6 +108,9 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 	},
 	run({ url }) {
 		this.unblock();
+		
+		console.log("Settings.Blacklist.Remove : "+url)
+		console.log(this.userId);
 		if (!this.userId) {
 			// Throw errors with a specific error code
 			throw new ValidationError([{

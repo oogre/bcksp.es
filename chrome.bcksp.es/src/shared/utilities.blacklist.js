@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-06-02 16:14:18
+  @Last Modified time: 2018-10-09 11:46:35
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -49,7 +49,10 @@ export default class UtilitiesBlacklist {
 		return urls.map( url => {
 			return new Promise((resolve, reject)=>{
 				chrome.tabs.query({
-					'url': url + "*"
+					'url': [
+						"http://" + url + "/*",
+						"https://" + url + "/*"
+					]
 				}, (value, error) => {
 					if(error)return reject(error);
 					resolve(value);

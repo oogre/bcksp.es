@@ -2,7 +2,7 @@
   runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-09-24 13:52:22
+  @Last Modified time: 2018-10-12 18:50:43
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -22,20 +22,33 @@ Data.on("currentURLBlacklisted", (value, name) =>{
 
 chrome.tabs.onActivated.addListener(({tabId}) => {
 	updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
-		.then(data => console.log(data));
+	.then(data => console.log(data));
 });
-
 
 
 chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 	if(sender.id != chrome.runtime.id)return;
 	new Promise((resolve, reject) => {
 		switch(request.action){
+			
 			case "login" : 
 				AsteroidHelper.login(request.data)
 					.then(message => resolve(!!message /* convert response to bool */))
-					.catch(error => reject(error));
+					.catch(error => {
+						console.log(error);
+						reject(error)
+					});
 			break;
+			
+			case "signup" : 
+				AsteroidHelper.signup(request.data)
+					.then(message => resolve(!!message /* convert response to bool */))
+					.catch(error => {
+						console.log(error);
+						reject(error)
+					});
+			break;
+			
 			case "archive" : 
 				Utilities.log(request.data);
 				Utilities.addToArchiveBuffer(request.data);
@@ -56,29 +69,43 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 						reject(error);
 					});
 			break;
+			
 			case "logout" : 
-				console.log("LOGOUT");
 				AsteroidHelper.logout()
 					.then(message => resolve(AsteroidHelper.asteroid.loggedIn))
 					.catch(error => reject(error));
 			break;
+			
 			case "isLogin":
 				resolve(AsteroidHelper.asteroid.loggedIn);
 			break;
-			case "getUrl": // Called everytime a page is loaded
+			
+			case "getUrlStatus" : 
 				updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
 					.then(data => resolve(data))
 					.catch(error => reject(error));
 			break;
+
+			case "getArchiveSize" : 
+				resolve(Data.state.archiveSize);
+			break;
+			
+			case "Settings.Blacklist.Add":
+			case "Settings.Blacklist.Remove":
+				AsteroidHelper.call(request.action, { url : request.data })
+					.then(data => resolve(data))
+					.catch(error => reject(error));
+			break;
+			
 			case "changeBWlist":
-				AsteroidHelper.blacklist(request.data.blacklisted, request.data.url)
+				AsteroidHelper.blacklist(request.data.blacklisted, )
 					.then(data => resolve(data))
 					.catch(error => reject(error));
 			break;
 		}
 	})
 	.then(data => sendResponse(data))
-	.catch(error => console.log(error));
+	.catch(sendResponse);
 	return true; //so i can use sendResponse later
 });
 
@@ -92,6 +119,8 @@ function updateCurrentUrl(request){
 		if(tabs.length == 0)throw new Error("Tab not found");
 		let regexp = /.+\:\/\/([^\/?#]+)(?:[\/?#]|$)/i
 		let url = (tabs[0].url.match(regexp)).shift();
+		url = url.replace(/https?:\/\//, "");
+		url = url.split("").reverse().join("").replace(/\//, "").split("").reverse().join("");
 		url = _.isEmpty(url) ? tabs[0].url : url;
 		if(!_.isArray(tabs) || tabs.length <= 0 ) throw new Error("URL not found");
 		Data.setState({

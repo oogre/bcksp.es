@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-09-24 13:52:13
+  @Last Modified time: 2018-10-07 19:57:18
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -57,11 +57,7 @@ class MenuFooter extends Component {
 												</a>
 											</li>
 										: 
-											<li className="menu__item">
-												<a className="menu__item__link" href={FlowRouter.path("signup")}>
-													<T>menus.signup</T>
-												</a>
-											</li>
+											null
 									}
 
 									{
@@ -72,11 +68,7 @@ class MenuFooter extends Component {
 												</button>
 											</li>
 										: 
-											<li className="menu__item">
-												<a className="menu__item__link" href={FlowRouter.path("login")}>
-													<T>menus.login</T>
-												</a>
-											</li>
+											null
 									}
 								</ul>
 							</div>

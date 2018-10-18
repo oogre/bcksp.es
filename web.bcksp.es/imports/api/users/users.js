@@ -2,7 +2,7 @@
   web.bitRepublic - users.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:17:11
-  @Last Modified time: 2018-06-02 17:50:52
+  @Last Modified time: 2018-10-02 15:38:21
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';

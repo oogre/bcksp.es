@@ -25,6 +25,7 @@
     "asteroid": "^2.0.3",
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",
+    "react-toggle-button": "2.2.0",
     "underscore": "^1.9.0"
   }
 }

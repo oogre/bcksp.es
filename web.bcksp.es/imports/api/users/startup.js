@@ -2,7 +2,7 @@
   web.bitRepublic - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:47
-  @Last Modified time: 2018-05-18 22:36:42
+  @Last Modified time: 2018-10-02 13:33:14
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as Utilities from '../../utilities.js';

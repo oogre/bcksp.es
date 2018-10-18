@@ -2,7 +2,7 @@
   bcksp.es - generator.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-06-02 19:14:06
-  @Last Modified time: 2018-09-13 14:00:38
+  @Last Modified time: 2018-10-02 13:13:04
 \*----------------------------------------*/
 import { Archives } from './../archives/archives.js';
 import Book from './tools.js';
@@ -19,10 +19,10 @@ let archive = Archives.findOne({
 		updatedAt : 1
 	}
 })
+/*
 
 let backspaces = archive.backspaces.join(" ");
 
-/*
 
 new Book(
 	'/Users/ogre/works/8102/bcksp.es/output.pdf', 

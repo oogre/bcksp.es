@@ -2,13 +2,17 @@
   web.bitRepublic - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 23:35:48
-  @Last Modified time: 2018-09-24 13:33:47
+  @Last Modified time: 2018-10-02 15:49:52
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { config } from '../../startup/config.js'
 import { LoginUser } from '../../api/users/methods.js';
+import { GetLoginTokenUser } from '../../api/users/methods.js';
+
+import * as Utilities from "./../../utilities.js";
+
 import HeaderMenu from './../menu/header.js';
 
 import MessageError from '../message/error.js';
@@ -75,14 +79,16 @@ export default class UserLogIn extends Component {
 				this.setState({
 					'has-success' : true
 				});
+
+				GetLoginTokenUser.call({}, (err, res)=>{
+					console.log(err);
+					console.log(res);
+					window.postMessage({
+						type : "login",
+						token : res.data
+					}, "*");
+				});
 				FlowRouter.go('home');
-				window.postMessage({
-					type : "login",
-					token : {
-						id : localStorage.getItem("Meteor.userId"),
-						token : localStorage.getItem("Meteor.loginToken")
-					}
-				}, "*");
 			});
 		});
 	}

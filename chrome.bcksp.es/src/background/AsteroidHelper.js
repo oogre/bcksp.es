@@ -2,10 +2,12 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-09-24 13:49:29
+  @Last Modified time: 2018-10-13 16:33:54
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
+import { config } from './../shared/config.js';
+
 import Data from "./../shared/Data.js";
 import _ from 'underscore';
 
@@ -14,7 +16,7 @@ class AsteroidHelper{
 		const Asteroid = createClass();
 		
 		this.asteroid = new Asteroid({
-    		endpoint: "ws://local.bcksp.es/websocket"
+    		endpoint: config.bcksp_ws
 		});
 
 		this.subscribtionAddressList = [
@@ -42,9 +44,22 @@ class AsteroidHelper{
 		});
 
 		this.asteroid.on("loggedIn", data =>{
-			Utilities.log("loggedIn", data);
+			this.asteroid.call("Users.methods.login.token")
+			.then(res=>{
+				Utilities.openHiddenTab(config.bcksp_url+"/login/"+res.data)
+					.then(tab => chrome.tabs.remove(tab.id))
+					.catch(error => console.warn(error));
+			}).catch(error=>{
+				console.warn("no way to auto connect to the website");
+				console.console(error)
+			});
+
 			this.on("changed", {
-				counts : ({count}) => Utilities.setBadgeText(count),
+				counts : ({count}) => {
+					Data.setState({
+						archiveSize : count
+					});
+				},
 				blacklist : settings => {
 					Utilities.log("changed", settings);
 					Utilities.setBlackList(settings.blacklist)
@@ -53,7 +68,11 @@ class AsteroidHelper{
 				}
 			});
 			this.on("added", {
-				counts : ({count}) => Utilities.setBadgeText(count) ,
+				counts : ({count}) => {
+					Data.setState({
+						archiveSize : count
+					});
+				},
 				blacklist : settings => {
 					Utilities.log("added", settings);
 					Utilities.setBlackList(settings.blacklist)
@@ -66,6 +85,20 @@ class AsteroidHelper{
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
+
+			Utilities.openHiddenTab(config.bcksp_url+"/logout")
+				.then(tab => chrome.tabs.remove(tab.id))
+				.catch(error => console.warn(error));
+
+			/*
+			chrome.tabs.create({ url: config.bcksp_url+"/logout" }, tab=>{
+				chrome.tabs.onUpdated.addListener((tabId, changeInfo)=>{
+					if(tabId == tab.id && changeInfo.status == "complete"){
+						setTimeout(()=>chrome.tabs.remove(tabId), 100);
+					}
+				});
+			});
+			*/
 			this.stopSubsribtion();
 			localStorage.clear();
 			Data.setState({
@@ -83,7 +116,6 @@ class AsteroidHelper{
 			this.asteroid.subscriptions.cache.del(subscribtion.id);
 		});
 		this.subscribtionList = [];
-		Utilities.setBadgeText(false);
 	}
 
 	startSubsribtion (){
@@ -109,9 +141,15 @@ class AsteroidHelper{
 		return this.asteroid.logout()
 	}
  
-	async login({id, token}){
+	async login(data){
 		if(!Data.state.connected) throw new Error("Server is not accessible");
-		return this.asteroid.loginWithToken({ id : id, token : token });
+		return this.asteroid.loginWithPassword(data)
+	}
+
+	async signup(data){
+		console.log(data);
+		if(!Data.state.connected) throw new Error("Server is not accessible");
+		return this.asteroid.createUser(data)
 	}
 
 	async deferredArchiveAdd(time){
@@ -122,7 +160,12 @@ class AsteroidHelper{
 			if(archive.length < 1) {
 				return new Error("Archive Add cancelled, casue local archive is empty");
 			}
-			return this.call("Archives.methods.add", { text: archive.split("").reverse().join("") });
+			return this.call("Archives.methods.add", { 
+				text: archive.split("").reverse().join("") 
+			})
+			.then(()=>{
+				Utilities.clearArchiveBuffer();
+			});
 		}
 		return;
 	}

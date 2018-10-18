@@ -2,7 +2,7 @@
   bcksp.es - signup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 19:28:56
-  @Last Modified time: 2018-09-23 23:07:33
+  @Last Modified time: 2018-09-29 13:51:38
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
@@ -10,6 +10,7 @@ import { Meteor } from 'meteor/meteor';
 
 import HeaderMenu from './../menu/header.js';
 import { SignupUser } from '../../api/users/methods.js';
+import * as Utilities from "./../../utilities.js";
 
 import MessageError from '../message/error.js';
 import T from './../../i18n/index.js';
@@ -83,6 +84,7 @@ export default class UserSignup extends Component {
 				this.setState({
 					'has-success' : true
 				});
+				Utilities.transfertLoginDataToExtension();
 				FlowRouter.go('home');
 			});
 		})

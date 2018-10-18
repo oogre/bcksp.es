@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-05-31 09:37:35
+  @Last Modified time: 2018-10-08 14:24:58
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";
@@ -45,8 +45,39 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
   		});
 	}
 
+	static async openHiddenTab(url){
+		return new Promise((resolve, reject) => {
+			let delayedResolve = null;
+			chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true }, (value, error)=>{
+				if(error)return reject(error);
+				let currentTab = value[0];
+				chrome.tabs.create({ url: url }, tab => {
+					chrome.tabs.highlight({
+						windowId: currentTab.windowId, 
+						tabs:currentTab.index
+					});
+					setTimeout(()=>{
+						if(!delayedResolve)return;
+						delayedResolve = clearTimeout(delayedResolve);
+						return reject("NO WAY TO complete the request")
+					}, 10000)
+					chrome.tabs.onUpdated.addListener((tabId, changeInfo)=>{
+						if(tabId == tab.id && changeInfo.status == "complete"){
+							delayedResolve = setTimeout(()=>{
+								if(delayedResolve){
+									resolve(tab);
+									delayedResolve = clearTimeout(delayedResolve);
+								}
+							}, 100);
+						}
+					});
+				});
+			});
+		});
+	}
+
 	static async sendMessage(action, data){
-		if(_.isEmpty(data)) throw new Error ("sendMessage - Data is not provided");
+		//if(_.isEmpty(data)) throw new Error ("sendMessage - Data is not provided");
 		return new Promise((resolve, reject) => {
 			chrome.runtime.sendMessage({
 				action : action,

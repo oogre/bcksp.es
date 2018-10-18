@@ -2,7 +2,7 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-09-24 13:54:40
+  @Last Modified time: 2018-10-12 18:56:44
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -14,12 +14,12 @@ import Protocol from "../shared/Protocol.js";
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 
 $(document).ready(()=>{
-	Utilities.sendMessage("isLogin", "true")
+	Utilities.sendMessage("isLogin")
 		.then(async (isLoggedIn) => {
 			if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
 			return true;
 		})
-		.then(() => Utilities.sendMessage("getUrl", "true"))
+		.then(() => Utilities.sendMessage("getUrlStatus"))
 		.then(async ({blackListed}) => {
 			if(blackListed) throw new Error('This web site is blacklisted, so here bcksp.es in not available');
 			return true;
@@ -33,10 +33,10 @@ $(document).ready(()=>{
 	        return;
 
 	    if (event.data.type && (event.data.type == "login")) {
-	        Utilities.sendMessage("login", event.data.token);
+	        Utilities.sendMessage("login", event.data);
 	    }
 	    if (event.data.type && (event.data.type == "logout")) {
-	    	Utilities.sendMessage("logout", "true");
+	    	Utilities.sendMessage("logout");
 	    }
 	});
 });
@@ -54,32 +54,33 @@ class BackspaceListener{
 				}catch(error){}
 			}
 		}, false);
+		this.setupListener(document);
 
 
 		Protocol.add("Highlight", target => {
-			Utilities.log("Highlight");
 			let content = Utilities.getHighlightText(target);
 			if(_.isString(content)){
+				Utilities.log("Highlight", content.split("").reverse().join(""));
 				Utilities.sendMessage("archive", content);
 			}
 			return content !== false;
 		});
 
 		Protocol.add("CharBeforeCaret", target => {
-			Utilities.log("CharBeforeCaret");
 			let content = Utilities.getCharBeforeCaret(target);
 			if(_.isString(content)){
+				Utilities.log("CharBeforeCaret", content);
 				Utilities.sendMessage("archive", content);
 			}
 			return content !== false;
 		});
 
 		Protocol.add("Diff", ({before, after}) =>{
-			Utilities.log("Diff");
 			let	content;
 			if(_.isEmpty(after)) content = before;
 			else content = Utilities.diff(before, after);
 			if(!_.isEmpty(content) && _.isString(content) ){
+				Utilities.log("Diff", content);
 				Utilities.sendMessage("archive", content.split("").reverse().join(""));
 			}
 		});
@@ -87,7 +88,8 @@ class BackspaceListener{
 	
 	keyDownListener(event){
 		if(8 === event.keyCode ){
-			Utilities.sendMessage("backspacing", "true");
+			Utilities.sendMessage("backspacing");
+
 			if(	Utilities.isAcceptable(this.activeElement) ){
 				Utilities.selectProtocol({
 					"googleDocument" : () => {
@@ -138,7 +140,7 @@ class BackspaceListener{
 	}
 	keyUpListener(event){
 		if(8 === event.keyCode ){
-			Utilities.sendMessage("backspaceup", "true");
+			Utilities.sendMessage("backspaceup");
 			if(!_.isEmpty(Data.state.innerText)){
 				Utilities.selectProtocol({
 					"googleDocument" : () => Protocol.exec("Diff", {

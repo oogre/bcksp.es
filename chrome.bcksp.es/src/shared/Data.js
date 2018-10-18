@@ -2,13 +2,14 @@
   bcksp.es - Data.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 19:33:44
-  @Last Modified time: 2018-05-30 21:06:48
+  @Last Modified time: 2018-10-12 18:48:11
 \*----------------------------------------*/
 import _ from 'underscore';
 
 class Data{
 	constructor(){
 		this.state = {
+			archiveSize : 0,
 			currentURLBlacklisted: false,
 			connected: false,
 			innerText: "",

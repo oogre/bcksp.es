@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2018-09-23 19:49:28
+  @Last Modified time: 2018-10-02 13:52:36
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -17,12 +17,18 @@ import HowtoList from './howto/list.js';
 import AboutPrivacy from './about/privacy.js';
 import T from './../i18n/index.js';
 
+import { streamer } from './../api/streamer.js';
+
 // App component - represents the whole app
 export default class App extends Component {
 	constructor(props){
 		super(props);
 	}
-
+	componentDidMount(){
+		streamer.on('login', message => {
+			console.log(message);		
+		});
+	}
 	render() {
 		return (
 			<div className="page page--home">

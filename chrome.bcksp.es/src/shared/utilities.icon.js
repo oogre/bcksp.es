@@ -2,7 +2,7 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-05-31 09:25:53
+  @Last Modified time: 2018-10-13 16:34:24
 \*----------------------------------------*/
 
 import _ from 'underscore';
@@ -43,12 +43,6 @@ export default class UtilitiesIcon {
 
 	static setDefaultIcon(loggedIn){
 		UtilitiesIcon.setIcon(loggedIn ? "standby" : "logout");
-	}
-
-	static setBadgeText(value){
-		chrome.browserAction.setBadgeText({
-			text: _.isNumber(value) && value != 0 ? UtilitiesIcon.prefixFormat(value) : ""
-		});
 	}
 
 	static setIcon(name){

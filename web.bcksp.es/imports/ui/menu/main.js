@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-09-23 23:15:22
+  @Last Modified time: 2018-10-07 20:08:49
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -32,6 +32,7 @@ class MenuMain extends Component {
 	}
 
 	render() {
+		let self = this;
 		return (
 			<nav>
 				<button type="button" className="menu--header__mobile-trigger" onClick={this.handleOpenMobileMenu.bind(this)}>
@@ -57,31 +58,31 @@ class MenuMain extends Component {
 							<T>menus.souvenir</T>
 						</a>
 					</li>
-					<li className="menu__item">
-						{ 
-							this.state.extensionInstalled ? 
-								(
-									this.props.userId ? 
-										<a 	className="menu__item__link" 
-											href={ FlowRouter.path("userProfile", { userId : this.props.userId }) }
-										>
-											profile
-										</a>
-									:
-										<a  className="menu__item__link " 
-											href={FlowRouter.path("signup")}
-										>
-											<T>menus.signup</T>
-										</a>
-								)
-							:
+
+					{
+						!this.state.extensionInstalled ?
+							<li className="menu__item">
 								<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "download" ? "active" : "")} 
 									href={FlowRouter.path("download")}
 								>
 									<T>menus.download</T>
 								</a>
-						}
-					</li>
+							</li>
+						:
+							null
+					}
+					{
+						this.state.extensionInstalled && self.props.userId ?
+							<li className="menu__item">
+								<a 	className="menu__item__link" 
+									href={ FlowRouter.path("userProfile", { userId : this.props.userId }) }
+								>
+									profile
+								</a>
+							</li>
+						:
+							null
+					}
 				</ul>
 			</nav>
 		);
