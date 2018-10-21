@@ -15,4 +15,4 @@ Sur son ordinateur personnel un internaute arrive sur le site web [bcksp.es](htt
 « bcksp.es » est un dispositif permettant la microédition de livres touchant à l’intime et l’absurde. Il s’agit aussi d’un processus dévoilant des questions relatives au « big data » et à la protection des données. Ces sujets sont fondamentaux dans l’expérience numérique actuelle. Ce projet ouvre des questions et les poses à une part de notre réalité encore obscure que seul l’art numérique peut éclairer.
 
 ## Source code License
-[!License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
