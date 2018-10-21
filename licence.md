@@ -1,10 +1,10 @@
 This is a human-readable summary of the Legal Code (the full licence).
 The full license can be optained here:
-http://creativecommons.org/licenses/by-nc-sa/4.0/legalcode 
+http://creativecommons.org/licenses/by-sa/4.0/legalcode 
 
 All data in this "Hardware" Folder is published under the following License
 
-Attribution-NonCommercial-ShareAlike 4.0 CC BY-NC-SA 4.0 
+Attribution-ShareAlike 4.0 CC BY-SA 4.0 
 
 This means:
 
@@ -14,7 +14,6 @@ You are free:
 
 Under the following conditions:
 Attribution — You must give the original author credit.
-Non-Commercial — You may not use this work for commercial purposes. 
 Share Alike — If you alter, transform, or build upon this work, you may distribute the resulting work only under a licence identical to this one.
 
 With the understanding that:

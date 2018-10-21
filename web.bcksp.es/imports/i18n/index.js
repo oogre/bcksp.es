@@ -69,8 +69,24 @@ i18n.addTranslation('en-US', {
 	},
 	about : {
 		title : "about",
-		long : "sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj. sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj. sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj. sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj. sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj. sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj. sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj.",
-		short : "sdfjlsdfkj dsflkjds flkdsjf dslkfj dfslkfdjs lfdskj fslkjfs dlfkjs fdlskkjfsldkfkjsd flksjf lskfjsdlfkkjds flkdsjf dlskfjdslfkjdsfldskfj dslfkdsj fldskfj dsflkjds fldskfj dslfkj.",
+		long : "sdfjlsdfkj",
+		short : 	"La pratique de l'écriture est pareille à un monde en formation. \
+					Soumises à l'érosion, les idées s'affinent pour former des phrases. \
+					Les tranches les plus sensibles de nos idées s'envolent sous la forme \
+					du sable subtil pour finir dans le désert du néant. Notre souhait est \
+					de mettre en lumière une part intime et sombre par nature de l'Homme. \
+					Il nous paraît que l'intérêt de ce projet tient dans l'observation de \
+					la mécanique cérébrale travaillant pour former une communication par \
+					l'écriture. Nous récupérons et imprimons les restes des nombreux \
+					accidents de l'écriture, rien de plus. Cela est déjà tout un programme... \
+					La curiosité, la soif de découverte et de connaissance de soi sont des raisons \
+					suffisantes pour se lancer dans l'aventure « bcksp.es » « bcksp.es » tire son \
+					nom de la touche « Backspace » du clavier informatique. Celle-ci est située \
+					au-dessus de la touche « Enter ». Elle est utilisée pour effacer les derniers \
+					caractères saisis, ceux situés à gauche du curseur d’écriture. Lorsque l’on \
+					utilise la touche « Backspace », une part de nous s'envole avec les mots perdus. \
+					« bcksp.es » capture ces poussières de pensée et les archive. « bcksp.es » vous \
+					propose d'imprimer vos archives de textes supprimés sous forme d’un livre de poche.",
 		link : "learn more"
 	},
 	artists: {
