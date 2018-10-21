@@ -1,5 +1,10 @@
 
 # BCKSP.ES
+
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/oogre)
+
+[![GitHub issues](https://img.shields.io/github/issues/oogre/bcksp.es.svg)](https://github.com/oogre/bcksp.es/issues/)
+
 ## Note d’intention
 
 La pratique de l'écriture est pareille à un monde en formation. Soumises à l'érosion, les idées s'affinent pour former des phrases. Les tranches les plus sensibles de nos idées s'envolent sous la forme du sable subtil pour finir dans le désert du néant.
