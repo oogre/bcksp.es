@@ -21,5 +21,5 @@ Sur son ordinateur personnel un internaute arrive sur le site web [bcksp.es](htt
 ## Source code License
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-## Soutient
-![](graphic/FWB-small.png?raw=true)
+## Soutien
+![http://www.arts-numeriques.culture.be/](graphic/FWB-small.png?raw=true)
