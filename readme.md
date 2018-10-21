@@ -1,7 +1,7 @@
 
 # BCKSP.ES
 
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/oogre) [![GitHub issues](https://img.shields.io/github/issues/oogre/bcksp.es.svg)](https://github.com/oogre/bcksp.es/issues/) [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/oogre) [![GitHub issues](https://img.shields.io/github/issues/oogre/bcksp.es.svg)](https://github.com/oogre/bcksp.es/issues/)
 
 ## Note d’intention
 
