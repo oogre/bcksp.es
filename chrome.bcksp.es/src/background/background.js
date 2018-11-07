@@ -2,7 +2,7 @@
   runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-10-12 18:50:43
+  @Last Modified time: 2018-11-07 15:33:09
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -84,6 +84,10 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 				updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
 					.then(data => resolve(data))
 					.catch(error => reject(error));
+			break;
+			
+			case "getBlindfields" : 
+				resolve(Utilities.getBlindfields());
 			break;
 
 			case "getArchiveSize" : 

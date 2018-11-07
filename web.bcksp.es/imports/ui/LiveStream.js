@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-09-23 18:58:00
+  @Last Modified time: 2018-11-03 21:04:02
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -21,7 +21,7 @@ class LiveStream extends Component {
 			liveBackspaces : "",
 			selectContent:"",
 			shareContent:"",
-			position : [0, 0]
+			position : [-1000, -1000]
 		};
 	}
 	onSelected(event){
@@ -31,22 +31,27 @@ class LiveStream extends Component {
 			this.setState({
 				selectContent : content,
 				shareContent : this.state.selectContent,
-				position : [boundingBox.right, boundingBox.top]
+				position : [
+					(boundingBox.left + boundingBox.right)/2 , 
+					boundingBox.top + document.scrollingElement.scrollTop
+				]
 			});
 		}else{
 			this.setState({
 				selectContent : "",
 				shareContent : this.state.selectContent,
-				position : [0, 0]
+				position : [-1000, -1000]
 			});
 		}
 	}
 	onBlur(){
-		this.setState({
-			selectContent : "",
-			shareContent : this.state.selectContent,
-			position : [0, 0]
-		});
+		setTimeout(()=>{
+			this.setState({
+				selectContent : "",
+				shareContent : this.state.selectContent,
+				position : [-1000, -1000]
+			});
+		}, 333);
 	}
 	componentDidMount(){
 		if(this.props.public){
@@ -65,15 +70,12 @@ class LiveStream extends Component {
 	}
 	render() {
 		return (
-			<div>
-				
-				<div 	className="stream2" 
-						onBlur={this.onBlur.bind(this)} 
-						onSelect={this.onSelected.bind(this)} 
-				>
-					<ButtonShare left={this.state.position[0]} top={this.state.position[1]} content={this.state.shareContent}/>
-					{this.state.liveBackspaces + " " + this.props.archive} 	
-				</div>
+			<div 	className="stream2" 
+					onBlur={this.onBlur.bind(this)} 
+					onSelect={this.onSelected.bind(this)} 
+			>
+				<ButtonShare left={this.state.position[0]} top={this.state.position[1]} content={this.state.shareContent}/>
+				{this.state.liveBackspaces + " " + this.props.archive} 	
 			</div>
 		);
 	}

@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-10-09 11:46:35
+  @Last Modified time: 2018-11-07 16:27:44
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -19,8 +19,13 @@ export default class UtilitiesBlacklist {
 		return false;
 	}
 
+	static getBlindfields(){
+		return JSON.parse(localStorage.getItem("blindfiels") || "[]");
+	}
+
+
 	static async setBlackList(urls){
-		if(!_.isArray(urls)) return Utilities.error("setBlackList", "need array as parameter");
+		if(!_.isArray(urls)) throw new Error("setBlackList : need urls to be an array");
 		let oldBlackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 
 		let blackliststed = _.difference(urls, oldBlackList);
@@ -35,6 +40,15 @@ export default class UtilitiesBlacklist {
 					.union(whiteliststed)
 					.uniq()
 					.value();
+	}
+
+	static async setBlindfield(blindfiels){
+		if(!_.isObject(blindfiels)) throw new Error("setBlindfield : need blindfiels to be an object");
+		if(!_.isArray(blindfiels.class)) throw new Error("setBlindfield : need blindfiels.class to be an array");
+		if(!_.isArray(blindfiels.types)) throw new Error("setBlindfield : need blindfiels.types to be an array");
+		
+		localStorage.setItem("blindfiels", JSON.stringify(blindfiels));
+		return blindfiels;
 	}
 
 	static removeToBlackList(url){

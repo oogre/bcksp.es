@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-09-23 23:20:55
+  @Last Modified time: 2018-11-07 12:56:31
 \*----------------------------------------*/
 export const config = {
 	archives : {
@@ -35,5 +35,32 @@ export const config = {
 			}
 		}
 	},
+	settings : {
+		blindfield : {
+			types : [{
+				value : "email",
+				placeholder : "demo@gmial.com"
+			},{
+				value : "password",
+				placeholder : "password"
+			},{
+				value : "text",
+				placeholder : "text"
+			},{
+				value : "search",
+				placeholder : "search"
+			},{
+				value : "tel",
+				placeholder : "+32495876315"
+			},{
+				value : "number",
+				placeholder : 123
+			},{
+				value : "url",
+				placeholder : "http://bcksp.es"
+			}],
+			class : []
+		}
+	}
 
 }

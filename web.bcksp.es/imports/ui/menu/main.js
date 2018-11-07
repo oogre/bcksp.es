@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-10-07 20:08:49
+  @Last Modified time: 2018-11-07 17:24:17
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -75,7 +75,7 @@ class MenuMain extends Component {
 						this.state.extensionInstalled && self.props.userId ?
 							<li className="menu__item">
 								<a 	className="menu__item__link" 
-									href={ FlowRouter.path("userProfile", { userId : this.props.userId }) }
+									href={ FlowRouter.path("userProfile") }
 								>
 									profile
 								</a>

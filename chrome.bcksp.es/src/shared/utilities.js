@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-10-08 14:24:58
+  @Last Modified time: 2018-11-07 16:40:29
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";
@@ -85,6 +85,16 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
 			}, (data, error) => {
 				if(error)return reject(error);
 				resolve(data);
+			});
+		});
+	}
+	static async sendMessageToAllTab(action, data){
+		return new Promise((resolve, reject) => {
+			chrome.tabs.query({}, tabs => {
+				tabs.map(tab =>{
+					chrome.tabs.sendMessage(tab.id, {action, data});	
+				});
+				resolve();
 			});
 		});
 	}

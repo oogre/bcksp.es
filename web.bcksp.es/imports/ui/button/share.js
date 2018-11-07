@@ -2,7 +2,7 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 17:45:05
-  @Last Modified time: 2018-09-23 19:01:46
+  @Last Modified time: 2018-10-31 16:22:43
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -23,8 +23,7 @@ export default class ButtonShare extends Component {
 						background:"red",
 						width:"50px",
 						height:"20px",
-						marginLeft: "-50px",
-						marginTop: "-20px",
+						transform: "translate(-50%, -100%)",
 						left: this.props.left+"px",
 						top: this.props.top+"px"
 					}}

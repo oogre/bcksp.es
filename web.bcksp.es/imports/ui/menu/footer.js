@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-10-07 19:57:18
+  @Last Modified time: 2018-11-07 17:24:07
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -51,7 +51,7 @@ class MenuFooter extends Component {
 										this.props.userId ?
 											<li className="menu__item">
 												<a 	className="menu__item__link" 
-													href={ FlowRouter.path("userProfile", { userId : this.props.userId }) }
+													href={ FlowRouter.path("userProfile") }
 												>
 													profile
 												</a>

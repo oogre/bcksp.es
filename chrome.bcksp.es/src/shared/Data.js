@@ -2,7 +2,7 @@
   bcksp.es - Data.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 19:33:44
-  @Last Modified time: 2018-10-12 18:48:11
+  @Last Modified time: 2018-11-07 15:50:43
 \*----------------------------------------*/
 import _ from 'underscore';
 
@@ -16,7 +16,8 @@ class Data{
 			downFlag: false,
 			timers: {},
 			procrastinations: {},
-			currentIcon: ""
+			currentIcon: "",
+			blindfields : {}
 		};
 		this.actions = _.mapObject(this.state, (value, key) => {
 			return [];

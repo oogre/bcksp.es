@@ -2,7 +2,7 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2018-10-08 06:14:39
+  @Last Modified time: 2018-11-07 17:20:18
 \*----------------------------------------*/
 import _ from 'underscore'
 import React from 'react';
@@ -35,7 +35,6 @@ class Popup extends React.Component {
 		}
 	}
 	render() {
-		console.log(this.state.loggedIn);
 		return (
 			<div>
 				{

@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:11:04
-  @Last Modified time: 2018-05-28 22:43:54
+  @Last Modified time: 2018-11-07 15:38:57
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Settings } from './settings.js';
@@ -24,7 +24,8 @@ if(Meteor.isServer){
 			owner : Meteor.userId()
 		}, {
 			fields : {
-				blacklist : 1
+				blacklist : 1,
+				blindfield : 1
 			}
 		}).observeChanges({
 			changed: (id, changedPrivateBlacklist) => {
@@ -47,7 +48,8 @@ if(Meteor.isServer){
 			owner : Meteor.userId()
 		}, {
 			fields : {
-				blacklist : 1
+				blacklist : 1,
+				blindfield : 1
 			}
 		});
 		if(settings){

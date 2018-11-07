@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-10-13 16:33:54
+  @Last Modified time: 2018-11-07 16:38:15
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -62,9 +62,18 @@ class AsteroidHelper{
 				},
 				blacklist : settings => {
 					Utilities.log("changed", settings);
-					Utilities.setBlackList(settings.blacklist)
-						.then(urls => Utilities.reloadTabs(urls))
+					if(!_.isEmpty(settings.blindfield)){
+						Utilities.setBlindfield(settings.blindfield)
+						.then(blindfield =>{
+							Utilities.sendMessageToAllTab("blindfield", blindfield);
+						})
 						.catch(error => Utilities.error(error));
+					}
+					if(!_.isEmpty(settings.blacklist)){
+						Utilities.setBlackList(settings.blacklist)
+							.then(urls => Utilities.reloadTabs(urls))
+							.catch(error => Utilities.error(error));
+					}
 				}
 			});
 			this.on("added", {
@@ -75,9 +84,18 @@ class AsteroidHelper{
 				},
 				blacklist : settings => {
 					Utilities.log("added", settings);
-					Utilities.setBlackList(settings.blacklist)
-						.then(urls => Utilities.reloadTabs(urls))
+					if(!_.isEmpty(settings.blindfield)){
+						Utilities.setBlindfield(settings.blindfield)
+						.then(blindfield =>{
+							Utilities.sendMessageToAllTab("blindfield", blindfield);
+						})
 						.catch(error => Utilities.error(error));
+					}
+					if(!_.isEmpty(settings.blacklist)){
+						Utilities.setBlackList(settings.blacklist)
+							.then(urls => Utilities.reloadTabs(urls))
+							.catch(error => Utilities.error(error));
+					}
 				}
 			});	
 			this.startSubsribtion();

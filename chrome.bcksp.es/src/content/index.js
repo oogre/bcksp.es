@@ -2,13 +2,14 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-10-12 18:56:44
+  @Last Modified time: 2018-11-07 17:06:59
 \*----------------------------------------*/
 
 import $ from 'jquery';
 import Utilities from '../shared/utilities.js';
 import _ from 'underscore';
 import Data from "../shared/Data.js";
+import { config } from "../shared/config.js";
 import Protocol from "../shared/Protocol.js";
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
@@ -43,6 +44,12 @@ $(document).ready(()=>{
 
 class BackspaceListener{
 	constructor(){
+		Utilities.sendMessage("getBlindfields").then(blindfields=>{
+			Data.setState({
+				blindfields : blindfields
+			});
+		});
+
 		Utilities.log("BackspaceListener initializer");
 		document.addEventListener("DOMSubtreeModified", event => {
 			this.setupListener(event.target);
@@ -87,59 +94,56 @@ class BackspaceListener{
 	}
 	
 	keyDownListener(event){
-		if(8 === event.keyCode ){
+		if(8 === event.keyCode && Utilities.isAcceptable(this.activeElement) ){
 			Utilities.sendMessage("backspacing");
-
-			if(	Utilities.isAcceptable(this.activeElement) ){
-				Utilities.selectProtocol({
-					"googleDocument" : () => {
-						if(!Data.state.downFlag){
-							Data.setState({
-								innerText : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
-							});
-						}
-					},
-					"googleSpreadsheets" : () => {
-						if(!Data.state.downFlag){
-							Data.setState({
-								innerText : Utilities.innerTEXT(document.querySelector(".cell-input"))
-							});
-						}
-					},
-					"googlePresentation" : () => {
-						if(!Data.state.downFlag){
-							Data.setState({
-								innerText : Utilities.innerTEXT(document.querySelectorAll(".panel-right text"))
-							});
-						}
-					},
-					"googleDrawings" : () => {
-						if(!Data.state.downFlag){
-							Data.setState({
-								innerText : Utilities.innerTEXT(document.querySelectorAll("text"))
-							});
-						}
-					},
-					"default" : () => {
-						if(!Protocol.exec("Highlight", event.target)){
-							if(!Protocol.exec("CharBeforeCaret", event.target)){
-								if(!Data.state.downFlag){
-									Data.setState({
-										innerText : Utilities.innerTEXT(event.target)
-									});
-								}
+			Utilities.selectProtocol({
+				"googleDocument" : () => {
+					if(!Data.state.downFlag){
+						Data.setState({
+							innerText : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
+						});
+					}
+				},
+				"googleSpreadsheets" : () => {
+					if(!Data.state.downFlag){
+						Data.setState({
+							innerText : Utilities.innerTEXT(document.querySelector(".cell-input"))
+						});
+					}
+				},
+				"googlePresentation" : () => {
+					if(!Data.state.downFlag){
+						Data.setState({
+							innerText : Utilities.innerTEXT(document.querySelectorAll(".panel-right text"))
+						});
+					}
+				},
+				"googleDrawings" : () => {
+					if(!Data.state.downFlag){
+						Data.setState({
+							innerText : Utilities.innerTEXT(document.querySelectorAll("text"))
+						});
+					}
+				},
+				"default" : () => {
+					if(!Protocol.exec("Highlight", event.target)){
+						if(!Protocol.exec("CharBeforeCaret", event.target)){
+							if(!Data.state.downFlag){
+								Data.setState({
+									innerText : Utilities.innerTEXT(event.target)
+								});
 							}
 						}
 					}
-				});
-			}
-			Data.setState({
-				downFlag : true
+				}
 			});
 		}
+		Data.setState({
+			downFlag : true
+		});
 	}
 	keyUpListener(event){
-		if(8 === event.keyCode ){
+		if(8 === event.keyCode && Utilities.isAcceptable(this.activeElement) ){
 			Utilities.sendMessage("backspaceup");
 			if(!_.isEmpty(Data.state.innerText)){
 				Utilities.selectProtocol({
@@ -188,3 +192,11 @@ class BackspaceListener{
 		element.addEventListener("keyup", this.keyUpListener, true);	
 	}
 }
+
+chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+	if (sender.id == config.id && msg.action == 'blindfield') {
+		Data.setState({
+			blindfields : msg.data
+		});
+	}
+});

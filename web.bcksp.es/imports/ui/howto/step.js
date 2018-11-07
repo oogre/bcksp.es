@@ -2,7 +2,7 @@
   bcksp.es - step.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:07:16
-  @Last Modified time: 2018-09-13 18:58:59
+  @Last Modified time: 2018-10-31 16:27:54
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -13,7 +13,7 @@ export default class HowtoStep extends Component {
 		super(props);
 	}
 
-	render() {
+	render(){
 		return (
 			<div className="step">
 				{
@@ -21,7 +21,9 @@ export default class HowtoStep extends Component {
 						<div className="container">
 							{
 								React.Children.map(this.props.children, (child, k) =>(
-									<div className={(this.props.k + k)%2==0 ? "left" : "right"} key={k}> {child} </div>
+									<div key={k} className={(this.props.k + k)%2==0 ? "left" : "right"} > 
+										{child} 
+									</div>
 								))
 							}
 						</div>

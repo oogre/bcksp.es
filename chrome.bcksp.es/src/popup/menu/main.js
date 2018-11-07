@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2018-10-12 19:02:56
+  @Last Modified time: 2018-11-07 17:26:31
 \*----------------------------------------*/
 
 import React from 'react';
@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom';
 
 import { config } from './../../shared/config.js';
 import Blacklist from './../blacklist.js';
+
 import Utilities from './../../shared/utilities.js';
 
 
@@ -33,6 +34,11 @@ export default class MainMenu extends React.Component {
 			url: config.bcksp_url
 		});
 	}
+	handleMySettings(event){
+		chrome.tabs.create({ 
+			url: config.bcksp_url+"/profile"
+		});
+	}
 	render() {
 		return (
 			<ul>
@@ -40,15 +46,15 @@ export default class MainMenu extends React.Component {
 					<Blacklist/>
 				</li>
 				<li>
-					<p>{this.state.archiveSize} characters saved</p>
+					<button 
+							className="" 
+							onClick={this.handleMySettings.bind(this)}
+						>
+							other security settings
+					</button>
 				</li>
 				<li>
-					<a  
-							className="" 
-							href="#"
-						>
-							settings
-					</a>
+					<p>{this.state.archiveSize} characters saved</p>
 				</li>
 				<li>
 					<button 

@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-10-07 19:40:49
+  @Last Modified time: 2018-11-07 17:23:43
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -13,6 +13,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+import TemplateFull from '../imports/ui/template/full.js';
+
 import App from '../imports/ui/App.js';
 import About from '../imports/ui/About.js';
 import UserProfile from '../imports/ui/user/profile.js';
@@ -20,7 +22,7 @@ import UserProfile from '../imports/ui/user/profile.js';
 FlowRouter.route( '/', {
 	name: 'home',
 	action( params ) {
-		render(<App />, document.getElementById('render-target'));
+		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
 		this.register('archive.public', Meteor.subscribe('archive.public'));
@@ -31,7 +33,7 @@ FlowRouter.route( '/', {
 FlowRouter.route( '/about', {
 	name: 'about',
 	action( params ) {
-		render(<About />, document.getElementById('render-target'));
+		render(<TemplateFull><About /></TemplateFull>, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
 		
@@ -50,7 +52,8 @@ FlowRouter.route( '/login/:token', {
 FlowRouter.route( '/logout', {
 	name: 'logout',
 	action( params ) {
-		Meteor.logout();
+		//Meteor.logout();
+		FlowRouter.go("home");
 	}
 });
 
@@ -62,12 +65,13 @@ let loginRoutes = FlowRouter.group({
 	}]
 });
 
-loginRoutes.route("/user/:userId", {
+loginRoutes.route("/profile", {
 	name: "userProfile",
 	action( params ) {
-		render(<UserProfile />, document.getElementById('render-target'));
+		render(<TemplateFull><UserProfile/></TemplateFull>, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
 		this.register('archive.private', Meteor.subscribe('archive.private'));
+		this.register('settings.private', Meteor.subscribe('settings.private'));
 	}
 });
