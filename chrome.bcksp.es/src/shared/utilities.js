@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-11-07 16:40:29
+  @Last Modified time: 2018-11-22 19:38:23
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";
@@ -68,7 +68,7 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
 									resolve(tab);
 									delayedResolve = clearTimeout(delayedResolve);
 								}
-							}, 100);
+							}, 1000);
 						}
 					});
 				});

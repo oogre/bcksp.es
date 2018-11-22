@@ -2,12 +2,13 @@
   runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-11-07 15:33:09
+  @Last Modified time: 2018-11-12 15:06:25
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
 import Utilities from './../shared/utilities.js';
 import Data from "./../shared/Data.js";
+import { config } from './../shared/config.js';
 import _ from 'underscore';
 import $ from 'jquery';
 
@@ -79,7 +80,7 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 			case "isLogin":
 				resolve(AsteroidHelper.asteroid.loggedIn);
 			break;
-			
+
 			case "getUrlStatus" : 
 				updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
 					.then(data => resolve(data))

@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2018-11-03 21:02:53
+  @Last Modified time: 2018-11-12 07:21:13
 \*----------------------------------------*/
 import React, { Component } from 'react';
 

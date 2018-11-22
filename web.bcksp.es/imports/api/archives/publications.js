@@ -2,23 +2,52 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2018-05-23 23:43:20
+  @Last Modified time: 2018-11-22 21:46:41
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from './archives.js';
 import { config } from './../../startup/config.js';
 
 if(Meteor.isServer){
-	Meteor.publish("archive.public", function archivesPublication(){
-		return Archives.find({
-			type : config.archives.public.type
-		});
+	let fs =  Npm.require('fs');
+	Meteor.publish("archive.public", function(){
+		let content = fs.readFileSync(process.env.ARCHIVE_PATH+"/longBuffer.txt", "utf8").split("").reverse().join("");
+		this.added('publicArchive', +new Date(), {content : content});
+		this.ready();
+		this.onStop(() => { } );
 	});
-	Meteor.publish("archive.private", function archivesPublication(){
-		return Archives.find({
-			type : config.archives.private.type,
-			owner : Meteor.userId()
-		});
+
+	Meteor.publish("archive.private", function(data){
+		let initializing = true;
+		let handle;
+		if(this.userId){
+			if(this.userId == data.user){
+				let user = Meteor.users.findOne({
+					_id : this.userId
+				}, { 
+					fields : {
+						archive : 1
+					}
+				});
+				let content = fs.readFileSync(process.env.ARCHIVE_PATH+"/"+user.archive+".txt", "utf8").split("").reverse().join("");
+				this.added('privateArchive', +new Date(), {content : content});
+				handle = Archives.find({ 
+					type : config.archives.private.type,
+					owner : Meteor.userId() 
+				}).observe({
+					changed: (oldData, newData) => {
+						if (!initializing) {
+							let newCharLength = oldData.count-newData.count;
+							let content = fs.readFileSync(process.env.ARCHIVE_PATH+"/"+user.archive+".txt", "utf8").substr(-newCharLength).split("").reverse().join("");
+							this.added('privateArchive', +new Date(), {content : content});
+						}
+					}
+				});
+			}
+			this.ready();
+		}
+		initializing = false;
+		this.onStop(() => { handle && handle.stop() });
 	});
 
 	Meteor.publish("archive.private.count", function archivesPublication(){
@@ -33,9 +62,6 @@ if(Meteor.isServer){
 				}
 			}
 		});
-
-		// Instead, we'll send one `added` message right after `observeChanges` has
-		// returned, and mark the subscription as ready.
 		initializing = false;
 		
 		let archive = Archives.findOne({
@@ -50,10 +76,6 @@ if(Meteor.isServer){
 			this.added('counts', archive._id, archive);
 		}
 		this.ready();
-
-		// Stop observing the cursor when the client unsubscribes. Stopping a
-		// subscription automatically takes care of sending the client any `removed`
-		// messages.
 		this.onStop(() => handle.stop() );
 	});
 }

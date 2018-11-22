@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-11-07 17:23:43
+  @Last Modified time: 2018-11-22 21:33:56
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -26,7 +26,6 @@ FlowRouter.route( '/', {
 	},
 	subscriptions( params, queryParams ) {
 		this.register('archive.public', Meteor.subscribe('archive.public'));
-		
 	}
 });
 
@@ -44,7 +43,8 @@ FlowRouter.route( '/login/:token', {
 	name: 'login',
 	action( params ) {
 		LoginLinks.loginWithToken(params.token, (e, r) => {
-			if (e) return console.log("KO");
+			if (e) return console.log(e);
+			console.log(r);
 		});
 	}
 });
@@ -52,8 +52,7 @@ FlowRouter.route( '/login/:token', {
 FlowRouter.route( '/logout', {
 	name: 'logout',
 	action( params ) {
-		//Meteor.logout();
-		FlowRouter.go("home");
+		Meteor.logout();
 	}
 });
 

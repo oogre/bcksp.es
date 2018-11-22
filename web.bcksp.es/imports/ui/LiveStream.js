@@ -2,11 +2,13 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-11-03 21:04:02
+  @Last Modified time: 2018-11-22 21:34:08
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../api/archives/archives.js';
+import { PublicArchive } from './../api/archives/archives.js';
+import { PrivateArchive } from './../api/archives/archives.js';
 import { streamer } from '../api/streamer.js';
 import { config } from './../startup/config.js';
 import ButtonShare from './button/share.js';
@@ -18,11 +20,27 @@ class LiveStream extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			liveBackspaces : "",
+			streamFrom : "public",
+			public : true,
+			publicBackspaces : "",
 			selectContent:"",
 			shareContent:"",
-			position : [-1000, -1000]
+			position : [-1000, -1000],
+			fullscreen : false
 		};
+	}
+	handleSwitchStream(streamName){
+		if(streamName == "public" && this.state.streamFrom != streamName){
+			this.setState({
+				streamFrom : streamName,
+				public : true,
+			});
+		} else if(streamName == "private" && Meteor.userId() && this.state.streamFrom != streamName){
+			this.setState({
+				streamFrom : streamName,
+				public : false
+			});
+		}
 	}
 	onSelected(event){
 		let content = event.target.ownerDocument.getSelection().toString();
@@ -53,75 +71,93 @@ class LiveStream extends Component {
 			});
 		}, 333);
 	}
+	componentWillUnmount(){
+		streamer.stop("publicBackspaces");
+	}
 	componentDidMount(){
-		if(this.props.public){
-			streamer.on('liveBackspaces', message => {
-				this.setState({
-					liveBackspaces : message + " " + this.state.liveBackspaces
-				});
+		streamer.on('publicBackspaces', message =>{
+			this.setState({
+				publicBackspaces : 	this.state.publicBackspaces + message.content
 			});
-		}
+		});
 		$(".stream2").attr("contenteditable", true);
 	}
-	componentWillUnmount(){
-		if(this.props.public){
-			streamer.stop("liveBackspaces");
+	toggleFullscreen(){
+		if(!this.state.fullscreen){
+			document.querySelector(".stream2").focus();	
+		}else{
+			document.querySelector(".stream2").blur();	
 		}
+		this.setState({
+			fullscreen : !this.state.fullscreen
+		});
 	}
+	handleKey(event){
+		event.preventDefault();
+		if(27 == event.keyCode /* ESC */ && this.state.fullscreen){
+			this.toggleFullscreen();
+		}
+		if(8 == event.keyCode){
+
+		}
+		return false;
+	}
+	
 	render() {
 		return (
-			<div 	className="stream2" 
-					onBlur={this.onBlur.bind(this)} 
-					onSelect={this.onSelected.bind(this)} 
-			>
-				<ButtonShare left={this.state.position[0]} top={this.state.position[1]} content={this.state.shareContent}/>
-				{this.state.liveBackspaces + " " + this.props.archive} 	
+			<div>
+				<ul>
+					<li>
+						<button onClick={this.handleSwitchStream.bind(this, "public")}>public live stream</button>
+					</li>
+					{ 
+						Meteor.userId() ? 
+							<li>
+								<button onClick={this.handleSwitchStream.bind(this, "private")}>your live stream</button>
+							</li>
+						:
+							null
+					}
+				</ul>
+				<div 	className={(this.state.fullscreen ? "fullscreen " : "") + "stream2" }
+						onBlur={this.onBlur.bind(this)} 
+						onKeyPress={this.handleKey.bind(this)}
+						onKeyUp={this.handleKey.bind(this)}
+						onSelect={this.onSelected.bind(this)} 
+				>
+					<ButtonShare left={this.state.position[0]} top={this.state.position[1]} content={this.state.shareContent}/>
+					{
+						this.state.public ? (this.state.publicBackspaces+this.props.publicArchive) : this.props.privateArchive
+					} 	
+				</div>
+				<button onClick={this.toggleFullscreen.bind(this)}>fullscreen</button>
 			</div>
 		);
 	}
 }
 
 export default withTracker(self => {
-	let isReady = false;
-	let archive;
-	let public = self.type != "private";
-
-	if(public){
-		isReady = FlowRouter.subsReady("archive.public");
-		if(!isReady)return{ 
-			isReady ,
-			public
-		};
-		archive = Archives.findOne({
-			type : config.archives.public.type
-		},{
-			fields : {
-				longBuffer : 1
-			},
-			reactive : false
-		});
-		archive = archive.longBuffer;
-	}else{
-		isReady = FlowRouter.subsReady("archive.private");
-		if(!isReady)return{ 
-			isReady,
-			public
-		};
-	
-		archive = Archives.findOne({
-			type : config.archives.private.type,
-			owner : Meteor.userId()
-		},{
-			fields : {
-				backspaces : 1
-			},
-			reactive : true
-		});
-		archive = archive.backspaces.join(" ");
+	let publicArchive = "";
+	if(FlowRouter.subsReady("archive.public")){
+		publicArchive = PublicArchive.findOne({}).content
 	}
+	let privateArchive = "";
+	let handle;
+	if(Meteor.userId()){
+		handle = Meteor.subscribe('archive.private', { user: Meteor.userId() });
+	}
+	if(Meteor.userId() && handle.ready()){
+		privateArchive = PrivateArchive.find({}, {
+							sort : {
+								_id : -1
+							}
+						}).fetch()
+						.map(data=>data.content)
+						.join("");
+	}
+
 	return {
-		public,
-		isReady,
-		archive
+		publicArchive : publicArchive,
+		privateArchive : privateArchive
 	};
 })(LiveStream);

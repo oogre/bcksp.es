@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-11-05 08:27:25
+  @Last Modified time: 2018-11-22 21:14:41
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -33,26 +33,67 @@ export const ArchiveAdd = new ValidatedMethod({
 	},
 	run({ text }) {
 		Utilities.checkUserLoggedIn();
-		text = text.replace(/&nbsp;/g, " ");
 		this.unblock();
-		let myArchive = Archives.update({
-			type : config.archives.private.type,
-			owner : this.userId
-		},{
-			$inc : {
-				count : text.length
-			},
-			$push : {
-				backspaces : {
-					$position : 0,
-					$each : [text]
+		if(Meteor.isServer){
+			text = text.replace(/&nbsp;/g, " ");
+			
+			let myArchive = Archives.findOne({
+				type : config.archives.private.type,
+				owner : this.userId
+			}, {
+				field : {
+					_id : 1
 				}
-			},
-			$set : {
-				updatedAt : new Date()
-			}
-		});
-		streamer.emit('liveBackspaces', text);
+			});
+
+			text = text+" ";
+			let fsExtra = Npm.require('fs-extra');
+			fsExtra.appendFile(process.env.ARCHIVE_PATH+"/"+myArchive._id+'.txt', text.split("").reverse().join(""))
+			.then(()=>{
+				Archives.update({
+					_id : myArchive._id
+				},{
+					$inc : {
+						count : text.length
+					},
+					$set : {
+						updatedAt : new Date()
+					}
+				});
+			})
+			.then(()=>fsExtra.readFile(process.env.ARCHIVE_PATH+"/longBuffer.txt", "utf8"))
+			.then(longBuffer=>{
+				longBuffer = longBuffer + text.split("").reverse().join("");
+				longBuffer = longBuffer.substr(-config.archives.public.longBuffer.maxLen);
+				return fsExtra.writeFile(process.env.ARCHIVE_PATH+"/longBuffer.txt", longBuffer, "utf8")
+			})
+			.then(()=>{
+				Archives.update({
+					type : config.archives.public.type
+				}, {
+					$inc : {
+						total : text.length
+					},
+					$set : {
+						updatedAt : new Date()
+					}
+				});
+				streamer.emit('publicBackspaces', {content : text});
+			})
+			.catch(err=>console.log(err));
+		}
 		return "YES";
+	}
+});
+export const ArchiveGet = new ValidatedMethod({
+	name: 'Archives.methods.get',
+	validate() {},
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		if(Meteor.isServer){
+			return Npm.require('fs').readFileSync(process.env.ARCHIVE_PATH+"/longBuffer.txt", "utf8").split("").reverse().join("");
+		}
 	}
 });

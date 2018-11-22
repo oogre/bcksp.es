@@ -2,7 +2,7 @@
   bcksp.es - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 21:10:15
-  @Last Modified time: 2018-11-07 17:06:59
+  @Last Modified time: 2018-11-22 21:45:23
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -15,7 +15,7 @@ import Protocol from "../shared/Protocol.js";
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 
 $(document).ready(()=>{
-	Utilities.sendMessage("isLogin")
+		Utilities.sendMessage("isLogin")
 		.then(async (isLoggedIn) => {
 			if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
 			return true;
@@ -26,7 +26,7 @@ $(document).ready(()=>{
 			return true;
 		})
 		.then(() => new BackspaceListener())
-		.catch(error => Utilities.error(error));
+		.catch(error => Utilities.error(error.message));
 
 	window.addEventListener("message", function(event) {
 	    // We only accept messages from ourselves
