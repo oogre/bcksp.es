@@ -2,16 +2,15 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-11-22 21:14:41
+  @Last Modified time: 2018-11-25 23:15:21
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-
-import { Archives } from './archives.js';
-import { config } from './../../startup/config.js';
-import { streamer } from './../streamer.js';
-
-import * as Utilities from './../../utilities.js';
+import { Archives } from '../../../imports/api/archives/archives.js';
+import { config } from '../../../imports/startup/config.js';
+import { streamer } from '../../../imports/api/streamer.js';
+import * as Utilities from '../../../imports/utilities.js';
+import * as ArchiveTools from '../../utilities.archive.js';
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
@@ -36,7 +35,6 @@ export const ArchiveAdd = new ValidatedMethod({
 		this.unblock();
 		if(Meteor.isServer){
 			text = text.replace(/&nbsp;/g, " ");
-			
 			let myArchive = Archives.findOne({
 				type : config.archives.private.type,
 				owner : this.userId
@@ -45,10 +43,8 @@ export const ArchiveAdd = new ValidatedMethod({
 					_id : 1
 				}
 			});
-
 			text = text+" ";
-			let fsExtra = Npm.require('fs-extra');
-			fsExtra.appendFile(process.env.ARCHIVE_PATH+"/"+myArchive._id+'.txt', text.split("").reverse().join(""))
+			ArchiveTools.append(myArchive._id, text)
 			.then(()=>{
 				Archives.update({
 					_id : myArchive._id
@@ -61,18 +57,18 @@ export const ArchiveAdd = new ValidatedMethod({
 					}
 				});
 			})
-			.then(()=>fsExtra.readFile(process.env.ARCHIVE_PATH+"/longBuffer.txt", "utf8"))
+			.then(()=>ArchiveTools.readAsync("longBuffer"))
 			.then(longBuffer=>{
-				longBuffer = longBuffer + text.split("").reverse().join("");
-				longBuffer = longBuffer.substr(-config.archives.public.longBuffer.maxLen);
-				return fsExtra.writeFile(process.env.ARCHIVE_PATH+"/longBuffer.txt", longBuffer, "utf8")
+				longBuffer = text + longBuffer;
+				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxLen);
+				return ArchiveTools.writeAsync("longBuffer", longBuffer)
 			})
 			.then(()=>{
 				Archives.update({
 					type : config.archives.public.type
 				}, {
 					$inc : {
-						total : text.length
+						count : text.length
 					},
 					$set : {
 						updatedAt : new Date()
@@ -83,17 +79,5 @@ export const ArchiveAdd = new ValidatedMethod({
 			.catch(err=>console.log(err));
 		}
 		return "YES";
-	}
-});
-export const ArchiveGet = new ValidatedMethod({
-	name: 'Archives.methods.get',
-	validate() {},
-	applyOptions: {
-		noRetry: true,
-	},
-	run() {
-		if(Meteor.isServer){
-			return Npm.require('fs').readFileSync(process.env.ARCHIVE_PATH+"/longBuffer.txt", "utf8").split("").reverse().join("");
-		}
 	}
 });

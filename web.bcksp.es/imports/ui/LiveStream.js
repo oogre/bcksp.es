@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-11-22 21:34:08
+  @Last Modified time: 2018-11-25 23:22:16
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -142,11 +142,7 @@ export default withTracker(self => {
 		publicArchive = PublicArchive.findOne({}).content
 	}
 	let privateArchive = "";
-	let handle;
-	if(Meteor.userId()){
-		handle = Meteor.subscribe('archive.private', { user: Meteor.userId() });
-	}
-	if(Meteor.userId() && handle.ready()){
+	if(FlowRouter.subsReady("archive.private")){
 		privateArchive = PrivateArchive.find({}, {
 							sort : {
 								_id : -1

@@ -2,16 +2,20 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-11-07 17:24:07
+  @Last Modified time: 2018-11-25 16:20:44
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import T from './../../i18n/index.js';
+import * as Utilities from "./../../utilities.js";
 //import { FacebookIcon, TwitterIcon } from 'react-share';
 
 class MenuFooter extends Component {
 	constructor(props){
 		super(props);
+		this.state = {
+			isExtensionInstalled : false
+		}
 	}
 	handleLogout(){
 		window.postMessage({
@@ -19,6 +23,28 @@ class MenuFooter extends Component {
 		}, "*");
 		Meteor.logout();
 	}
+
+	componentDidMount(){
+		Utilities.isExtensionInstalled()
+		.then(isInstalled=>{
+			this.setState({
+				isExtensionInstalled: isInstalled
+			});	
+		});
+	}
+
+	hasToDisplayDownloadBtn(){
+		return !this.state.isExtensionInstalled;
+	}
+	
+	hasToDisplayProfileBtn(){
+		return this.props.isConnected && this.state.isExtensionInstalled;
+	}
+	
+	hasToDisplayLogoutBtn(){
+		return this.props.isConnected && this.state.isExtensionInstalled;
+	}
+	
 	render() {
 			return (
 			<footer className="main-footer">
@@ -42,13 +68,16 @@ class MenuFooter extends Component {
 											<T>menus.authors</T>
 										</a>
 									</li>
-									<li className="menu__item">
-										<a className="menu__item__link" href={FlowRouter.path("download")}>
-											<T>menus.download</T>
-										</a>
-									</li>
+									{	
+										this.hasToDisplayDownloadBtn() &&
+											<li className="menu__item">
+												<a className="menu__item__link" href={FlowRouter.path("download")}>
+													<T>menus.download</T>
+												</a>
+											</li>
+									}
 									{
-										this.props.userId ?
+										this.hasToDisplayProfileBtn() &&
 											<li className="menu__item">
 												<a 	className="menu__item__link" 
 													href={ FlowRouter.path("userProfile") }
@@ -56,19 +85,14 @@ class MenuFooter extends Component {
 													profile
 												</a>
 											</li>
-										: 
-											null
 									}
-
 									{
-										this.props.userId ?
+										this.hasToDisplayLogoutBtn() &&
 											<li className="menu__item">
 												<button className="menu__item__link" onClick={this.handleLogout.bind(this)}>
 													<T>forms.logout</T>
 												</button>
 											</li>
-										: 
-											null
 									}
 								</ul>
 							</div>
@@ -115,6 +139,6 @@ class MenuFooter extends Component {
 }
 export default withTracker(() => {
 	return {
-		userId : Meteor.userId()
+		isConnected : !!Meteor.userId()
 	};
 })(MenuFooter);

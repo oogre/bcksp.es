@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-11-07 17:24:17
+  @Last Modified time: 2018-11-25 16:22:02
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -16,11 +16,16 @@ class MenuMain extends Component {
 		super(props);
 		this.state = {
 			mobileMenu: false,
-			extensionInstalled : Utilities.isExtensionInstalled()
+			isExtensionInstalled : false
 		}
-		window.addEventListener('load', ()=>{
+
+
+	}
+	componentDidMount(){
+		Utilities.isExtensionInstalled()
+		.then(isInstalled=>{
 			this.setState({
-				extensionInstalled: Utilities.isExtensionInstalled()
+				isExtensionInstalled : isInstalled,
 			});	
 		});
 	}
@@ -31,8 +36,15 @@ class MenuMain extends Component {
 		});
 	}
 
+	hasToDisplayDownloadBtn(){
+		return !this.state.isExtensionInstalled;
+	}
+	
+	hasToDisplayProfileBtn(){
+		return this.props.isConnected && this.state.isExtensionInstalled;
+	}
+
 	render() {
-		let self = this;
 		return (
 			<nav>
 				<button type="button" className="menu--header__mobile-trigger" onClick={this.handleOpenMobileMenu.bind(this)}>
@@ -58,9 +70,8 @@ class MenuMain extends Component {
 							<T>menus.souvenir</T>
 						</a>
 					</li>
-
 					{
-						!this.state.extensionInstalled ?
+						this.hasToDisplayDownloadBtn() &&
 							<li className="menu__item">
 								<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "download" ? "active" : "")} 
 									href={FlowRouter.path("download")}
@@ -68,11 +79,9 @@ class MenuMain extends Component {
 									<T>menus.download</T>
 								</a>
 							</li>
-						:
-							null
 					}
 					{
-						this.state.extensionInstalled && self.props.userId ?
+						this.hasToDisplayProfileBtn() &&
 							<li className="menu__item">
 								<a 	className="menu__item__link" 
 									href={ FlowRouter.path("userProfile") }
@@ -80,8 +89,6 @@ class MenuMain extends Component {
 									profile
 								</a>
 							</li>
-						:
-							null
 					}
 				</ul>
 			</nav>
@@ -90,6 +97,6 @@ class MenuMain extends Component {
 }
 export default withTracker(() => {
 	return {
-		userId : Meteor.userId()
+		isConnected : !!Meteor.userId()
 	};
 })(MenuMain);

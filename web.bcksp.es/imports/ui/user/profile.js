@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2018-11-07 17:29:25
+  @Last Modified time: 2018-11-25 23:12:29
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -272,7 +272,7 @@ class UserProfile extends Component {
 }
 
 export default withTracker(self => {
-	let isReady = FlowRouter.subsReady("archive.private") && FlowRouter.subsReady("settings.private");
+	let isReady = FlowRouter.subsReady("settings.private");
 	let currentUser = Meteor.user();
 	let userMail = currentUser ? currentUser.emails[0].address : null;
 	let userId = currentUser ? currentUser._id : null;

@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-11-12 15:06:48
+  @Last Modified time: 2018-11-25 23:08:54
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -20,7 +20,7 @@ class AsteroidHelper{
 		});
 
 		this.subscribtionAddressList = [
-			"archive.private.count",
+			"archive.private.counter",
 			"settings.private.blacklist"
 		];
 		
@@ -55,7 +55,7 @@ class AsteroidHelper{
 			});
 
 			this.on("changed", {
-				counts : ({count}) => {
+				archives : ({count}) => {
 					Data.setState({
 						archiveSize : count
 					});
@@ -77,7 +77,7 @@ class AsteroidHelper{
 				}
 			});
 			this.on("added", {
-				counts : ({count}) => {
+				archives : ({count}) => {
 					Data.setState({
 						archiveSize : count
 					});
