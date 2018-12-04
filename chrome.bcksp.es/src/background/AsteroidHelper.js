@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-11-25 23:08:54
+  @Last Modified time: 2018-12-04 16:04:53
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -21,7 +21,7 @@ class AsteroidHelper{
 
 		this.subscribtionAddressList = [
 			"archive.private.counter",
-			"settings.private.blacklist"
+			"settings.private"
 		];
 		
 		this.subscribtionList = [];
@@ -60,16 +60,15 @@ class AsteroidHelper{
 						archiveSize : count
 					});
 				},
-				blacklist : settings => {
-					Utilities.log("changed", settings);
-					if(!_.isEmpty(settings.blindfield)){
+				settings : settings=>{
+					if(_.isObject(settings.blindfield)){
 						Utilities.setBlindfield(settings.blindfield)
 						.then(blindfield =>{
 							Utilities.sendMessageToAllTab("blindfield", blindfield);
 						})
 						.catch(error => Utilities.error(error));
 					}
-					if(!_.isEmpty(settings.blacklist)){
+					if(_.isArray(settings.blacklist)){
 						Utilities.setBlackList(settings.blacklist)
 							.then(urls => Utilities.reloadTabs(urls))
 							.catch(error => Utilities.error(error));
@@ -82,16 +81,15 @@ class AsteroidHelper{
 						archiveSize : count
 					});
 				},
-				blacklist : settings => {
-					Utilities.log("added", settings);
-					if(!_.isEmpty(settings.blindfield)){
+				settings : settings=>{
+					if(_.isObject(settings.blindfield)){
 						Utilities.setBlindfield(settings.blindfield)
 						.then(blindfield =>{
 							Utilities.sendMessageToAllTab("blindfield", blindfield);
 						})
 						.catch(error => Utilities.error(error));
 					}
-					if(!_.isEmpty(settings.blacklist)){
+					if(_.isArray(settings.blacklist)){
 						Utilities.setBlackList(settings.blacklist)
 							.then(urls => Utilities.reloadTabs(urls))
 							.catch(error => Utilities.error(error));
@@ -103,20 +101,9 @@ class AsteroidHelper{
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
-
 			Utilities.openHiddenTab(config.bcksp_url+"/logout")
 				.then(tab => chrome.tabs.remove(tab.id))
 				.catch(error => console.warn(error));
-
-			/*
-			chrome.tabs.create({ url: config.bcksp_url+"/logout" }, tab=>{
-				chrome.tabs.onUpdated.addListener((tabId, changeInfo)=>{
-					if(tabId == tab.id && changeInfo.status == "complete"){
-						setTimeout(()=>chrome.tabs.remove(tabId), 100);
-					}
-				});
-			});
-			*/
 			this.stopSubsribtion();
 			localStorage.clear();
 			Data.setState({
@@ -160,6 +147,7 @@ class AsteroidHelper{
 	}
  
 	async login(data){
+		console.log(data, Data.state);
 		if(!Data.state.connected) throw new Error("Server is not accessible");
 		return this.asteroid.loginWithPassword(data)
 	}

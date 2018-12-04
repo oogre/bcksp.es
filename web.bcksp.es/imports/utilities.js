@@ -2,7 +2,7 @@
   web.bitRepublic - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:21:58
-  @Last Modified time: 2018-11-25 21:37:02
+  @Last Modified time: 2018-11-26 14:11:53
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import T from './i18n/index.js';

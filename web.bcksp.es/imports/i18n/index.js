@@ -6,6 +6,12 @@ i18n.setOptions({
 
 i18n.addTranslation('en-US', {
 	baseline: "we archive backspace",
+	archive : {
+		counter : {
+			title : "prints",
+			left : "{$value} characters left"
+		}
+	},
 	errors : {
 		email : {
 			required : "your email is require",

@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-11-25 23:15:21
+  @Last Modified time: 2018-11-26 06:14:41
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -43,6 +43,13 @@ export const ArchiveAdd = new ValidatedMethod({
 					_id : 1
 				}
 			});
+			let publicArchive = Archives.findOne({
+				type : config.archives.public.type
+			}, {
+				field : {
+					_id : 1
+				}
+			});
 			text = text+" ";
 			ArchiveTools.append(myArchive._id, text)
 			.then(()=>{
@@ -57,15 +64,15 @@ export const ArchiveAdd = new ValidatedMethod({
 					}
 				});
 			})
-			.then(()=>ArchiveTools.readAsync("longBuffer"))
+			.then(()=>ArchiveTools.readAsync(publicArchive._id))
 			.then(longBuffer=>{
 				longBuffer = text + longBuffer;
 				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxLen);
-				return ArchiveTools.writeAsync("longBuffer", longBuffer)
+				return ArchiveTools.writeAsync(publicArchive._id, longBuffer)
 			})
 			.then(()=>{
 				Archives.update({
-					type : config.archives.public.type
+					_id : publicArchive._id
 				}, {
 					$inc : {
 						count : text.length

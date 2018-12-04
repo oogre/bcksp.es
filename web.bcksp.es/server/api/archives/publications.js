@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2018-11-25 23:19:00
+  @Last Modified time: 2018-11-26 06:25:13
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';
@@ -12,26 +12,21 @@ import * as Utilities from '../../../imports/utilities.js';
 
 if(Meteor.isServer){
 	Meteor.publish("archive.public", function(){
-		ArchiveTools.readAsync("longBuffer")
+		let publicArchive = Archives.findOne({
+			type : config.archives.public.type
+		}, {
+			field : {
+				_id : 1
+			}
+		});
+		ArchiveTools.readAsync(publicArchive._id)
 		.then(content=>{
-			this.added('publicArchive', +new Date(), {content : content});
+			this.added('publicArchive', publicArchive._id, {content : content});
 			this.ready();
 		})
 		this.onStop(() => { } );
 	});
-	Meteor.publish("archive.private.counter", function(){
-		return Archives.find({ 
-				type : config.archives.private.type,
-				owner : Meteor.userId() 
-			}, {
-				fields : {
-					count : 1,
-					type : 1
-				}
-			});
-	});
 	Meteor.publish("archive.public.counter", function(){
-		Utilities.checkUserLoggedIn();
 		return Archives.find({ 
 				type : config.archives.public.type,
 			}, {
@@ -41,6 +36,8 @@ if(Meteor.isServer){
 				}
 			});
 	});
+
+
 	Meteor.publish("archive.private", function(){
 		let initializing = true;
 		let handle;
@@ -77,4 +74,17 @@ if(Meteor.isServer){
 		initializing = false;
 		this.onStop(() => { handle && handle.stop() });
 	});
+	Meteor.publish("archive.private.counter", function(){
+		Utilities.checkUserLoggedIn();
+		return Archives.find({ 
+				type : config.archives.private.type,
+				owner : Meteor.userId() 
+			}, {
+				fields : {
+					count : 1,
+					type : 1
+				}
+			});
+	});
+	
 }

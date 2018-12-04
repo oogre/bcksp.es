@@ -2,7 +2,7 @@
   bcksp.es - header.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:19:59
-  @Last Modified time: 2018-09-23 19:51:12
+  @Last Modified time: 2018-11-26 07:54:29
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -24,10 +24,7 @@ export default class MenuHeader extends Component {
 						</a>
 					</h1>
 					{
-						!this.props.noMain?
-							<MenuMain />
-						:
-							null
+						!this.props.noMain && <MenuMain />
 					}
 				</div>
 			</header>

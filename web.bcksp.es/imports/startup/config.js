@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-11-25 22:28:01
+  @Last Modified time: 2018-11-26 06:33:32
 \*----------------------------------------*/
 
 
@@ -16,6 +16,9 @@ export const config = {
 					count : 30
 				}
 			}
+		},
+		getMaxChar : ()=>{
+			return config.book.page.count * config.book.page.line.count * config.book.page.line.char.count;
 		}
 	},
 	archives : {

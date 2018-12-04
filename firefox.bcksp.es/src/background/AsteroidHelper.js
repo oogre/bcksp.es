@@ -2,10 +2,11 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-06-01 20:56:17
+  @Last Modified time: 2018-12-04 21:17:48
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
+import { config } from './../shared/config.js';
 import Data from "./../shared/Data.js";
 import _ from 'underscore';
 
@@ -14,12 +15,12 @@ class AsteroidHelper{
 		const Asteroid = createClass();
 		
 		this.asteroid = new Asteroid({
-    		endpoint: "ws://local.bcksp.es/websocket"
+    		endpoint: config.bcksp_ws
 		});
 
 		this.subscribtionAddressList = [
-			"archive.private.count",
-			"settings.private.blacklist"
+			"archive.private.counter",
+			"settings.private"
 		];
 		
 		this.subscribtionList = [];
@@ -42,23 +43,56 @@ class AsteroidHelper{
 		});
 
 		this.asteroid.on("loggedIn", data =>{
-			Utilities.log("loggedIn", data);
+			this.asteroid.call("Users.methods.login.token")
+			.then(res=>{
+				Utilities.openHiddenTab(config.bcksp_url+"/login/"+res.data)
+					//.then(tab => browser.tabs.remove(tab.id))
+					.catch(error => console.warn(error));
+			}).catch(error=>{
+				console.warn("no way to auto connect to the website");
+				console.console(error)
+			});
+
 			this.on("changed", {
-				counts : ({count}) => Utilities.setBadgeText(count),
-				blacklist : settings => {
-					Utilities.log("changed", settings);
-					Utilities.setBlackList(settings.blacklist)
-					.then(urls => Utilities.reloadTabs(urls))
-					.catch(error => Utilities.error(error));
+				archives : ({count}) => {
+					Data.setState({
+						archiveSize : count
+					});
+				},
+				settings : settings=>{
+					if(_.isObject(settings.blindfield)){
+						Utilities.setBlindfield(settings.blindfield)
+						.then(blindfield =>{
+							Utilities.sendMessageToAllTab("blindfield", blindfield);
+						})
+						.catch(error => Utilities.error(error));
+					}
+					if(_.isArray(settings.blacklist)){
+						Utilities.setBlackList(settings.blacklist)
+							.then(urls => Utilities.reloadTabs(urls))
+							.catch(error => Utilities.error(error));
+					}
 				}
 			});
 			this.on("added", {
-				counts : ({count}) => Utilities.setBadgeText(count) ,
-				blacklist : settings => {
-					Utilities.log("added", settings);
-					Utilities.setBlackList(settings.blacklist)
-					.then(urls => Utilities.reloadTabs(urls))
-					.catch(error => Utilities.error(error));
+				archives : ({count}) => {
+					Data.setState({
+						archiveSize : count
+					});
+				},
+				settings : settings=>{
+					if(_.isObject(settings.blindfield)){
+						Utilities.setBlindfield(settings.blindfield)
+						.then(blindfield =>{
+							Utilities.sendMessageToAllTab("blindfield", blindfield);
+						})
+						.catch(error => Utilities.error(error));
+					}
+					if(_.isArray(settings.blacklist)){
+						Utilities.setBlackList(settings.blacklist)
+							.then(urls => Utilities.reloadTabs(urls))
+							.catch(error => Utilities.error(error));
+					}
 				}
 			});	
 			this.startSubsribtion();
@@ -66,6 +100,9 @@ class AsteroidHelper{
 		});
 		
 		this.asteroid.on("loggedOut", () =>{
+			Utilities.openHiddenTab(config.bcksp_url+"/logout")
+				.then(tab => browser.tabs.remove(tab.id))
+				.catch(error => console.warn(error));
 			this.stopSubsribtion();
 			localStorage.clear();
 			Data.setState({
@@ -83,7 +120,6 @@ class AsteroidHelper{
 			this.asteroid.subscriptions.cache.del(subscribtion.id);
 		});
 		this.subscribtionList = [];
-		Utilities.setBadgeText(false);
 	}
 
 	startSubsribtion (){
@@ -108,12 +144,17 @@ class AsteroidHelper{
 		if(!Data.state.connected) throw new Error("Server is not accessible");
 		return this.asteroid.logout()
 	}
-
-	async login({email, pwd}){
+ 
+	async login(data){
+		console.log(data, Data.state);
 		if(!Data.state.connected) throw new Error("Server is not accessible");
-		let data = await Utilities.isEmail(email);
-		data = await Utilities.isPwd(pwd, data);
-		return this.asteroid.loginWithPassword({ email : data.email, password : data.pwd })
+		return this.asteroid.loginWithPassword(data)
+	}
+
+	async signup(data){
+		console.log(data);
+		if(!Data.state.connected) throw new Error("Server is not accessible");
+		return this.asteroid.createUser(data)
 	}
 
 	async deferredArchiveAdd(time){
@@ -124,7 +165,12 @@ class AsteroidHelper{
 			if(archive.length < 1) {
 				return new Error("Archive Add cancelled, casue local archive is empty");
 			}
-			return this.call("Archives.methods.add", { text: archive.split("").reverse().join("") });
+			return this.call("Archives.methods.add", { 
+				text: archive.split("").reverse().join("") 
+			})
+			.then(()=>{
+				Utilities.clearArchiveBuffer();
+			});
 		}
 		return;
 	}

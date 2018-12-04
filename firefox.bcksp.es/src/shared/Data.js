@@ -2,21 +2,22 @@
   bcksp.es - Data.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 19:33:44
-  @Last Modified time: 2018-05-30 20:15:18
+  @Last Modified time: 2018-12-04 16:15:10
 \*----------------------------------------*/
 import _ from 'underscore';
-
 
 class Data{
 	constructor(){
 		this.state = {
+			archiveSize : 0,
 			currentURLBlacklisted: false,
 			connected: false,
 			innerText: "",
 			downFlag: false,
 			timers: {},
 			procrastinations: {},
-			currentIcon: ""
+			currentIcon: "",
+			blindfields : {}
 		};
 		this.actions = _.mapObject(this.state, (value, key) => {
 			return [];
@@ -31,10 +32,8 @@ class Data{
 			if(_.isArray(this.actions[name])){
 				_.union(this.actions[name], this.actions["*"])
 					.map(action => {
-						try{
+						if(_.isFunction(action)){
 							action(value, name);
-						}catch(e){
-							console.error(e);
 						}
 					});
 			}

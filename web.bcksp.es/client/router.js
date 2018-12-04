@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-11-25 23:20:58
+  @Last Modified time: 2018-11-27 14:19:16
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -25,8 +25,6 @@ FlowRouter.route( '/', {
 		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
-		this.register('archive.private', Meteor.subscribe('archive.private'));
-		this.register('archive.private.counter', Meteor.subscribe('archive.private.counter'));
 		this.register('archive.public', Meteor.subscribe('archive.public'));
 		this.register('archive.public.counter', Meteor.subscribe('archive.public.counter'));
 	}
@@ -60,6 +58,7 @@ FlowRouter.route( '/logout', {
 });
 
 let loginRoutes = FlowRouter.group({
+	name : 'loginRoutes',
 	triggersEnter: [(context, redirect)=>{
 		if(!Meteor.userId()){
 			redirect("/");
@@ -74,5 +73,17 @@ loginRoutes.route("/profile", {
 	},
 	subscriptions( params, queryParams ) {
 		this.register('settings.private', Meteor.subscribe('settings.private'));
+	}
+});
+
+Tracker.autorun(()=>{
+	let current = FlowRouter.current();
+	if(	   !Meteor.userId() 
+		&& current 
+		&& current.route 
+		&& current.route.group 
+		&& current.route.group.name == "loginRoutes"
+	){
+		FlowRouter.go("home");
 	}
 });

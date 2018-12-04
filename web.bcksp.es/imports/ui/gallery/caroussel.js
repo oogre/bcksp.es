@@ -2,7 +2,7 @@
   bcksp.es - caroussel.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:24:50
-  @Last Modified time: 2018-09-13 19:33:24
+  @Last Modified time: 2018-11-26 07:53:12
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -16,7 +16,7 @@ export default class GalleryCaroussel extends Component {
 			<div className="">
 				<div className="container">
 					{
-						this.props.children ?
+						this.props.children &&
 							<ul className="">
 								{
 									React.Children.map(this.props.children, (child, k) =>(
@@ -28,8 +28,6 @@ export default class GalleryCaroussel extends Component {
 									))
 								}
 							</ul>
-						:
-							null
 					}
 				</div>
 			</div>

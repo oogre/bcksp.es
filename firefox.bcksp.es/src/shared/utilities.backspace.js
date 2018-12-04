@@ -2,10 +2,11 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-05-30 15:35:12
+  @Last Modified time: 2018-12-03 13:45:35
 \*----------------------------------------*/
 import diffMatchPatch from "diff-match-patch";
 import _ from 'underscore';
+import Data from "./Data.js";
 
 export default class UtilitiesBackspace {
 	static getHighlightText(elem){
@@ -55,10 +56,18 @@ export default class UtilitiesBackspace {
 	}
 
 	static isAcceptable(elem){
-		return 		elem && (  "input" === elem.nodeName.toLowerCase()
-						|| 	"textarea" === elem.nodeName.toLowerCase() 
-						|| 	    "true" === elem.getAttribute("contenteditable") 
-						|| 	        "" === elem.getAttribute("contenteditable") ) ; 
+		let acceptable = elem && (  
+							"input" === elem.nodeName.toLowerCase() ||
+							"textarea" === elem.nodeName.toLowerCase()  ||
+							"true" === elem.getAttribute("contenteditable") ||
+							"" === elem.getAttribute("contenteditable") 
+						) &&
+						_.isArray(Data.state.blindfields.types) &&
+						_.isArray(Data.state.blindfields.class) &&
+						!Data.state.blindfields.types.includes(elem.getAttribute("type")) &&
+						_.chain(Data.state.blindfields.class).intersection(elem.className.split(" ")).isEmpty().value();
+		!acceptable && console.log("bcksp.es", "this field is not acceptable");
+		return acceptable;
 	}
 
 	static getTarget(defaultValue){

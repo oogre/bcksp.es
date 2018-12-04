@@ -2,7 +2,7 @@
   runtime-examples - index.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-11-12 15:06:25
+  @Last Modified time: 2018-12-03 14:13:10
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -41,6 +41,16 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 					});
 			break;
 			
+			case "isLogin":
+				resolve(AsteroidHelper.asteroid.loggedIn);
+			break;
+			
+			case "logout" : 
+				AsteroidHelper.logout()
+					.then(message => resolve(AsteroidHelper.asteroid.loggedIn))
+					.catch(error => reject(error));
+			break;
+			
 			case "signup" : 
 				AsteroidHelper.signup(request.data)
 					.then(message => resolve(!!message /* convert response to bool */))
@@ -69,16 +79,6 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
 						Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 						reject(error);
 					});
-			break;
-			
-			case "logout" : 
-				AsteroidHelper.logout()
-					.then(message => resolve(AsteroidHelper.asteroid.loggedIn))
-					.catch(error => reject(error));
-			break;
-			
-			case "isLogin":
-				resolve(AsteroidHelper.asteroid.loggedIn);
 			break;
 
 			case "getUrlStatus" : 

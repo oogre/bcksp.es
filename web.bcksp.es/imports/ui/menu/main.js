@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-11-25 16:22:02
+  @Last Modified time: 2018-11-26 07:59:19
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -18,8 +18,6 @@ class MenuMain extends Component {
 			mobileMenu: false,
 			isExtensionInstalled : false
 		}
-
-
 	}
 	componentDidMount(){
 		Utilities.isExtensionInstalled()
@@ -44,6 +42,16 @@ class MenuMain extends Component {
 		return this.props.isConnected && this.state.isExtensionInstalled;
 	}
 
+	isActive(route){
+		if(FlowRouter.current().route.name == route)return " active";
+		return "";
+	}
+
+	isMobile(){
+		if(this.state.mobileMenu)return " visible";
+		return "";
+	}
+
 	render() {
 		return (
 			<nav>
@@ -55,16 +63,16 @@ class MenuMain extends Component {
 						<T>menus.open</T>
 					</span>
 				</button>
-				<ul className={"menu menu--header" + " " + (this.state.mobileMenu ? "visible" : "")}>
+				<ul className={"menu menu--header" + this.isMobile()}>
 					<li className="menu__item">
-						<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "about" ? "active" : "")} 
+						<a 	className={"menu__item__link " + this.isActive("about")}
 							href={FlowRouter.path("about")}
 						>
 							<T>menus.about</T>
 						</a>
 					</li>
 					<li className="menu__item">
-						<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "souvenir" ? "active" : "")} 
+						<a 	className={"menu__item__link" + this.isActive("souvenir")} 
 							href={FlowRouter.path("souvenir")}
 						>
 							<T>menus.souvenir</T>
@@ -73,7 +81,7 @@ class MenuMain extends Component {
 					{
 						this.hasToDisplayDownloadBtn() &&
 							<li className="menu__item">
-								<a 	className={"menu__item__link " + (FlowRouter.current().route.name == "download" ? "active" : "")} 
+								<a 	className={"menu__item__link" + this.isActive("download")}
 									href={FlowRouter.path("download")}
 								>
 									<T>menus.download</T>
@@ -83,7 +91,7 @@ class MenuMain extends Component {
 					{
 						this.hasToDisplayProfileBtn() &&
 							<li className="menu__item">
-								<a 	className="menu__item__link" 
+								<a 	className={"menu__item__link" + this.isActive("userProfile")}
 									href={ FlowRouter.path("userProfile") }
 								>
 									profile

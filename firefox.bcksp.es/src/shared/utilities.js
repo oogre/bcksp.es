@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-05-30 18:33:23
+  @Last Modified time: 2018-12-04 21:43:35
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";
@@ -45,12 +45,66 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
   		});
 	}
 
+
+	static async openHiddenTab(url){
+		return new Promise((resolve, reject) => {
+			let delayedResolve = null;
+			let currentTab;
+			let newTab;
+			browser.tabs.query({ 'active': true, 'lastFocusedWindow': true })
+			.then(tabs => {
+				currentTab = tabs[0];
+				return browser.tabs.create({ url: url });
+			})
+			.then(nTab => {
+				browser.tabs.highlight({
+					windowId : currentTab.windowId, 
+					tabs : currentTab.index
+				})
+				return {
+					new : nTab,
+					current : currentTab
+				};
+			})
+			.then(tabs =>{
+				setTimeout(()=>{
+					if(!delayedResolve)return;
+					delayedResolve = clearTimeout(delayedResolve);
+					return reject("NO WAY TO complete the request")
+				}, 10000)
+				browser.tabs.onUpdated.addListener((tabId, changeInfo)=>{
+					if(tabId == tabs.new.id && changeInfo.status == "complete"){
+						delayedResolve = setTimeout(()=>{
+							if(delayedResolve){
+								resolve(tabs.new);
+								delayedResolve = clearTimeout(delayedResolve);
+							}
+						}, 3000);
+					}
+				});
+			})
+			.catch(error => reject(error));
+		});
+	}
+	
 	static async sendMessage(action, data){
-		if(_.isEmpty(data)) throw new Error ("sendMessage - Data is not provided");
+		//if(_.isEmpty(data)) throw new Error ("sendMessage - Data is not provided");
 		return browser.runtime.sendMessage({
 			action : action,
 			data : data
 		});
+	}
+
+	static async sendMessageToAllTab(action, data){
+		return browser.tabs.query({})
+				.then(tabs => {
+					tabs.map(tab =>{
+						browser.tabs.sendMessage(tab.id, {action, data})
+						.then(response => {
+      						console.log("Message from the content script:", response);
+    					}).catch(e => console.log("ERROR", e));;	
+					});
+				});
 	}
 
 	static log(...data){

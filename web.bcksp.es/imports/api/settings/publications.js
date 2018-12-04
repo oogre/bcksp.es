@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:11:04
-  @Last Modified time: 2018-11-07 15:38:57
+  @Last Modified time: 2018-11-26 08:23:07
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Settings } from './settings.js';
@@ -14,53 +14,15 @@ if(Meteor.isServer){
 			owner : Meteor.userId()
 		});
 	});
-
-	Meteor.publish("settings.private.blacklist", function settingsPublication(){
-		
-		/* MAYBE DON'T NEDD THIS */
-		
-		let initializing = true;
-		const handle = Settings.find({ 
-			owner : Meteor.userId()
-		}, {
-			fields : {
-				blacklist : 1,
-				blindfield : 1
-			}
-		}).observeChanges({
-			changed: (id, changedPrivateBlacklist) => {
-				if (!initializing) {
-					//console.log("changed", changedPrivateBlacklist);
-					this.changed('blacklist', id, changedPrivateBlacklist);
+	Meteor.publish("settings.private", function(){
+		Utilities.checkUserLoggedIn();
+		return Settings.find({ 
+				owner : Meteor.userId() 
+			}, {
+				fields : {
+					blacklist : 1,
+					blindfield : 1
 				}
-			}
-		});
-
-		// Instead, we'll send one `added` message right after `observeChanges` has
-		// returned, and mark the subscription as ready.
-		initializing = false;
-		
-		/* MAYBE DON'T NEDD THIS UNITL THERE */
-
-
-
-		let settings = Settings.findOne({
-			owner : Meteor.userId()
-		}, {
-			fields : {
-				blacklist : 1,
-				blindfield : 1
-			}
-		});
-		if(settings){
-			//console.log("added", settings.blacklist);
-			this.added('blacklist', settings._id, settings);
-		}
-		this.ready();
-
-		// Stop observing the cursor when the client unsubscribes. Stopping a
-		// subscription automatically takes care of sending the client any `removed`
-		// messages.
-		this.onStop(() => handle.stop() );
+			});
 	});
 }

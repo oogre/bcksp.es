@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-11-07 16:27:44
+  @Last Modified time: 2018-12-03 13:47:44
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -22,7 +22,6 @@ export default class UtilitiesBlacklist {
 	static getBlindfields(){
 		return JSON.parse(localStorage.getItem("blindfiels") || "[]");
 	}
-
 
 	static async setBlackList(urls){
 		if(!_.isArray(urls)) throw new Error("setBlackList : need urls to be an array");
