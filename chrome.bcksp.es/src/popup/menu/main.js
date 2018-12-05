@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2018-11-07 17:26:31
+  @Last Modified time: 2018-12-06 00:42:41
 \*----------------------------------------*/
 
 import React from 'react';
@@ -36,7 +36,7 @@ export default class MainMenu extends React.Component {
 	}
 	handleMySettings(event){
 		chrome.tabs.create({ 
-			url: config.bcksp_url+"/profile"
+			url: config.bcksp_url+"profile"
 		});
 	}
 	render() {

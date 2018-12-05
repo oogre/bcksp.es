@@ -2,7 +2,7 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-12-04 20:41:02
+  @Last Modified time: 2018-12-05 23:15:39
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -13,6 +13,8 @@ import { config } from "../shared/config.js";
 import Protocol from "../shared/Protocol.js";
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
+
+
 
 $(document).ready(()=>{
 		Utilities.sendMessage("isLogin")
@@ -190,12 +192,17 @@ class BackspaceListener{
 		element.addEventListener("keydown", this.keyDownListener, true);
 		element.addEventListener("keyup", this.keyUpListener, true);	
 	}
+
 }
 
 browser.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-	if (sender.id == browser.extension.id && msg.action == 'blindfield') {
-		Data.setState({
-			blindfields : msg.data
-		});
+	if (sender.id == browser.extension.id){
+		switch(msg.action){
+			case 'blindfield':
+				Data.setState({
+					blindfields : msg.data
+				});
+			break;
+		}
 	}
 });

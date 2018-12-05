@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-12-04 21:42:34
+  @Last Modified time: 2018-12-05 23:15:32
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -26,13 +26,11 @@ browser.tabs.onActivated.addListener(({tabId}) => {
 	.then(data => console.log(data));
 });
 
-
 browser.runtime.onMessage.addListener( (request, sender) => {
 
 	if(sender.id != browser.runtime.id)return;
 	return new Promise((resolve, reject) => {
 		switch(request.action){
-
 			case "login" : 
 				AsteroidHelper.login(request.data)
 					.then(message => resolve(!!message))//convert response to bool

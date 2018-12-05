@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-11-26 06:33:32
+  @Last Modified time: 2018-12-06 00:06:32
 \*----------------------------------------*/
 
 
@@ -20,6 +20,10 @@ export const config = {
 		getMaxChar : ()=>{
 			return config.book.page.count * config.book.page.line.count * config.book.page.line.char.count;
 		}
+	},
+	devices : {
+		firefox : "ee8b5029dd07e30cf2e8078d2bfaf0936c74fa83@temporary-addon",
+		chrome : "ieiinhiiecccpepemfpeikdclbiicbmg"
 	},
 	archives : {
 		public : {

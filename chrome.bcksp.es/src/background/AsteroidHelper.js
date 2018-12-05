@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-12-04 16:04:53
+  @Last Modified time: 2018-12-06 00:50:27
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -42,13 +42,31 @@ class AsteroidHelper{
 			this.stopSubsribtion();
 			Utilities.setIcon("logout");
 		});
+		
+		this.asteroid.on("loggedOut", () =>{
+			Utilities.tabHandler()
+			.then(tab=>chrome.tabs.update({url: config.bcksp_url+"logout"}))
+			.catch(()=>chrome.tabs.create({url: config.bcksp_url+"logout"}));
+			
+
+			this.stopSubsribtion();
+			localStorage.clear();
+			Data.setState({
+				currentURLBlacklisted : false
+			});
+			Utilities.log("loggedOut");
+		});
 
 		this.asteroid.on("loggedIn", data =>{
-			this.asteroid.call("Users.methods.login.token")
+			this.asteroid.call("Users.methods.login.token", {device : config.id})
 			.then(res=>{
-				Utilities.openHiddenTab(config.bcksp_url+"/login/"+res.data)
-					.then(tab => chrome.tabs.remove(tab.id))
-					.catch(error => console.warn(error));
+				Utilities.tabHandler()
+				.then(tab=>chrome.tabs.update({url: config.bcksp_url+"login/"+res.data}))
+				.catch(()=>chrome.tabs.create({url: config.bcksp_url+"login/"+res.data}));
+
+				//Utilities.openHiddenTab(config.bcksp_url+"/login/"+res.data)
+				//	.then(tab => chrome.tabs.remove(tab.id))
+				//	.catch(error => console.warn(error));
 			}).catch(error=>{
 				console.warn("no way to auto connect to the website");
 				console.console(error)
@@ -98,18 +116,6 @@ class AsteroidHelper{
 			});	
 			this.startSubsribtion();
 			Utilities.setIcon("standby");
-		});
-		
-		this.asteroid.on("loggedOut", () =>{
-			Utilities.openHiddenTab(config.bcksp_url+"/logout")
-				.then(tab => chrome.tabs.remove(tab.id))
-				.catch(error => console.warn(error));
-			this.stopSubsribtion();
-			localStorage.clear();
-			Data.setState({
-				currentURLBlacklisted : false
-			});
-			Utilities.log("loggedOut");
 		});
 		this.deferredPromise = undefined;
 	}

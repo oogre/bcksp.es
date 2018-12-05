@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-12-04 21:17:48
+  @Last Modified time: 2018-12-06 00:54:27
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -42,12 +42,25 @@ class AsteroidHelper{
 			Utilities.setIcon("logout");
 		});
 
+		this.asteroid.on("loggedOut", () =>{
+			Utilities.tabHandler()
+			.then(tab=>browser.tabs.update({url: config.bcksp_url+"logout"}))
+			.catch(()=>browser.tabs.create({url: config.bcksp_url+"logout"}));
+			this.stopSubsribtion();
+			localStorage.clear();
+			Data.setState({
+				currentURLBlacklisted : false
+			});
+			Utilities.log("loggedOut");
+		});
+
+
 		this.asteroid.on("loggedIn", data =>{
-			this.asteroid.call("Users.methods.login.token")
+			this.asteroid.call("Users.methods.login.token", {device : browser.runtime.id})
 			.then(res=>{
-				Utilities.openHiddenTab(config.bcksp_url+"/login/"+res.data)
-					//.then(tab => browser.tabs.remove(tab.id))
-					.catch(error => console.warn(error));
+				Utilities.tabHandler()
+				.finally(tab=>browser.tabs.update({url: config.bcksp_url+"login/"+res.data}))
+				.catch(()=>browser.tabs.create({url: config.bcksp_url+"login/"+res.data}));
 			}).catch(error=>{
 				console.warn("no way to auto connect to the website");
 				console.console(error)
@@ -99,17 +112,7 @@ class AsteroidHelper{
 			Utilities.setIcon("standby");
 		});
 		
-		this.asteroid.on("loggedOut", () =>{
-			Utilities.openHiddenTab(config.bcksp_url+"/logout")
-				.then(tab => browser.tabs.remove(tab.id))
-				.catch(error => console.warn(error));
-			this.stopSubsribtion();
-			localStorage.clear();
-			Data.setState({
-				currentURLBlacklisted : false
-			});
-			Utilities.log("loggedOut");
-		});
+		
 		this.deferredPromise = undefined;
 	}
 

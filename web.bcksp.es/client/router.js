@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-11-27 14:19:16
+  @Last Modified time: 2018-12-05 12:16:25
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -45,15 +45,7 @@ FlowRouter.route( '/login/:token', {
 	action( params ) {
 		LoginLinks.loginWithToken(params.token, (e, r) => {
 			if (e) return console.log(e);
-			console.log(r);
 		});
-	}
-});
-
-FlowRouter.route( '/logout', {
-	name: 'logout',
-	action( params ) {
-		Meteor.logout();
 	}
 });
 
@@ -64,6 +56,13 @@ let loginRoutes = FlowRouter.group({
 			redirect("/");
 		}
 	}]
+});
+
+loginRoutes.route( '/logout', {
+	name: 'logout',
+	action( params ) {
+		Meteor.logout();
+	}
 });
 
 loginRoutes.route("/profile", {
@@ -78,11 +77,21 @@ loginRoutes.route("/profile", {
 
 Tracker.autorun(()=>{
 	let current = FlowRouter.current();
-	if(	   !Meteor.userId() 
-		&& current 
-		&& current.route 
-		&& current.route.group 
-		&& current.route.group.name == "loginRoutes"
+	if((	   !Meteor.userId() 
+			&& current 
+			&& current.route 
+			&& current.route.group 
+			&& current.route.group.name == "loginRoutes"
+		) || ( Meteor.userId() 
+			&& current
+			&& current.route
+			&& current.route.name == "login"
+		) || (
+			   !Meteor.userId() 
+			&& current
+			&& current.route
+			&& current.route.name == "logout"
+		)
 	){
 		FlowRouter.go("home");
 	}

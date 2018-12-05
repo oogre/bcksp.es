@@ -2,7 +2,7 @@
   web.bitRepublic - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:21:58
-  @Last Modified time: 2018-11-26 14:11:53
+  @Last Modified time: 2018-12-05 19:57:46
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import T from './i18n/index.js';
@@ -37,20 +37,4 @@ export async function needConfirmation(context){
 	}else{
 		throw new Error("The action has been canceled");
 	}
-}
-
-let windowLoaded = false;
-export async function isExtensionInstalled(){
-	let bckspesExtensionInstalled = false;
-	return new Promise((resolve, reject) => {
-		if(!windowLoaded){
-			window.addEventListener('load', ()=>{
-				windowLoaded = true;
-				bckspesExtensionInstalled = !!document.querySelector("[bcksp-es-extension-installed]");
-				resolve(bckspesExtensionInstalled);
-			});	
-		}else{
-			resolve(bckspesExtensionInstalled);
-		}
-	});
 }

@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-11-26 07:59:19
+  @Last Modified time: 2018-12-05 19:54:06
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -11,23 +11,14 @@ import T from './../../i18n/index.js';
 import * as Utilities from "./../../utilities.js";
 
 
-class MenuMain extends Component {
+export default class MenuMain extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			mobileMenu: false,
-			isExtensionInstalled : false
+			mobileMenu: false
 		}
 	}
-	componentDidMount(){
-		Utilities.isExtensionInstalled()
-		.then(isInstalled=>{
-			this.setState({
-				isExtensionInstalled : isInstalled,
-			});	
-		});
-	}
-
+	
 	handleOpenMobileMenu(){
 		this.setState({
 			mobileMenu: !this.state.mobileMenu
@@ -35,11 +26,11 @@ class MenuMain extends Component {
 	}
 
 	hasToDisplayDownloadBtn(){
-		return !this.state.isExtensionInstalled;
+		return !Session.get("extensionInstalled");
 	}
 	
 	hasToDisplayProfileBtn(){
-		return this.props.isConnected && this.state.isExtensionInstalled;
+		return this.props.isConnected && Session.get("extensionInstalled");
 	}
 
 	isActive(route){
@@ -103,8 +94,3 @@ class MenuMain extends Component {
 		);
 	}
 }
-export default withTracker(() => {
-	return {
-		isConnected : !!Meteor.userId()
-	};
-})(MenuMain);

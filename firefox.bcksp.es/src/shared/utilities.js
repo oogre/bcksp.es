@@ -2,11 +2,12 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-12-04 21:43:35
+  @Last Modified time: 2018-12-06 00:51:30
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";
 import Multi from "./Multi.inherit.js";
+import { config } from './config.js';
 import UtilitiesIcon from "./utilities.icon.js";
 import UtilitiesArchive from "./utilities.archive.js";
 import UtilitiesBackspace from "./utilities.backspace.js";
@@ -45,46 +46,18 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
   		});
 	}
 
-
-	static async openHiddenTab(url){
-		return new Promise((resolve, reject) => {
-			let delayedResolve = null;
-			let currentTab;
-			let newTab;
-			browser.tabs.query({ 'active': true, 'lastFocusedWindow': true })
-			.then(tabs => {
-				currentTab = tabs[0];
-				return browser.tabs.create({ url: url });
+	static async tabHandler(){
+		return browser.tabs.query({ 
+				url : config.standard_url, 
+				currentWindow: true 
 			})
-			.then(nTab => {
-				browser.tabs.highlight({
-					windowId : currentTab.windowId, 
-					tabs : currentTab.index
-				})
-				return {
-					new : nTab,
-					current : currentTab
-				};
-			})
-			.then(tabs =>{
-				setTimeout(()=>{
-					if(!delayedResolve)return;
-					delayedResolve = clearTimeout(delayedResolve);
-					return reject("NO WAY TO complete the request")
-				}, 10000)
-				browser.tabs.onUpdated.addListener((tabId, changeInfo)=>{
-					if(tabId == tabs.new.id && changeInfo.status == "complete"){
-						delayedResolve = setTimeout(()=>{
-							if(delayedResolve){
-								resolve(tabs.new);
-								delayedResolve = clearTimeout(delayedResolve);
-							}
-						}, 3000);
-					}
-				});
-			})
-			.catch(error => reject(error));
-		});
+			.then(tabs=>tabs[0])
+			.then(tab=>{
+				if(!tab.active){
+					return browser.tabs.highlight({tabs:tab.index}).then(()=>tab);
+				}
+				return tab;
+			});
 	}
 	
 	static async sendMessage(action, data){

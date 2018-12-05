@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-11-27 14:11:35
+  @Last Modified time: 2018-12-05 19:54:42
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -13,9 +13,6 @@ import * as Utilities from "./../../utilities.js";
 class MenuFooter extends Component {
 	constructor(props){
 		super(props);
-		this.state = {
-			isExtensionInstalled : false
-		}
 	}
 	handleLogout(){
 		window.postMessage({
@@ -24,25 +21,16 @@ class MenuFooter extends Component {
 		Meteor.logout();
 	}
 
-	componentDidMount(){
-		Utilities.isExtensionInstalled()
-		.then(isInstalled=>{
-			this.setState({
-				isExtensionInstalled: isInstalled
-			});	
-		});
-	}
-
 	hasToDisplayDownloadBtn(){
-		return !this.state.isExtensionInstalled;
+		return !Session.get("extensionInstalled");
 	}
 	
 	hasToDisplayProfileBtn(){
-		return this.props.isConnected && this.state.isExtensionInstalled;
+		return this.props.isConnected && Session.get("extensionInstalled");
 	}
 	
 	hasToDisplayLogoutBtn(){
-		return this.props.isConnected && this.state.isExtensionInstalled;
+		return this.props.isConnected && Session.get("extensionInstalled");
 	}
 	
 	render() {
