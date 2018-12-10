@@ -2,16 +2,14 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2018-12-10 14:14:07
+  @Last Modified time: 2018-12-10 16:28:34
 \*----------------------------------------*/
 import _ from 'underscore'
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import LoginMenu from "./menu/login.js";
-
 import MainMenu from "./menu/main.js";
-import { config } from './../shared/config.js';
 import Utilities from './../shared/utilities.js';
 
 

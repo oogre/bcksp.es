@@ -2,14 +2,13 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-12-10 06:25:18
+  @Last Modified time: 2018-12-10 16:23:58
 \*----------------------------------------*/
 
 import $ from 'jquery';
 import Utilities from '../shared/utilities.js';
 import _ from 'underscore';
 import Data from "../shared/Data.js";
-import { config } from "../shared/config.js";
 import Protocol from "../shared/Protocol.js";
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);

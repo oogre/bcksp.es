@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-12-10 12:45:56
+  @Last Modified time: 2018-12-10 15:00:43
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -54,7 +54,7 @@ class AsteroidHelper{
 		});
 
 		this.asteroid.on("loggedIn", data =>{
-			this.asteroid.call("Users.methods.login.token", {device : Utilities.runtimeId()})
+			this.call("Users.methods.login.token")
 			.then(res=>{
 				Utilities.tabHandler()
 				.then(tab=>Utilities.tabsUpdate({url: config.bcksp_url+"login/"+res.data}))
@@ -147,13 +147,16 @@ class AsteroidHelper{
 		return this.call(methode,  { url : url });
 	}
 
-	async call(methode, data){
+	async call(methode, data={}){
 		Utilities.setIcon("sending");
+		data.device =  Utilities.runtimeId();
 		return this.asteroid.call(methode, data)
 			.then(res => {
 				//Utilities.info(res);
+				return res;
 			}).catch(error => {
 				Utilities.error(error);
+				return error;
 			}).finally(()=>{
 				Utilities.setDefaultIcon(this.asteroid.loggedIn);
 			});

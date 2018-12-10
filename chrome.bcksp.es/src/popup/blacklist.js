@@ -2,12 +2,10 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2018-12-10 00:02:13
+  @Last Modified time: 2018-12-10 16:28:13
 \*----------------------------------------*/
 
-import _ from 'underscore';
 import React from 'react';
-
 import Utilities from './../shared/utilities.js';
 import ToggleButton from 'react-toggle-button'
 

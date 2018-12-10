@@ -2,15 +2,13 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-12-10 12:52:32
+  @Last Modified time: 2018-12-10 16:26:03
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
 import Utilities from './../shared/utilities.js';
 import Data from "./../shared/Data.js";
 import { config } from './../shared/config.js';
-import _ from 'underscore';
-import $ from 'jquery';
 
 Data.on("*", (value, name) => Utilities.log("---on---", name, value));
 

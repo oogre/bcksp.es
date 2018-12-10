@@ -2,15 +2,13 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2018-12-10 06:03:29
+  @Last Modified time: 2018-12-10 16:31:51
 \*----------------------------------------*/
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import { config } from './../../shared/config.js';
 import Blacklist from './../blacklist.js';
-
 import Utilities from './../../shared/utilities.js';
 
 

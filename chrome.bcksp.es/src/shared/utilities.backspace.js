@@ -2,11 +2,12 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-12-09 20:29:58
+  @Last Modified time: 2018-12-10 16:29:17
 \*----------------------------------------*/
-import diffMatchPatch from "diff-match-patch";
+
 import _ from 'underscore';
 import Data from "./Data.js";
+import diffMatchPatch from "diff-match-patch";
 
 export default class UtilitiesBackspace {
 	static getHighlightText(elem){
