@@ -22,7 +22,7 @@
     "jquery": "^3.3.1"
   },
   "dependencies": {
-    "asteroid": "^2.0.3",
+    "asteroid": "https://github.com/oogre/asteroid/tarball/df69c5171dcca1c13009f33a774ca628801314da",
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",
     "react-toggle-button": "2.2.0",

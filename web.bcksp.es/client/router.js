@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-12-10 14:13:32
+  @Last Modified time: 2018-12-10 21:19:47
 \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -46,8 +46,8 @@ FlowRouter.route( '/login/:token', {
 		LoginLinks.loginWithToken(params.token, (e, r) => {
 			if (e) {
 				console.log(e);
-				FlowRouter.go("home");
 			}
+			FlowRouter.go("home");
 		});
 	}
 });
