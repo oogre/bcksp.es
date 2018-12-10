@@ -2,7 +2,7 @@
   bcksp.es - full.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-03 20:46:10
-  @Last Modified time: 2018-12-05 19:57:28
+  @Last Modified time: 2018-12-07 22:00:52
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -20,7 +20,7 @@ class TemplateFull extends Component {
 	}
 	
 	hasToDisplayCallToConnect(){
-		return !this.props.isConnected && Session.get("extensionInstalled");
+		return !this.props.isConnected && this.props.extensionInstalled;
 	}
 	render() {
 		return (
@@ -29,18 +29,18 @@ class TemplateFull extends Component {
 					this.hasToDisplayCallToConnect() && 
 						<CallToConnect /> 
 				}
-				<HeaderMenu isConnected={this.props.isConnected}/>
+				<HeaderMenu isConnected={this.props.isConnected} extensionInstalled={this.props.extensionInstalled}/>
 				{
 					React.Children.map(this.props.children, child => child)
 				}
-				<MenuFooter isConnected={this.props.isConnected} />
+				<MenuFooter isConnected={this.props.isConnected} extensionInstalled={this.props.extensionInstalled}/>
 			</div>
 		);
 	}
 }
-
 export default withTracker(self => {
 	return {
-		isConnected : !!Meteor.userId()
+		isConnected : !!Meteor.userId(),
+		extensionInstalled : Session.get("extensionInstalled")
 	};
 })(TemplateFull);

@@ -2,7 +2,7 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2018-10-09 11:51:31
+  @Last Modified time: 2018-12-10 00:02:13
 \*----------------------------------------*/
 
 import _ from 'underscore';
@@ -28,8 +28,7 @@ export default class Blacklist extends React.Component {
 					currentURL: url,
 					isBlacklisted : !!blackListed
 				});
-			})
-			.catch(error => console.warn(error));
+			});
 	}
 
 	handleBlacklistChange(wasBlacklisted){
@@ -38,9 +37,9 @@ export default class Blacklist extends React.Component {
 		});
 		let methodName = "";
 		if(!wasBlacklisted){
-			methodName = "Settings.Blacklist.Add";
+			methodName = "blacklistAdd";
 		}else{
-			methodName = "Settings.Blacklist.Remove";
+			methodName = "blacklistRemove";
 		}
 		Utilities.sendMessage(methodName, this.state.currentURL);
 	}

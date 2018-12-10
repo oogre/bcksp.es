@@ -2,7 +2,7 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-12-05 23:15:39
+  @Last Modified time: 2018-12-10 06:25:18
 \*----------------------------------------*/
 
 import $ from 'jquery';
@@ -14,10 +14,15 @@ import Protocol from "../shared/Protocol.js";
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 
-
+Utilities.on("blindfield", (data, resolve) =>{
+	Data.setState({
+		blindfields : data
+	});
+	resolve(true);
+});
 
 $(document).ready(()=>{
-		Utilities.sendMessage("isLogin")
+	Utilities.sendMessage("isLogin")
 		.then(async (isLoggedIn) => {
 			if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
 			return true;
@@ -45,11 +50,12 @@ $(document).ready(()=>{
 
 class BackspaceListener{
 	constructor(){
-		Utilities.sendMessage("getBlindfields").then(blindfields=>{
-			Data.setState({
-				blindfields : blindfields
+		Utilities.sendMessage("getBlindfields")
+			.then(blindfields=>{
+				Data.setState({
+					blindfields : blindfields
+				});
 			});
-		});
 
 		Utilities.log("BackspaceListener initializer");
 		document.addEventListener("DOMSubtreeModified", event => {
@@ -96,7 +102,7 @@ class BackspaceListener{
 	
 	keyDownListener(event){
 		if(8 === event.keyCode && Utilities.isAcceptable(this.activeElement)){
-			Utilities.sendMessage("backspacing");
+			Utilities.sendMessage("backspace");
 			Utilities.selectProtocol({
 				"googleDocument" : () => {
 					if(!Data.state.downFlag){
@@ -145,7 +151,7 @@ class BackspaceListener{
 	}
 	keyUpListener(event){
 		if(8 === event.keyCode && Utilities.isAcceptable(this.activeElement)){
-			Utilities.sendMessage("backspaceup");
+			Utilities.sendMessage("backspace");
 			if(!_.isEmpty(Data.state.innerText)){
 				Utilities.selectProtocol({
 					"googleDocument" : () => Protocol.exec("Diff", {
@@ -192,17 +198,4 @@ class BackspaceListener{
 		element.addEventListener("keydown", this.keyDownListener, true);
 		element.addEventListener("keyup", this.keyUpListener, true);	
 	}
-
 }
-
-browser.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-	if (sender.id == browser.extension.id){
-		switch(msg.action){
-			case 'blindfield':
-				Data.setState({
-					blindfields : msg.data
-				});
-			break;
-		}
-	}
-});

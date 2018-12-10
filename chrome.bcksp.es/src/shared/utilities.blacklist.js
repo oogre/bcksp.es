@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-12-03 13:47:44
+  @Last Modified time: 2018-12-10 00:22:30
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -24,21 +24,18 @@ export default class UtilitiesBlacklist {
 	}
 
 	static async setBlackList(urls){
-		if(!_.isArray(urls)) throw new Error("setBlackList : need urls to be an array");
+		if(!_.isArray(urls)) throw new Error("setBlackList : need array as parameter");
 		let oldBlackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 
 		let blackliststed = _.difference(urls, oldBlackList);
 		let whiteliststed = _.difference(oldBlackList, urls);
 
-		Utilities.log("blackliststed", blackliststed);
-		Utilities.log("whiteliststed", whiteliststed);
-
 		localStorage.setItem("blackList", JSON.stringify(urls));
 		
 		return _.chain(blackliststed)
-					.union(whiteliststed)
-					.uniq()
-					.value();
+			.union(whiteliststed)
+			.uniq()
+			.value();
 	}
 
 	static async setBlindfield(blindfiels){
@@ -56,23 +53,5 @@ export default class UtilitiesBlacklist {
 		if(itemId === false) return;
 		blackList.splice(itemId, 1);
 		localStorage.setItem("blackList", JSON.stringify(blackList));
-	}
-
-	static async reloadTabs(urls){
-		return urls.map( url => {
-			return new Promise((resolve, reject)=>{
-				chrome.tabs.query({
-					'url': [
-						"http://" + url + "/*",
-						"https://" + url + "/*"
-					]
-				}, (value, error) => {
-					if(error)return reject(error);
-					resolve(value);
-				});
-			}).then(tabs => {
-				tabs.forEach(tab => chrome.tabs.reload(tab.id))
-			});
-		});
 	}
 }

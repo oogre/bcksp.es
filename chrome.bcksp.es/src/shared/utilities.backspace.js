@@ -2,7 +2,7 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-11-07 16:23:13
+  @Last Modified time: 2018-12-09 20:29:58
 \*----------------------------------------*/
 import diffMatchPatch from "diff-match-patch";
 import _ from 'underscore';
@@ -10,7 +10,7 @@ import Data from "./Data.js";
 
 export default class UtilitiesBackspace {
 	static getHighlightText(elem){
-		let highlighted = elem.ownerDocument.getSelection().toString();
+		let highlighted = elem.value.substring(elem.selectionStart, elem.selectionEnd);//elem.ownerDocument.getSelection().toString();
 		if(_.isEmpty(highlighted)) return false;
 		return highlighted.split("").reverse().join("");
 	}

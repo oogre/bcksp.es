@@ -2,7 +2,7 @@
   bcksp.es - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:00:44
-  @Last Modified time: 2018-10-08 06:13:54
+  @Last Modified time: 2018-12-10 00:02:31
 \*----------------------------------------*/
 import _ from 'underscore'
 import React from 'react';
@@ -57,7 +57,6 @@ export default class LoginForm extends React.Component {
 			})
 			.then(isLoggedIn => this.props.onSuccess(isLoggedIn))
 			.catch(error => {
-				console.warn(error);
 				this.setState({
 					'is-loading' : false,
 					'has-error' : true

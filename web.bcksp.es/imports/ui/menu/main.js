@@ -2,14 +2,11 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-12-05 19:54:06
+  @Last Modified time: 2018-12-07 22:01:29
 \*----------------------------------------*/
 import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-
 import T from './../../i18n/index.js';
 import * as Utilities from "./../../utilities.js";
-
 
 export default class MenuMain extends Component {
 	constructor(props){
@@ -26,11 +23,11 @@ export default class MenuMain extends Component {
 	}
 
 	hasToDisplayDownloadBtn(){
-		return !Session.get("extensionInstalled");
+		return !this.props.extensionInstalled;
 	}
 	
 	hasToDisplayProfileBtn(){
-		return this.props.isConnected && Session.get("extensionInstalled");
+		return this.props.isConnected && this.props.extensionInstalled;
 	}
 
 	isActive(route){

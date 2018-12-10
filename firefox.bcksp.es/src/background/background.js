@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2018-12-05 23:15:32
+  @Last Modified time: 2018-12-10 06:46:32
 \*----------------------------------------*/
 
 import AsteroidHelper from "./AsteroidHelper.js";
@@ -12,120 +12,112 @@ import { config } from './../shared/config.js';
 import _ from 'underscore';
 import $ from 'jquery';
 
-let senderTimeout = 6000;
+Data.on("*", (value, name) => Utilities.log("---on---", name, value));
 
-Data.on("*", (value, name) => console.log("---on---", name, value));
+Data.on("archiveSize", (value, name) =>{
+	Utilities.sendMessage("archiveSize", value);
+});
+
+Data.on("blindfields", (value, name) =>{
+	Utilities.setBlindfield(value)
+		.then(blindfield => Utilities.sendMessageToAllTab("blindfield", blindfield))
+		.catch(error => Utilities.error(error));
+});
+
+Data.on("blacklist", (value, name) =>{
+	Utilities.setBlackList(value)
+		.then(urls => Utilities.reloadTabs(urls))
+		.catch(error => Utilities.error(error));
+});
 
 Data.on("currentURLBlacklisted", (value, name) =>{
-	Utilities.log("UPDATE : ", value, name);
 	Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 });
 
-browser.tabs.onActivated.addListener(({tabId}) => {
-	updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
-	.then(data => console.log(data));
+Utilities.tabsOnActivatedAddListener(({tabId}) => {
+	Utilities.updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true });
 });
 
-browser.runtime.onMessage.addListener( (request, sender) => {
-
-	if(sender.id != browser.runtime.id)return;
-	return new Promise((resolve, reject) => {
-		switch(request.action){
-			case "login" : 
-				AsteroidHelper.login(request.data)
-					.then(message => resolve(!!message))//convert response to bool
-					.catch(error => {
-						console.log(error);
-						reject(error)
-					});
-			break;
-			
-			case "isLogin":
-				resolve(AsteroidHelper.asteroid.loggedIn);
-			break;
-			
-			case "logout" : 
-				AsteroidHelper.logout()
-					.then(message => resolve(AsteroidHelper.asteroid.loggedIn))
-					.catch(error => reject(error));
-			break;
-			
-			case "signup" : 
-				AsteroidHelper.signup(request.data)
-					.then(message => resolve(!!message))//convert response to bool
-					.catch(error => {
-						console.log(error);
-						reject(error)
-					});
-			break;
-
-			case "archive" : 
-				Utilities.log(request.data);
-				Utilities.addToArchiveBuffer(request.data);
-			case "backspacing" : 
-			case "backspaceup" : 
-				Utilities.setIcon("backspacing");
-				AsteroidHelper.deferredArchiveAdd(senderTimeout)
-					.then(data => {
-						if(!data) return reject(data);
-						Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
-						if(data instanceof Error)return reject(data);
-						Utilities.clearArchiveBuffer();
-						resolve(data);
-					})
-					.catch(error => {
-						Utilities.error("error", error);
-						Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
-						reject(error);
-					});
-			break;
-
-			case "getUrlStatus" : 
-				updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
-					.then(data => resolve(data))
-					.catch(error => reject(error));
-			break;
-			
-			case "getBlindfields" : 
-				resolve(Utilities.getBlindfields());
-			break;
-
-			case "getArchiveSize" : 
-				resolve(Data.state.archiveSize);
-			break;
-			
-			case "Settings.Blacklist.Add":
-			case "Settings.Blacklist.Remove":
-				AsteroidHelper.call(request.action, { url : request.data })
-					.then(data => resolve(data))
-					.catch(error => reject(error));
-			break;
-			
-			case "changeBWlist":
-				AsteroidHelper.blacklist(request.data.blacklisted, )
-					.then(data => resolve(data))
-					.catch(error => reject(error));
-			break;
-		}
-	});
+Utilities.on("signup", (data, resolve, reject) =>{
+	AsteroidHelper.signup(data)
+		.then(message => resolve(!!message))
+		.catch(error => reject(error));
 });
 
-function updateCurrentUrl(request){
-	return browser.tabs.query(request)
-	.then(async (tabs) => {
-		if(tabs.length == 0)throw new Error("Tab not found");
-		let regexp = /.+\:\/\/([^\/?#]+)(?:[\/?#]|$)/i
-		let url = (tabs[0].url.match(regexp)).shift();
-		url = url.replace(/https?:\/\//, "");
-		url = url.split("").reverse().join("").replace(/\//, "").split("").reverse().join("");
-		url = _.isEmpty(url) ? tabs[0].url : url;
-		if(!_.isArray(tabs) || tabs.length <= 0 ) throw new Error("URL not found");
-		Data.setState({
-			currentURLBlacklisted : Utilities.getIntoBlackList(url) !== false
-		});
-		return {
-			url : url,
-			blackListed : +Data.state.currentURLBlacklisted  // +true => 1 | +false => 0
-		};
+Utilities.on("login", (data, resolve, reject) =>{
+	AsteroidHelper.login(data)
+		.then(message => resolve(!!message))
+		.catch(error => reject(error));
+});
+
+Utilities.on("logout", (data, resolve, reject) =>{
+	AsteroidHelper.logout()
+		.then(message => resolve(AsteroidHelper.asteroid.loggedIn))
+		.catch(error => reject(error));
+});
+
+Utilities.on("isLogin", (data, resolve, reject) =>{
+	resolve(AsteroidHelper.asteroid.loggedIn);
+});
+
+Utilities.on("openTab", (data, resolve, reject) =>{
+	Utilities.tabHandler()
+		.then(tab=>Utilities.tabsUpdate({url: data}))
+		.catch(()=>Utilities.tabsCreate({url: data}));
+});
+
+Utilities.on("getUrlStatus", (data, resolve, reject) =>{
+	Utilities.updateCurrentUrl({ 'active': true, 'lastFocusedWindow': true })
+		.then(data => resolve(data))
+		.catch(error => reject(error));
+});
+
+Utilities.on("getBlindfields", (data, resolve, reject) =>{
+	resolve(Utilities.getBlindfields());
+});
+
+Utilities.on("getArchiveSize", (data, resolve, reject) =>{
+	resolve(Data.state.archiveSize);
+});
+
+Utilities.on("blacklistAdd", (data, resolve, reject) =>{
+	AsteroidHelper.call("Settings.Blacklist.Add", { url : data })
+		.then(data => resolve(data))
+		.catch(error => reject(error));
+});
+
+Utilities.on("blacklistRemove", (data, resolve, reject) =>{
+	AsteroidHelper.call("Settings.Blacklist.Remove", { url : data })
+		.then(data => resolve(data))
+		.catch(error => reject(error));
+});
+
+Utilities.on("archive, backspace", (data, resolve, reject) =>{
+	if(data){
+		Utilities.log(data);
+		Utilities.addToArchiveBuffer(data);
+	}
+	Utilities.setIcon("backspacing");
+	Utilities.procrastinate(config.senderTimeout, "deferredArchiveAdd")
+	.then(message =>{
+		let archive = Utilities.getArchiveBuffer();
+		if(archive.length < 1) throw new Error("Archive Add cancelled, casue local archive is empty");
+		return 	AsteroidHelper.call("Archives.methods.add", { 
+					text: archive.split("").reverse().join("") 
+				})
+				.then(()=>{
+					Utilities.log(archive.split("").reverse().join(""), "archived");
+					Utilities.clearArchiveBuffer();
+					resolve("archived")
+				})
+				.catch((e)=>{
+					reject(e);
+				})
+				.finally(()=>{
+					Utilities.setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
+				});
+	})
+	.catch(message =>{
+		reject(message);
 	});
-}
+});

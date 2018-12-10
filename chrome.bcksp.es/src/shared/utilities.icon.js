@@ -2,11 +2,12 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-10-13 16:34:24
+  @Last Modified time: 2018-12-10 06:47:54
 \*----------------------------------------*/
 
 import _ from 'underscore';
 import Data from "./Data.js";
+import Utilities from './utilities.js';
 
 export default class UtilitiesIcon {
 	static prefixFormat(input, base = 10){
@@ -68,12 +69,12 @@ export default class UtilitiesIcon {
 		if(_.isString(icons[name])){
 			clearInterval(timers.icons);
 			timers.icons = undefined;
-			chrome.browserAction.setIcon({
+			Utilities.browserActionSetIcon({
 				path: icons[name]
 			});
 		}else if(_.isArray(icons[name]) && undefined === timers.icons){
 			timers.icons = setInterval(() => {
-				chrome.browserAction.setIcon({
+				Utilities.browserActionSetIcon({
 					path: icons[name][0]
 				});
 				icons[name].push(icons[name].shift());

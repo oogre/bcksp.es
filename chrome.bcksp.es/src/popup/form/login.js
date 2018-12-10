@@ -2,7 +2,7 @@
   bcksp.es - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:00:44
-  @Last Modified time: 2018-10-08 06:13:54
+  @Last Modified time: 2018-12-10 14:08:43
 \*----------------------------------------*/
 import _ from 'underscore'
 import React from 'react';
@@ -47,6 +47,7 @@ export default class LoginForm extends React.Component {
 			.then(data => Utilities.isPwd(ReactDom.findDOMNode(this.refs.password).value, "password", data))
 			.then(data => Utilities.sendMessage("login", data))
 			.then(isLoggedIn => {
+				console.log(isLoggedIn, isLoggedIn, isLoggedIn);
 				if(_.isObject(isLoggedIn) && isLoggedIn.error){
 					throw new Error(isLoggedIn.reason);
 				}
@@ -57,7 +58,6 @@ export default class LoginForm extends React.Component {
 			})
 			.then(isLoggedIn => this.props.onSuccess(isLoggedIn))
 			.catch(error => {
-				console.warn(error);
 				this.setState({
 					'is-loading' : false,
 					'has-error' : true

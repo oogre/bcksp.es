@@ -2,7 +2,7 @@
   bcksp.es - utilities.blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 00:11:16
-  @Last Modified time: 2018-12-03 13:47:32
+  @Last Modified time: 2018-12-10 00:22:30
 \*----------------------------------------*/
 import _ from 'underscore';
 import Utilities from './utilities.js';
@@ -24,14 +24,11 @@ export default class UtilitiesBlacklist {
 	}
 
 	static async setBlackList(urls){
-		if(!_.isArray(urls)) return Utilities.error("setBlackList", "need array as parameter");
+		if(!_.isArray(urls)) throw new Error("setBlackList : need array as parameter");
 		let oldBlackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 
 		let blackliststed = _.difference(urls, oldBlackList);
 		let whiteliststed = _.difference(oldBlackList, urls);
-
-		Utilities.log("blackliststed", blackliststed);
-		Utilities.log("whiteliststed", whiteliststed);
 
 		localStorage.setItem("blackList", JSON.stringify(urls));
 		
@@ -56,19 +53,5 @@ export default class UtilitiesBlacklist {
 		if(itemId === false) return;
 		blackList.splice(itemId, 1);
 		localStorage.setItem("blackList", JSON.stringify(blackList));
-	}
-
-	static async reloadTabs(urls){
-		return urls.map( url => {
-			browser.tabs.query({
-				'url': [
-					"http://" + url + "/*",
-					"https://" + url + "/*"
-				]
-			})
-			.then(tabs => {
-				tabs.forEach(tab => browser.tabs.reload(tab.id))
-			});
-		});
 	}
 }

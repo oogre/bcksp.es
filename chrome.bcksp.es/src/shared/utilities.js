@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-12-06 00:49:13
+  @Last Modified time: 2018-12-10 14:31:17
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";
@@ -10,26 +10,24 @@ import Multi from "./Multi.inherit.js";
 import { config } from './config.js';
 import UtilitiesIcon from "./utilities.icon.js";
 import UtilitiesArchive from "./utilities.archive.js";
+import UtilitiesBrowser from "./utilities.browser.js";
 import UtilitiesBackspace from "./utilities.backspace.js";
 import UtilitiesBlacklist from "./utilities.blacklist.js";
 import UtilitiesValidation from "./utilities.validation.js";
 
-export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBackspace, UtilitiesArchive, UtilitiesBlacklist, UtilitiesValidation ) {
+export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBackspace, UtilitiesArchive, UtilitiesBlacklist, UtilitiesValidation, UtilitiesBrowser ) {
 
 	static procrastinate(delay, name="default"){
 		return new Promise((resolve, reject) => {
 			let procrastinations = Data.state.procrastinations;
 			let timers = Data.state.timers;
-
 			if(timers[name] !== undefined){
 				clearTimeout(timers[name]);
 				if(_.isFunction(procrastinations[name])){
 					procrastinations[name]("I'll do : "+name+" later...");
 				}
 			}
-			
 			procrastinations[name] = reject;
-			
 			timers[name] = setTimeout(() => {
 				clearTimeout(timers[name]);
 				timers[name] = undefined;
@@ -38,7 +36,6 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
 				});
 				resolve("It's time for : " + name);
 			}, delay);
-
 			Data.setState({
 				procrastinations : procrastinations,
 				timers : timers
@@ -47,50 +44,87 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
 	}
 
 	static async tabHandler(){
-		return new Promise((resolve, reject) => {
-			chrome.tabs.query({ 
+		return UtilitiesBrowser.tabsQuery({ 
 				url : config.standard_url, 
-				currentWindow: true  
-			}, (value, error)=>{
-				if(error)return reject(error);
-				return resolve(value);
+				currentWindow: true 
+			})
+			.then(tabs=>{
+				return _.findWhere(tabs, {active : true}) || _.last(tabs);
+			})
+			.then(tab=>{
+				if(!tab.active){
+					return UtilitiesBrowser.tabsHighlight({tabs:tab.index}).then(()=>tab);
+				}
+				return tab;
 			});
-		})
-		.then(tabs=>tabs[0])
-		.then(tab=>{
-			if(!tab.active){
-				return new Promise((resolve, reject) => {
-					chrome.tabs.highlight({tabs:tab.index}, (value, error)=>{
-						if(error)return reject(error);
-						return resolve(tab);
-					});
-				});
-			}
-			return tab;
-		})
 	}
 
-	static async sendMessage(action, data){
-		//if(_.isEmpty(data)) throw new Error ("sendMessage - Data is not provided");
-		return new Promise((resolve, reject) => {
-			chrome.runtime.sendMessage({
-				action : action,
-				data : data
-			}, (data, error) => {
-				if(error)return reject(error);
-				resolve(data);
+	static async reloadTabs(urls){
+		return urls.map( url => {
+			UtilitiesBrowser.tabsQuery({
+				'url': "*://" + url.replace(/:\d+/, "") + "/*",
+			})
+			.then(tabs => {
+				tabs.forEach(tab => UtilitiesBrowser.tabsReload(tab.id))
 			});
 		});
 	}
 	
-	static async sendMessageToAllTab(action, data){
-		return new Promise((resolve, reject) => {
-			chrome.tabs.query({}, tabs => {
-				tabs.map(tab =>{
-					chrome.tabs.sendMessage(tab.id, {action, data});	
-				});
-				resolve();
+	static async sendMessage(action, data){
+		return UtilitiesBrowser.runtimeSendMessage({
+			action : action,
+			data : data
+		});
+	}
+
+	static on(actions, cb){
+		actions.split(/\W+/g).map(action=>{
+			Utilities.Listener[action] = Utilities.Listener[action] || [];
+			let listener = UtilitiesBrowser.runtimeOnMessageAddListener((request, sender, sendResponse) => {
+				if(request.action != action)return;
+				if(sender.id != UtilitiesBrowser.runtimeId())return;
+				new Promise((resolve, reject) => cb(request.data, resolve, reject))
+						.then(data => sendResponse(data))
+						.catch(sendResponse);
+				return true; //so i can use sendResponse later;
 			});
+			Utilities.Listener[action].push(listener);
+		});
+	}
+
+	static off(actions){
+		actions.split(/\W+/g).map(action=>{
+			UtilitiesBrowser.runtimeOnMessageRemoveListener(Utilities.Listener[action]);
+			Utilities.Listener[action] = [];
+		});
+	}
+
+	static async sendMessageToAllTab(action, data){
+		return UtilitiesBrowser.tabsQuery({})
+				.then(tabs => {
+					tabs.map(tab =>{
+						UtilitiesBrowser.tabsSendMessage(tab.id, {action, data});
+					});
+				});
+	}
+
+	static async updateCurrentUrl(request){
+		return UtilitiesBrowser.tabsQuery(request)
+		.then(async (tabs) => {
+			if(tabs.length == 0)throw new Error("Tab not found");
+			let regexp = /.+\:\/\/([^\/?#]+)(?:[\/?#]|$)/i
+			let url = (tabs[0].url.match(regexp)).shift();
+			url = url.replace(/https?:\/\//, "");
+			url = url.split("").reverse().join("").replace(/\//, "").split("").reverse().join("");
+			url = _.isEmpty(url) ? tabs[0].url : url;
+			if(!_.isArray(tabs) || tabs.length <= 0 ) throw new Error("URL not found");
+			Data.setState({
+				currentURLBlacklisted : Utilities.getIntoBlackList(url) !== false
+			});
+			return {
+				url : url,
+				blackListed : +Data.state.currentURLBlacklisted  // +true => 1 | +false => 0
+			};
 		});
 	}
 
@@ -123,8 +157,9 @@ export default class Utilities extends Multi.inherit( UtilitiesIcon, UtilitiesBa
 			console.error.apply(this, ["bcksp.es"].concat(data))
 		}
 	}
-
 }
+
+Utilities.Listener = {};
 
 Utilities.LOG_LVLS = {
 	OFF : -1,

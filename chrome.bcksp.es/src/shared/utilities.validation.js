@@ -2,7 +2,7 @@
   bcksp.es - utilities.validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 14:20:47
-  @Last Modified time: 2018-10-03 19:24:34
+  @Last Modified time: 2018-12-07 08:08:33
 \*----------------------------------------*/
 import _ from 'underscore';
 

@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2018-12-05 19:31:49
+  @Last Modified time: 2018-12-10 06:03:29
 \*----------------------------------------*/
 
 import React from 'react';
@@ -20,24 +20,26 @@ export default class MainMenu extends React.Component {
 		this.state = {
 			'archiveSize' : 0
 		};
-		Utilities.sendMessage("getArchiveSize").then(archiveSize=> {
+	}
+	componentDidMount() {
+		Utilities.sendMessage("getArchiveSize")
+		.then(archiveSize=> {
 			this.setState({'archiveSize' : archiveSize});
+		})
+		Utilities.on("archiveSize", (data, resolve) =>{
+			this.setState({'archiveSize' : data});
+			resolve(true);
 		});
 	}
 	handleLogout(event){
 		Utilities.sendMessage("logout")
-		.then(isLoggedIn => this.props.onLoginStatusChange(isLoggedIn))
-		.catch(error => console.log(error));
+		.then(isLoggedIn => this.props.onLoginStatusChange(isLoggedIn));
 	}
 	handleMyFeed(event){
-		chrome.tabs.create({ 
-			url: config.bcksp_url
-		});
+		Utilities.sendMessage("openTab", config.bcksp_url);
 	}
 	handleMySettings(event){
-		chrome.tabs.create({ 
-			url: config.bcksp_url+"profile"
-		});
+		Utilities.sendMessage("openTab", config.bcksp_url+"profile");
 	}
 	render() {
 		return (

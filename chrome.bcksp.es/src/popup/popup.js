@@ -2,7 +2,7 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2018-11-07 17:20:18
+  @Last Modified time: 2018-12-10 14:14:07
 \*----------------------------------------*/
 import _ from 'underscore'
 import React from 'react';
@@ -23,11 +23,11 @@ class Popup extends React.Component {
 		};
 	}
 	componentDidMount() {
-		Utilities.sendMessage("isLogin", "true")
-			.then(isLoggedIn => {
-				this.setState({loggedIn: isLoggedIn})
-			})
-			.catch(error => console.log(error));
+		Utilities.sendMessage("isLogin")
+		.then(isLoggedIn => {
+			console.log("isLoggedIn", isLoggedIn);
+			this.setState({loggedIn: isLoggedIn})
+		});
 	}
 	handleLoginStatusChange(isLoggedIn){
 		if(_.isBoolean(isLoggedIn)){

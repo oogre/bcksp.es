@@ -2,14 +2,14 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2018-10-08 06:12:57
+  @Last Modified time: 2018-12-06 18:27:27
 \*----------------------------------------*/
 import React from 'react';
 
 import { config } from './../../shared/config.js';
 import LoginForm from './../form/login.js';
 import SignupForm from './../form/signup.js';
-
+import Utilities from './../../shared/utilities.js';
 
 
 export default class LoginMenu extends React.Component {
@@ -29,9 +29,7 @@ export default class LoginMenu extends React.Component {
 		return false;
 	}
 	handleGoBcksp(event){
-		chrome.tabs.create({ 
-			url: config.bcksp_url
-		});
+		Utilities.sendMessage("openTab", config.bcksp_url);
 	}
 	render() {
 		return (

@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-11-27 15:09:53
+  @Last Modified time: 2018-12-09 20:35:41
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -77,7 +77,7 @@ class LiveStream extends Component {
 	componentDidMount(){
 		streamer.on('publicBackspaces', message =>{
 			this.setState({
-				publicBackspaces : 	this.state.publicBackspaces + message.content
+				publicBackspaces : 	message.content + this.state.publicBackspaces
 			});
 		});
 		document.querySelector(".stream2").onkeydown = this.handleKey.bind(this);
@@ -102,11 +102,11 @@ class LiveStream extends Component {
 		return false;
 	}
 	getPublicArchive(){
-		if(!this.props.isPublicReady)return "";
+		if(!this.props.isPublicReady || !this.props.publicArchive)return "";
 		return this.state.publicBackspaces+this.props.publicArchive.content;
 	}
 	getPrivateArchive(){
-		if(!this.props.isPrivateReady)return "";
+		if(!this.props.isPrivateReady || !this.props.privateArchive)return "";
 		return this.props.privateArchive.map(data=>data.content).join("");
 	}
 	
