@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2018-12-11 21:56:51
+  @Last Modified time: 2018-12-11 22:04:21
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -161,7 +161,7 @@ class UserProfile extends Component {
 			<div className="page__content">
 				<form className="login-user">
 					{
-						this.renderUserInfo();
+						this.renderUserInfo()
 					}
 					<div className="fields-row">
 						<div className="fields-column">
