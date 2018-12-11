@@ -2,14 +2,13 @@
   web.bitRepublic - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:21:58
-  @Last Modified time: 2018-12-10 14:53:40
+  @Last Modified time: 2018-12-11 18:18:59
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import T from './i18n/index.js';
 
 let translator = i18n.createTranslator("utilities");
 let errors = i18n.createTranslator("errors");
-
 
 export function checkUserLoggedIn(){
 	if (!Meteor.userId()) {
