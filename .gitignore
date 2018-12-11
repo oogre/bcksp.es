@@ -7,3 +7,4 @@ settings.json
 archives/*
 secrete.js
 *.zip
+/scripts
