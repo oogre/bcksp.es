@@ -1,7 +1,9 @@
 {
   "manifest_version": 2,
   "name": "bcksp.es",
-  "version": "0.2.0",
+  "version": "2.0.0.0",
+  "description": "We archive the text you erase.",
+  "author" : "Vincent Evrard",
   "content_scripts": [
     {
       "matches": ["*://*/*"],

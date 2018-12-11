@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-12-09 13:52:54
+  @Last Modified time: 2018-12-11 15:31:52
 \*----------------------------------------*/
 
 
@@ -23,7 +23,8 @@ export const config = {
 	},
 	devices : {
 		firefox : "0d6038c8c45b6c3f6599b72d08d43523be9a1fb7@temporary-addon",
-		chrome : "ieiinhiiecccpepemfpeikdclbiicbmg"
+		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg"
+		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb"
 	},
 	archives : {
 		public : {
