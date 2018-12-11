@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2018-12-07 07:44:10
+  @Last Modified time: 2018-12-11 21:56:51
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -135,26 +135,34 @@ class UserProfile extends Component {
 			</li>
 		))
 	}
+	renderUserInfo(){
+		if(!this.props.isSettingsReady)return;
+		return (
+			<div className="fields-row">
+				<div className="fields-column">
+					<label htmlFor = "email">
+						<T>forms.email</T>
+					</label>
+					<input 	id = "email" 
+							type = "email" 
+							ref = "email"
+							name = "email"
+							placeholder = "email"
+							value = {Meteor.user().emails.pop().address}
+							disabled = "true"
+					/>
+				</div>
+			</div>
+		)
+	}
 	
 	render() {
 		return (
 			<div className="page__content">
 				<form className="login-user">
-					<div className="fields-row">
-						<div className="fields-column">
-							<label htmlFor = "email">
-								<T>forms.email</T>
-							</label>
-							<input 	id = "email" 
-									type = "email" 
-									ref = "email"
-									name = "email"
-									placeholder = "email"
-									value = {this.state.email}
-									disabled = "true"
-							/>
-						</div>
-					</div>
+					{
+						this.renderUserInfo();
+					}
 					<div className="fields-row">
 						<div className="fields-column">
 							<label>
@@ -190,7 +198,7 @@ class UserProfile extends Component {
 					</div>
 					<div className="fields-row">
 						<div className="fields-column">
-							<label htmlFor = "email">
+							<label>
 								<T>userprofile.changePassword</T>
 							</label>
 							<button	onClick = {this.handleResetPassword.bind(this)}>
@@ -200,7 +208,7 @@ class UserProfile extends Component {
 					</div>
 					<div className="fields-row">
 						<div className="fields-column">
-							<label htmlFor = "email">
+							<label>
 								<T>userprofile.archive</T>
 							</label>
 							<button	onClick = {this.handleDeleteArchive.bind(this)}>
@@ -210,7 +218,7 @@ class UserProfile extends Component {
 					</div>
 					<div className="fields-row">
 						<div className="fields-column">
-							<label htmlFor = "email">
+							<label>
 								<T>userprofile.account</T>
 							</label>
 							<button	onClick = {this.handleDeleteAccount.bind(this)}>

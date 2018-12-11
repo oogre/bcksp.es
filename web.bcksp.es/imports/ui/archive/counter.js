@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2018-11-26 07:51:08
+  @Last Modified time: 2018-12-11 21:49:44
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -15,9 +15,11 @@ class ArchiveCounter extends Component {
 		super(props);
 	}
 	getCharLeft(){
+		if(!this.props.archive)return 0 ;
 		return config.book.getMaxChar() - this.props.archive.count;
 	}
 	getPerCent(){
+		if(!this.props.archive)return 0;
 		return (config.book.getMaxChar() / this.props.archive.count) * 100 ;
 	}
 	render() {
