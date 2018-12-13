@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2018-12-10 16:31:51
+  @Last Modified time: 2018-12-12 18:40:09
 \*----------------------------------------*/
 
 import React from 'react';
@@ -34,10 +34,10 @@ export default class MainMenu extends React.Component {
 		.then(isLoggedIn => this.props.onLoginStatusChange(isLoggedIn));
 	}
 	handleMyFeed(event){
-		Utilities.sendMessage("openTab", config.bcksp_url);
+		Utilities.sendMessage("openTab", config.getHomeUrl());
 	}
 	handleMySettings(event){
-		Utilities.sendMessage("openTab", config.bcksp_url+"profile");
+		Utilities.sendMessage("openTab", config.getProfileUrl());
 	}
 	render() {
 		return (

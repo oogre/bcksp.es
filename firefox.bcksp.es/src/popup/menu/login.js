@@ -2,7 +2,7 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2018-12-06 18:27:27
+  @Last Modified time: 2018-12-12 18:39:29
 \*----------------------------------------*/
 import React from 'react';
 
@@ -29,7 +29,7 @@ export default class LoginMenu extends React.Component {
 		return false;
 	}
 	handleGoBcksp(event){
-		Utilities.sendMessage("openTab", config.bcksp_url);
+		Utilities.sendMessage("openTab", config.getHomeUrl());
 	}
 	render() {
 		return (

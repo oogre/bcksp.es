@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-12-11 18:50:12
+  @Last Modified time: 2018-12-12 19:04:01
 \*----------------------------------------*/
 
 
@@ -22,7 +22,8 @@ export const config = {
 		}
 	},
 	devices : {
-		firefox : "0d6038c8c45b6c3f6599b72d08d43523be9a1fb7@temporary-addon",
+		firefox : "jid1-P1oHEt4FsKJNoA@jetpack",
+		firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
 		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
 		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb"
 	},

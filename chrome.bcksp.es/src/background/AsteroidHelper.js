@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-12-10 15:00:43
+  @Last Modified time: 2018-12-12 18:59:57
 \*----------------------------------------*/
 import {createClass} from "asteroid";
 import Utilities from '../shared/utilities.js';
@@ -14,8 +14,9 @@ class AsteroidHelper{
 	constructor(){
 		const Asteroid = createClass();
 		
+		
 		this.asteroid = new Asteroid({
-    		endpoint: config.bcksp_ws
+    		endpoint: config.getWebSocketUrl()
 		});
 
 		this.subscribtionAddressList = [
@@ -43,8 +44,8 @@ class AsteroidHelper{
 
 		this.asteroid.on("loggedOut", () =>{
 			Utilities.tabHandler()
-			.then(tab=>Utilities.tabsUpdate({url: config.bcksp_url+"logout"}))
-			.catch(()=>Utilities.tabsCreate({url: config.bcksp_url+"logout"}));
+			.then(tab=>Utilities.tabsUpdate({url: config.getLogoutUrl() }))
+			.catch(()=>Utilities.tabsCreate({url: config.getLogoutUrl() }));
 			this.stopSubsribtion();
 			localStorage.clear();
 			Data.setState({
@@ -57,8 +58,8 @@ class AsteroidHelper{
 			this.call("Users.methods.login.token")
 			.then(res=>{
 				Utilities.tabHandler()
-				.then(tab=>Utilities.tabsUpdate({url: config.bcksp_url+"login/"+res.data}))
-				.catch(()=>Utilities.tabsCreate({url: config.bcksp_url+"login/"+res.data}));
+				.then(tab=>Utilities.tabsUpdate({url: config.getLoginUrl(res.data) }))
+				.catch(()=>Utilities.tabsCreate({url: config.getLoginUrl(res.data) }));
 			}).catch(error=>{
 				Utilities.warn("no way to auto connect to the website");
 			});
