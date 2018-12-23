@@ -2,52 +2,62 @@
   bcksp.es - Utilities.backspace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 23:56:21
-  @Last Modified time: 2018-12-10 16:33:16
+  @Last Modified time: 2018-12-23 14:02:46
 \*----------------------------------------*/
 
+import { Caret } from 'caret-pos';
 import _ from 'underscore';
 import Data from "./Data.js";
 import diffMatchPatch from "diff-match-patch";
 
 export default class UtilitiesBackspace {
 	static getHighlightText(elem){
-		let highlighted = elem.value.substring(elem.selectionStart, elem.selectionEnd);//elem.ownerDocument.getSelection().toString();
+		let caret = new Caret(elem, false);
+		caret.enable(elem);
+		let highlighted = caret.getSelectedText();
 		if(_.isEmpty(highlighted)) return false;
 		return highlighted.split("").reverse().join("");
 	}
 
-	static getCaretPosition(elem){
-		try{
-			if (elem.selectionStart){
-				return elem.selectionStart;
-			}
-			else if (elem.ownerDocument.selection){
-				elem.focus();
-				let r = elem.ownerDocument.selection.createRange();
-				if (null === r){
-					return false;
-				}
-				let re = elem.createTextRange();
-				let rc = re.duplicate();
-				re.moveToBookmark(r.getBookmark());
-				rc.setEndPoint("EndToStart", re);
-				return rc.text.length;
-			}
-		}catch(e){}
-		return false;
+	static checkTarget(element){
+  		if(!UtilitiesBackspace.isInputField(element)){
+    		element = UtilitiesBackspace.getContentEditableInParent(element);
+  		}
+  		return element;
 	}
 
 	static getCharBeforeCaret(elem){
-		let caretPosition = UtilitiesBackspace.getCaretPosition(elem);
-		if(!caretPosition) return false;
-		return elem.value.charAt(caretPosition-1);
+		let caret = new Caret(elem, false);
+		caret.enable(elem);
+		return caret.getCharBeforCaret() || false;
 	}
 
-	static innerTEXT(elem){
-		if(elem instanceof NodeList) return _.chain(elem).reduce((memo, e) => memo += UtilitiesBackspace.innerTEXT(e), "").value();
-		if(! (elem instanceof Element)) return "";
-		if("input" === elem.tagName.toLowerCase()) return elem.value;
-		return elem.innerHTML.replace(/(<([^>]+)>)/ig, "");	
+	static isContentEditable(element){
+		return !!(
+  			element.contentEditable &&
+  			element.contentEditable === 'true'
+		);
+	}
+	static getContentEditableInParent(element){
+  		if(UtilitiesBackspace.isContentEditable(element)){
+  		  	return element;
+  		}
+  		if(element.parentElement){
+    		return UtilitiesBackspace.getContentEditableInParent(element.parentElement);  
+  		}
+  		return false;
+	}
+
+	static isInputField(element){
+  		let nodeName = element.nodeName;
+  		return nodeName == 'TEXTAREA' || nodeName == 'INPUT';
+	}
+
+	static getContent(element){
+  		if(element instanceof NodeList) [].slice.call(element).reduce((memo, e) => memo += UtilitiesBackspace.getContent(e), '');
+  		if(! (element instanceof Element)) return '';
+  		if(UtilitiesBackspace.isInputField(element)) return element.value;
+  		return element.innerHTML.replace(/(<([^>]+)>)/ig, ''); 
 	}
 
 	static diff(a, b){
@@ -57,18 +67,11 @@ export default class UtilitiesBackspace {
 	}
 
 	static isAcceptable(elem){
-		let acceptable = elem && (  
-							"input" === elem.nodeName.toLowerCase() ||
-							"textarea" === elem.nodeName.toLowerCase()  ||
-							"true" === elem.getAttribute("contenteditable") ||
-							"" === elem.getAttribute("contenteditable") 
-						) &&
-						_.isArray(Data.state.blindfields.types) &&
-						_.isArray(Data.state.blindfields.class) &&
-						!Data.state.blindfields.types.includes(elem.getAttribute("type")) &&
-						_.chain(Data.state.blindfields.class).intersection(elem.className.split(" ")).isEmpty().value();
-		!acceptable && console.log("bcksp.es", "this field is not acceptable");
-		return acceptable;
+		return elem 
+			&& _.isArray(Data.state.blindfields.types) 
+			&& _.isArray(Data.state.blindfields.class) 
+			&& !Data.state.blindfields.types.includes(elem.getAttribute("type")) 
+			&& _.chain(Data.state.blindfields.class).intersection(elem.className.split(" ")).isEmpty().value();
 	}
 
 	static getTarget(defaultValue){

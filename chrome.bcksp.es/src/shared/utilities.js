@@ -2,7 +2,7 @@
   bcksp.es - utilities.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:36:49
-  @Last Modified time: 2018-12-10 14:31:17
+  @Last Modified time: 2018-12-23 13:11:09
 \*----------------------------------------*/
 import _ from 'underscore'
 import Data from "./Data.js";

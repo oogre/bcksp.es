@@ -2,14 +2,13 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-12-10 16:23:02
+  @Last Modified time: 2018-12-23 13:49:30
 \*----------------------------------------*/
-
 import $ from 'jquery';
-import Utilities from '../shared/utilities.js';
 import _ from 'underscore';
 import Data from "../shared/Data.js";
 import Protocol from "../shared/Protocol.js";
+import Utilities from '../shared/utilities.js';
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 
@@ -57,7 +56,7 @@ class BackspaceListener{
 			});
 
 		Utilities.log("BackspaceListener initializer");
-		document.addEventListener("DOMSubtreeModified", event => {
+		/*document.addEventListener("DOMSubtreeModified", event => {
 			this.setupListener(event.target);
 			if(event.target){
 				try{
@@ -66,7 +65,7 @@ class BackspaceListener{
 					});
 				}catch(error){}
 			}
-		}, false);
+		}, false);*/
 		this.setupListener(document);
 
 
@@ -100,98 +99,114 @@ class BackspaceListener{
 	}
 	
 	keyDownListener(event){
-		if(8 === event.keyCode && Utilities.isAcceptable(this.activeElement)){
-			Utilities.sendMessage("backspace");
-			Utilities.selectProtocol({
-				"googleDocument" : () => {
-					if(!Data.state.downFlag){
-						Data.setState({
-							innerText : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
-						});
-					}
-				},
-				"googleSpreadsheets" : () => {
-					if(!Data.state.downFlag){
-						Data.setState({
-							innerText : Utilities.innerTEXT(document.querySelector(".cell-input"))
-						});
-					}
-				},
-				"googlePresentation" : () => {
-					if(!Data.state.downFlag){
-						Data.setState({
-							innerText : Utilities.innerTEXT(document.querySelectorAll(".panel-right text"))
-						});
-					}
-				},
-				"googleDrawings" : () => {
-					if(!Data.state.downFlag){
-						Data.setState({
-							innerText : Utilities.innerTEXT(document.querySelectorAll("text"))
-						});
-					}
-				},
-				"default" : () => {
-					if(!Protocol.exec("Highlight", event.target)){
-						if(!Protocol.exec("CharBeforeCaret", event.target)){
+		if(8 !== event.keyCode)return true;
+		let target;
+		if(false === (target = Utilities.checkTarget(this.activeElement))){
+			Utilities.warn("Error with : "+this.activeElement);
+		}
+		if(!Utilities.isAcceptable(target)){
+			Utilities.log("This field is not acceptable");
+			return true;
+		}
+		
+		Utilities.sendMessage("backspace");
+		Utilities.selectProtocol({
+			"googleDocument" : () => {
+				if(!Data.state.downFlag){
+					Data.setState({
+						innerText : Utilities.getContent(document.querySelector(".kix-appview-editor"))
+					});
+				}
+			},
+			"googleSpreadsheets" : () => {
+				if(!Data.state.downFlag){
+					Data.setState({
+						innerText : Utilities.getContent(document.querySelector(".cell-input"))
+					});
+				}
+			},
+			"googlePresentation" : () => {
+				if(!Data.state.downFlag){
+					Data.setState({
+						innerText : Utilities.getContent(document.querySelectorAll(".panel-right text"))
+					});
+				}
+			},
+			"googleDrawings" : () => {
+				if(!Data.state.downFlag){
+					Data.setState({
+						innerText : Utilities.getContent(document.querySelectorAll("text"))
+					});
+				}
+			},
+			"default" : () => {
+				if(Utilities.isInputField(target)){
+					if(!Protocol.exec("Highlight", target)){
+						if(!Protocol.exec("CharBeforeCaret", target)){
 							if(!Data.state.downFlag){
 								Data.setState({
-									innerText : Utilities.innerTEXT(event.target)
+									innerText : Utilities.getContent(target)
 								});
 							}
 						}
-					}
+					}	
+				}else{
+					if(!Data.state.downFlag){
+						Data.setState({
+							innerText : Utilities.getContent(target)
+						});
+					}					
 				}
-			});
-		}
+			}
+		});
 		Data.setState({
 			downFlag : true
 		});
 	}
 	keyUpListener(event){
-		if(8 === event.keyCode && Utilities.isAcceptable(this.activeElement)){
-			Utilities.sendMessage("backspace");
-			if(!_.isEmpty(Data.state.innerText)){
-				Utilities.selectProtocol({
-					"googleDocument" : () => Protocol.exec("Diff", {
-						before : Data.state.innerText,
-						after : Utilities.innerTEXT(document.querySelector(".kix-appview-editor"))
-					}),
-					"googleSpreadsheets" : () => Protocol.exec("Diff", {
-						before : Data.state.innerText,
-						after : Utilities.innerTEXT(document.querySelector(".cell-input"))
-					}),
-					"googlePresentation" : () => Protocol.exec("Diff", {
-						before : Data.state.innerText,
-						after : Utilities.innerTEXT(document.querySelectorAll(".panel-right text"))
-					}),
-					"googleDrawings" : () => Protocol.exec("Diff", {
-						before : Data.state.innerText,
-						after : Utilities.innerTEXT(document.querySelectorAll("text"))
-					}),
-					"default" : () => Protocol.exec("Diff", {
-						before : Data.state.innerText,
-						after : Utilities.innerTEXT(event.target)
-					})
-				});
-			}
-			Data.setState({
-				downFlag : false,
-				innerText : "" 
-			});
+		if(8 !== event.keyCode)return true;
+		if(_.isEmpty(Data.state.innerText))return true;
+		let target;
+		if(false === (target = Utilities.checkTarget(this.activeElement))){
+			Utilities.warn("Error with : "+this.activeElement);
 		}
+		if(!Utilities.isAcceptable(target)){
+			Utilities.log("This field is not acceptable");
+			return true;
+		}
+		
+		Utilities.sendMessage("backspace");
+		Utilities.selectProtocol({
+			"googleDocument" : () => Protocol.exec("Diff", {
+				before : Data.state.innerText,
+				after : Utilities.getContent(document.querySelector(".kix-appview-editor"))
+			}),
+			"googleSpreadsheets" : () => Protocol.exec("Diff", {
+				before : Data.state.innerText,
+				after : Utilities.getContent(document.querySelector(".cell-input"))
+			}),
+			"googlePresentation" : () => Protocol.exec("Diff", {
+				before : Data.state.innerText,
+				after : Utilities.getContent(document.querySelectorAll(".panel-right text"))
+			}),
+			"googleDrawings" : () => Protocol.exec("Diff", {
+				before : Data.state.innerText,
+				after : Utilities.getContent(document.querySelectorAll("text"))
+			}),
+			"default" : () => {
+				Protocol.exec("Diff", {
+					before : Data.state.innerText,
+					after : Utilities.getContent(target)
+				})
+			}
+		});
+		Data.setState({
+			downFlag : false,
+			innerText : "" 
+		});
 	}
 	setupListener(target){
-		if("IFRAME" ===  target.nodeName) {
-			target.addEventListener("load", event => {
-				try{
-					this.addListeners(event.target.contentWindow.document)
-				}catch(e){
-					Utilities.error(e);
-				}
-			} , false);
-		}
-		else this.addListeners(document);
+		this.addListeners(document);
 	}
 	addListeners (element){
 		element.addEventListener("keydown", this.keyDownListener, true);

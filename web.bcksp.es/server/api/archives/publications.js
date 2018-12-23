@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2018-11-26 06:25:13
+  @Last Modified time: 2018-12-17 08:24:57
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';
@@ -64,8 +64,12 @@ if(Meteor.isServer){
 						let newCharLength = oldData.count-newData.count;
 						let content = ArchiveTools.readAsync(user.archive)
 						.then(content=>{
-							this.added('privateArchive', +new Date(), {content : content.substr(0, newCharLength)});
-						});
+							if(newCharLength > 0){
+								this.added('privateArchive', +new Date(), {content : content.substr(0, newCharLength)});
+							}else{
+								this.added('privateArchive', +new Date(), {content : content, invalidateOlder : true});
+							}
+						});	
 					}
 				}
 			});

@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2018-11-25 22:18:50
+  @Last Modified time: 2018-12-17 07:59:53
 \*----------------------------------------*/
 import { config } from '../imports/startup/config.js';
 import CryptoJS from 'crypto-js';
@@ -26,6 +26,18 @@ export async function append(name, txt){
 	let data = await readAsync(name);
 	data = txt + data;
 	await writeAsync(name, data);
+}
+
+export async function splice(name, token, startAt, stopAt){
+	let data = await readAsync(name);
+	data = data.split("");
+	let txt = data.splice(startAt, stopAt-startAt).join("");
+	data = data.join("");
+	if(token == txt){
+		await writeAsync(name, data);
+	}else{
+		throw new Error("Token must be equals to text to be Erased");
+	}
 }
 
 export async function readAsync(name){
