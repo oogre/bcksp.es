@@ -2,7 +2,7 @@
   web.bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-12-13 20:48:44
+  @Last Modified time: 2018-12-23 14:26:20
   \*----------------------------------------*/
 /*----------------------------------------*\
   bitRepublic - router.js
@@ -18,16 +18,16 @@
   import App from '../imports/ui/App.js';
   import About from '../imports/ui/About.js';
   import UserProfile from '../imports/ui/user/profile.js';
-//import TempIndex from "../imports/ui/temp/index.js";
 
+/*
 FlowRouter.route( '/', {
 	name: 'temp',
 	action( params ) {
 		FlowRouter.go("home");
 	}
 });
-
-FlowRouter.route( '/dev', {
+*/
+FlowRouter.route( '/', {
 	name: 'home',
 	action( params ) {
 		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));

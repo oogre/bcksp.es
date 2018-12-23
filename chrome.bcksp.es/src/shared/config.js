@@ -4,7 +4,7 @@ export const config = {
 	protocol : "http://",
 	ws_protocol : "ws://",
 	address : "local.bcksp.es",
-	home : "/dev",
+	home : "/",
 	login : "/login",
 	logout : "/logout",
 	profile : "/profile",
