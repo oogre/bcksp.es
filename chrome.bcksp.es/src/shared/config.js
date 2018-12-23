@@ -3,7 +3,7 @@ export const config = {
 	standard_url : "*://*.bcksp.es/*",
 	protocol : "http://",
 	ws_protocol : "ws://",
-	address : "local.bcksp.es",
+	address : "local.bcksp.es:8888",
 	home : "/",
 	login : "/login",
 	logout : "/logout",
