@@ -1,0 +1,46 @@
+/*------------------------------------*\
+  > Mixins
+  Generic and common mixins
+\*------------------------------------*/
+
+/**
+ * [media-query Enclose a block of code with a media query as named in `$breakpoints`.]
+ * @param  {string} $media-query [The name of the media-query]
+ */
+@mixin media-query($media-query) {
+    $breakpoint-found: false;
+
+
+    @each $breakpoint in $breakpoints {
+        $name: nth($breakpoint, 1);
+        $declaration: nth($breakpoint, 2);
+
+        @if $media-query == $name and $declaration {
+            $breakpoint-found: true;
+
+            @if $name == "x-small" {
+                @content;
+            }
+
+            @media only screen and #{$declaration} {
+                @content;
+            }
+        }
+    }
+
+    @if not $breakpoint-found {
+        @warn "Breakpoint '#{$media-query}' does not exist";
+    }
+}
+
+/**
+ * [clearfix Clear the floats of an elements]
+ * @url https://css-tricks.com/snippets/css/clear-fix/
+ */
+@mixin clearfix() {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}

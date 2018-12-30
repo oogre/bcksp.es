@@ -1,0 +1,10 @@
+/*------------------------------------*\
+  > Sizes
+  Size declaration reusable everywhere (for font-size, margin, etc)
+\*------------------------------------*/
+
+// Table convertation 'px' to 'rem'
+// size-xx (xx stand for the desired size in pixel)
+// ---------------------
+$size-16: 1rem;
+$size-10: .625rem;

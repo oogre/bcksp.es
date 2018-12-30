@@ -1,0 +1,30 @@
+/*------------------------------------*\
+  > Visibility
+\*------------------------------------*/
+
+// sr-only
+// Screen reader only (hidden on all default device, readed by a screen reader)
+// ---------------------
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+// invisible
+// Element hidden (bot screen reader and 'normal' device) but with which browser can interact
+// If the invisible class is associated with open class, these style are not applied
+// e.g. Sort dropdown on mobile
+// ---------------------
+
+.invisible:not(.open) {
+    position: absolute;
+    width: 0;
+    cursor: 0;
+    visibility: hidden;
+}

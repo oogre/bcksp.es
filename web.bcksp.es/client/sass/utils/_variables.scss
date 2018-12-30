@@ -1,0 +1,77 @@
+// fonts
+$font-title: monospace !default;
+$font-body: sans-serif !default;
+
+// sizes
+$base-size: 100% !default;
+$font-size-title: 1.4rem !default;
+$font-weight-title: 700 !default;
+
+$font-size-body: 1rem !default;
+$font-weight-body: 400 !default;
+$line-height-body: 1.5 !default;
+
+// Colors
+// ---------------------
+$primary: #ff0066 !default;
+$secondary: cyan !default;
+
+// Grey shader
+$grey-50: #808080 !default;
+
+// Link & other
+$color-link: $primary !default;
+$color-link-hover: $primary !default;
+
+$color-body: #63697e !default;
+$color-background: #fff !default;
+
+// Functional
+$functional-success: #6bc97d !default;
+$functional-error: #91273f !default;
+$functional-warning: #eccb6d !default;
+
+// Form & buttons
+// ---------------------
+
+// Responsive
+// ---------------------
+
+/**
+ * Breakpoints.
+ * The first value is the name of the breakpoint (use for grid class generation)
+ * The second value is the media query that the breakpoint fires at.
+ *
+ * @warning: xl breakpoint should only be used for gallery modal
+ */
+$breakpoints: (
+    "x-small" "(max-width: 575px)",
+    "small" "(min-width: 576px)",
+    "medium" "(min-width: 768px)",
+    "desktop" "(min-width: 992px)",
+    "widescreen" "(min-width: 1200px)",
+    "xl" "(min-width: 1400px)"
+) !default;
+
+$max-width-x-small: 100% !default;
+$max-width-small: 540px !default;
+$max-width-medium: 720px !default;
+$max-width-desktop: 960px !default;
+$max-width-widescreen: 1140px !default;
+
+// Grid
+$columns-amount: 12 !default;
+$gutter: 20px !default;
+
+// Transition
+// ---------------------
+$easeInOutCubic: cubic-bezier(.645, .045, .355, 1) !default;
+
+// Use by z (_functions.scss) to declare z-index
+// Z Layer
+// ---------------------
+$z-layers: (
+    "modal": 2000,
+    "dropdown": 1400,
+    "sticky-footer": 1200,
+) !default;
