@@ -15,14 +15,14 @@ export default class HowtoStep extends Component {
 
 	render(){
 		return (
-			<div className="step">
+			<div className="step card card--step">
 				{
 					this.props.children && this.props.children.length == 2 ?
-						<div className="container">
+						<div>
 							{
 								React.Children.map(this.props.children, (child, k) =>(
-									<div key={k} className={(this.props.k + k)%2==0 ? "left" : "right"} > 
-										{child} 
+									<div key={k} className={(this.props.k + k)%2==0 ? "left" : "right"} >
+										{child}
 									</div>
 								))
 							}

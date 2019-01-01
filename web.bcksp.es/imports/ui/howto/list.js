@@ -18,8 +18,9 @@ export default class HowtoList extends Component {
 
 	render() {
 		return (
+		<div className="container">
 			<ul className="howto">
-				<li>
+				<li class="howto__item">
 					<HowtoStep k={0}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -29,7 +30,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li>
+				<li className="howto__item">
 					<HowtoStep k={1}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -38,7 +39,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li>
+				<li class="howto__item">
 					<HowtoStep k={2}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -47,7 +48,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li>
+				<li class="howto__item">
 					<HowtoStep k={3}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -58,7 +59,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li>
+				<li class="howto__item">
 					<HowtoStep k={4}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -73,6 +74,7 @@ export default class HowtoList extends Component {
 					</HowtoStep>
 				</li>
 			</ul>
+		</div>
 		);
 	}
 }

@@ -1,0 +1,23 @@
+/*------------------------------------*\
+  How to
+\*------------------------------------*/
+
+.howto {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.howto__item:nth-child(even) {
+  align-self: flex-end;
+}
+
+
+// Step
+// ---------------------
+.step {
+  max-width: 442px;
+  margin-bottom: $size-40;
+}
