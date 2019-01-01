@@ -2,3 +2,10 @@
   > Layout.scss
   Define all general rules for layout conpomnent (container, etc)
 \*------------------------------------*/
+
+// Container, default centered container containing content
+// ---------------------
+.container {
+  max-width: 942px;
+  margin: 0 auto;
+}
