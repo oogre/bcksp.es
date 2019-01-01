@@ -1,6 +1,6 @@
 // fonts
-$font-title: monospace !default;
-$font-body: sans-serif !default;
+$font-title: "GT Pressura Mono Trial", monospace !default;
+$font-body: "Cormorant Garamond", serif !default;
 
 // sizes
 $base-size: 100% !default;
@@ -13,7 +13,10 @@ $line-height-body: 1.5 !default;
 
 // Colors
 // ---------------------
-$primary: #ff0066 !default;
+$yellow-broom: #fff123;
+$grey-thunder: #231F20;
+
+$primary: $yellow-broom !default;
 $secondary: cyan !default;
 
 // Grey shader
@@ -23,7 +26,7 @@ $grey-50: #808080 !default;
 $color-link: $primary !default;
 $color-link-hover: $primary !default;
 
-$color-body: #63697e !default;
+$color-body: #000 !default;
 $color-background: #fff !default;
 
 // Functional
