@@ -15,7 +15,7 @@ export default class MenuMain extends Component {
 			mobileMenu: false
 		}
 	}
-	
+
 	handleOpenMobileMenu(){
 		this.setState({
 			mobileMenu: !this.state.mobileMenu
@@ -25,7 +25,7 @@ export default class MenuMain extends Component {
 	hasToDisplayDownloadBtn(){
 		return !this.props.extensionInstalled;
 	}
-	
+
 	hasToDisplayProfileBtn(){
 		return this.props.isConnected && this.props.extensionInstalled;
 	}
@@ -53,14 +53,14 @@ export default class MenuMain extends Component {
 				</button>
 				<ul className={"menu menu--header" + this.isMobile()}>
 					<li className="menu__item">
-						<a 	className={"menu__item__link " + this.isActive("about")}
+						<a 	className={"menu__item-link " + this.isActive("about")}
 							href={FlowRouter.path("about")}
 						>
 							<T>menus.about</T>
 						</a>
 					</li>
 					<li className="menu__item">
-						<a 	className={"menu__item__link" + this.isActive("souvenir")} 
+						<a 	className={"menu__item-link" + this.isActive("souvenir")}
 							href={FlowRouter.path("souvenir")}
 						>
 							<T>menus.souvenir</T>
@@ -69,7 +69,7 @@ export default class MenuMain extends Component {
 					{
 						this.hasToDisplayDownloadBtn() &&
 							<li className="menu__item">
-								<a 	className={"menu__item__link" + this.isActive("download")}
+								<a 	className={"button button--primary" + this.isActive("download")}
 									href={FlowRouter.path("download")}
 								>
 									<T>menus.download</T>
@@ -79,7 +79,7 @@ export default class MenuMain extends Component {
 					{
 						this.hasToDisplayProfileBtn() &&
 							<li className="menu__item">
-								<a 	className={"menu__item__link" + this.isActive("userProfile")}
+								<a 	className={"menu__item-link" + this.isActive("userProfile")}
 									href={ FlowRouter.path("userProfile") }
 								>
 									profile

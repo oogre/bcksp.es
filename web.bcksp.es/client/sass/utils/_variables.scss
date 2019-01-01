@@ -23,10 +23,10 @@ $secondary: cyan !default;
 $grey-50: #808080 !default;
 
 // Link & other
-$color-link: $primary !default;
-$color-link-hover: $primary !default;
+$color-link: #000 !default;
+$color-link-hover: #ff0066 !default;
 
-$color-body: #000 !default;
+$color-body: $grey-thunder !default;
 $color-background: #fff !default;
 
 // Functional

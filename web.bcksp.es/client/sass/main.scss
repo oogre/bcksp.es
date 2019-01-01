@@ -1,8 +1,6 @@
 /*------------------------------------*\
-  Serenity Framework
-  Internal front-end framework for Immoweb.
-
-  @authors Immoweb PHP Tribe
+  Bcksp.es
+  @authors Crucifix Arnaud (hello@crucifixarnaud.com)
 \*------------------------------------*/
 
 //====== Utils ======
@@ -30,7 +28,9 @@
 //====== Blocks ======
 // Reusable stand alone blocks which can be use everywhere on the project
 // ex: Card, Button, Searchbox
-
+@import "blocks/main-header";
+@import "blocks/menu";
+@import "blocks/button";
 
 // Visibility Utils
 // Need to be imported in last, to make sure these styles overwrite the older one
