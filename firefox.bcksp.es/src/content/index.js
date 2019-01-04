@@ -2,98 +2,108 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2018-12-23 14:09:08
+  @Last Modified time: 2019-01-04 22:46:21
 \*----------------------------------------*/
-import $ from 'jquery';
-import _ from 'underscore';
-import Data from "../shared/Data.js";
-import Protocol from "../shared/Protocol.js";
-import Utilities from '../shared/utilities.js';
+import Data from "./../utilities/Data.js";
+import Protocol from "./../utilities/Protocol.js";
+import { on, sendMessage } from './../utilities/com.js';
+import { getContent, jQuery } from './../utilities/tools.js';
+import { log, info, warn, error } from './../utilities/log.js';
+import { diff, getHighlightText, getCharBeforeCaret, specialCase } from './../utilities/backspace.js';
+import { checkString, checkTarget, isAcceptable, isInputField, isEmpty } from './../utilities/validation.js';
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 
-Utilities.on("blindfield", (data, resolve) =>{
+on("blindfield", (data, resolve) =>{
 	Data.setState({
 		blindfields : data
 	});
 	resolve(true);
 });
 
-$(document).ready(()=>{
-	Utilities.sendMessage("isLogin")
-		.then(async (isLoggedIn) => {
-			if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
-			return true;
-		})
-		.then(() => Utilities.sendMessage("getUrlStatus"))
-		.then(async ({blackListed}) => {
-			if(blackListed) throw new Error('This web site is blacklisted, so here bcksp.es in not available');
-			return true;
-		})
-		.then(() => new BackspaceListener())
-		.catch(error => Utilities.error(error.message));
+jQuery.fn.ready(() => {
+	sendMessage("isLogin")
+	.then(async (isLoggedIn) => {
+		if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
+		return true;
+	})
+	.then(() => sendMessage("getUrlStatus"))
+	.then(async ({blackListed}) => {
+		if(blackListed) throw new Error('This web site is blacklisted, so here bcksp.es in not available');
+		return true;
+	})
+	.then(() => new BackspaceListener())
+	.catch(e => error(e.message));
+
 	window.addEventListener("message", function(event) {
 	    // We only accept messages from ourselves
 	    if (event.source != window)
 	        return;
 
 	    if (event.data.type && (event.data.type == "login")) {
-	        Utilities.sendMessage("login", event.data);
+	        sendMessage("login", event.data)
+			.then(data => info(data))
+			.catch(e => info(e.message));;
 	    }
 	    if (event.data.type && (event.data.type == "logout")) {
-	    	Utilities.sendMessage("logout");
+	    	sendMessage("logout")
+			.then(data => info(data))
+			.catch(e => info(e.message));;
 	    }
 	});
 });
 
 class BackspaceListener{
 	constructor(){
-		Utilities.sendMessage("getBlindfields")
-			.then(blindfields=>{
-				Data.setState({
-					blindfields : blindfields
-				});
+		sendMessage("getBlindfields")
+		.then(blindfields=>{
+			Data.setState({
+				blindfields : blindfields
 			});
-
-		Utilities.log("BackspaceListener initializer");
-		/*document.addEventListener("DOMSubtreeModified", event => {
-			this.setupListener(event.target);
-			if(event.target){
-				try{
-					event.target.querySelectorAll("iframe").forEach( iframe => {
-						this.setupListener(iframe);
-					});
-				}catch(error){}
-			}
-		}, false);*/
+		});
+		log("BackspaceListener initializer");
 		this.setupListener(document);
-
-
 		Protocol.add("Highlight", target => {
-			let content = Utilities.getHighlightText(target);
-			if(_.isString(content)){
-				Utilities.log("Highlight", content.split("").reverse().join(""));
-				Utilities.sendMessage("archive", content);
+			try{
+				let content = getHighlightText(target);
+				log("Highlight", content.split("").reverse().join(""));
+				
+				sendMessage("archive", content)
+				.then(data => info(data))
+				.catch(e => info(e.message));
+				
+				return true;
+			}catch(e){
+				return false;
 			}
-			return content !== false;
 		});
-
 		Protocol.add("CharBeforeCaret", target => {
-			let content = Utilities.getCharBeforeCaret(target);
-			if(_.isString(content)){
-				Utilities.log("CharBeforeCaret", content);
-				Utilities.sendMessage("archive", content);
+			try{
+				let content = getCharBeforeCaret(target);
+				log("CharBeforeCaret", content);
+				
+				sendMessage("archive", content)
+				.then(data => info(data))
+				.catch(e => info(e.message));
+				
+				return true;
+			}catch(e){
+				return false;
 			}
-			return content !== false;
 		});
-
 		Protocol.add("Diff", ({before, after}) =>{
-			let	content;
-			if(_.isEmpty(after)) content = before;
-			else content = Utilities.diff(before, after);
-			if(!_.isEmpty(content) && _.isString(content) ){
-				Utilities.log("Diff", content);
-				Utilities.sendMessage("archive", content.split("").reverse().join(""));
+			let	content = isEmpty(after) ? before : diff(before, after);
+			try{
+				checkString(content)
+				log("Diff", content);
+
+				sendMessage("archive", content.split("").reverse().join(""))
+				.then(data => info(data))
+				.catch(e => info(e.message));
+				
+				return true;
+			}catch(e){
+				return false;
 			}
 		});
 	}
@@ -101,51 +111,56 @@ class BackspaceListener{
 	keyDownListener(event){
 		if(8 !== event.keyCode)return true;
 		let target;
-		if(false === (target = Utilities.checkTarget(this.activeElement))){
-			Utilities.warn("Error with : "+this.activeElement);
+		
+		if(false === (target = checkTarget(this.activeElement))){
+			warn("Error with : " + this.activeElement);
 		}
-		if(!Utilities.isAcceptable(target)){
-			Utilities.log("This field is not acceptable");
+
+		if(!isAcceptable(target)){
+			log("This field is not acceptable");
 			return true;
 		}
-		
-		Utilities.sendMessage("backspace");
-		Utilities.selectProtocol({
+
+		sendMessage("backspace")
+		.then(data => info(data))
+		.catch(e => info(e.message));
+
+		specialCase({
 			"googleDocument" : () => {
 				if(!Data.state.downFlag){
 					Data.setState({
-						innerText : Utilities.getContent(document.querySelector(".kix-appview-editor"))
+						innerText : getContent(document.querySelector(".kix-appview-editor"))
 					});
 				}
 			},
 			"googleSpreadsheets" : () => {
 				if(!Data.state.downFlag){
 					Data.setState({
-						innerText : Utilities.getContent(document.querySelector(".cell-input"))
+						innerText : getContent(document.querySelector(".cell-input"))
 					});
 				}
 			},
 			"googlePresentation" : () => {
 				if(!Data.state.downFlag){
 					Data.setState({
-						innerText : Utilities.getContent(document.querySelectorAll(".panel-right text"))
+						innerText : getContent(document.querySelectorAll(".panel-right text"))
 					});
 				}
 			},
 			"googleDrawings" : () => {
 				if(!Data.state.downFlag){
 					Data.setState({
-						innerText : Utilities.getContent(document.querySelectorAll("text"))
+						innerText : getContent(document.querySelectorAll("text"))
 					});
 				}
 			},
 			"default" : () => {
-				if(Utilities.isInputField(target)){
+				if(isInputField(target)){
 					if(!Protocol.exec("Highlight", target)){
 						if(!Protocol.exec("CharBeforeCaret", target)){
 							if(!Data.state.downFlag){
 								Data.setState({
-									innerText : Utilities.getContent(target)
+									innerText : getContent(target)
 								});
 							}
 						}
@@ -153,7 +168,7 @@ class BackspaceListener{
 				}else{
 					if(!Data.state.downFlag){
 						Data.setState({
-							innerText : Utilities.getContent(target)
+							innerText : getContent(target)
 						});
 					}					
 				}
@@ -165,40 +180,42 @@ class BackspaceListener{
 	}
 	keyUpListener(event){
 		if(8 !== event.keyCode)return true;
-		if(_.isEmpty(Data.state.innerText))return true;
+		if(isEmpty(Data.state.innerText))return true;
+		
 		let target;
-		if(false === (target = Utilities.checkTarget(this.activeElement))){
-			Utilities.warn("Error with : "+this.activeElement);
+		if(false === (target = checkTarget(this.activeElement))){
+			warn("Error with : "+this.activeElement);
 		}
-		if(!Utilities.isAcceptable(target)){
-			Utilities.log("This field is not acceptable");
+		if(!isAcceptable(target)){
+			log("This field is not acceptable");
 			return true;
 		}
-		
-		Utilities.sendMessage("backspace");
-		Utilities.selectProtocol({
+
+		sendMessage("backspace")
+		.then(data => info(data))
+		.catch(e => info(e.message));
+
+		specialCase({
 			"googleDocument" : () => Protocol.exec("Diff", {
 				before : Data.state.innerText,
-				after : Utilities.getContent(document.querySelector(".kix-appview-editor"))
+				after : getContent(document.querySelector(".kix-appview-editor"))
 			}),
 			"googleSpreadsheets" : () => Protocol.exec("Diff", {
 				before : Data.state.innerText,
-				after : Utilities.getContent(document.querySelector(".cell-input"))
+				after : getContent(document.querySelector(".cell-input"))
 			}),
 			"googlePresentation" : () => Protocol.exec("Diff", {
 				before : Data.state.innerText,
-				after : Utilities.getContent(document.querySelectorAll(".panel-right text"))
+				after : getContent(document.querySelectorAll(".panel-right text"))
 			}),
 			"googleDrawings" : () => Protocol.exec("Diff", {
 				before : Data.state.innerText,
-				after : Utilities.getContent(document.querySelectorAll("text"))
+				after : getContent(document.querySelectorAll("text"))
 			}),
-			"default" : () => {
-				Protocol.exec("Diff", {
-					before : Data.state.innerText,
-					after : Utilities.getContent(target)
-				})
-			}
+			"default" : () => Protocol.exec("Diff", {
+				before : Data.state.innerText,
+				after : getContent(target)
+			})
 		});
 		Data.setState({
 			downFlag : false,

@@ -1,22 +1,22 @@
 /*----------------------------------------*\
   bcksp.es - Protocol.js
   @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-05-30 16:54:12
-  @Last Modified time: 2018-05-30 19:48:43
+  @Date:   2019-01-04 17:20:27
+  @Last Modified time: 2019-01-04 17:21:00
 \*----------------------------------------*/
-import _ from 'underscore';
+import { isString, isFunction, isEmpty } from './validation.js';
 
 class Protocol{
 	constructor(){
 		this.protocols = {}
 	}
 	add(name, action){
-		if( _.isString(name) && !_.isEmpty(name) && _.isFunction(action) ){
+		if( isString(name) && !isEmpty(name) && isFunction(action) ){
 			this.protocols[name] = action;
 		}
 	}
 	exec(name, data = {}){
-		if( _.isFunction( this.protocols[name]) ){
+		if( isFunction( this.protocols[name]) ){
 			return this.protocols[name](data);
 		};
 	}

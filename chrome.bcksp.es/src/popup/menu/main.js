@@ -2,17 +2,15 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2018-12-12 18:41:32
+  @Last Modified time: 2019-01-04 23:04:38
 \*----------------------------------------*/
 
-import React from 'react';
-
-import { config } from './../../shared/config.js';
+import React, { Component } from 'react';
 import Blacklist from './../blacklist.js';
-import Utilities from './../../shared/utilities.js';
+import { config } from './../../shared/config.js';
+import { sendMessage, on } from './../../utilities/com.js';
 
-
-export default class MainMenu extends React.Component {
+export default class MainMenu extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,24 +18,33 @@ export default class MainMenu extends React.Component {
 		};
 	}
 	componentDidMount() {
-		Utilities.sendMessage("getArchiveSize")
+		sendMessage("getArchiveSize")
 		.then(archiveSize=> {
 			this.setState({'archiveSize' : archiveSize});
 		})
-		Utilities.on("archiveSize", (data, resolve) =>{
+		.catch(e => info(e.message));
+		
+		on("archiveSize", (data, resolve, reject) =>{
 			this.setState({'archiveSize' : data});
 			resolve(true);
 		});
 	}
 	handleLogout(event){
-		Utilities.sendMessage("logout")
-		.then(isLoggedIn => this.props.onLoginStatusChange(isLoggedIn));
+		sendMessage("logout")
+		.then(isLoggedIn => {
+			this.props.onLoginStatusChange(isLoggedIn);
+		})
+		.catch(e => info(e.message));
 	}
 	handleMyFeed(event){
-		Utilities.sendMessage("openTab", config.getHomeUrl());
+		sendMessage("openTab", config.getHomeUrl())
+		.then(data => info(data))
+		.catch(e => info(e.message));
 	}
 	handleMySettings(event){
-		Utilities.sendMessage("openTab", config.getProfileUrl());
+		sendMessage("openTab", config.getProfileUrl())
+		.then(data => info(data))
+		.catch(e => info(e.message));
 	}
 	render() {
 		return (

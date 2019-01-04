@@ -2,28 +2,25 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-12-17 17:12:07
+  @Last Modified time: 2019-01-03 15:24:48
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { Archives } from '../../../imports/api/archives/archives.js';
-import { config } from '../../../imports/startup/config.js';
-import { streamer } from '../../../imports/api/streamer.js';
-import * as Utilities from '../../../imports/utilities.js';
+import { Archives } from './../../../imports/api/archives/archives.js';
+import { config } from './../../../imports/startup/config.js';
+import { streamer } from './../../../imports/api/streamer.js';
+import { 
+	checkString,
+	checkUserLoggedIn
+} from './../../../imports/utilities/validation.js';
+
 import * as ArchiveTools from '../../utilities.archive.js';
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
 	validate({ text }) {
-		if(!_.isString(text) || _.isEmpty(text)){
-			throw new ValidationError([{
-				name: 'text',
-				type: 'not-a-string',
-				details: {
-				  value: text
-				}
-			}]);
-		}
+		checkUserLoggedIn();
+		checkString(text);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -31,7 +28,6 @@ export const ArchiveAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ text }) {
-		Utilities.checkUserLoggedIn();
 		this.unblock();
 		if(Meteor.isServer){
 			text = text.replace(/&nbsp;/g, " ");
@@ -91,45 +87,14 @@ export const ArchiveAdd = new ValidatedMethod({
 	}
 });
 
+
+
 export const ArchiveEdit = new ValidatedMethod({
 	name: 'Archives.methods.edit',
 	validate({ text, startAt, stopAt }) {
-		if(!_.isString(text)){
-			throw new ValidationError([{
-				name: 'text',
-				type: 'not-a-string',
-				details: {
-				  value: text
-				}
-			}]);
-		}
-		if(!_.isNumber(startAt)){
-			throw new ValidationError([{
-				name: 'startAt',
-				type: 'not-a-number',
-				details: {
-				  value: startAt
-				}
-			}]);
-		}
-		if(!_.isNumber(stopAt)){
-			throw new ValidationError([{
-				name: 'stopAt',
-				type: 'not-a-number',
-				details: {
-				  value: stopAt
-				}
-			}]);
-		}
-		if(stopAt < startAt){
-			throw new ValidationError([{
-				name: 'stopAt<startAt',
-				type: 'inconsistant-value',
-				details: {
-				  value: (stopAt-startAt)
-				}
-			}]);
-		}
+		checkUserLoggedIn();
+		checkString(text);
+		checkGreaterThan(stopAt, startAt);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -137,7 +102,6 @@ export const ArchiveEdit = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ text, startAt, stopAt  }) {
-		Utilities.checkUserLoggedIn();
 		this.unblock();
 		if(Meteor.isServer){
 			let myArchive = Archives.findOne({

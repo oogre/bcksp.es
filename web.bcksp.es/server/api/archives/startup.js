@@ -2,29 +2,30 @@
   web.bitRepublic - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:39
-  @Last Modified time: 2018-11-26 06:17:17
+  @Last Modified time: 2019-01-03 15:40:45
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 
 import { Archives } from '../../../imports/api/archives/archives.js';
 import { config } from '../../../imports/startup/config.js';
 import * as ArchiveTools from '../../utilities.archive.js';
-import * as Utilities from '../../../imports/utilities.js';
-
+import { log, warn } from './../../../imports/utilities/log.js';
 
 Meteor.startup(() => {
 	if(Meteor.isServer){
 		if(Archives.find({
 			type : config.archives.public.type
 		}).count() < 1){
-			Utilities.log(" INSERT PUBLIC Archive");
+			log(" INSERT PUBLIC Archive");
 			let publicArchiveId = Archives.insert({
 				type : config.archives.public.type,
 				count : 0
 			});
 			ArchiveTools.writeAsync(publicArchiveId, "")
-			.then(()=>{console.log('The file has been saved!');})
-			.catch(err => console.log(err));
+			.then(()=>{
+				log('The file has been saved!');
+			})
+			.catch(err => warn(err));
 		}
 		Meteor.users.find({})
 		.observeChanges({
@@ -42,10 +43,12 @@ Meteor.startup(() => {
 					count : 0
 				});
 				ArchiveTools.writeAsync(archiveId, "")
-				.then(()=>{console.log('The file has been saved!');})
-				.catch(err => console.log(err));
+				.then(()=>{ 
+					log('The file has been saved!');
+				})
+				.catch(err => warn(err));
 
-				Utilities.log("Archive : " + archiveId + " is created");
+				log("Archive : " + archiveId + " is created");
 			}
 		});
 	}

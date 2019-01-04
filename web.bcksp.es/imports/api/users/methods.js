@@ -2,70 +2,30 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2018-12-13 20:23:08
+  @Last Modified time: 2019-01-04 14:19:14
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { config } from './../../startup/config.js';
-import * as Utilities from './../../utilities.js';
+import { 
+	checkValidDevice,
+	checkUserLoggedIn,
+	checkValidEmail
+} from './../../utilities/validation.js';
 import T from './../../i18n/index.js';
-
-let translator = i18n.createTranslator("methods");
-let errors = i18n.createTranslator("errors");
 
 export const GetLoginTokenUser = new ValidatedMethod({
 	name: 'Users.methods.login.token',
 	validate({device}) {
-		if(_.isEmpty(device))throw new ValidationError([{
-				name: 'device',
-				type: 'is-empty',
-				details: {
-				  value: 'Users.methods.login.token wait device to be not empty'
-				}
-			}]);
-		if(!_.isString(device))throw new ValidationError([{
-				name: 'device',
-				type: 'not-a-string',
-				details: {
-				  value: 'Users.methods.login.token wait device to be a string'
-				}
-			}]);
-		if(!_.values(config.devices).includes(device)){
-			Utilities.log("DEVICE : "+device+ " has been blocked after trying to connecte");
-			throw new ValidationError([{
-					name: 'device',
-					type: 'not-recognized',
-					details: {
-					  value: 'Users.methods.login.token wait device to be recorded'
-					}
-				}]);
-		}
+		checkUserLoggedIn();
+		checkValidDevice(device);
 	},
-	mixins: [RateLimiterMixin],
-	rateLimit: config.methods.rateLimit.superFast,
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
 	applyOptions: {
 		noRetry: true,
 	},
 	run({device}) {
-		Utilities.checkUserLoggedIn();
-		/*
-		let u = Meteor.users.findOne({_id : this.userId}, {
-			field : {
-				"services.resume.loginTokens" : 1
-			}
-		});
-		
-		u.services.resume.loginTokens = u.services.resume.loginTokens.slice(-1);
-
-		let t = Meteor.users.update({_id : this.userId}, {
-			$unset : {
-				"services.accessTokens.tokens" : null
-			},
-			$set : {
-				"services.resume.loginTokens" : u.services.resume.loginTokens
-			}
-		});
-		*/
 		LoginLinks.setDefaultExpirationInSeconds(15); // 15 seconds
 		if (!this.isSimulation) {
 			return {
@@ -79,21 +39,28 @@ export const GetLoginTokenUser = new ValidatedMethod({
 
 export const ResetPassword = new ValidatedMethod({
 	name: 'Users.methods.reset.password',
-	validate: new SimpleSchema({}).validator({clean:true}),
-	mixins: [RateLimiterMixin],
-	rateLimit: config.methods.rateLimit.slow,
+	validate({device, email}) {
+		checkValidDevice(device);
+		checkValidEmail(email, true);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
 	applyOptions: {
 		noRetry: true,
 	},
-	run() {
-		Utilities.checkUserLoggedIn();
-		
-		if (!this.isSimulation) {
-			Accounts.sendResetPasswordEmail(Meteor.userId());
-			return {
-				success : true,
-				message : translator("user.resetPassword.success"),
-			};
-		}
+	run({email}) {
+		if (this.isSimulation)return;
+		let user = Meteor.users.findOne({"emails.address" : email});
+		Meteor.users.update({_id : user.userId}, {
+			$unset : {
+				"services.accessTokens.tokens" : null,
+				"services.resume.loginTokens" : null
+			}
+		});
+		Accounts.sendResetPasswordEmail(user._id);
+		return {
+			success : true,
+			message : i18n.__("methods.user.resetPassword.success")
+		};
 	}
 });

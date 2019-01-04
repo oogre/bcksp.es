@@ -2,11 +2,10 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2018-12-07 22:01:29
+  @Last Modified time: 2019-01-03 15:28:47
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import T from './../../i18n/index.js';
-import * as Utilities from "./../../utilities.js";
 
 export default class MenuMain extends Component {
 	constructor(props){

@@ -2,11 +2,11 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2018-12-11 22:11:24
+  @Last Modified time: 2019-01-03 17:44:23
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import * as Utilities from '../../utilities.js';
+import { needConfirmation } from './../../utilities/ui.js';
 import { ResetPassword, UpdateEmail } from '../../api/users/methods.js';
 import { SettingsBlacklistRemove, SettingsBlindFieldAdd, SettingsBlindFieldRemove } from '../../api/settings/methods.js';
 import T from './../../i18n/index.js';
@@ -46,7 +46,8 @@ class UserProfile extends Component {
 	
 	handleDeleteArchive(event){
 		event.preventDefault();
-		Utilities.needConfirmation("userprofile").then(data=>{
+		needConfirmation("userprofile")
+		.then(data=>{
 			
 		}).catch(e=>{
 			console.log("Delete Archive Confirmation",e.message);
@@ -77,7 +78,8 @@ class UserProfile extends Component {
 
 	handleDeleteAccount(event){
 		event.preventDefault();
-		Utilities.needConfirmation("userprofile").then(data=>{
+		needConfirmation("userprofile")
+		.then(data=>{
 			
 		}).catch(e=>{
 			console.log("Delete Account Confirmation",e.message);
@@ -194,16 +196,6 @@ class UserProfile extends Component {
 									<input type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
 								</li>
 							</ul>	
-						</div>
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
-								<T>userprofile.changePassword</T>
-							</label>
-							<button	onClick = {this.handleResetPassword.bind(this)}>
-								<T>userprofile.resetPassword</T>
-							</button>
 						</div>
 					</div>
 					<div className="fields-row">

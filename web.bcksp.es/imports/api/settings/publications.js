@@ -2,16 +2,19 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:11:04
-  @Last Modified time: 2018-12-07 08:56:18
+  @Last Modified time: 2019-01-03 16:57:13
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Settings } from './settings.js';
 import { config } from './../../startup/config.js';
-import * as Utilities from './../../utilities.js';
+import { 
+	checkUserLoggedIn
+} from './../../utilities/validation.js';
+
 
 if(Meteor.isServer){
-	Meteor.publish("settings.private", function(){
-		Utilities.checkUserLoggedIn();
+	Meteor.publish("settings.private", () => {
+		checkUserLoggedIn();
 		return Settings.find({ 
 				owner : Meteor.userId() 
 			}, {

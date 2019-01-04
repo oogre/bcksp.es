@@ -2,11 +2,11 @@
   web.bitRepublic - error.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 23:44:23
-  @Last Modified time: 2018-05-29 17:27:21
+  @Last Modified time: 2019-01-04 17:31:43
 \*----------------------------------------*/
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class MessageError extends React.Component {
+export default class MessageError extends Component {
 	constructor(props){
 		super(props);
 	}
