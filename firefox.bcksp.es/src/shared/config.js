@@ -1,10 +1,10 @@
 export const config = {
 	senderTimeout : 6000,
 	standard_url : "*://*.bcksp.es/*",
-	protocol : "https://",
-	ws_protocol : "wss://",
+	protocol : "http://",
+	ws_protocol : "ws://",
 	address : "bcksp.es",
-	home : "/dev",
+	home : "/",
 	login : "/login",
 	logout : "/logout",
 	profile : "/profile",
