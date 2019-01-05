@@ -4,7 +4,7 @@
   "description": "We archive backspaces, then we turn them into books.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -w --display-error-details --progress --colors",
+    "build": "webpack -w --display-error-details --progress --colors"
   },
   "author" : "Vincent Evrard <https://github.com/oogre>",
   "license": "MPL-2.0",
