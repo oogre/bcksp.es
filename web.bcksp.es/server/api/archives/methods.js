@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2018-11-26 06:14:41
+  @Last Modified time: 2018-12-17 17:12:07
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -35,6 +35,8 @@ export const ArchiveAdd = new ValidatedMethod({
 		this.unblock();
 		if(Meteor.isServer){
 			text = text.replace(/&nbsp;/g, " ");
+			text = text.replace(/\n/g, " ");
+			text = text.replace(/\t/g, " ");
 			let myArchive = Archives.findOne({
 				type : config.archives.private.type,
 				owner : this.userId
@@ -86,5 +88,80 @@ export const ArchiveAdd = new ValidatedMethod({
 			.catch(err=>console.log(err));
 		}
 		return "YES";
+	}
+});
+
+export const ArchiveEdit = new ValidatedMethod({
+	name: 'Archives.methods.edit',
+	validate({ text, startAt, stopAt }) {
+		if(!_.isString(text)){
+			throw new ValidationError([{
+				name: 'text',
+				type: 'not-a-string',
+				details: {
+				  value: text
+				}
+			}]);
+		}
+		if(!_.isNumber(startAt)){
+			throw new ValidationError([{
+				name: 'startAt',
+				type: 'not-a-number',
+				details: {
+				  value: startAt
+				}
+			}]);
+		}
+		if(!_.isNumber(stopAt)){
+			throw new ValidationError([{
+				name: 'stopAt',
+				type: 'not-a-number',
+				details: {
+				  value: stopAt
+				}
+			}]);
+		}
+		if(stopAt < startAt){
+			throw new ValidationError([{
+				name: 'stopAt<startAt',
+				type: 'inconsistant-value',
+				details: {
+				  value: (stopAt-startAt)
+				}
+			}]);
+		}
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run({ text, startAt, stopAt  }) {
+		Utilities.checkUserLoggedIn();
+		this.unblock();
+		if(Meteor.isServer){
+			let myArchive = Archives.findOne({
+				type : config.archives.private.type,
+				owner : this.userId
+			}, {
+				field : {
+					_id : 1
+				}
+			});
+			ArchiveTools.splice(myArchive._id, text, startAt, stopAt)
+			.then(data=>{
+				Archives.update({
+					_id : myArchive._id
+				}, {
+					$inc : {
+						count : -(stopAt - startAt), 
+					},
+					$set : {
+						updatedAt : new Date()
+					}
+				});
+			})
+			.catch(err=>console.log(err));
+		}
 	}
 });

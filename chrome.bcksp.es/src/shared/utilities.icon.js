@@ -2,7 +2,7 @@
   bcksp.es - utilities.icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-25 22:59:25
-  @Last Modified time: 2018-12-10 06:47:54
+  @Last Modified time: 2018-12-23 13:18:58
 \*----------------------------------------*/
 
 import _ from 'underscore';
@@ -10,38 +10,6 @@ import Data from "./Data.js";
 import Utilities from './utilities.js';
 
 export default class UtilitiesIcon {
-	static prefixFormat(input, base = 10){
-		let table = [{
-				value : Math.pow(base, 3),
-				name : "kilo",
-				symbol : "k"
-			},{
-				value : Math.pow(base, 6),
-				name : "mega",
-				symbol : "M"
-			},{
-				value : Math.pow(base, 9),
-				name : "giga",
-				symbol : "G"
-			},{
-				value : Math.pow(base, 12),
-				name : "tera",
-				symbol : "T"
-		}];
-		for(let i = table.length - 1 ; i >= 0 ; i --){
-			if(input >= table[i].value){
-				input /= table[i].value;
-				input = input.toFixed(1);
-				if(input.length > 3){
-					input = input.substr(0, input.indexOf("."));
-				}
-				input += table[i].symbol;
-				return input;
-			}
-		}
-		return ""+Math.round(input);
-	}
-
 	static setDefaultIcon(loggedIn){
 		UtilitiesIcon.setIcon(loggedIn ? "standby" : "logout");
 	}

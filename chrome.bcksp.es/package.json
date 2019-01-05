@@ -22,6 +22,7 @@
     "jquery": "^3.3.1"
   },
   "dependencies": {
+    "caret-pos": "https://github.com/oogre/caret-pos/tarball/9d828aa21fa06daad102c71b31e7c1727b6e7aee",
     "asteroid": "https://github.com/oogre/asteroid/tarball/df69c5171dcca1c13009f33a774ca628801314da",
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",

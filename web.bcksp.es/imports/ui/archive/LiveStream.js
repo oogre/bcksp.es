@@ -2,18 +2,15 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2018-12-09 20:35:41
+  @Last Modified time: 2018-12-19 19:55:26
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Archives } from './../../api/archives/archives.js';
 import { PublicArchive } from './../../api/archives/archives.js';
 import { PrivateArchive } from './../../api/archives/archives.js';
 import { streamer } from './../../api/streamer.js';
-import { config } from './../../startup/config.js';
-import ButtonShare from './../button/share.js';
+import LiveFrame from './LiveFrame.js';
 import T from './../../i18n/index.js';
-
 
 // LiveStream component
 class LiveStream extends Component {
@@ -23,12 +20,9 @@ class LiveStream extends Component {
 			streamFrom : "public",
 			public : true,
 			publicBackspaces : "",
-			selectContent:"",
-			shareContent:"",
-			position : [-1000, -1000],
-			fullscreen : false
 		};
 	}
+
 	handleSwitchStream(streamName){
 		if(streamName == "public" && this.state.streamFrom != streamName){
 			this.setState({
@@ -42,35 +36,6 @@ class LiveStream extends Component {
 			});
 		}
 	}
-	onSelected(event){
-		let content = event.target.ownerDocument.getSelection().toString();
-		let boundingBox = event.target.ownerDocument.getSelection().getRangeAt(0).getBoundingClientRect()
-		if(!_.isEmpty(content)){
-			this.setState({
-				selectContent : content,
-				shareContent : this.state.selectContent,
-				position : [
-					(boundingBox.left + boundingBox.right)/2 , 
-					boundingBox.top + document.scrollingElement.scrollTop
-				]
-			});
-		}else{
-			this.setState({
-				selectContent : "",
-				shareContent : this.state.selectContent,
-				position : [-1000, -1000]
-			});
-		}
-	}
-	onBlur(){
-		setTimeout(()=>{
-			this.setState({
-				selectContent : "",
-				shareContent : this.state.selectContent,
-				position : [-1000, -1000]
-			});
-		}, 333);
-	}
 	componentWillUnmount(){
 		streamer.stop("publicBackspaces");
 	}
@@ -80,34 +45,23 @@ class LiveStream extends Component {
 				publicBackspaces : 	message.content + this.state.publicBackspaces
 			});
 		});
-		document.querySelector(".stream2").onkeydown = this.handleKey.bind(this);
-		document.querySelector(".stream2").onkeyup = this.handleKey.bind(this);
 	}
-	toggleFullscreen(){
-		if(!this.state.fullscreen){
-			document.querySelector(".stream2").focus();	
-		}else{
-			document.querySelector(".stream2").blur();	
-		}
-		this.setState({
-			fullscreen : !this.state.fullscreen
-		});
-	}
-	handleKey(event){
-		event.preventDefault();
-		event.stopPropagation();
-		if(27 == event.keyCode /* ESC */ && this.state.fullscreen){
-			this.toggleFullscreen();
-		}
-		return false;
-	}
+	
 	getPublicArchive(){
 		if(!this.props.isPublicReady || !this.props.publicArchive)return "";
 		return this.state.publicBackspaces+this.props.publicArchive.content;
 	}
+
 	getPrivateArchive(){
 		if(!this.props.isPrivateReady || !this.props.privateArchive)return "";
-		return this.props.privateArchive.map(data=>data.content).join("");
+		let content = "";
+		for(let data of this.props.privateArchive){
+			content += data.content;
+			if(data.invalidateOlder){
+				break;
+			}
+		}
+		return content;
 	}
 	
 	render() {
@@ -129,21 +83,14 @@ class LiveStream extends Component {
 					}
 				</ul>
 
-				<ButtonShare 	left={this.state.position[0]} 
-								top={this.state.position[1]} 
-								content={this.state.shareContent}
+				<LiveFrame	public={ this.state.public }
+							content={ 
+								this.state.public ? 
+									this.getPublicArchive()
+								: 
+									this.getPrivateArchive() 
+							}
 				/>
-
-				<div 	className={(this.state.fullscreen ? "fullscreen " : "") + "stream2" }
-						onBlur={this.onBlur.bind(this)} 
-						onSelect={this.onSelected.bind(this)} 
-						contentEditable={true}
-        				dangerouslySetInnerHTML={{__html: this.state.public ? this.getPublicArchive(): this.getPrivateArchive()}}
-				></div>
-
-				<button onClick={this.toggleFullscreen.bind(this)}>
-					fullscreen
-				</button>
 			</div>
 		);
 	}

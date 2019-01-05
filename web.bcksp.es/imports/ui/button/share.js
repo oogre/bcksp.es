@@ -2,7 +2,7 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 17:45:05
-  @Last Modified time: 2018-10-31 16:22:43
+  @Last Modified time: 2018-12-19 19:52:22
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -17,13 +17,8 @@ export default class ButtonShare extends Component {
 	}
 	render() {
 		return (
-			<div
+			<div	className="buttonShare"
 					style={{	
-						position:"absolute",
-						background:"red",
-						width:"50px",
-						height:"20px",
-						transform: "translate(-50%, -100%)",
 						left: this.props.left+"px",
 						top: this.props.top+"px"
 					}}
