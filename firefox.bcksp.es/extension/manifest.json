@@ -35,5 +35,11 @@
     "http://*/*",
     "https://*/*",
     "storage"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id" : "480bcc24-04ca-a942-a09b-cbdd2735fa88",
+      "strict_min_version": "52.0"
+    }
+  }
 }

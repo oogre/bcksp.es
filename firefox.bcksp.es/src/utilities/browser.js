@@ -2,7 +2,7 @@
   bcksp.es - browser.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:29:49
-  @Last Modified time: 2019-01-05 00:47:11
+  @Last Modified time: 2019-01-05 18:21:10
 \*----------------------------------------*/
 export async function tabsQuery(req){
 	return browser.tabs.query(req);
@@ -42,6 +42,14 @@ export function runtimeId(){
 
 export async function runtimeSendMessage(req){
 	return browser.runtime.sendMessage(req);
+}
+
+export function runtimeSetUninstallURL(url){
+	return browser.runtime.setUninstallURL(url);
+}
+
+export function runtimeOnInstalledAddListener(req){
+	return browser.runtime.onInstalled.addListener(req);
 }
 
 export function runtimeOnMessageAddListener(req){

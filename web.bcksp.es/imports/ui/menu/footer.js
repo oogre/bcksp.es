@@ -2,11 +2,11 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2019-01-03 15:28:30
+  @Last Modified time: 2019-01-05 17:41:33
 \*----------------------------------------*/
 import React, { Component } from 'react';
-
 import T from './../../i18n/index.js';
+import { installExtension } from "./../../utilities/ui.js";
 //import { FacebookIcon, TwitterIcon } from 'react-share';
 
 export default class MenuFooter extends Component {
@@ -58,7 +58,7 @@ export default class MenuFooter extends Component {
 									{	
 										this.hasToDisplayDownloadBtn() &&
 											<li className="menu__item">
-												<a className="menu__item__link" href={FlowRouter.path("download")}>
+												<a className="menu__item__link" href="#" onClick={installExtension}>
 													<T>menus.download</T>
 												</a>
 											</li>

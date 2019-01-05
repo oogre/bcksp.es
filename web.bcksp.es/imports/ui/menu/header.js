@@ -2,11 +2,10 @@
   bcksp.es - header.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:19:59
-  @Last Modified time: 2018-12-07 22:01:03
+  @Last Modified time: 2019-01-05 18:01:01
 \*----------------------------------------*/
-import React, { Component } from 'react';
-
 import MenuMain from './main.js';
+import React, { Component } from 'react';
 
 
 export default class MenuHeader extends Component {
