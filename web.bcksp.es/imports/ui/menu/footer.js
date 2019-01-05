@@ -2,12 +2,11 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2018-12-07 22:01:43
+  @Last Modified time: 2019-01-03 15:28:30
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
 import T from './../../i18n/index.js';
-import * as Utilities from "./../../utilities.js";
 //import { FacebookIcon, TwitterIcon } from 'react-share';
 
 export default class MenuFooter extends Component {

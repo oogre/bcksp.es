@@ -7,6 +7,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
     "bcrypt": "^3.0.2",
+    "caret-pos": "https://github.com/oogre/caret-pos/tarball/11f461326202f534dbc0f58bbb442623b2e9b8ff",
     "crypto-js": "^3.1.9-1",
     "cryptojs": "^2.5.3",
     "ddp-rate-limiter-mixin": "^1.1.10",
@@ -16,8 +17,9 @@
     "mutation-observer": "^1.0.3",
     "pdfkit": "^0.8.3",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react-dom": "^16.3.3",
+    "react-modal": "^3.8.1",
     "react-toggle-button": "^2.2.0",
-    "caret-pos": "https://github.com/oogre/caret-pos/tarball/9d828aa21fa06daad102c71b31e7c1727b6e7aee"
+    "underscore": "^1.9.1"
   }
 }

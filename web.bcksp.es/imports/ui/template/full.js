@@ -2,12 +2,10 @@
   bcksp.es - full.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-03 20:46:10
-  @Last Modified time: 2018-12-07 22:00:52
+  @Last Modified time: 2019-01-03 15:29:00
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import Utilities from './../../utilities.js';
-
 
 import CallToConnect from './../banner/callToConnect.js';
 import HeaderMenu from './../menu/header.js';

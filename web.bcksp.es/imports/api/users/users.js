@@ -2,7 +2,7 @@
   web.bitRepublic - users.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:17:11
-  @Last Modified time: 2018-12-13 20:20:47
+  @Last Modified time: 2019-01-03 15:32:42
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -10,8 +10,7 @@ import './startup.js';
 
 import { config } from '../../startup/config.js';
 import { Archives } from './../archives/archives.js';
-import * as Utilities from '../../utilities.js';
-
+import { log } from './../../utilities/log.js';
 
 
 if(Meteor.isServer){
@@ -33,7 +32,7 @@ if(Meteor.isServer){
 				}
 			});
 
-			Utilities.log("Archive "+id+" is attached to user : " + archive.owner);
+			log("Archive "+id+" is attached to user : " + archive.owner);
 		}
 	});
 }

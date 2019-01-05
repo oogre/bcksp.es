@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2018-11-07 14:34:56
+  @Last Modified time: 2019-01-04 23:24:20
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -12,24 +12,18 @@ import { Settings } from './settings.js';
 import { config } from './../../startup/config.js';
 import { streamer } from './../streamer.js';
 
-import * as Utilities from './../../utilities.js';
-
-let translator = i18n.createTranslator("methods");
-let errors = i18n.createTranslator("errors");
+import { 
+	checkUserLoggedIn,
+	chackString,
+	checkUrl
+} from './../../utilities/validation.js';
 
 
 export const SettingsBlindFieldAdd = new ValidatedMethod({
 	name: 'Settings.Blind.Field.Add',
 	validate({ type, classFlag=false }) {
-		if(!_.isString(type) || _.isEmpty(type)){
-			throw new ValidationError([{
-				name: 'type',
-				type: 'not-a-string',
-				details: {
-				  value: errors("type.not-a-string")
-				}
-			}]);
-		}
+		checkUserLoggedIn();
+		chackString(type);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -37,10 +31,7 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ type, classFlag=false }) {
-		Utilities.checkUserLoggedIn();
 		this.unblock();
-		
-		
 		let search = {
 			owner : this.userId
 		};
@@ -55,21 +46,18 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 		}
 		value.$push["blindfield."+(classFlag?"class":"types")] = type
 		Settings.update(search,value);
+		return {
+			success : true,
+			data : "BlindField Added"
+		};
 	}
 });
 
 export const SettingsBlindFieldRemove = new ValidatedMethod({
 	name: 'Settings.Blind.Field.Remove',
 	validate({ type, classFlag=false }) {
-		if(!_.isString(type) || _.isEmpty(type)){
-			throw new ValidationError([{
-				name: 'type',
-				type: 'not-a-string',
-				details: {
-				  value: errors("type.not-a-string")
-				}
-			}]);
-		}
+		checkUserLoggedIn();
+		chackString(type);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -77,7 +65,6 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ type, classFlag=false }) {
-		Utilities.checkUserLoggedIn();
 		this.unblock();
 		let search = {
 			owner : this.userId
@@ -93,21 +80,18 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 		}
 		value.$pull["blindfield."+(classFlag?"class":"types")] = type
 		Settings.update(search, value);
+		return {
+			success : true,
+			data : "BlindField Removed"
+		};
 	}
 });
 
 export const SettingsBlacklistAdd = new ValidatedMethod({
 	name: 'Settings.Blacklist.Add',
 	validate({ url }) {
-		if(!_.isString(url) || _.isEmpty(url)){
-			throw new ValidationError([{
-				name: 'url',
-				type: 'not-a-string',
-				details: {
-				  value: errors("url.not-a-string")
-				}
-			}]);
-		}
+		checkUserLoggedIn();
+		checkUrl(url);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -115,7 +99,6 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ url }) {
-		Utilities.checkUserLoggedIn();
 		this.unblock();
 		let mySettings = Settings.findOne({
 			owner : this.userId
@@ -146,21 +129,18 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 				}
 			});
 		}
+		return {
+			success : true,
+			data : "Blacklist Added"
+		};
 	}
 });
 
 export const SettingsBlacklistRemove = new ValidatedMethod({
 	name: 'Settings.Blacklist.Remove',
 	validate({ url }) {
-		if(!_.isString(url) || _.isEmpty(url)){
-			throw new ValidationError([{
-				name: 'url',
-				type: 'not-a-string',
-				details: {
-				  value: errors("url.not-a-string")
-				}
-			}]);
-		}
+		checkUserLoggedIn();
+		checkUrl(url);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -168,7 +148,6 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ url }) {
-		Utilities.checkUserLoggedIn();
 		this.unblock();
 		Settings.update({
 			owner : this.userId,
@@ -183,5 +162,9 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		return {
+			success : true,
+			data : "Blacklist Removed"
+		};
 	}
 });

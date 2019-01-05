@@ -2,13 +2,16 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2018-12-17 08:24:57
+  @Last Modified time: 2019-01-03 16:56:59
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';
 import { config } from '../../../imports/startup/config.js';
 import * as ArchiveTools from '../../utilities.archive.js';
-import * as Utilities from '../../../imports/utilities.js';
+import { 
+	checkUserLoggedIn
+} from './../../../imports/utilities/validation.js';
+
 
 if(Meteor.isServer){
 	Meteor.publish("archive.public", function(){
@@ -78,8 +81,8 @@ if(Meteor.isServer){
 		initializing = false;
 		this.onStop(() => { handle && handle.stop() });
 	});
-	Meteor.publish("archive.private.counter", function(){
-		Utilities.checkUserLoggedIn();
+	Meteor.publish("archive.private.counter", () => {
+		checkUserLoggedIn();
 		return Archives.find({ 
 				type : config.archives.private.type,
 				owner : Meteor.userId() 

@@ -9,6 +9,14 @@ export const config = {
 	logout : "/logout",
 	profile : "/profile",
 	websocket : "/websocket",
+	user : {
+		password : {
+			length : {
+				min : 6,
+				max : 127
+			}
+		}
+	},
 	getLogoutUrl : function(){
 		return config.protocol+config.address+config.logout;
 	},
