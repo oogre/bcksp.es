@@ -20,7 +20,7 @@ export default class HowtoList extends Component {
 		return (
 		<div className="container">
 			<ul className="howto">
-				<li class="howto__item">
+				<li className="howto__item">
 					<HowtoStep k={0}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -39,7 +39,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li class="howto__item">
+				<li className="howto__item">
 					<HowtoStep k={2}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -48,7 +48,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li class="howto__item">
+				<li className="howto__item">
 					<HowtoStep k={3}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
@@ -59,7 +59,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				<li class="howto__item">
+				<li className="howto__item">
 					<HowtoStep k={4}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
