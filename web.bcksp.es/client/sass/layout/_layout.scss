@@ -8,11 +8,6 @@
 .container {
   max-width: 942px;
   margin: 0 auto;
-}
-
-// Page Content
-// ---------------------
-.page__content {
   padding: 0 $size-16;
 
   @include media-query("medium") {

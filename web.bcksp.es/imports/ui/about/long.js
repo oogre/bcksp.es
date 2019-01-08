@@ -20,8 +20,8 @@ export default class AboutLong extends Component {
 		return (
 			<div className="about">
 				<div className="container">
-					<h2><T>about.title</T></h2>
-					<div><T>about.long</T></div>
+					<h2 className="about__title"><T>about.title</T></h2>
+					<div className="about__content"><T>about.long</T></div>
 				</div>
 			</div>
 		);
