@@ -45,6 +45,13 @@
 // Declaration
 // ---------------------
 
+.button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  appearance: none;
+}
+
 .button--primary {
   @include button-default($primary);
 }

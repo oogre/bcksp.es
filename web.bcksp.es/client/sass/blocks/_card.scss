@@ -6,7 +6,23 @@
 // Default Card
 // ---------------------
 .card {
+  position: relative;
   padding: $size-30 $size-46;
   border: 1px solid #000;
+  background: #fff;
+
+  // Card "double" border
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border: inherit;
+    top: 3px;
+    left: 3px;
+    z-index: -1;
+  }
 }
 

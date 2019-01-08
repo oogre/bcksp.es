@@ -24,9 +24,11 @@ export default class HowtoList extends Component {
 					<HowtoStep k={0}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
-							<h3>1. <T>howto.step.0.title</T></h3>
-							<p><T>howto.step.0.desc</T></p>
-							<button><T>menus.download</T></button>
+							<h3 className="step__title"><span className="step__number">1.</span> <T>howto.step.0.title</T></h3>
+							<div className="step__content">
+								<p><T>howto.step.0.desc</T></p>
+								<button className="button button--primary"><T>menus.download</T></button>
+							</div>
 						</div>
 					</HowtoStep>
 				</li>
@@ -34,17 +36,21 @@ export default class HowtoList extends Component {
 					<HowtoStep k={1}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
-							<h3>2. <T>howto.step.1.title</T></h3>
-							<p><T>howto.step.1.desc</T></p>
+							<h3 className="step__title"><span className="step__number">2.</span> <T>howto.step.1.title</T></h3>
+							<div className="step__content">
+								<p><T>howto.step.1.desc</T></p>
+							</div>
 						</div>
 					</HowtoStep>
 				</li>
 				<li className="howto__item">
 					<HowtoStep k={2}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
-						<div>
-							<h3>3. <T>howto.step.2.title</T></h3>
-							<p><T>howto.step.2.desc</T></p>
+						<div className="step__content">
+							<h3 className="step__title"><span className="step__number">3.</span> <T>howto.step.2.title</T></h3>
+							<div className="step__content">
+								<p><T>howto.step.2.desc</T></p>
+							</div>
 						</div>
 					</HowtoStep>
 				</li>
@@ -52,10 +58,12 @@ export default class HowtoList extends Component {
 					<HowtoStep k={3}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
-							<h3>4. <T>howto.step.3.title</T></h3>
-							<p>
-								<T>howto.step.3.desc</T>
-							</p>
+							<h3 className="step__title"><span className="step__number">4.</span> <T>howto.step.3.title</T></h3>
+							<div className="step__content">
+								<p>
+									<T>howto.step.3.desc</T>
+								</p>
+							</div>
 						</div>
 					</HowtoStep>
 				</li>
@@ -63,13 +71,15 @@ export default class HowtoList extends Component {
 					<HowtoStep k={4}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
 						<div>
-							<h3>4. <T>howto.step.4.title</T></h3>
-							<p>
-								<T>howto.step.4.desc</T>
-							</p>
-							<a href={FlowRouter.path("souvenir")}>
-								<T>menus.souvenir</T>
-							</a>
+							<h3 className="step__title"><span className="step__number">5.</span> <T>howto.step.4.title</T></h3>
+							<div className="step__content">
+								<p>
+									<T>howto.step.4.desc</T>
+								</p>
+								<a href={FlowRouter.path("souvenir")}>
+									<T>menus.souvenir</T>
+								</a>
+							</div>
 						</div>
 					</HowtoStep>
 				</li>

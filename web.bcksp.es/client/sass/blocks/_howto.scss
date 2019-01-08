@@ -18,6 +18,33 @@
 // Step
 // ---------------------
 .step {
-  max-width: 442px;
+  max-width: 746px;
   margin-bottom: $size-40;
+}
+
+.step__title {
+  text-transform: capitalize;
+}
+
+.step__number {
+  font-size: $size-48;
+  font-family: $font-body;
+  font-weight: 200;
+}
+
+// @warning
+// Temporary hide first step (wait for final design)
+.step > div > div:first-child{
+  display: none;
+}
+
+// Step Content
+// ---------------------
+.step__content {
+  margin-left: $size-40;
+}
+
+.step__content p {
+  font-size: $size-22;
+  line-height: 1.36;
 }
