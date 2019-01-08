@@ -18,7 +18,7 @@ export default class HowtoStep extends Component {
 			<div className="step card card--step">
 				{
 					this.props.children && this.props.children.length == 2 ?
-						<div>
+						<div className="card__content">
 							{
 								React.Children.map(this.props.children, (child, k) =>(
 									<div key={k} className={(this.props.k + k)%2==0 ? "left" : "right"} >
