@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "bcksp.es",
-  "version": "2.0.0",
+  "version": "2.0.0.1",
   "description": "We archive the text you erase.",
   "author" : "Vincent Evrard",
   "content_scripts": [
@@ -35,5 +35,11 @@
     "http://*/*",
     "https://*/*",
     "storage"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id" : "480bcc24-04ca-a942-a09b-cbdd2735fa88",
+      "strict_min_version": "52.0"
+    }
+  }
 }

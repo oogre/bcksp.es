@@ -17,22 +17,34 @@ i18n.addTranslation('en-US', {
 			required : "your email is require",
 			"not-a-string" : "Your email is not a string",
 			"not-an-email" : "Your email is wrong formatted",
+			"no-match" : "this email is not recognized",
 			"already-exists" : "this email is already recorded",
 		},
 		password : {
 			required : "your password is require",
-			minString : "your password is too short",
-			maxString : "your password is too long"
+			"not-a-string" : "Your password is not a string",
+			"min-string" : 'Your password is too short (minimum {$length} characters)',
+			"max-string" : "your password is too long (maximum {$length} characters)",
 		},
 		passwordConfirm : {
 			required : "your password confirmation is require",
 			"no-match" : "your password confirmation does not match",
 		},
 		login : {
-			needed : "you have to be logged in to perform this action"
+			required : "you have to be logged in to perform this action"
 		},
 		url : {
 			"not-a-string" : "this is not a valid URL"
+		},
+		device : {
+			required : "your device is require",
+			"not-a-string" : "your device must be referenced as a string",
+			"no-match" : "your device is not recognized as valid device (your device id : {$deviceId})",
+		},
+		type : {
+			"not-a-string" : "this is not a valid string",
+			"not-a-number" : "this is not a valid number",
+			"greater-than" : "{$a} is smaller than {$b}",
 		}
 	},
 	userprofile : {
@@ -71,12 +83,16 @@ i18n.addTranslation('en-US', {
 		notMemberYet : "Don't have an account?",
 		email : "email",
 		password : "password",
-		passwordConfirm : "password conform",
+		passwordConfirm : "password confirm",
 		delete : "delete",
 		submit : {
 			login : "log in",
 			logout : "log out",
 			signup : "sign up",
+			setPassword : "set password"
+		},
+		success : {
+			resetPassword : "Your password has been reset. Now, you can login with the extension."
 		}
 	},
 	menus: {
@@ -236,7 +252,13 @@ i18n.addTranslation('en-US', {
 		],
 		callToAction : {
 			button : "contact us",
-			message : "dsljdsf;ljdaglksghj gsd"
+			message : "kljghasdglkjdshlksghj gsd"
+		}
+	},
+	mail : {
+		resetPassword : {
+			subject : "Password reset to bcksp.es",
+			message : "Hey! Reset your password by following this link: [URL]"	
 		}
 	}
 });

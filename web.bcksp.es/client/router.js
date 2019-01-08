@@ -1,14 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - router.js
-  @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-05-18 16:12:52
-  @Last Modified time: 2018-12-23 14:26:20
-  \*----------------------------------------*/
-/*----------------------------------------*\
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2018-04-12 10:33:17
+  @Last Modified time: 2019-01-05 19:46:44
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';

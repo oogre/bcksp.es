@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-//import '../imports/startup/account-config.js';
+import '../imports/startup/account-config.js';
 import '../imports/api/archives/archives.js';
 import './api/archives/methods.js';
 import './api/archives/startup.js';

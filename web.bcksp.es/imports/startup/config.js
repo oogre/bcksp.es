@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2018-12-12 19:04:01
+  @Last Modified time: 2019-01-05 16:42:54
 \*----------------------------------------*/
 
 
@@ -54,6 +54,14 @@ export const config = {
 			superFast : {
 				numRequests: 5,
 				timeInterval: 5000,
+			}
+		}
+	},
+	user : {
+		password : {
+			length : {
+				min : 6,
+				max : 127
 			}
 		}
 	},

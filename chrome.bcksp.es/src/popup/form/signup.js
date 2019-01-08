@@ -2,37 +2,57 @@
   bcksp.es - signup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:11:37
-  @Last Modified time: 2018-10-08 06:13:38
+  @Last Modified time: 2019-01-04 17:31:56
 \*----------------------------------------*/
-import React from 'react';
-import ReactDom from 'react-dom';
-import Utilities from './../../shared/utilities.js';
-import MessageError from './../message/error.js';
 
-export default class LoginForm extends React.Component {
+import ReactDom from 'react-dom';
+import React, { Component } from 'react';
+import FixeWait from './../fixe/wait.js';
+import MessageError from './../message/error.js';
+import { sendMessage } from './../../utilities/com.js';
+import { getMessageFromError } from './../../utilities/tools.js';
+import { isEmail, isPwd, isPwdConf } from './../../utilities/validation.js';
+
+
+export default class SignupForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			error: false
+			'error' : false,
+			'is-loading' : false,
+			'has-success' : false
 		};
 	}
-
-	componentDidMount() {
-		
-	}
-
 	handleLogin(event){
 		event.preventDefault();
 
-		this.setState({
-			error : false
-		});
+		this.state = {
+			'error' : false,
+			'is-loading' : false,
+			'has-success' : false
+		};
 
-		Utilities.isEmail(ReactDom.findDOMNode(this.refs.email).value, "email")
-			.then(data => Utilities.isPwd(ReactDom.findDOMNode(this.refs.password).value, "password", data))
-			.then(data => Utilities.sendMessage("signup", data))
-			.then(isLoggedIn => this.props.onSuccess(isLoggedIn))
-			.catch(error => this.setState({error : error.message}));
+		isEmail(ReactDom.findDOMNode(this.refs.email).value)
+		.then(data => isPwd(ReactDom.findDOMNode(this.refs.password).value, data))
+		.then(data => isPwdConf(ReactDom.findDOMNode(this.refs.passwordConfirm).value, data))
+		.then(data => sendMessage("signup", data))
+		.then(isLoggedIn => {
+			this.setState({
+				'is-success' : true
+			});
+			this.props.onSuccess(isLoggedIn)
+		})
+		.catch(error => {
+			this.setState({
+				'is-success' : false,
+				error : getMessageFromError(error)
+			});
+		})
+		.finally(()=>{
+			this.setState({ 
+				'is-loading' : false,
+			});
+		});
 	}
 
 	render() {
@@ -42,50 +62,28 @@ export default class LoginForm extends React.Component {
 					<div className="fields-column">
 						<label htmlFor="email">email</label>
 						<input id="email" type = "email" ref="email"name="email"/>
-						{
-							this.state["error-email"] ?
-								<MessageError
-									messages={errors("email", this.state["error-email"])}
-								/>
-							:
-								null
-						}
 					</div>
 					<div className="fields-column">
 						<label htmlFor="password">password</label>
 						<input id="password" type="password" ref="password" name="password"/>
-						{
-							this.state["error-password"] ?
-								<MessageError
-									messages={errors("password", this.state["error-password"])}
-								/>
-							:
-								null
-						}
 					</div>
 					<div className="fields-column">
 						<label htmlFor="passwordConfirm">password confirmation</label>
 						<input id="passwordConfirm" type="password" ref="passwordConfirm" name="passwordConfirm"/>
-						{
-							this.state["error-passwordConfirm"] ?
-								<MessageError
-									messages={errors("passwordConfirm", this.state["error-passwordConfirm"])}
-								/>
-							:
-								null
-						}
 					</div>
 				</div>
 				<div className="fields-row text-right">
 					<input className="button--secondary" type="submit" value="singup"/>
 				</div>
 				{
-					this.state["error"] ?
-						<MessageError
-							messages={this.state["error"]}
-						/>
-					:
-						null
+					this.state["error"] &&
+					<MessageError
+						messages={this.state["error"]}
+					/>
+				}
+				{
+					this.state['is-loading'] &&
+					<FixeWait/>
 				}
 			</form>
 		);

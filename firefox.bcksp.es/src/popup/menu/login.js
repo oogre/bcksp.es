@@ -2,21 +2,21 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2018-12-12 18:39:29
+  @Last Modified time: 2019-01-05 18:29:33
 \*----------------------------------------*/
-import React from 'react';
-
-import { config } from './../../shared/config.js';
+import React, { Component } from 'react';
 import LoginForm from './../form/login.js';
 import SignupForm from './../form/signup.js';
-import Utilities from './../../shared/utilities.js';
+import { config } from './../../shared/config.js';
+import ForgotPwdForm from './../form/forgotPwd.js';
+import { sendMessage } from './../../utilities/com.js';
 
 
-export default class LoginMenu extends React.Component {
+export default class LoginMenu extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			availableProcess : ["signup", "login"],
+			availableProcess : ["signup", "login", "forgotPwd"],
 			currentProcess : "signup"
 		};
 	}
@@ -29,45 +29,80 @@ export default class LoginMenu extends React.Component {
 		return false;
 	}
 	handleGoBcksp(event){
-		Utilities.sendMessage("openTab", config.getHomeUrl());
+		sendMessage("openTab", config.getHomeUrl())
+		.then(data => info(data))
+		.catch(e => info(e.message));;
 	}
+	renderLoginBtn(){
+		return(
+			<li>
+				<p>
+					Already have an account?
+					<button onClick={this.handleProcessSwitchTo.bind(this, "login")}>
+						log in now
+					</button>
+				</p>	
+			</li>
+		);
+	}
+	
+	renderSignupBtn(){
+		return(
+			<li>
+				<p>
+					Don't have an account?
+					<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
+						sign up now
+					</button>
+				</p>	
+			</li>
+		);
+	}
+	
+	renderForgotPwdBtn(){
+		return(
+			<li>
+				<p>
+					Have you forgot your password?
+					<button onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
+						If so click here
+					</button>
+				</p>
+			</li>
+		);
+	}
+
 	render() {
 		return (
 			<ul>
 				<li>
 					{ 
-						this.state.currentProcess == "signup" ? 
-							<div>
-								<SignupForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
-								<div>
-									<p>
-										Already have an account?
-										<button onClick={this.handleProcessSwitchTo.bind(this, "login")}>
-											log in now
-										</button>
-									</p>	
-								</div>
-							</div>
-						:
-							null
+						this.state.currentProcess == "signup" &&
+							<SignupForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
 					}
 					{ 
-						this.state.currentProcess == "login" ? 
-							<div>
-								<LoginForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
-								<div>
-									<p>
-										Don't have an account?
-										<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
-											sign up now
-										</button>
-									</p>	
-								</div>
-							</div>
-						:
-							null
+						this.state.currentProcess == "login" && 
+							<LoginForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
+					}
+					{ 
+						this.state.currentProcess == "forgotPwd" &&
+							<ForgotPwdForm/>
 					}
 				</li>
+				{
+					(	this.state.currentProcess == "signup" 
+					||  this.state.currentProcess == "forgotPwd")
+					&&	this.renderLoginBtn()
+				}
+				{
+					this.state.currentProcess == "login" && 
+						this.renderForgotPwdBtn()
+				}
+				{	(	this.state.currentProcess == "login" 
+					||  this.state.currentProcess == "forgotPwd")
+					&&	this.renderSignupBtn()
+				}
+				
 				<li>
 					<button 
 						className="" 

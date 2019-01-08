@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Caret } from 'caret-pos';
-import * as Utilities from '../../utilities.js';
+import { log } from './../../utilities/log.js';
 import ButtonShare from './../button/share.js';
 import T from './../../i18n/index.js';
 
@@ -76,7 +76,7 @@ export default class LiveFrame extends Component {
 					text : text, 
 					startAt : this.caret.startAt, 
 					stopAt : this.caret.stopAt
-				}, error => {if(error) Utilities.log(e)});
+				}, error => {if(error) log(e)});
 			}
 			return false;
 		}

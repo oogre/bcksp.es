@@ -2,12 +2,15 @@
   bcksp.es - settings.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:40
-  @Last Modified time: 2018-12-17 06:10:49
+  @Last Modified time: 2019-01-03 15:31:02
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
 import { config } from '../../startup/config.js';
-import * as Utilities from '../../utilities.js';
+import { 
+	log
+} from './../../utilities/log.js';
+
 
 export const Settings = new Mongo.Collection('settings');
 
@@ -27,7 +30,7 @@ if(Meteor.isServer){
 				updatedAt : new Date()
 			});
 
-			Utilities.log("Settings : " + settingsId + " is created");
+			log("Settings : " + settingsId + " is created");
 		}
 	});
 }

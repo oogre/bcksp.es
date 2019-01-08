@@ -2,19 +2,19 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2018-12-12 18:59:57
+  @Last Modified time: 2019-01-05 00:14:41
 \*----------------------------------------*/
-import {createClass} from "asteroid";
-import Utilities from '../shared/utilities.js';
+import { createClass } from "asteroid";
+import Data from "./../utilities/Data.js";
 import { config } from './../shared/config.js';
-import Data from "./../shared/Data.js";
-import _ from 'underscore';
+import { runtimeId } from './../utilities/browser.js';
+import { log, info, error } from './../utilities/log.js';
+import { setIcon, setDefaultIcon } from './../utilities/icon.js';
+import { isObject, isArray, isFunction } from './../utilities/validation.js';
 
 class AsteroidHelper{
 	constructor(){
 		const Asteroid = createClass();
-		
-		
 		this.asteroid = new Asteroid({
     		endpoint: config.getWebSocketUrl()
 		});
@@ -27,83 +27,56 @@ class AsteroidHelper{
 		this.subscribtionList = [];
 
 		this.asteroid.on("connected", () =>{
-			Utilities.info("connected");
+			log("connected");
 			Data.setState({
-				connected : true
+				connected : true,
 			});
 		});
 
 		this.asteroid.on("disconnected", () =>{
-			Utilities.info("disconnected");
+			log("disconnected");
 			Data.setState({
-				connected : false
+				connected : false,
 			});
-			this.stopSubsribtion();
-			Utilities.setIcon("logout");
 		});
 
 		this.asteroid.on("loggedOut", () =>{
-			Utilities.tabHandler()
-			.then(tab=>Utilities.tabsUpdate({url: config.getLogoutUrl() }))
-			.catch(()=>Utilities.tabsCreate({url: config.getLogoutUrl() }));
-			this.stopSubsribtion();
+			log("loggedOut");
 			localStorage.clear();
 			Data.setState({
+				loggedStatus : false,
 				currentURLBlacklisted : false
 			});
-			Utilities.log("loggedOut");
 		});
 
 		this.asteroid.on("loggedIn", data =>{
-			this.call("Users.methods.login.token")
-			.then(res=>{
-				Utilities.tabHandler()
-				.then(tab=>Utilities.tabsUpdate({url: config.getLoginUrl(res.data) }))
-				.catch(()=>Utilities.tabsCreate({url: config.getLoginUrl(res.data) }));
-			}).catch(error=>{
-				Utilities.warn("no way to auto connect to the website");
+			log("loggedIn");
+			Data.setState({
+				"loggedStatus": true
 			});
-
-			this.on("changed", {
-				archives : ({count}) => {
-					Data.setState({
-						archiveSize : count
-					});
-				},
-				settings : settings=>{
-					if(_.isObject(settings.blindfield)){
-						Data.setState({
-							blindfields : settings.blindfield
-						});
-					}
-					if(_.isArray(settings.blacklist)){
-						Data.setState({
-							blacklist : settings.blacklist
-						});
-					}
-				}
-			});
-			this.on("added", {
-				archives : ({count}) => {
-					Data.setState({archiveSize : count});
-				},
-				settings : settings=>{
-					if(_.isObject(settings.blindfield)){
-						Data.setState({blindfields : settings.blindfield});
-					}
-					if(_.isArray(settings.blacklist)){
-						Data.setState({blacklist : settings.blacklist});
-					}
-				}
-			});	
-			this.startSubsribtion();
-			Utilities.setIcon("standby");
 		});
-		this.deferredPromise = undefined;
+		
+		Data.on("connected", connected => {
+			if(connected && Data.state.loggedStatus){
+				this.startSubsribtion();
+			}
+			if(!Data.state.loggedStatus){
+				this.stopSubsribtion();
+			}
+		});
+
+		Data.on("loggedStatus", loggedIn => {
+			if(Data.state.connected && loggedIn){
+				this.startSubsribtion();
+			}
+			if(!loggedIn){
+				this.stopSubsribtion();
+			}
+		});
 	}
 
 	stopSubsribtion(){
-		Utilities.info("stopSubsribtion");
+		info("stopSubsribtion");
 		this.subscribtionList.map(subscribtion => {
 			this.asteroid.unsubscribe(subscribtion.id);
 			this.asteroid.subscriptions.cache.del(subscribtion.id);
@@ -113,53 +86,69 @@ class AsteroidHelper{
 
 	startSubsribtion (){
 		this.subscribtionList = this.subscribtionAddressList.map(address =>{
-			Utilities.info("subscribtion to : " + address);
+			info("subscribtion to : " + address);
 			let sub = this.asteroid.subscribe(address);
 			sub.on("ready", () => {
-				Utilities.info(address + " : ready");
+				info(address + " : ready");
 			});
 			return sub;
+		});
+		//if(Data.state.init)return;
+		//Data.setState({
+		//	"init": true
+		//});
+		this.on("changed", {
+			archives : ({count}) => {
+				Data.setState({
+					archiveSize : count
+				});
+			},
+			settings : settings=>{
+				if(isObject(settings.blindfield)){
+					Data.setState({
+						blindfields : settings.blindfield
+					});
+				}
+				if(isArray(settings.blacklist)){
+					Data.setState({
+						blacklist : settings.blacklist
+					});
+				}
+			}
+		});
+		this.on("added", {
+			archives : ({count}) => {
+				Data.setState({archiveSize : count});
+			},
+			settings : settings=>{
+				if(isObject(settings.blindfield)){
+					Data.setState({blindfields : settings.blindfield});
+				}
+				if(isArray(settings.blacklist)){
+					Data.setState({blacklist : settings.blacklist});
+				}
+			}
 		});
 	}
 
 	on(eventName, options){
 		this.asteroid.ddp.on(eventName, ({collection, id, fields}) => {
-			if (_.isFunction(options[collection])) options[collection](fields);
+			if (isFunction(options[collection])) options[collection](fields);
 		});
 	}
 
-	async logout(){
-		if(!Data.state.connected) throw new Error("Server is not accessible");
-		return this.asteroid.logout()
-	}
- 
-	async login(data){
-		if(!Data.state.connected) throw new Error("Server is not accessible");
-		return this.asteroid.loginWithPassword(data)
-	}
-
-	async signup(data){
-		if(!Data.state.connected) throw new Error("Server is not accessible");
-		return this.asteroid.createUser(data)
-	}
-
-	async blacklist(add, url){
-		let methode = add ? "Settings.Blacklist.Add" : "Settings.Blacklist.Remove";
-		return this.call(methode,  { url : url });
-	}
-
 	async call(methode, data={}){
-		Utilities.setIcon("sending");
-		data.device =  Utilities.runtimeId();
+		setIcon("sending");
+		data.device =  runtimeId();
 		return this.asteroid.call(methode, data)
 			.then(res => {
-				//Utilities.info(res);
+				//info(res);
 				return res;
 			}).catch(error => {
-				Utilities.error(error);
-				return error;
+				error(error);
+				throw error;
 			}).finally(()=>{
-				Utilities.setDefaultIcon(this.asteroid.loggedIn);
+				setDefaultIcon(this.asteroid.loggedIn);
 			});
 	}
 }
