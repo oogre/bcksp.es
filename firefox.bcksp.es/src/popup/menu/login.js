@@ -2,7 +2,7 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2019-01-04 22:47:13
+  @Last Modified time: 2019-01-05 18:29:33
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import LoginForm from './../form/login.js';
@@ -94,14 +94,15 @@ export default class LoginMenu extends Component {
 					||  this.state.currentProcess == "forgotPwd")
 					&&	this.renderLoginBtn()
 				}
-				{	(	this.state.currentProcess == "login" 
-					||  this.state.currentProcess == "forgotPwd")
-					&&	this.renderSignupBtn()
-				}
 				{
 					this.state.currentProcess == "login" && 
 						this.renderForgotPwdBtn()
 				}
+				{	(	this.state.currentProcess == "login" 
+					||  this.state.currentProcess == "forgotPwd")
+					&&	this.renderSignupBtn()
+				}
+				
 				<li>
 					<button 
 						className="" 

@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-01-04 23:15:57
+  @Last Modified time: 2019-01-05 18:17:25
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -14,8 +14,8 @@ import { log, info, warn, error } from './../utilities/log.js';
 import { setIcon, setDefaultIcon } from './../utilities/icon.js';
 import { on, sendMessage, sendMessageToAllTab } from './../utilities/com.js';
 import { tabHandler, reloadTabs, getTabStatus } from './../utilities/tab.js';
-import { tabsUpdate, tabsCreate, tabsOnActivatedAddListener } from './../utilities/browser.js';
 import { setBlindfield, setBlackList, getBlindfields, addToArchiveBuffer, getArchiveBuffer, clearArchiveBuffer } from './../utilities/localStorage.js';
+import { tabsUpdate, tabsCreate, tabsOnActivatedAddListener, runtimeOnInstalledAddListener, runtimeSetUninstallURL } from './../utilities/browser.js';
 
 Data.setState({
 	"loggedStatus": false
@@ -64,6 +64,16 @@ Data.on("blacklist", (value, name) =>{
 Data.on("currentURLBlacklisted", (value, name) =>{
 	setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 });
+
+runtimeOnInstalledAddListener(data => {
+	if(data.reason == "install"){
+		tabHandler()
+		.then(tab => tabsUpdate({url:config.getHomeUrl()}))
+		.catch(() => tabsCreate({url:config.getHomeUrl()}));
+	}
+});
+
+runtimeSetUninstallURL(config.getLogoutUrl());
 
 tabsOnActivatedAddListener(({tabId}) => {
 	getTabStatus({ 'active': true, 'currentWindow': true })

@@ -2,10 +2,11 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2019-01-03 15:28:47
+  @Last Modified time: 2019-01-05 18:01:38
 \*----------------------------------------*/
-import React, { Component } from 'react';
 import T from './../../i18n/index.js';
+import React, { Component } from 'react';
+import { installExtension } from "./../../utilities/ui.js";
 
 export default class MenuMain extends Component {
 	constructor(props){
@@ -69,7 +70,7 @@ export default class MenuMain extends Component {
 						this.hasToDisplayDownloadBtn() &&
 							<li className="menu__item">
 								<a 	className={"menu__item__link" + this.isActive("download")}
-									href={FlowRouter.path("download")}
+									href="#" onClick={installExtension}
 								>
 									<T>menus.download</T>
 								</a>
