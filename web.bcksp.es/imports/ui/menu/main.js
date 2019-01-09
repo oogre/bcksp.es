@@ -2,13 +2,14 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2019-01-05 18:01:38
+  @Last Modified time: 2019-01-09 20:05:50
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
 
-export default class MenuMain extends Component {
+class MenuMain extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -70,7 +71,7 @@ export default class MenuMain extends Component {
 						this.hasToDisplayDownloadBtn() &&
 							<li className="menu__item">
 								<a 	className={"button button--primary" + this.isActive("download")}
-									href={FlowRouter.path("download")}
+									onClick={installExtension}
 								>
 									<T>menus.download</T>
 								</a>
@@ -91,3 +92,9 @@ export default class MenuMain extends Component {
 		);
 	}
 }
+export default withTracker(self => {
+	return {
+		isConnected : !!Meteor.userId(),
+		extensionInstalled : Session.get("extensionInstalled")
+	};
+})(MenuMain);

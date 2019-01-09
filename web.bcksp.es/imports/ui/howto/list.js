@@ -2,16 +2,20 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:56:40
-  @Last Modified time: 2018-10-31 15:40:56
+  @Last Modified time: 2019-01-09 19:53:56
 \*----------------------------------------*/
-import React, { Component } from 'react';
 
-import T from './../../i18n/index.js';
+
+
 import HowtoStep from './step.js';
 import HowtoBadge from './badge.js';
+import T from './../../i18n/index.js';
+import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { installExtension, isExtensionInstalled } from "./../../utilities/ui.js";
 
 // App component - represents the whole app
-export default class HowtoList extends Component {
+class HowtoList extends Component {
 	constructor(props){
 		super(props);
 	}
@@ -27,7 +31,7 @@ export default class HowtoList extends Component {
 							<h3 className="step__title"><span className="step__number">1.</span> <T>howto.step.0.title</T></h3>
 							<div className="step__content">
 								<p><T>howto.step.0.desc</T></p>
-								<button className="button button--primary"><T>menus.download</T></button>
+								<button onClick={installExtension} className="button button--primary"><T>menus.download</T></button>
 							</div>
 						</div>
 					</HowtoStep>
@@ -43,6 +47,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
+				
 				<li className="howto__item">
 					<HowtoStep k={2}>
 						<HowtoBadge url="/images/logo-animated.gif"/>
@@ -88,3 +93,9 @@ export default class HowtoList extends Component {
 		);
 	}
 }
+export default withTracker(self => {
+	return {
+		isConnected : !!Meteor.userId(),
+		extensionInstalled : Session.get("extensionInstalled")
+	};
+})(HowtoList);

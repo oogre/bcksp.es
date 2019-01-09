@@ -2,14 +2,16 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2019-01-05 17:41:33
+  @Last Modified time: 2019-01-09 20:06:52
 \*----------------------------------------*/
-import React, { Component } from 'react';
+
 import T from './../../i18n/index.js';
+import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
 //import { FacebookIcon, TwitterIcon } from 'react-share';
 
-export default class MenuFooter extends Component {
+class MenuFooter extends Component {
 	constructor(props){
 		super(props);
 	}
@@ -124,3 +126,9 @@ export default class MenuFooter extends Component {
 		);
 	}
 }
+export default withTracker(self => {
+	return {
+		isConnected : !!Meteor.userId(),
+		extensionInstalled : Session.get("extensionInstalled")
+	};
+})(MenuFooter);

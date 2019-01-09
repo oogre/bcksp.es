@@ -2,43 +2,30 @@
   bcksp.es - full.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-03 20:46:10
-  @Last Modified time: 2019-01-03 15:29:00
+  @Last Modified time: 2019-01-09 20:06:45
 \*----------------------------------------*/
 import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
+
 
 import CallToConnect from './../banner/callToConnect.js';
 import HeaderMenu from './../menu/header.js';
 import MenuFooter from './../menu/footer.js';
 import MutationObserver from 'mutation-observer';
 
-class TemplateFull extends Component {
+export default class TemplateFull extends Component {
 	constructor(props){
 		super(props);
-	}
-	
-	hasToDisplayCallToConnect(){
-		return !this.props.isConnected && this.props.extensionInstalled;
 	}
 	render() {
 		return (
 			<div className="page page--home">
-				{ 
-					this.hasToDisplayCallToConnect() && 
-						<CallToConnect /> 
-				}
-				<HeaderMenu isConnected={this.props.isConnected} extensionInstalled={this.props.extensionInstalled}/>
+				<CallToConnect /> 
+				<HeaderMenu/>
 				{
 					React.Children.map(this.props.children, child => child)
 				}
-				<MenuFooter isConnected={this.props.isConnected} extensionInstalled={this.props.extensionInstalled}/>
+				<MenuFooter/>
 			</div>
 		);
 	}
 }
-export default withTracker(self => {
-	return {
-		isConnected : !!Meteor.userId(),
-		extensionInstalled : Session.get("extensionInstalled")
-	};
-})(TemplateFull);
