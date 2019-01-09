@@ -1,0 +1,36 @@
+/*------------------------------------*\
+  Menu
+\*------------------------------------*/
+
+// Menu Header
+// ---------------------
+.menu--header {
+  display: flex;
+  max-width: 50%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+.menu--header .menu__item {
+  display: block;
+  margin-left: $size-35;
+
+  &:first-child {
+    margin: 0;
+  }
+}
+
+.menu__item-link {
+  text-decoration: underline;
+  text-transform: uppercase;
+  font-family: $font-title;
+  color: $grey-thunder;
+}
+
+// Menu Header Mobile
+// ---------------------
+.menu--header__mobile-trigger {
+  display: none;
+}

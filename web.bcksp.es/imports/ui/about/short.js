@@ -17,9 +17,9 @@ export default class AboutShort extends Component {
 	render() {
 		return (
 			<div className="about">
-				<div className="container">
-					<h2><T>about.title</T></h2>
-					<div>
+				<div className="container about__container">
+					<h2 className="about__title"><T>about.title</T></h2>
+					<div className="about__content">
 						<T>about.short</T>
 						<span>
 							<a href={FlowRouter.path("about")}>

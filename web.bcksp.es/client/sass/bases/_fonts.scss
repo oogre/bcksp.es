@@ -1,0 +1,31 @@
+/*------------------------------------*\
+  > Fonts
+\*------------------------------------*/
+
+// GT Pressura
+// ---------------------
+
+// Regular
+@font-face {
+  font-family: 'GT Pressura Mono Trial';
+  src: url('/fonts/gt-pressura/GT-Pressura-Mono-Regular.eot'); /* IE9 Compat Modes */
+  src: url('/fonts/gt-pressura/GT-Pressura-Mono-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/fonts/gt-pressura/GT-Pressura-Mono-Regular.woff') format('woff'), /* Modern Browsers */
+       url('/fonts/gt-pressura/GT-Pressura-Mono-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/fonts/gt-pressura/GT-Pressura-Mono-Regular.svg#878b7de18570b5e49ea14edfb1ac6e29') format('svg'); /* Legacy iOS */
+  font-style: normal;
+  font-weight: 400;
+}
+
+// Bold
+@font-face {
+  font-family: 'GT Pressura Mono Trial';
+  src: url('/fonts/gt-pressura/GT-Pressura-Mono-Bold.eot'); /* IE9 Compat Modes */
+  src: url('/fonts/gt-pressura/GT-Pressura-Mono-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/fonts/gt-pressura/GT-Pressura-Mono-Bold.woff') format('woff'), /* Modern Browsers */
+       url('/fonts/gt-pressura/GT-Pressura-Mono-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/fonts/gt-pressura/GT-Pressura-Mono-Bold.svg#878b7de18570b5e49ea14edfb1ac6e29') format('svg'); /* Legacy iOS */
+  font-style: normal;
+  font-weight: 800;
+}
+

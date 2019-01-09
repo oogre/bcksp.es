@@ -1,0 +1,30 @@
+/*------------------------------------*\
+  > About
+\*------------------------------------*/
+
+.about {
+  padding: $size-112 0 $size-205;
+  background: $grey-thunder;
+}
+
+.about__container {
+  display: flex;
+}
+
+.about,
+.about__title {
+  color: #fff;
+}
+
+.about__title {
+  font-size: $size-44;
+  line-height: 1.27;
+  text-transform: capitalize;
+  max-width: 200px;
+  margin-right: $size-65;
+}
+
+.about__content {
+  font-size: $size-23;
+  line-height: 1.39;
+}

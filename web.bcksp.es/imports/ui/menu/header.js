@@ -14,12 +14,12 @@ export default class MenuHeader extends Component {
 	}
 
 	render() {
-			return (
+		return (
 			<header className="main-header">
-				<div className="container">
+				<div className="main-header__container">
 					<h1 className="logo logo--header">
 						<a href={FlowRouter.path("home")}>
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
+							<img className="logo--header__picture" src="/images/logo.svg" alt="#bcksp.es"/>
 						</a>
 					</h1>
 					{

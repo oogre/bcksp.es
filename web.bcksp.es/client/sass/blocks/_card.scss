@@ -1,0 +1,32 @@
+/*------------------------------------*\
+  Card
+  Container with a specific border use to put some content in highlight
+\*------------------------------------*/
+
+// Default Card
+// ---------------------
+.card {
+  position: relative;
+
+  // Card "double" border
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+    background: #fff;
+    top: 3px;
+    left: 3px;
+    z-index: z("card") - 1;
+  }
+}
+
+.card__content {
+  position: relative;
+  z-index: z("card");
+  padding: $size-30 $size-46;
+  border: 1px solid #000;
+  background: #fff;
+}
