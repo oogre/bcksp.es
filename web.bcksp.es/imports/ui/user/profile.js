@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-01-03 17:44:23
+  @Last Modified time: 2019-01-09 17:41:49
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -151,7 +151,7 @@ class UserProfile extends Component {
 							name = "email"
 							placeholder = "email"
 							value = {Meteor.user().emails.pop().address}
-							disabled = "true"
+							disabled = {true}
 					/>
 				</div>
 			</div>

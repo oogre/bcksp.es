@@ -2,13 +2,14 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2019-01-04 22:48:12
+  @Last Modified time: 2019-01-09 17:54:38
 \*----------------------------------------*/
 
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import MainMenu from "./menu/main.js";
 import LoginMenu from "./menu/login.js";
+import { config } from './../shared/config.js';
 import { sendMessage } from './../utilities/com.js';
 import { isBoolean } from './../utilities/validation.js';
 
@@ -34,6 +35,10 @@ class Popup extends Component {
 	render() {
 		return (
 			<div>
+				{
+					config.isDevMode() && 
+						<span>dev mode</span>
+				}
 				{
 					!this.state.loggedIn ? 
 						<LoginMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>

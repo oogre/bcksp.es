@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-01-05 00:14:41
+  @Last Modified time: 2019-01-09 17:34:08
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import Data from "./../utilities/Data.js";
@@ -42,11 +42,11 @@ class AsteroidHelper{
 
 		this.asteroid.on("loggedOut", () =>{
 			log("loggedOut");
-			localStorage.clear();
 			Data.setState({
 				loggedStatus : false,
 				currentURLBlacklisted : false
 			});
+			this.stopSubsribtion();
 		});
 
 		this.asteroid.on("loggedIn", data =>{
@@ -54,24 +54,7 @@ class AsteroidHelper{
 			Data.setState({
 				"loggedStatus": true
 			});
-		});
-		
-		Data.on("connected", connected => {
-			if(connected && Data.state.loggedStatus){
-				this.startSubsribtion();
-			}
-			if(!Data.state.loggedStatus){
-				this.stopSubsribtion();
-			}
-		});
-
-		Data.on("loggedStatus", loggedIn => {
-			if(Data.state.connected && loggedIn){
-				this.startSubsribtion();
-			}
-			if(!loggedIn){
-				this.stopSubsribtion();
-			}
+			this.startSubsribtion();
 		});
 	}
 
@@ -85,6 +68,7 @@ class AsteroidHelper{
 	}
 
 	startSubsribtion (){
+		info("startSubsribtion");
 		this.subscribtionList = this.subscribtionAddressList.map(address =>{
 			info("subscribtion to : " + address);
 			let sub = this.asteroid.subscribe(address);
@@ -97,6 +81,7 @@ class AsteroidHelper{
 		//Data.setState({
 		//	"init": true
 		//});
+		
 		this.on("changed", {
 			archives : ({count}) => {
 				Data.setState({
@@ -129,6 +114,7 @@ class AsteroidHelper{
 				}
 			}
 		});
+		
 	}
 
 	on(eventName, options){

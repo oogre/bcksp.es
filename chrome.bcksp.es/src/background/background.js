@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-01-05 18:17:25
+  @Last Modified time: 2019-01-09 15:55:43
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";

@@ -7,7 +7,6 @@
     "build": "webpack -w --display-error-details --progress --colors",
     "start": "web-ext run -s extension/"
   },
-  "author" : "Vincent Evrard <https://github.com/oogre>",
   "author": "",
   "license": "MPL-2.0",
   "devDependencies": {
@@ -22,7 +21,7 @@
     "webpack": "3.10.0"
   },
   "dependencies": {
-    "caret-pos": "https://github.com/oogre/caret-pos/tarball/11f461326202f534dbc0f58bbb442623b2e9b8ff",
+    "caret-pos": "https://github.com/oogre/caret-pos/tarball/23025431c2cf66d10fd4a9249bf69f55c25a921d",
     "asteroid": "https://github.com/oogre/asteroid/tarball/df69c5171dcca1c13009f33a774ca628801314da",
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",
