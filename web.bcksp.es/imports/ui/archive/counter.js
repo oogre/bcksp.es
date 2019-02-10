@@ -2,25 +2,26 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2018-12-11 21:49:44
+  @Last Modified time: 2019-01-17 17:31:18
 \*----------------------------------------*/
+
+import T from './../../i18n/index.js';
 import React, { Component } from 'react';
+import { config } from './../../startup/config.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
-import { config } from './../../startup/config.js';
-import T from './../../i18n/index.js';
 
 class ArchiveCounter extends Component {
 	constructor(props){
 		super(props);
 	}
-	getCharLeft(){
-		if(!this.props.archive)return 0 ;
-		return config.book.getMaxChar() - this.props.archive.count;
+	getCharCount(){
+		if(!this.props.archive || !this.props.isReady)return 0 ;
+		return this.props.archive.count;
 	}
 	getPerCent(){
-		if(!this.props.archive)return 0;
-		return (config.book.getMaxChar() / this.props.archive.count) * 100 ;
+		if(!this.props.archive || !this.props.isReady)return 0;
+		return (this.props.archive.count / config.book.getMaxChar()) * 100 ;
 	}
 	render() {
 		return (
@@ -31,7 +32,7 @@ class ArchiveCounter extends Component {
 							<h1><T>archive.counter.title</T></h1>
 							<div>
 								<span>
-									<T value={this.getCharLeft()}>archive.counter.left</T>
+									<T count={this.getCharCount()}>archive.counter.now</T>
 								</span>
 								<div>
 									<div style={{

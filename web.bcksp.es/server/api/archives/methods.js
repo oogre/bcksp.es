@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-01-03 15:24:48
+  @Last Modified time: 2019-01-17 17:01:00
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -87,6 +87,39 @@ export const ArchiveAdd = new ValidatedMethod({
 	}
 });
 
+export const ArchiveDownload = new ValidatedMethod({
+	name: 'Archives.methods.download',
+	validate() {
+		checkUserLoggedIn();
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		this.unblock();
+		if(Meteor.isServer){
+			let myArchive = Archives.findOne({
+				type : config.archives.private.type,
+				owner : this.userId
+			});
+			return ArchiveTools.readAsync(myArchive._id)
+			.then(data => {
+				return {
+					count : myArchive.count,
+					content : data,
+					createdAt : myArchive.createdAt,
+					updatedAt : myArchive.updatedAt,
+				};
+			})
+			.then(data =>{
+				return data;
+			})
+			.catch(err=>console.log(err));
+		}
+	}
+});
 
 
 export const ArchiveEdit = new ValidatedMethod({

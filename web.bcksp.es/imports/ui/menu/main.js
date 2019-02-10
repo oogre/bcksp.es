@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2019-01-09 20:05:50
+  @Last Modified time: 2019-01-17 08:19:10
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
@@ -83,7 +83,7 @@ class MenuMain extends Component {
 								<a 	className={"menu__item-link" + this.isActive("userProfile")}
 									href={ FlowRouter.path("userProfile") }
 								>
-									profile
+									<T>menus.profile</T>
 								</a>
 							</li>
 					}

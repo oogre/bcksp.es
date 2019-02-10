@@ -2,7 +2,7 @@
   bcksp.es - callToConnect.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 19:41:50
-  @Last Modified time: 2019-01-09 20:02:50
+  @Last Modified time: 2019-01-14 18:07:23
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
@@ -23,7 +23,7 @@ class CallToConnect extends Component {
 			return (
 				<div>
 					<div>
-						<h1><T>extension.login.call.action</T></h1>
+						<h1><T>extension.login.call.login</T></h1>
 					</div>
 				</div>
 			);

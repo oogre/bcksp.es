@@ -2,17 +2,16 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-01-09 18:59:42
+  @Last Modified time: 2019-01-29 19:37:52
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
-
-  import TemplateFull from '../imports/ui/template/full.js';
-
   import App from '../imports/ui/App.js';
   import About from '../imports/ui/About.js';
+  import Souvenir from '../imports/ui/souvenir/list.js';
   import UserProfile from '../imports/ui/user/profile.js';
-
+  import SouvenirItem from '../imports/ui/souvenir/item.js';
+  import TemplateFull from '../imports/ui/template/full.js';
 /*
 FlowRouter.route( '/', {
 	name: 'temp',
@@ -27,8 +26,7 @@ FlowRouter.route( '/', {
 		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
-		this.register('archive.public', Meteor.subscribe('archive.public'));
-		this.register('archive.public.counter', Meteor.subscribe('archive.public.counter'));
+		
 	}
 });
 
@@ -36,6 +34,26 @@ FlowRouter.route( '/about', {
 	name: 'about',
 	action( params ) {
 		render(<TemplateFull><About /></TemplateFull>, document.getElementById('render-target'));
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+FlowRouter.route( '/souvenir', {
+	name: 'souvenir',
+	action( params ) {
+		render(<TemplateFull><Souvenir /></TemplateFull>, document.getElementById('render-target'));
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+FlowRouter.route( '/souvenir/:type', {
+	name: 'item',
+	action( params ) {
+		render(<TemplateFull><SouvenirItem type={params.type}/></TemplateFull>, document.getElementById('render-target'));
 	},
 	subscriptions( params, queryParams ) {
 		

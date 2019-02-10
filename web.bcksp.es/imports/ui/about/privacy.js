@@ -2,7 +2,7 @@
   bcksp.es - privacy.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:14:26
-  @Last Modified time: 2018-09-23 18:56:46
+  @Last Modified time: 2019-01-17 08:12:37
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -21,6 +21,11 @@ export default class AboutPrivacy extends Component {
 					<h2 className="about__title"><T>privacy.title</T></h2>
 					<div className="about__content">
 						<T>privacy.short</T>
+						<span>
+							<a href={FlowRouter.path("about")}>
+								<T>about.link</T>
+							</a>
+						</span>
 					</div>
 				</div>
 			</div>

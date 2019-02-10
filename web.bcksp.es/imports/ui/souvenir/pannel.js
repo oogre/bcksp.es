@@ -1,18 +1,16 @@
 /*----------------------------------------*\
-  bcksp.es - About.js
+  bcksp.es - pannel.js
   @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-01-15 12:18:17
+  @Date:   2019-01-11 13:53:56
+  @Last Modified time: 2019-01-17 08:16:21
 \*----------------------------------------*/
-import Slider from "react-slick";
-import AboutLong from './about/long.js';
-import React, { Component } from 'react';
-import AboutPress from './about/press.js';
-import AboutArtists from './about/artists.js';
 
-import T from './../i18n/index.js';
+import Slider from "react-slick";
+import T from './../../i18n/index.js';
+import React, { Component } from 'react';
+
 // App component - represents the whole app
-export default class About extends Component {
+export default class SouvenirPannel extends Component {
 	constructor(props){
 		super(props);
 	}
@@ -29,9 +27,16 @@ export default class About extends Component {
 			arrows : true
 		};
 		return (
-			<div className="page__content">
-				<AboutLong/>
-				<Slider {...settings}>
+			<div className="container" onClick={()=>FlowRouter.go("souvenir")}>
+				<h3><T>souvenir.title</T></h3>
+				<div>
+					<div>
+						<p>
+							<T>souvenir.short</T>
+						</p>
+						<a href={FlowRouter.path("souvenir")}><T>menus.souvenir</T></a>
+					</div>
+					<Slider {...settings}>
 						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
@@ -48,9 +53,8 @@ export default class About extends Component {
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
 					</Slider>
-				<AboutArtists/>
-				<AboutPress/>
+				</div>
 			</div>
-		);
+		);	
 	}
 }

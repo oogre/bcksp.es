@@ -1,5 +1,8 @@
 import i18n from 'meteor/universe:i18n';
 
+import './fr.js';
+
+i18n.setLocale('fr-FR');
 i18n.setOptions({
     purify: string => string
 });
@@ -9,7 +12,8 @@ i18n.addTranslation('en-US', {
 	archive : {
 		counter : {
 			title : "prints",
-			left : "{$value} characters left"
+			left : "{$count} characters left",
+			now : "{$count} characters"
 		}
 	},
 	errors : {
@@ -112,10 +116,8 @@ i18n.addTranslation('en-US', {
 	howto:{
 		step : [{
 			title : "get extension",
-			desc : "Pour collecter vos morceaux de texte supprimé,<br/>\
-					nous utilisons une extension de navigateur web.<br/>\
-					La première démarche pour participer à ce projet\
-					est d'installer celle-ci."
+			desc : "Nous utilisons une extension de navigateur web pour collecter les morceaux de texte que vous supprimez.<br/>\
+					La première démarche pour participer à ce projet est d'installer au moins une de nos extensions en clickant ici."
 		},{
 			title : "create your account",
 			desc : "Le seconde étape est de vous identifier via l'extension.<br/>\
@@ -145,7 +147,7 @@ i18n.addTranslation('en-US', {
 		}]
 	},
 	privacy : {
-		title : "about privacy",
+		title : 	"about privacy",
 		short : 	"<p>L'aspect privé de vos donnés est un sujet que nous prennons au sérieux.\
 					C'est pour cela que le code source des processus de collecte et de stockage \
 					est Open Source. Il est donc soumis à un audit permanant de ses utilisateurs.\
@@ -156,6 +158,10 @@ i18n.addTranslation('en-US', {
 					en votre nom sans votre accord explicite.\
 					Il ne sera fait aucun usage de vos informations afin de réaliser des profils de consomateur,\
 					nous ne croyons pas en les paradigmes qui font vivre les gros du web.</p>",
+	},
+	souvenir : {
+		title : 	"Go to the shop",
+		pannel : 	""
 	},
 	about : {
 		title : "about",
@@ -265,4 +271,3 @@ i18n.addTranslation('en-US', {
 
 export default i18n.createComponent();
 
-//i18n.setLocale('fr-FR');

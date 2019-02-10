@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+
 import { Caret } from 'caret-pos';
+import React, { Component } from 'react';
+import T from './../../i18n/index.js';
 import { log } from './../../utilities/log.js';
 import ButtonShare from './../button/share.js';
-import T from './../../i18n/index.js';
+
 
 // LiveStream component
 export default class LiveFrame extends Component {
@@ -91,6 +93,13 @@ export default class LiveFrame extends Component {
 				return false;
 		}
 	}
+	onButtonClick(data){
+		if(_.isFunction(this.props.action)){
+			this.props.action(data);
+		}else{
+			console.log(data);	
+		}
+	}
 	
 	render(){
 		return (
@@ -98,6 +107,7 @@ export default class LiveFrame extends Component {
 				<ButtonShare 	left={this.state.position[0]} 
 								top={this.state.position[1]} 
 								content={this.state.selectContent}
+								action={this.onButtonClick.bind(this)}
 				/>
 				
 				<div 	className={(this.state.fullscreen ? "fullscreen " : "") + "stream bcksp-es-disabled" }
@@ -107,7 +117,7 @@ export default class LiveFrame extends Component {
 				></div>
 
 				<button onClick={this.toggleFullscreen.bind(this)}>
-					fullscreen
+					<T>archive.fullscreen.button</T>
 				</button>
 			</div>
 		);

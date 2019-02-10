@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2019-01-09 20:06:52
+  @Last Modified time: 2019-01-15 10:24:44
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -16,6 +16,7 @@ class MenuFooter extends Component {
 		super(props);
 	}
 	handleLogout(){
+		alert("HELLO");
 		window.postMessage({
 			type : "logout"
 		}, "*");
