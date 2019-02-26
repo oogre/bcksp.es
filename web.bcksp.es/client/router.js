@@ -2,28 +2,31 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-01-29 19:37:52
+  @Last Modified time: 2019-02-26 11:05:56
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
   import App from '../imports/ui/App.js';
   import About from '../imports/ui/About.js';
+  import {setupView} from '../imports/utilities/ui.js';
   import Souvenir from '../imports/ui/souvenir/list.js';
   import UserProfile from '../imports/ui/user/profile.js';
   import SouvenirItem from '../imports/ui/souvenir/item.js';
   import TemplateFull from '../imports/ui/template/full.js';
-/*
+
+
 FlowRouter.route( '/', {
 	name: 'temp',
 	action( params ) {
 		FlowRouter.go("home");
 	}
 });
-*/
-FlowRouter.route( '/', {
+
+FlowRouter.route( '/dev', {
 	name: 'home',
 	action( params ) {
 		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
 	},
 	subscriptions( params, queryParams ) {
 		
@@ -34,6 +37,7 @@ FlowRouter.route( '/about', {
 	name: 'about',
 	action( params ) {
 		render(<TemplateFull><About /></TemplateFull>, document.getElementById('render-target'));
+		setupView();
 	},
 	subscriptions( params, queryParams ) {
 		
@@ -44,6 +48,7 @@ FlowRouter.route( '/souvenir', {
 	name: 'souvenir',
 	action( params ) {
 		render(<TemplateFull><Souvenir /></TemplateFull>, document.getElementById('render-target'));
+		setupView();
 	},
 	subscriptions( params, queryParams ) {
 		
@@ -54,6 +59,7 @@ FlowRouter.route( '/souvenir/:type', {
 	name: 'item',
 	action( params ) {
 		render(<TemplateFull><SouvenirItem type={params.type}/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
 	},
 	subscriptions( params, queryParams ) {
 		
@@ -92,6 +98,7 @@ loginRoutes.route("/profile", {
 	name: "userProfile",
 	action( params ) {
 		render(<TemplateFull><UserProfile/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
 	},
 	subscriptions( params, queryParams ) {
 		this.register('settings.private', Meteor.subscribe('settings.private'));
