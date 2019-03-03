@@ -40,8 +40,10 @@ class Souvenir extends Component {
 		return (
 			<div className="page__content">
 				<div className="container">
+					<h1 className="page__title">Bring Back <br/> the souvenirs</h1>
+					<h2 className="page__subtitle">The shop</h2>
 					<ul className="souvenir">
-						
+
 						<li className="souvenir__item">
 							<a href={FlowRouter.path("item", {type : "download"})}>
 								<div className="wrapper">
@@ -51,7 +53,7 @@ class Souvenir extends Component {
 								<h3><T>souvenir.item.download.title</T></h3>
 							</a>
 						</li>
-						
+
 						<li className="howto__item">
 							<a href={FlowRouter.path("item", {type : "book"})}>
 								<div className="wrapper">
@@ -63,7 +65,7 @@ class Souvenir extends Component {
 								<p><T>souvenir.item.book.price</T></p>
 							</a>
 						</li>
-						
+
 						<li className="howto__item">
 							<a href={FlowRouter.path("item", {type : "poster"})}>
 								<div className="wrapper">
