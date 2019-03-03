@@ -3,15 +3,16 @@
 \*------------------------------------*/
 
 .about {
-  padding: $size-112 0 $size-205 $size-230;
-  background: $grey-thunder url("/images/backgrounds/eraser-background.png") no-repeat right center;
+  padding: $size-112 0 $size-205;
+  background: $grey-thunder;
 }
 
 .about__container {
-  max-width: 680px;
+  display: flex;
 }
 
 .about,
+.about--intro,
 .about__title {
   color: #fff;
 }
@@ -21,14 +22,12 @@
   line-height: 1.27;
   text-transform: capitalize;
   max-width: 200px;
-  font-family: $font-body;
-  margin-bottom: $size-60;
+  margin-right: $size-65;
 }
 
 .about__content {
   font-size: $size-23;
   line-height: 1.39;
-  margin-bottom: $size-126;
 }
 
 .about__content a {
@@ -38,4 +37,25 @@
   &:hover {
     color: #f06;
   }
+}
+
+// About intro variation
+// ---------------------
+.about--intro {
+  padding: $size-112 0 $size-205 $size-230;
+  background: $grey-thunder url("/images/backgrounds/eraser-background.png") no-repeat right center;
+}
+
+.about--intro .about__container {
+  max-width: 680px;
+  display: block;
+}
+
+.about--intro .about__title {
+  font-family: $font-body;
+  margin-bottom: $size-60;
+}
+
+.about--intro .about__content {
+  margin-bottom: $size-126;
 }

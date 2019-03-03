@@ -16,7 +16,7 @@ export default class AboutShort extends Component {
 
 	render() {
 		return (
-			<div className="about">
+			<div className="about--intro">
 				<div className="container about__container">
 					<h2 className="about__title"><T>about.title</T></h2>
 					<div className="about__content">
