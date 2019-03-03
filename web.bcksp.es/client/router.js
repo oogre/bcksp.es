@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-03-02 13:22:40
+  @Last Modified time: 2019-03-03 15:19:09
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -14,7 +14,7 @@
   import SouvenirItem from '../imports/ui/souvenir/item.js';
   import TemplateFull from '../imports/ui/template/full.js';
 
-const DEVELOPPMENT = true;
+const DEVELOPPMENT = false;
 
 if(DEVELOPPMENT){
 	FlowRouter.route( '/', {
