@@ -7,19 +7,18 @@
   flex-direction: column;
   list-style-type: none;
   padding: 0;
-  margin: -200px 0 100px;
+  margin: -200px 0 22px;
 }
 
 .howto__item:nth-child(odd) {
   align-self: flex-end;
 }
 
-
 // Step
 // ---------------------
 .step {
   max-width: 746px;
-  margin-bottom: $size-40;
+  margin-bottom: $size-148;
 }
 
 .step__title {
