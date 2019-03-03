@@ -46,52 +46,50 @@ class Souvenir extends Component {
 
 						<li className="souvenir__item">
 							<a href={FlowRouter.path("item", {type : "download"})}>
-								<div className="wrapper">
-									<div className="badge"><T>souvenir.item.download.badge</T></div>
-									<img src="#"/>
-								</div>
-								<h3><T>souvenir.item.download.title</T></h3>
+								<img src="#" src="/images/souvenirs/archive.svg" alt="" />
+								<span className="souvenir__link-title"><T>souvenir.item.download.title</T></span>
+								<span className="souvenir__link-badge"><T>souvenir.item.download.badge</T></span>
 							</a>
 						</li>
 
-						<li className="howto__item">
-							<a href={FlowRouter.path("item", {type : "book"})}>
+						<li className="souvenir__item">
+							<a className="souvenir__link" href={FlowRouter.path("item", {type : "book"})}>
+								<div className="souvenir__counter-label">{this.getPerCent()}%</div>
 								<div className="wrapper">
-									<div className="jauge">{this.getPerCent()}%</div>
-									<img src="#"/>
+									<img src="#" src="/images/souvenirs/book.png" alt="" />
 								</div>
-								<h3><T>souvenir.item.book.title</T></h3>
-								<p><T count={this.getCharLeft()}>souvenir.item.book.countdown</T></p>
-								<p><T>souvenir.item.book.price</T></p>
+								<span className="souvenir__link-title"><T>souvenir.item.book.title</T></span>
+								<span className=""><T count={this.getCharLeft()}>souvenir.item.book.countdown</T></span>
+								<span className="souvenir__link-badge"><T>souvenir.item.book.price</T></span>
 							</a>
 						</li>
 
-						<li className="howto__item">
-							<a href={FlowRouter.path("item", {type : "poster"})}>
+						<li className="souvenir__item">
+							<a class="souvenir__link" href={FlowRouter.path("item", {type : "poster"})}>
 								<div className="wrapper">
-									<img src="#"/>
+									<img src="#" src="/images/souvenirs/poster.png" alt=""/>
 								</div>
-								<h3><T>souvenir.item.poster.title</T></h3>
-								<p><T>souvenir.item.poster.price</T></p>
+								<span className="souvenir__link-title"><T>souvenir.item.poster.title</T></span>
+								<span className="souvenir__link-badge"><T>souvenir.item.poster.price</T></span>
 							</a>
 						</li>
 
-						<li className="howto__item">
-							<a href={FlowRouter.path("item", {type : "custom"})}>
+						<li className="souvenir__item">
+							<a class="souvenir__link" href={FlowRouter.path("item", {type : "custom"})}>
 								<div className="wrapper">
 									<img src="#"/>
 								</div>
-								<h3><T>souvenir.item.custom.title</T></h3>
+								<span className="souvenir__link-title"><T>souvenir.item.custom.title</T></span>
 							</a>
 						</li>
 
-						<li className="howto__item">
+						<li className="souvenir__item">
 							<a href={FlowRouter.path("item", {type : "almanach"})}>
 								<div className="wrapper">
 									<img src="#"/>
 								</div>
-								<h3><T>souvenir.item.almanach.title</T></h3>
-								<p><T>souvenir.item.almanach.price</T></p>
+								<span className="souvenir__link-title"><T>souvenir.item.almanach.title</T></span>
+								<span className="souvenir__link-badge"><T>souvenir.item.almanach.price</T></span>
 							</a>
 						</li>
 
