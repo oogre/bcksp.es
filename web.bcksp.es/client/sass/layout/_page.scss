@@ -2,6 +2,15 @@
   Page
 \*------------------------------------*/
 
+// Page Content
+// ---------------------
+.page__content {
+  margin-bottom: $size-40;
+}
+
+
+// Page Title
+// ---------------------
 .page__title,
 .page__subtitle {
   font-family: $font-body;
