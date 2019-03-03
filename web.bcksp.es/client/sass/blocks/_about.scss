@@ -3,12 +3,12 @@
 \*------------------------------------*/
 
 .about {
-  padding: $size-112 0 $size-205;
-  background: $grey-thunder;
+  padding: $size-112 0 $size-205 $size-230;
+  background: $grey-thunder url("/images/backgrounds/eraser-background.png") no-repeat right center;
 }
 
 .about__container {
-  display: flex;
+  max-width: 680px;
 }
 
 .about,
@@ -21,10 +21,21 @@
   line-height: 1.27;
   text-transform: capitalize;
   max-width: 200px;
-  margin-right: $size-65;
+  font-family: $font-body;
+  margin-bottom: $size-60;
 }
 
 .about__content {
   font-size: $size-23;
   line-height: 1.39;
+  margin-bottom: $size-126;
+}
+
+.about__content a {
+  color: #fff;
+  text-decoration: underline;
+
+  &:hover {
+    color: #f06;
+  }
 }
