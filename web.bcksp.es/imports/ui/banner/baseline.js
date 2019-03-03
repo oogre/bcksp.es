@@ -17,7 +17,7 @@ export default class BannerBaseline extends Component {
 			return (
 			<div className="punchline">
 				<div className="container">
-					<h1><T>baseline</T></h1>
+					<h1 class="punchline__title"><T>baseline</T></h1>
 				</div>
 			</div>
 		);
