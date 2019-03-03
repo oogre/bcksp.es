@@ -8,7 +8,9 @@
 }
 
 .about__container {
-  display: flex;
+  @include media-query("medium") {
+    display: flex;
+  }
 }
 
 .about,
@@ -42,8 +44,13 @@
 // About intro variation
 // ---------------------
 .about--intro {
-  padding: $size-112 0 $size-205 $size-230;
-  background: $grey-thunder url("/images/backgrounds/eraser-background.png") no-repeat right center;
+  padding: $size-112 0 $size-205;
+  background: $grey-thunder no-repeat right center;
+
+  @include media-query("medium") {
+    padding-left: $size-230;
+    background-image: url("/images/backgrounds/eraser-background.png");
+  }
 }
 
 .about--intro .about__container {

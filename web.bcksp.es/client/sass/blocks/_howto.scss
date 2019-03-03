@@ -3,11 +3,15 @@
 \*------------------------------------*/
 
 .howto {
-  display: flex;
-  flex-direction: column;
-  list-style-type: none;
   padding: 0;
   margin: -200px 0 22px;
+  list-style-type: none;
+
+  @include media-query("medium") {
+    display: flex;
+    flex-direction: column;
+  }
+
 }
 
 .howto__item:nth-child(odd) {
@@ -18,7 +22,11 @@
 // ---------------------
 .step {
   max-width: 746px;
-  margin-bottom: $size-148;
+  margin-bottom: $size-40;
+
+  @include media-query("medium") {
+    margin-bottom: $size-148;
+  }
 }
 
 .step__title {
@@ -29,6 +37,11 @@
   font-size: $size-48;
   font-family: $font-body;
   font-weight: 200;
+  display: block;
+
+  @include media-query("medium") {
+    display: inline;
+  }
 }
 
 // @warning
@@ -40,7 +53,9 @@
 // Step Content
 // ---------------------
 .step__content {
-  margin-left: $size-40;
+  @include media-query("medium") {
+    margin-left: $size-40;
+  }
 }
 
 .step__content p {
