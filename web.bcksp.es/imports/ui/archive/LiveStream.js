@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2019-01-29 19:42:47
+  @Last Modified time: 2019-02-12 19:41:40
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -22,6 +22,7 @@ class LiveStream extends Component {
 			public : true,
 			publicBackspaces : "",
 		};
+		this.loaded = false;
 	}
 
 	handleSwitchStream(streamName, event){
@@ -66,15 +67,14 @@ class LiveStream extends Component {
 		}
 		return content;
 	}
-	
-	onButtonClick(data){
-		if(_.isFunction(this.props.action)){
-			this.props.action(data);
-		}else{
-			console.log(data);	
+	componentDidUpdate(){
+		if(!this.loaded && this.props.isPublicReady){
+			if(_.isFunction(this.props.onLoad)){
+				this.props.onLoad(this.getPublicArchive().substr(0, 40));
+			}
+			this.loaded = true;
 		}
 	}
-	
 	render() {
 		return (
 			<div>
@@ -101,7 +101,10 @@ class LiveStream extends Component {
 								: 
 									this.getPrivateArchive() 
 							}
-							action={this.onButtonClick.bind(this)}
+							onSelect={_.isFunction(this.props.onSelect) && this.props.onSelect.bind(this)}
+							onShare={_.isFunction(this.props.onShare) && this.props.onShare.bind(this)}
+							fullscreenAvailable={this.props.fullscreenAvailable}
+							shareAvailable={this.props.shareAvailable}
 				/>
 			</div>
 		);

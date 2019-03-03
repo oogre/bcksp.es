@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-01-17 17:01:00
+  @Last Modified time: 2019-02-27 13:09:17
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -114,7 +114,15 @@ export const ArchiveDownload = new ValidatedMethod({
 				};
 			})
 			.then(data =>{
-				return data;
+				let file = [
+					i18n.__("souvenir.item.download.file.content", {
+						createdAt : moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+						updatedAt : moment(data.updatedAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+						content : data.content,
+						count : data.count
+					})
+				];
+				return file;
 			})
 			.catch(err=>console.log(err));
 		}

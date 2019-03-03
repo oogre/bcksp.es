@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-01-05 16:42:54
+  @Last Modified time: 2019-02-28 18:36:02
 \*----------------------------------------*/
 
 
@@ -69,7 +69,7 @@ export const config = {
 		blindfield : {
 			types : [{
 				value : "email",
-				placeholder : "demo@gmial.com"
+				placeholder : "demo@gmail.com"
 			},{
 				value : "password",
 				placeholder : "password"
@@ -81,13 +81,13 @@ export const config = {
 				placeholder : "search"
 			},{
 				value : "tel",
-				placeholder : "+32495876315"
+				placeholder : "+32.495.876.315"
 			},{
 				value : "number",
 				placeholder : 123
 			},{
 				value : "url",
-				placeholder : "http://bcksp.es"
+				placeholder : "https://bcksp.es"
 			}],
 			class : []
 		}

@@ -2,32 +2,60 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2019-01-03 17:07:56
+  @Last Modified time: 2019-02-25 16:01:40
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
 import { config } from './../startup/config.js';
 import T from './../i18n/index.js';
 
-export function checkString(value){
-	if(!_.isString(value) || _.isEmpty(value))
+export function checkObject(value, ...origin){
+	if(!_.isObject(value) || _.isEmpty(value))
 			throw new ValidationError([{
 				name: 'type',
-				type: 'not-a-string',
+				type: 'not-recognize',
 				details: {
-				  value: i18n.__("errors.type.not-a-string")
+				  value: i18n.__("errors.type.not-recognize"),
+				  origin : origin,
 				}
 			}]);
 	return value;
 }
 
-export function checkNumber(value){
+export function checkArray(value, ...origin){
+	if(!_.isArray(value) || _.isEmpty(value))
+			throw new ValidationError([{
+				name: 'type',
+				type: 'not-recognize',
+				details: {
+				  value: i18n.__("errors.type.not-recognize"),
+				  origin : origin,
+				}
+			}]);
+	return value;
+}
+
+export function checkString(value, ...origin){
+	if(!_.isString(value) || _.isEmpty(value))
+			throw new ValidationError([{
+				name: 'type',
+				type: 'not-a-string',
+				details: {
+				  value: i18n.__("errors.type.not-a-string"),
+				  origin : origin,
+				}
+			}]);
+	return value;
+}
+
+export function checkNumber(value, ...origin){
 	if(!_.isNumber(value))
 			throw new ValidationError([{
 				name: 'type',
 				type: 'not-a-number',
 				details: {
-				  value: i18n.__("errors.type.not-a-number")
+				  value: i18n.__("errors.type.not-a-number"),
+				  origin : origin,
 				}
 			}]);
 	return value;

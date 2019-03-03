@@ -5,6 +5,7 @@ import './api/archives/methods.js';
 import './api/archives/startup.js';
 import './api/archives/publications.js';
 import '../imports/api/users/users.js';
+import '../imports/api/souvenirs/souvenirs.js';
 import '../imports/api/settings/settings.js';
 
 import '../imports/api/books/generator.js';

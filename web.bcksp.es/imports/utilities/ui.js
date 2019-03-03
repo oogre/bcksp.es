@@ -2,7 +2,7 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2019-01-05 19:35:50
+  @Last Modified time: 2019-02-23 16:06:27
 \*----------------------------------------*/
 import T from './../i18n/index.js';
 import { config } from './../startup/config.js';
@@ -32,4 +32,33 @@ export function installExtension(){
 	}
 	return false;
 }
+export function setupView(){
+	if(FlowRouter.current().context.hash == ""){
+		$('html, body').animate({
+			scrollTop: 0
+		}, 666 );
+	}else{
+		scrollTo(FlowRouter.current().context.hash);
+	}
+}
+export function scrollTo(hash, offset = 0){
+	let h = $("#"+hash);
+	if(!!h.length){
+		$('html, body').animate({
+			scrollTop: h.offset().top - offset
+		}, 666 );
+	}
+}
 
+export function getMessageFromError(error){
+	if(_.isArray(error.details) && !_.isEmpty(error.details)){
+		return error.details.map(e=>e.details.value).join(", ");
+	}
+	if(error.errorType == "Meteor.Error"){
+		return error.reason;
+	}
+	if(error.name == "Error"){
+		return error.message;
+	}
+	return error.toString();
+}

@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2019-01-29 19:43:59
+  @Last Modified time: 2019-03-03 14:23:24
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -13,10 +13,7 @@ import AboutShort from './about/short.js';
 import HowtoList from './howto/list.js';
 import AboutPrivacy from './about/privacy.js';
 import SouvenirPannel from './souvenir/pannel.js';
-
 import T from './../i18n/index.js';
-
-
 
 // App component - represents the whole app
 class App extends Component {
@@ -29,10 +26,12 @@ class App extends Component {
 	render() {
 		return (
 			<div className="page__content">
-				<BannerBaseline/>
-				{ this.props.isConnected && <ArchiveCounter/> }
-				<LiveStream action={this.onShare.bind(this)}/>
-				
+				<BannerBaseline isConnected={this.props.isConnected}/>
+				{ 
+					this.props.isConnected && 
+						<ArchiveCounter/> 
+				}
+				<LiveStream onShare={this.onShare.bind(this)}/>
 				{
 					!this.props.isConnected &&
 						<AboutShort/>
@@ -45,7 +44,10 @@ class App extends Component {
 					!this.props.isConnected &&
 						<AboutPrivacy/>
 				}
-				<SouvenirPannel/>
+				{ 
+					this.props.isConnected && 
+						<SouvenirPannel/>
+				}
 			</div>
 		);
 	}

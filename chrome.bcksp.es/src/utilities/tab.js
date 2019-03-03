@@ -2,7 +2,7 @@
   bcksp.es - tab.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:41:20
-  @Last Modified time: 2019-01-04 20:44:39
+  @Last Modified time: 2019-02-26 18:40:28
 \*----------------------------------------*/
 
 import { last, findWhere } from './tools.js';
@@ -44,6 +44,7 @@ export async function getTabStatus(request){
 		.then(async (tabs) => {
 			if(tabs.length == 0)throw new Error("Tab not found " + JSON.stringify(request));
 			let regexp = /.+\:\/\/([^\/?#]+)(?:[\/?#]|$)/i
+			console.log(tabs[0].url, tabs[0].url.match(regexp));
 			let url = (tabs[0].url.match(regexp)).shift();
 			url = url.replace(/https?:\/\//, "");
 			url = url.split("").reverse().join("").replace(/\//, "").split("").reverse().join("");

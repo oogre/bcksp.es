@@ -2,7 +2,7 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 17:45:05
-  @Last Modified time: 2019-01-29 19:45:20
+  @Last Modified time: 2019-02-10 15:01:47
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -14,8 +14,8 @@ export default class ButtonShare extends Component {
 	}
 	onClick(event){
 		event.preventDefault();
-		if(_.isFunction(this.props.action)){
-			this.props.action(this.props.content);
+		if(_.isFunction(this.props.onShare)){
+			this.props.onShare(this.props.content);
 		}else{
 			console.log(this.props.content);	
 		}

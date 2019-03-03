@@ -32,10 +32,24 @@
   font-weight: 200;
 }
 
-// @warning
+// @warning Made by vince 
 // Temporary hide first step (wait for final design)
-.step > div > div:first-child{
-  display: none;
+// Temporary positionning (wait for final design)
+.step > div > div.left:first-child{
+  /*display: none;*/
+  float: left;
+  margin-left: -27%;
+  margin-right: 40px;
+}
+
+// @warning Made by vince 
+// Temporary hide first step (wait for final design)
+// Temporary positionning (wait for final design)
+.step > div > div.right:first-child{
+  /*display: none;*/
+  position: absolute;
+  right: -128px;
+  top: 0.75rem;
 }
 
 // Step Content

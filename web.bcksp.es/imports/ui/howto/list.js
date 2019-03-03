@@ -2,7 +2,7 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:56:40
-  @Last Modified time: 2019-01-17 08:11:10
+  @Last Modified time: 2019-02-26 15:32:08
 \*----------------------------------------*/
 
 
@@ -25,7 +25,7 @@ export default class HowtoList extends Component {
 			<ul className="howto">
 				<li className="howto__item">
 					<HowtoStep k={0}>
-						<HowtoBadge url="/images/logo-animated.gif"/>
+						<HowtoBadge url="/images/download.light.gif"/>
 						<div>
 							<h3 className="step__title"><span className="step__number">1.</span> <T>howto.step.download.title</T></h3>
 							<div className="step__content">
@@ -37,7 +37,7 @@ export default class HowtoList extends Component {
 				</li>
 				<li className="howto__item">
 					<HowtoStep k={1}>
-						<HowtoBadge url="/images/logo-animated.gif"/>
+						<HowtoBadge url="/images/login.3.light.gif"/>
 						<div>
 							<h3 className="step__title"><span className="step__number">2.</span> <T>howto.step.connect.title</T></h3>
 							<div className="step__content">
@@ -49,7 +49,7 @@ export default class HowtoList extends Component {
 				
 				<li className="howto__item">
 					<HowtoStep k={2}>
-						<HowtoBadge url="/images/logo-animated.gif"/>
+						<HowtoBadge url="/images/bcksp.es.gif"/>
 						<div className="step__content">
 							<h3 className="step__title"><span className="step__number">3.</span> <T>howto.step.continue.title</T></h3>
 							<div className="step__content">
@@ -60,7 +60,7 @@ export default class HowtoList extends Component {
 				</li>
 				<li className="howto__item">
 					<HowtoStep k={3}>
-						<HowtoBadge url="/images/logo-animated.gif"/>
+						<HowtoBadge url="/images/backsapce.2.light.gif"/>
 						<div>
 							<h3 className="step__title"><span className="step__number">4.</span> <T>howto.step.souvenir.title</T></h3>
 							<div className="step__content">

@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-02-26 11:05:56
+  @Last Modified time: 2019-03-02 13:22:40
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -14,24 +14,39 @@
   import SouvenirItem from '../imports/ui/souvenir/item.js';
   import TemplateFull from '../imports/ui/template/full.js';
 
+const DEVELOPPMENT = true;
 
-FlowRouter.route( '/', {
-	name: 'temp',
-	action( params ) {
-		FlowRouter.go("home");
-	}
-});
+if(DEVELOPPMENT){
+	FlowRouter.route( '/', {
+		name: 'home',
+		action( params ) {
+			render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
+			setupView();
+		},
+		subscriptions( params, queryParams ) {
+			
+		}
+	});
+}else{
+	FlowRouter.route( '/', {
+		name: 'temp',
+		action( params ) {
+			FlowRouter.go("home");
+		}
+	});
 
-FlowRouter.route( '/dev', {
-	name: 'home',
-	action( params ) {
-		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
-		setupView();
-	},
-	subscriptions( params, queryParams ) {
-		
-	}
-});
+	FlowRouter.route( '/dev', {
+		name: 'home',
+		action( params ) {
+			render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
+			setupView();
+		},
+		subscriptions( params, queryParams ) {
+			
+		}
+	});	
+}
+
 
 FlowRouter.route( '/about', {
 	name: 'about',

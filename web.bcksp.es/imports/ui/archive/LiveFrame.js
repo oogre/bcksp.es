@@ -34,6 +34,9 @@ export default class LiveFrame extends Component {
 		});
 		this.caret.onCaretChange(event=>{
 			let content = event.selectedText || "";
+			if(_.isFunction(this.props.onSelect)){
+				this.props.onSelect(content);
+			}
 			this.setState({
 				selectContent : content,
 			});
@@ -93,32 +96,32 @@ export default class LiveFrame extends Component {
 				return false;
 		}
 	}
-	onButtonClick(data){
-		if(_.isFunction(this.props.action)){
-			this.props.action(data);
-		}else{
-			console.log(data);	
-		}
-	}
 	
 	render(){
 		return (
 			<div>
-				<ButtonShare 	left={this.state.position[0]} 
-								top={this.state.position[1]} 
-								content={this.state.selectContent}
-								action={this.onButtonClick.bind(this)}
-				/>
-				
+				{
+					this.props.fullscreenAvailable!==false && 
+						<button onClick={this.toggleFullscreen.bind(this)}>
+							<T>archive.fullscreen.button</T>
+						</button>
+				}
+				{
+					this.props.shareAvailable!==false && 
+						<ButtonShare 	left={this.state.position[0]} 
+										top={this.state.position[1]} 
+										content={this.state.selectContent}
+										onShare={this.props.onShare && this.props.onShare.bind(this)}
+						/>
+				}
+
 				<div 	className={(this.state.fullscreen ? "fullscreen " : "") + "stream bcksp-es-disabled" }
 						contentEditable={true}
 						spellCheck={false}
         				dangerouslySetInnerHTML={{__html: this.props.content }}
 				></div>
-
-				<button onClick={this.toggleFullscreen.bind(this)}>
-					<T>archive.fullscreen.button</T>
-				</button>
+				
+				
 			</div>
 		);
 	}

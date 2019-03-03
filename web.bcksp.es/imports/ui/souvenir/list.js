@@ -2,7 +2,7 @@
   bcksp.es - Souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2019-01-26 17:53:53
+  @Last Modified time: 2019-03-03 15:02:05
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - About.js
@@ -41,29 +41,32 @@ class Souvenir extends Component {
 			<div className="page__content">
 				<div className="container">
 					<ul className="souvenir">
-						
-						<li className="souvenir__item">
-							<a href={FlowRouter.path("item", {type : "download"})}>
-								<div className="wrapper">
-									<div className="badge"><T>souvenir.item.download.badge</T></div>
-									<img src="#"/>
-								</div>
-								<h3><T>souvenir.item.download.title</T></h3>
-							</a>
-						</li>
-						
-						<li className="howto__item">
-							<a href={FlowRouter.path("item", {type : "book"})}>
-								<div className="wrapper">
-									<div className="jauge">{this.getPerCent()}%</div>
-									<img src="#"/>
-								</div>
-								<h3><T>souvenir.item.book.title</T></h3>
-								<p><T count={this.getCharLeft()}>souvenir.item.book.countdown</T></p>
-								<p><T>souvenir.item.book.price</T></p>
-							</a>
-						</li>
-						
+						{
+							this.props.isConnected &&
+							<li className="souvenir__item">
+								<a href={FlowRouter.path("item", {type : "download"})}>
+									<div className="wrapper">
+										<div className="badge"><T>souvenir.item.download.badge</T></div>
+										<img src="#"/>
+									</div>
+									<h3><T>souvenir.item.download.title</T></h3>
+								</a>
+							</li>
+						}
+						{
+							this.props.isConnected &&
+								<li className="howto__item">
+									<a href={FlowRouter.path("item", {type : "book"})}>
+										<div className="wrapper">
+											<div className="jauge">{(this.getPerCent()).toFixed(3)}%</div>
+											<img src="#"/>
+										</div>
+										<h3><T>souvenir.item.book.title</T></h3>
+										<p><T count={this.getCharLeft()}>souvenir.item.book.countdown</T></p>
+										<p><T>souvenir.item.book.price</T></p>
+									</a>
+								</li>
+						}
 						<li className="howto__item">
 							<a href={FlowRouter.path("item", {type : "poster"})}>
 								<div className="wrapper">
@@ -75,11 +78,11 @@ class Souvenir extends Component {
 						</li>
 
 						<li className="howto__item">
-							<a href={FlowRouter.path("item", {type : "custom"})}>
+							<a href={FlowRouter.path("item", {type : "contact"})}>
 								<div className="wrapper">
 									<img src="#"/>
 								</div>
-								<h3><T>souvenir.item.custom.title</T></h3>
+								<h3><T>souvenir.item.contact.title</T></h3>
 							</a>
 						</li>
 
@@ -102,6 +105,7 @@ class Souvenir extends Component {
 export default withTracker(self => {
 	let handle = Meteor.userId() && Meteor.subscribe('archive.private.counter');
 	return {
+		isConnected : Meteor.userId(),
 		isPrivateReady : handle && handle.ready(),
 		archive : Archives.findOne({}, {fields : {count : 1}})
 	};
