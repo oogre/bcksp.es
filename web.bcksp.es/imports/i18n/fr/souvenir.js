@@ -2,11 +2,12 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2019-03-03 13:40:28
+  @Last Modified time: 2019-03-04 21:24:08
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	souvenir : {
 		title : 	"Rendez-vous à la boutique",
+		title2 : 	"matérialiser votre mémoire",
 		short : 	"Faites vivre ce projet, en faisant produire via notre boutique \
 					tout sorte de goodies affichants vos meilleurs mots supprimés.",
 		delivery : {
@@ -39,7 +40,6 @@ i18n.addTranslation('fr-FR', {
 		},
 		item : {
 			download : {
-				badge : "gratuit",
 				title : "télécharger mon archive",
 				img : "/images/logo-animated.gif",
 				description : 	"Nous pensons chez «bcksp.es» que toutes les données que vous nous confiez vous appartiennent.\
@@ -47,6 +47,7 @@ i18n.addTranslation('fr-FR', {
 								l'entièreté des ces données.<br/>\
 								<small><u>PS</u> : Pour supprimer tout ou en partie votre archive, rendez-vous dans votre flux privé, \
 								selectionnez ce que vous voulez supprimer et appuyez sur votre touche backspace.</small>",
+				price : "gratuit",
 				button : "télécharger",
 				file : {
 					name : "archive.bcksp.es",
@@ -54,7 +55,7 @@ i18n.addTranslation('fr-FR', {
 				}
 			},
 			book : {
-				title : "commander une édition de mon archive",
+				title : "imprimer mon livre",
 				img : "/images/logo-animated.gif",
 				description : 	"C'est ici que «bcksp.es» prend tout son sens. \
 								En participant à cette étape-ci que nous allons publier votre archive. \
@@ -62,7 +63,6 @@ i18n.addTranslation('fr-FR', {
 								Le contenu de votre archive sera supprimé de nos serveurs après imprimession.",
 				button : "passer commande",
 				price : "à partir de ... €",
-				countdown : "encore {$count} chraractères avant impression de votre livre",
 				form : {
 					author : {
 						label : "nom de l'auteur à imprimer sur la couverture",
@@ -82,7 +82,7 @@ i18n.addTranslation('fr-FR', {
 			},
 
 			poster : {
-				title : "commander un poster",
+				title : "créer un poster",
 				img : "/images/logo-animated.gif",
 				description : "",
 				button : "passer commande",

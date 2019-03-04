@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2019-02-12 19:41:40
+  @Last Modified time: 2019-03-04 21:40:21
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -77,7 +77,7 @@ class LiveStream extends Component {
 	}
 	render() {
 		return (
-			<div>
+			<div className="livestream">
 				<ul>
 					<li>
 						<button onClick={this.handleSwitchStream.bind(this, "public")}>

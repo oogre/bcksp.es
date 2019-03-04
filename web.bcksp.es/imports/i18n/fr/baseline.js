@@ -2,14 +2,17 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2019-03-03 14:24:21
+  @Last Modified time: 2019-03-03 16:27:07
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	online : {
 		baseline: [
 			"Salut! Qu'as-tu supprimé aujourd'hui?",
-			"T'efface plus que t'écris",
-			"T'efface plus que t'écris",
+			"Hey! T'efface plus que t'écris!",
+			"Bonjour! As-tu pensé à nous dernièrement?",
+			"Salut! Nous ne t'avons pas oublié",
+			"J'ai hâte d'archiver tes prochaines suppression. Bisous!",
+			"Coucou! Bientôt tu aura un livre dont tu es le héros.",
 		]
 	},
 	offline : {

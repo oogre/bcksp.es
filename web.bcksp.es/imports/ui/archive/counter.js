@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2019-03-02 13:41:25
+  @Last Modified time: 2019-03-04 21:40:08
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -25,22 +25,19 @@ class ArchiveCounter extends Component {
 	}
 	render() {
 		return (
-			<div>
-				{
-					this.props.isReady &&
-						<div>
-							<h1><T>archive.counter.title</T></h1>
-							<div>
-								<div>
-									<span>
-										<T count={this.getCharCount()}>archive.counter.now</T>
-									</span>
-									<meter value={this.getPerCent()} max="100"></meter>
-									<span>{this.getPerCent()+"%"}</span>
-								</div>
-							</div>
-						</div>
-				}
+			<div className="counter">
+				<span>
+					<T count={this.getCharCount()}>archive.counter</T>
+				</span>
+				<span>
+					{
+						(this.getPerCent()).toFixed(2)+"%"
+					}
+				</span>
+				<svg width="100%" height="20px">
+					<rect rx="3" ry="3" x="0" y="0" width="100%" height="100%" fill={"#d8d8d8"} />
+					<rect rx="3" ry="3" x="0" y="0" width={this.getPerCent()+"%"} height="100%" fill={"#fff123"} />
+				</svg>
 			</div>
 		)
 	}

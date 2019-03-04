@@ -99,7 +99,7 @@ export default class LiveFrame extends Component {
 	
 	render(){
 		return (
-			<div>
+			<div className="liveframe">
 				{
 					this.props.fullscreenAvailable!==false && 
 						<button onClick={this.toggleFullscreen.bind(this)}>

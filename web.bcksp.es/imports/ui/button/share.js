@@ -2,7 +2,7 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 17:45:05
-  @Last Modified time: 2019-02-10 15:01:47
+  @Last Modified time: 2019-03-03 16:36:24
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -30,7 +30,7 @@ export default class ButtonShare extends Component {
 					}}
 			>
 				<button onClick={this.onClick.bind(this)}>
-					<T>menus.share</T>
+					<T>archive.share.button</T>
 				</button>
 			</div>
 		);
