@@ -2,7 +2,7 @@
   bcksp.es - Souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2019-03-04 21:26:50
+  @Last Modified time: 2019-03-04 22:20:17
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - About.js
@@ -24,12 +24,8 @@ class Souvenir extends Component {
 	constructor(props){
 		super(props);
 		this.state={
-			percent : 0
+			percent : 0.33
 		}
-		setInterval(()=>{
-			let t = this.state.percent += 0.0029;
-			this.setState({percent : t % 1})
-		}, 20);
 	}
 
 	getPerCent(){
@@ -47,25 +43,24 @@ class Souvenir extends Component {
 		return (
 			<div className="page__content">
 				<div className="container">
-					<h2 className="souvenir__title"><T>souvenir.title2</T></h2>
+					<h2 className="page__title"><T>souvenir.title2</T></h2>
+					<h2 className="page__subtitle"><T>souvenir.subtitle</T></h2>
 					<ul className="souvenir">
 						{
 							this.props.isConnected &&
 							<li className="souvenir__item">
 								<a href={FlowRouter.path("item", {type : "download"})}>
-									<div className="wrapper border">
-										<img src="/images/logo.svg"/>
-									</div>
-									<h3><T>souvenir.item.download.title</T></h3>
-									<p><T>souvenir.item.download.price</T></p>
+									<img src="#" src="/images/souvenirs/archive.svg" alt="" />
+									<span className="souvenir__link-title"><T>souvenir.item.download.title</T></span>
+									<span className="souvenir__link-badge"><T>souvenir.item.download.price</T></span>
 								</a>
 							</li>
 						}
 						{
 							this.props.isConnected &&
 								<li className="souvenir__item">
-									<a href={FlowRouter.path("item", {type : "book"})}>
-										<ProgressTemplate 
+									<a className="souvenir__link" href={FlowRouter.path("item", {type : "book"})}>
+										<ProgressTemplate //souvenir__counter-label
 											percent={this.getPerCent()}
 											colorFg="#fff123"
 											colorBg="#000000"
@@ -73,42 +68,41 @@ class Souvenir extends Component {
 											thickness={15}
 											thicknessRatio={0.5}
 										>
-											<img src="/images/logo.svg"/>
+											<img src="/images/souvenirs/book.png"/>
 										</ProgressTemplate>
-										<h3><T>souvenir.item.book.title</T></h3>
-										<p><T>souvenir.item.book.price</T></p>
+										<span className="souvenir__link-title"><T>souvenir.item.book.title</T></span>
+										<span className="souvenir__link-badge"><T>souvenir.item.book.price</T></span>
 									</a>
 								</li>
 						}
 						<li className="souvenir__item">
-							<a href={FlowRouter.path("item", {type : "poster"})}>
+							<a className="souvenir__link" href={FlowRouter.path("item", {type : "poster"})}>
 								<div className="wrapper">
-									<img src="/images/logo.svg"/>
+									<img src="/images/souvenirs/poster.png" alt=""/>
 								</div>
-								<h3><T>souvenir.item.poster.title</T></h3>
-								<p><T>souvenir.item.poster.price</T></p>
+								<span className="souvenir__link-title"><T>souvenir.item.poster.title</T></span>
+								<span className="souvenir__link-badge"><T>souvenir.item.poster.price</T></span>
 							</a>
 						</li>
 
 						<li className="souvenir__item">
-							<a href={FlowRouter.path("item", {type : "contact"})}>
+							<a className="souvenir__link" href={FlowRouter.path("item", {type : "contact"})}>
 								<div className="wrapper">
-									<img src="/images/logo.svg"/>
+									<img src="#" alt=""/>
 								</div>
-								<h3><T>souvenir.item.contact.title</T></h3>
+								<span className="souvenir__link-title"><T>souvenir.item.contact.title</T></span>
 							</a>
 						</li>
 
 						<li className="souvenir__item">
 							<a href={FlowRouter.path("item", {type : "almanach"})}>
 								<div className="wrapper">
-									<img src="/images/logo.svg"/>
+									<img src="#"/>
 								</div>
-								<h3><T>souvenir.item.almanach.title</T></h3>
-								<p><T>souvenir.item.almanach.price</T></p>
+								<span className="souvenir__link-title"><T>souvenir.item.almanach.title</T></span>
+								<span className="souvenir__link-badge"><T>souvenir.item.almanach.price</T></span>
 							</a>
 						</li>
-
 					</ul>
 				</div>
 			</div>

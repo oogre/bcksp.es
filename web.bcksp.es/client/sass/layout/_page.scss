@@ -1,0 +1,42 @@
+/*------------------------------------*\
+  Page
+\*------------------------------------*/
+
+// Page Content
+// ---------------------
+.page__content {
+  margin-bottom: $size-40;
+}
+
+
+// Page Title
+// ---------------------
+.page__title,
+.page__subtitle {
+  font-family: $font-body;
+  font-weight: $font-weight-body;
+  text-transform: uppercase;
+}
+
+.page__title {
+  font-size: $size-70;
+  line-height: .95;
+  margin-bottom: 0;
+
+  // Small "underline" decoration
+  &:after {
+    margin-top: $size-30;
+    content: "";
+    display: block;
+    height: 8px;
+    width: 58px;
+    border-radius: 2px;
+    background: #000;
+  }
+}
+
+.page__subtitle {
+  font-size: $size-24;
+  line-height: 2.33;
+}
+

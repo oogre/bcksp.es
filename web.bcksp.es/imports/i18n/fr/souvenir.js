@@ -2,12 +2,13 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2019-03-04 21:24:08
+  @Last Modified time: 2019-03-04 22:15:39
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	souvenir : {
 		title : 	"Rendez-vous à la boutique",
 		title2 : 	"matérialiser votre mémoire",
+		subtitle : 	"la boutique",
 		short : 	"Faites vivre ce projet, en faisant produire via notre boutique \
 					tout sorte de goodies affichants vos meilleurs mots supprimés.",
 		delivery : {

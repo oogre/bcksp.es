@@ -8,10 +8,13 @@
 }
 
 .about__container {
-  display: flex;
+  @include media-query("medium") {
+    display: flex;
+  }
 }
 
 .about,
+.about--intro,
 .about__title {
   color: #fff;
 }
@@ -27,4 +30,39 @@
 .about__content {
   font-size: $size-23;
   line-height: 1.39;
+}
+
+.about__content a {
+  color: #fff;
+  text-decoration: underline;
+
+  &:hover {
+    color: #f06;
+  }
+}
+
+// About intro variation
+// ---------------------
+.about--intro {
+  padding: $size-112 0 $size-205;
+  background: $grey-thunder no-repeat right center;
+
+  @include media-query("medium") {
+    padding-left: $size-230;
+    background-image: url("/images/backgrounds/eraser-background.png");
+  }
+}
+
+.about--intro .about__container {
+  max-width: 680px;
+  display: block;
+}
+
+.about--intro .about__title {
+  font-family: $font-body;
+  margin-bottom: $size-60;
+}
+
+.about--intro .about__content {
+  margin-bottom: $size-126;
 }
