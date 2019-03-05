@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2019-01-04 23:24:20
+  @Last Modified time: 2019-03-05 11:08:48
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -14,7 +14,7 @@ import { streamer } from './../streamer.js';
 
 import { 
 	checkUserLoggedIn,
-	chackString,
+	checkString,
 	checkUrl
 } from './../../utilities/validation.js';
 
@@ -23,7 +23,7 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 	name: 'Settings.Blind.Field.Add',
 	validate({ type, classFlag=false }) {
 		checkUserLoggedIn();
-		chackString(type);
+		checkString(type);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -57,7 +57,7 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 	name: 'Settings.Blind.Field.Remove',
 	validate({ type, classFlag=false }) {
 		checkUserLoggedIn();
-		chackString(type);
+		checkString(type);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,

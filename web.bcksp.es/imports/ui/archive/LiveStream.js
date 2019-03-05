@@ -2,7 +2,7 @@
   web.bitRepublic - LiveStream.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-20 15:17:52
-  @Last Modified time: 2019-03-04 22:17:16
+  @Last Modified time: 2019-03-05 10:56:43
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -20,7 +20,7 @@ class LiveStream extends Component {
 		this.state = {
 			streamFrom : "public",
 			public : true,
-			publicBackspaces : "",
+			publicBackspaces : ""
 		};
 		this.loaded = false;
 	}
@@ -30,7 +30,7 @@ class LiveStream extends Component {
 		if(streamName == "public" && this.state.streamFrom != streamName){
 			this.setState({
 				streamFrom : streamName,
-				public : true,
+				public : true
 			});
 		} else if(streamName == "private" && this.props.isConnected && this.state.streamFrom != streamName){
 			this.setState({

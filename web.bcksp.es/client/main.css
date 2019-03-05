@@ -8,10 +8,33 @@
     height: 100%;
     font-size: 4em;
 }
+.livestream__content{
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.livestream__content::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.livestream__content::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-left : solid 1px #efefef;
+    margin-left: 20px;
+}
+ 
+.livestream__content::-webkit-scrollbar-thumb {
+  background-color: black;
+  outline: 1px solid slategrey;
+}
+
 .stream{
     word-break: break-all;
     white-space: pre-wrap;
+    
 }
+
 [contenteditable]:focus{
     outline: none;
 }
@@ -30,8 +53,8 @@ html, body, #render-target{
     height: 100%;
 }
 
-.hide : {
-    display:none;
+.hide{
+    display:none !important; 
 }
 
 

@@ -2,12 +2,49 @@
   bcksp.es - MyToggleButton.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-26 13:38:23
-  @Last Modified time: 2018-11-26 13:55:01
+  @Last Modified time: 2019-03-05 12:33:54
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ToggleButton from 'react-toggle-button'
 
 // App component - represents the whole app
+class ThumbIcon extends Component {
+	constructor(props){
+		super(props);
+	}
+	render(){
+		return (
+			<span style={{
+				    width: "100%",
+					textAlign: 'center',
+					textTransform: 'uppercase',
+					paddingTop: '4px'
+			}}>
+				{this.props.value ? "blacklisted" : "whitelisted"}
+			</span>
+		);
+	}
+}
+
+class LabelIcon extends Component {
+	constructor(props){
+		super(props);
+	}
+	render(){
+		return (
+			<span style={{
+				width: "100%",
+				display: "block",
+				textAlign: "center",
+				textTransform: "uppercase",
+				paddingTop: "6px"
+			}}>
+				{this.props.value}
+			</span>
+		);
+	}
+}
+
 export default class MyToggleButton extends Component {
 	constructor(props){
 		super(props);
@@ -15,22 +52,81 @@ export default class MyToggleButton extends Component {
 	render() {
 		return (
 			<ToggleButton
+				value={this.props.value}
+				onToggle={this.props.onToggle.bind(this)}
+				activeLabel={ <LabelIcon value="whitelisted"/> }
+				inactiveLabel={ <LabelIcon value="blacklisted"/> }
+				thumbIcon={ <ThumbIcon value={this.props.value}/> }
+				thumbAnimateRange={[3, 125]}
 				colors={{
+					activeThumb: {
+						base: '#e9000f',
+						hover: '#e9000f',
+    				},
+    				inactiveThumb: {
+      					base: '#14c402',
+      					hover: '#14c402',
+    				},
 					inactive: {
-						base: 'rgb(128, 128, 128)',
-						hover: 'rgb(150,150,150)',
+						base: '#ffffff',
+						hover: '#ffffff',
 					},
 					active: {
-						base: 'rgb(0, 0, 0)',
-						hover: 'rgb(50,50,50)',
+						base: '#ffffff',
+						hover: '#ffffff',
 					}
 				}}
-				activeLabel="black"
-				inactiveLabel="white"
-				value={this.props.value}
-				thumbStyle={{ borderRadius: 2 }}
-				trackStyle={{ borderRadius: 2 }}
-				onToggle={this.props.onToggle.bind(this)} />
+				containerStyle={{
+					width: '250px',
+					height: '40px',
+				}}
+				thumbStyle={{ 
+					borderRadius: "1px",
+					color : "#ffffff",
+					border : "none",
+					boxShadow : "none",
+					width: '122px',
+					height: '34px',
+				}}
+				trackStyle={{ 
+					borderRadius: "1px",
+					border : "solid 1px black",
+					background : "white",
+					width: '250px',
+  					height: '40px',
+				 }}
+				trackStyleHover={{
+					borderRadius: "1px",
+					border : "solid 1px black",
+					backgroundColor : "white"
+				}}
+				activeLabelStyle={{
+					color : "#000000",
+					fontSize: "inherit",
+					fontFamily:"inherit",
+					position: "inherit",
+					marginTop:0,
+					marginBottom:0,
+					lineHeight: "inherit",
+					opacity: "1",
+					display: "inline-block",
+					width: "50%",
+					height: "100%"
+				}}
+				inactiveLabelStyle={{
+					color : "#000000",
+					fontSize: "inherit",
+					fontFamily:"inherit",
+					position: "inherit",
+					marginTop:0,
+					marginBottom:0,
+					lineHeight: "inherit",
+					opacity: "1",
+					display: "inline-block",
+					width: "50%",
+					height: "100%"
+				}}
+			/>
 		);
 	}
 }

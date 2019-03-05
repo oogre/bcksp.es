@@ -29,3 +29,6 @@
   top: 50%;
   transform: translateY(-50%);
 }
+.dropdown-switcher__button:focus{
+  outline:none;
+}
