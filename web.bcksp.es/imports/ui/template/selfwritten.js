@@ -2,16 +2,15 @@
   bcksp.es - selfwritten.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 16:45:02
-  @Last Modified time: 2019-03-02 17:18:05
+  @Last Modified time: 2019-03-07 12:48:33
 \*----------------------------------------*/
 import React, { Component } from 'react';
-
+import {lerp} from './../../utilities/math.js';
 export default class SelfWrittenTemplate extends Component {
 	constructor(props){
 		super(props);
 		this.timer;
 		this.cursor = 0;
-		this.caretAt = 0;
 		this.state = {
 			text : ""
 		};
@@ -23,11 +22,10 @@ export default class SelfWrittenTemplate extends Component {
 	updateTxt(){
 		let wait = parseInt(this.props.text[this.cursor]);
 		Meteor.clearInterval(this.timer);
-		let t = wait || 200 + (Math.random() * 2 - 1) * 100;
+		let t = (wait || 200) * lerp(0.5, 1.5, Math.random());// + (Math.random() * 2 - 1) * 100;
 		this.timer = Meteor.setTimeout(()=>this.updateTxt(), t);	
 		if(!wait){
 			var text = this.props.text[this.cursor];
-			this.caretAt = text.indexOf("^");
 			this.setState({
 				text : text
 			});
@@ -42,9 +40,9 @@ export default class SelfWrittenTemplate extends Component {
 					React.Children.map(this.state.text.split(""), child => {
 						return (
 							child == "^" ? 
-								<span className="caret blink"></span>
+								<span className="caret blink">|</span>
 							:
-								<span style={{whiteSpace: "pre"}}>{child}</span>
+								<span className="char">{child}</span>
 						);
 					})
 				}

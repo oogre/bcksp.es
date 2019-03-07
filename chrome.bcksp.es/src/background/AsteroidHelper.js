@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-01-09 17:34:08
+  @Last Modified time: 2019-03-06 19:22:37
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import Data from "./../utilities/Data.js";

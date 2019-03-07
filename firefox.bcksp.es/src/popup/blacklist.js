@@ -2,12 +2,12 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2019-01-04 23:25:32
+  @Last Modified time: 2019-03-05 12:53:11
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
 import FixeWait from './fixe/wait.js';
-import ToggleButton from 'react-toggle-button';
+import MyToggleButton from './MyToggleButton.js';
 import MessageError from './message/error.js';
 import { sendMessage } from './../utilities/com.js';
 import { getMessageFromError } from './../utilities/tools.js';
@@ -76,24 +76,7 @@ export default class Blacklist extends Component {
 					{ this.state.currentURL } is 
 				</span>
 				<span>
-					<ToggleButton
-						  colors={{
-						  	inactive: {
-						      base: 'rgb(128, 128, 128)',
-						      hover: 'rgb(150,150,150)',
-						    },
-						    active: {
-						      base: 'rgb(0, 0, 0)',
-						      hover: 'rgb(50,50,50)',
-						    }
-						  }}
-						  activeLabel="black"
-	  					  inactiveLabel="white"
-						  value={ self.state.isBlacklisted }
-						  thumbStyle={{ borderRadius: 2 }}
-						  trackStyle={{ borderRadius: 2 }}
-						  onToggle={self.handleBlacklistChange.bind(self)} 
-					/>
+					<MyToggleButton value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)} />
 				</span>
 				<span>
 					listed

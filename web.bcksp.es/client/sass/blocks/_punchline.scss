@@ -9,3 +9,9 @@
   font-weight: $font-weight-body;
   margin-bottom: $size-80;
 }
+
+.caret {
+    width: 1px;
+    position: absolute;
+    transform: translate(-5.5px, 0);
+}

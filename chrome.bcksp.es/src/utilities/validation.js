@@ -2,18 +2,22 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:16:34
-  @Last Modified time: 2019-01-04 23:40:11
+  @Last Modified time: 2019-03-06 19:22:46
 \*----------------------------------------*/
 
 import Data from "./Data.js";
 import { config } from './../shared/config.js';
 import { getContentEditableInParent, intersection } from "./tools.js";
 import { isString, isEmpty, isFunction, isArray } from 'underscore';
+import { setDefaultIcon } from './icon.js';
 
 export { isString, isEmpty, isFunction, isUndefined, isNull, isArray, isBoolean, isObject } from 'underscore';
 
 export async function checkConnected(){
-	if(!Data.state.connected) throw new Error("Server is not accessible");
+	if(!Data.state.connected){
+		setDefaultIcon(Data.state.loggedStatus);
+		throw new Error("Server is not accessible");
+	}
 	return true;
 }
 

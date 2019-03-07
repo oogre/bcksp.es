@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-01-05 18:28:27
+  @Last Modified time: 2019-03-06 19:24:34
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -167,7 +167,7 @@ on("archive, backspace", (data, resolve, reject) =>{
 	setIcon("backspacing");
 	procrastinate(config.senderTimeout, "deferredArchiveAdd")
 	.then(message =>{
-		checkConnected();
+		await checkConnected();
 		let archive = getArchiveBuffer();
 		if(archive.length < 1) throw new Error("Archive Add cancelled, casue local archive is empty");
 		return 	AsteroidHelper.call("Archives.methods.add", { 
