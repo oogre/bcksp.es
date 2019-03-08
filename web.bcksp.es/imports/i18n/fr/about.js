@@ -18,8 +18,9 @@ i18n.addTranslation('fr-FR', {
 					"pour effacer les derniers caractères saisis, ceux situés à gauche "+
 					"du curseur d’écriture. C'est elle qui déclanche la mécanique d'archivage de «bcksp.es»</p>"+
 					"<a href=\"{$about}\">en savoir plus</a></p>",
-		
-		long : 		"<a id=\"art\" href=\"#art\"><h2>positionnement artistique</h2></a>"+
+
+		long : 		"<div class=\"text-block\">"+
+					"<a id=\"art\" href=\"#art\"><h3 class=\"text-block__title\">positionnement artistique</h3></a>"+
 					"<p>Notre souhait est de mettre en lumière une part intime et obscure de l'Homme. "+
 					"Il nous paraît qu'un des intérêts de ce projet tient dans l'observation "+
 					"de la mécanique cérébrale travaillant pour former une communication par l'écrit. "+
@@ -33,8 +34,10 @@ i18n.addTranslation('fr-FR', {
 					"relatives au «big data» et à la protection des données. Ces sujets sont fondamentaux "+
 					"dans l’expérience numérique actuelle. Ce projet ouvre des questions et les poses "+
 					"à une part de notre réalité encore obscure que seul l’art numérique peut éclairer.</p>"+
+					"</div>"+
 					""+
-					"<a id=\"finance\" href=\"#finance\"><h2>financement</h2></a>"+
+					"<div class=\"text-block\">"+
+					"<a id=\"finance\" href=\"#finance\"><h3 class=\"text-block__title\">financement</h3></a>"+
 					"<p>Lorsque vous participer à «bcksp.es» vous avez la possibilité d'acheter "+
 					"l’impression de votre "+
 					"archive sous forme d’un livre format poche. Le prix demandé par «bcksp.es» "+
@@ -46,8 +49,10 @@ i18n.addTranslation('fr-FR', {
 					"<p>À l'heure actuelle, «bcksp.es» a bénéficié d'un financement de 3.000€ via la commision "+
 					"des arts numériques de la Fédération Wallonie-Bruxelles."+
 					"</p>"+
+					"</div>"+
 					""+
-					"<a id=\"history\" href=\"#history\"><h2>histoire</h2></a>"+
+					"<div class=\"text-block\">"+
+					"<a id=\"history\" href=\"#history\"><h3 class=\"text-block__title\">histoire</h3></a>"+
 					"<p>Une version beta de «bcksp.es» a déjà vu le jour et a fonctionné durant toute "+
 					"l’année 2014. La production de cette version beta autofinancée a répondu aux attentes "+
 					"déterminées au préalable. Elle a hébergé le compte d’une centaine d’utilisateurs "+
@@ -67,8 +72,10 @@ i18n.addTranslation('fr-FR', {
 					"<li>La rédaction d’une charte relative aux droits d’auteur respectant les dernières législation européenne.</li>"+
 					"</ul>"+
 					"</p>"+
+					"</div>"+
 					""+
-					"<a id=\"privacy\" href=\"#history\"><h2>vide privée</h2></a>"+
+					"<div class=\"text-block\">"+
+					"<a id=\"privacy\" href=\"#history\"><h3 class=\"text-block__title\">vide privée</h3></a>"+
 					"<p>Nous vous garantissons que toutes les données sont transférées de façon cryptées via les protocolss HTTPS et WSS. "+
 					"Sur nos serveurs, les archives sont cryptées au moyen de la librairie "+
 					"<a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>, de l'algorithme "+
@@ -79,8 +86,10 @@ i18n.addTranslation('fr-FR', {
 					"<p>De notre point de vue, il va de soi que rien ne sera publié en votre nom sans votre accord explicite. "+
 					"Il ne sera fait aucun usage de vos informations afin de réaliser des profils de consomateur, "+
 					"nous ne croyons pas en les paradigmes qui font vivre les gros du web.</p>"+
+					"</div>"+
 					""+
-					"<a id=\"licence\" href=\"#licence\"><h2>droit d'auteur</h2></a>"+
+					"<div class=\"text-block\">"+
+					"<a id=\"licence\" href=\"#licence\"><h3 class=\"text-block__title\">droit d'auteur</h3></a>"+
 					"<p>L'application web et des extensions sont open source, "+
 					"vous pouvez trouver l'entièreté de nos algorithmes "+
 					"sur <a target=\"_blank\" href=\"https://github.com/oogre/bcksp.es\">github</a>. "+
@@ -97,6 +106,7 @@ i18n.addTranslation('fr-FR', {
 					"<p>Toutes les éditions produites par «bcksp.es» ont un status standard d'œuvre d'art."+
 					"Toutes les éditions réalisées par «bcksp.es» ont comme co-auteur "+
 					"Vincent Evrard (auteur de «bcksp.es») et l'utilisateur ayant produit le contenu imprimé. "+
-					"Les auteurs/ayants droits seront toujours mentionné sur l'objet.</p>"
+					"Les auteurs/ayants droits seront toujours mentionné sur l'objet.</p>"+
+					"</div>"
 	}
 });

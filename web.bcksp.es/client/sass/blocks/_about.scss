@@ -4,19 +4,12 @@
 
 .about {
   padding: $size-112 0 $size-205;
-  background: $grey-thunder;
 }
 
 .about__container {
   @include media-query("medium") {
     display: flex;
   }
-}
-
-.about,
-.about--intro,
-.about__title {
-  color: #fff;
 }
 
 .about__title {
@@ -65,4 +58,10 @@
 
 .about--intro .about__content {
   margin-bottom: $size-126;
+}
+
+// About Long variation
+// ---------------------
+.about--long {
+  margin-top: $size-35;
 }

@@ -1,0 +1,17 @@
+/*------------------------------------*\
+  > Text Block
+  Simple text block generaly displaying title and content
+\*------------------------------------*/
+
+.text-block {
+  margin-bottom: $size-120;
+}
+
+.text-block__title {
+  font-family: $font-body;
+  font-size: $size-48;
+  line-height: 0.5;
+
+  // Small underline decoration
+  @include titleDecoration();
+}
