@@ -1,0 +1,19 @@
+/*------------------------------------*\
+  > Slider
+  Skin of https://github.com/akiran/react-slick
+\*------------------------------------*/
+
+.slider {
+  min-height: 600px;
+}
+
+.slick-arrow {
+  height: 100%;
+  width: 100px;
+  background: $grey-thunder;
+  z-index: z("slider") + 1;
+
+  @include media-query("medium") {
+    width: 230px;
+  }
+}

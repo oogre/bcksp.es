@@ -18,26 +18,37 @@ export default class AboutArtists extends Component {
 		return (
 			<div className="artists">
 				<div className="container">
-					<h2><T>artists.title</T></h2>
-					<ul className="">
-						{
-							i18n.createTranslator("artists")("list").map((artist, k) =>(
-								<li className="" key={k} >	
-									<h3>{artist.name}</h3>
-									<p dangerouslySetInnerHTML={{__html: artist.bio}} ></p>
-									<ul className="">
-										{
-											artist.links.map((link, k) =>(
-												<li className="" key={k} >	
-													<a href={link}>{link}</a>
-												</li>
-											))
-										}
-									</ul>
-								</li>
-							))
-						}
-					</ul>
+					<div className="artists__column">
+
+					</div>
+					<div className="artists__column">
+						<h3 className="artists__title"><T>artists.title</T></h3>
+						<p className="artists__intro"><T>artists.intro</T></p>
+						<ul className="artists-list">
+							{
+								i18n.createTranslator("artists")("list").map((artist, k) =>(
+									<li className="artist" key={k} >
+										<h3 className="artist__name">{artist.name}</h3>
+										<p className="artist__description" dangerouslySetInnerHTML={{__html: artist.bio}} ></p>
+										<ul className="artist__social-list">
+											{
+												artist.links.map((link, k) =>(
+													<li className="artist__social-list-item" key={k} >
+														<a className="artist__social-link" href={link}>
+															<img src="/images/icons/icon-globe.svg"/>
+															<div className="sr-only">
+																{link}
+															</div>
+														</a>
+													</li>
+												))
+											}
+										</ul>
+									</li>
+								))
+							}
+						</ul>
+					</div>
 				</div>
 			</div>
 		);

@@ -46,6 +46,11 @@
   }
 }
 
+.about--intro,
+.about--intro .about__title {
+  color: #fff;
+}
+
 .about--intro .about__container {
   max-width: 680px;
   display: block;
