@@ -7,6 +7,7 @@
 .artists {
   background: $grey-cod;
   padding: $size-40 0;
+  margin-bottom: $size-120;
 
   @include media-query("medium") {
     padding: $size-160 0;
@@ -19,7 +20,13 @@
 
 .artists__column {
   @include media-query("medium") {
-    width: 50%;
+    width: 30%;
+  }
+}
+
+.artists__column + .artists__column {
+  @include media-query("medium") {
+    width: 70%;
   }
 }
 
