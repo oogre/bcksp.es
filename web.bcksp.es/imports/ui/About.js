@@ -35,7 +35,7 @@ export default class About extends Component {
 					<h2 className="page__subtitle"><T>about.subtitle</T></h2>
 					<AboutLong/>
 				</div>
-				<Slider {...settings}>
+				<Slider className="slider" {...settings}>
 					<div>
 						<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 					</div>
