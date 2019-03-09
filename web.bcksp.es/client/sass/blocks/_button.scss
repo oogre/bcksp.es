@@ -6,10 +6,10 @@
 // ---------------------
 
 // Button Default
-@mixin button-default($color) {
+@mixin button-default($color-background, $text-color) {
   display: inline-block;
-  background-color: $color;
-  color: $color-body;
+  background-color: $color-background;
+  color: $text-color;
   padding: $size-8 $size-18 $size-6;
   text-transform: uppercase;
   font-family: $font-title;
@@ -19,13 +19,13 @@
   // Hover, focus, active interactions
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
-    color: inherit;
+    color: $text-color;
     text-decoration: none;
-    background: darken($color, 10%);
+    background: darken($color-background, 10%);
   }
 
   &:active:not([disabled]) {
-    background: darken($color, 15%);
+    background: darken($color-background, 15%);
   }
 }
 
@@ -53,5 +53,9 @@
 }
 
 .button--primary {
-  @include button-default($primary);
+  @include button-default($primary, $color-body);
+}
+
+.button--secondary {
+  @include button-default(#000, #fff);
 }

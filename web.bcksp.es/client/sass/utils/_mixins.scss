@@ -44,3 +44,19 @@
         clear: both;
     }
 }
+
+/**
+ * [titleDecoration Add a small underline decoration below title]
+ */
+@mixin titleDecoration($color: #000) {
+    // Small "underline" decoration
+    &::after {
+        margin-top: $size-30;
+        content: "";
+        display: block;
+        height: 8px;
+        width: 58px;
+        border-radius: 2px;
+        background: $color;
+    }
+}

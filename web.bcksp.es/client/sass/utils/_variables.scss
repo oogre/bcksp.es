@@ -15,6 +15,7 @@ $line-height-body: 1.5 !default;
 // ---------------------
 $yellow-broom: #fff123;
 $grey-thunder: #231F20;
+$grey-cod: #151212;
 
 $primary: $yellow-broom !default;
 $secondary: cyan !default;
@@ -79,6 +80,7 @@ $z-layers: (
     "modal": 2000,
     "dropdown": 1400,
     "sticky-footer": 1200,
+    "slider": 1100,
     "card": 1000,
     "souvenir": 500
 ) !default;

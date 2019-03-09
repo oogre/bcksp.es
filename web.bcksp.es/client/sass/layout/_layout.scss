@@ -10,7 +10,7 @@
   margin: 0 auto;
   padding: 0 $size-16;
 
-  @include media-query("medium") {
+  @include media-query("desktop") {
     padding: 0;
   }
 }

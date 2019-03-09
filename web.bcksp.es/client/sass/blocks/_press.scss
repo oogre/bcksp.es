@@ -1,0 +1,30 @@
+/*------------------------------------*\
+  > Press
+\*------------------------------------*/
+
+.press {
+  position: relative;
+}
+
+.press-list {
+  list-style-type: none;
+  padding: 0;
+
+  @include media-query("medium") {
+    display: flex;
+  }
+}
+
+.press-list__item {
+  @include media-query("medium") {
+    width: calc(50% - 10px);
+  }
+}
+
+.press__contact {
+  @include media-query("medium") {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

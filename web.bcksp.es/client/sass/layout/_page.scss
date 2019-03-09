@@ -24,15 +24,7 @@
   margin-bottom: 0;
 
   // Small "underline" decoration
-  &:after {
-    margin-top: $size-30;
-    content: "";
-    display: block;
-    height: 8px;
-    width: 58px;
-    border-radius: 2px;
-    background: #000;
-  }
+  @include titleDecoration();
 }
 
 .page__subtitle {

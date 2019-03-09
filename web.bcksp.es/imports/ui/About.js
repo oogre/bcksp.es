@@ -30,26 +30,36 @@ export default class About extends Component {
 		};
 		return (
 			<div className="page__content">
-				<AboutLong/>
-				<Slider {...settings}>
+				<div className="container">
+					<h1 className="page__title"><T>about.title</T></h1>
+					<h2 className="page__subtitle"><T>about.subtitle</T></h2>
+					<AboutLong/>
+				</div>
+				<div className="slider">
+					<Slider {...settings}>
 						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
+						<div>
+							<img className="logo--header__picture" src="/	images/logo-animated.gif" alt="#bcksp.es"/>
+						</div>
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
-						</div>
-						<div>	
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
 					</Slider>
+				</div>
+
 				<AboutArtists/>
-				<AboutPress/>
+
+				<div className="container">
+					<AboutPress/>
+				</div>
 			</div>
 		);
 	}

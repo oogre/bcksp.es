@@ -17,18 +17,18 @@ export default class AboutPress extends Component {
 	render() {
 		return (
 			<div className="press">
-				<div className="container">
-					<h2><T>press.title</T></h2>
-					<ul className="">
+				<div className="text-block">
+					<h3 className="text-block__title"><T>press.title</T></h3>
+					<ul className="press-list">
 						{
 							i18n.createTranslator("press")("testimonies").map((testimony, k) =>(
-								<li className="" key={k} >	
+								<li className="press-list__item" key={k} >
 									<p>« {testimony} »</p>
 								</li>
 							))
 						}
 					</ul>
-					<a href={FlowRouter.path("contact")}><T>press.callToAction.button</T></a>
+					<a className="button button--secondary press__contact" href={FlowRouter.path("contact")}><T>press.callToAction.button</T></a>
 					<p><T>press.callToAction.message</T></p>
 				</div>
 			</div>
