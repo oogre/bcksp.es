@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-03-06 19:20:26
+  @Last Modified time: 2019-03-08 18:15:02
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -38,7 +38,7 @@ Data.on("loggedStatus", loggedIn => {
 			warn("no way to auto connect to the website");
 		});
 	}
-	setDefaultIcon();
+	setDefaultIcon(loggedIn);
 });
 
 Data.on("*", (value, name) => log("---on---", name, value));

@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-02-28 18:36:02
+  @Last Modified time: 2019-03-08 19:28:21
 \*----------------------------------------*/
 
 
@@ -11,9 +11,9 @@ export const config = {
 		page : {
 			count : 100,
 			line : {
-				count : 25,
+				count : 32,
 				char : {
-					count : 30
+					count : 32
 				}
 			}
 		},
