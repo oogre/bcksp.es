@@ -7,16 +7,11 @@
   margin: 0;
   list-style-type: none;
   display: flex;
-  flex-direction: column;
   max-width: 600px;
 }
 
 .souvenir__item {
   max-width: 300px;
-}
-
-.souvenir__item:nth-child(even) {
-  align-self: flex-end;
 }
 
 // Souvenir Link
