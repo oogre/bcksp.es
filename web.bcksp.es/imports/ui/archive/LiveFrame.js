@@ -118,7 +118,7 @@ export default class LiveFrame extends Component {
 						/>
 				}
 
-				<div 	className={(this.state.fullscreen ? "fullscreen " : "") + "stream bcksp-es-disabled" }
+				<div 	className={(this.state.fullscreen ? "fullscreen " : "") + "liveframe__stream stream bcksp-es-disabled" }
 						contentEditable={true}
 						spellCheck={false}
         				dangerouslySetInnerHTML={{__html: this.props.content }}

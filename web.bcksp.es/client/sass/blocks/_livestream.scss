@@ -2,10 +2,29 @@
   Livestream
 \*------------------------------------*/
 
+.livestream-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  margin-bottom: $size-118;
+
+  &::after {
+    z-index: z("livestream");
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 214px;
+    background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
+  }
+}
+
 .livestream {
   margin: 0 auto $size-155;
   max-width: 942px;
   position: relative;
+  z-index: z("livestream") + 1;
   transform: translateX($size-12);
 }
 
@@ -54,8 +73,8 @@
 }
 
 .livestream__content .liveframe{
-    max-height: 200px;
-    overflow-y: scroll;
+    max-height: 1100px;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -77,8 +96,20 @@
 .liveframe{
     word-break: break-all;
     white-space: pre-wrap;
-    padding: $size-44 $size-76;
+    padding: $size-34 0;
+}
 
+// Liveframe Stream
+// ---------------------
+.liveframe__stream {
+  font-size: $size-26;
+  line-height: 1.38;
+}
+
+// Dropdown Livestream
+// ---------------------
+.dropdown--livestream {
+  margin-left: -$size-12;
 }
 
 // Liveframe Fullscreen Button

@@ -81,47 +81,49 @@ class LiveStream extends Component {
 	}
 	render() {
 		return (
-			<div className="livestream">
-				<div className="livestream__content">
+		  <div className="livestream-container">
+				<div className="livestream">
+					<div className="livestream__content">
 
-					<Dropdown label={this.state.livestreamTypeLabel}>
-						<ul className="dropdown__list">
-							<li className="dropdown__list-item">
-								<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this, "public")}>
-										<span className="dropdown__list-button-label">
-											<T>archive.public.button</T>
-										</span>
-								</button>
-							</li>
-							{
-								this.props.isConnected &&
+						<Dropdown className="dropdown--livestream" label={this.state.livestreamTypeLabel}>
+							<ul className="dropdown__list">
 								<li className="dropdown__list-item">
-									<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this, "private")}>
+									<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this, "public")}>
 											<span className="dropdown__list-button-label">
-												<T>archive.private.button</T>
+												<T>archive.public.button</T>
 											</span>
-										</button>
+									</button>
 								</li>
-							}
-						</ul>
-					</Dropdown>
+								{
+									this.props.isConnected &&
+									<li className="dropdown__list-item">
+										<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this, "private")}>
+												<span className="dropdown__list-button-label">
+													<T>archive.private.button</T>
+												</span>
+											</button>
+									</li>
+								}
+							</ul>
+						</Dropdown>
 
-					<LiveFrame	public={ this.state.public }
-							content={ this.state.public ? this.getPublicArchive() : this.getPrivateArchive() }
-							onSelect={_.isFunction(this.props.onSelect) && this.props.onSelect.bind(this)}
-							onShare={_.isFunction(this.props.onShare) && this.props.onShare.bind(this)}
-							fullscreenAvailable={this.props.fullscreenAvailable}
-							shareAvailable={this.props.shareAvailable}
-					/>
-				</div>
+						<LiveFrame	public={ this.state.public }
+								content={ this.state.public ? this.getPublicArchive() : this.getPrivateArchive() }
+								onSelect={_.isFunction(this.props.onSelect) && this.props.onSelect.bind(this)}
+								onShare={_.isFunction(this.props.onShare) && this.props.onShare.bind(this)}
+								fullscreenAvailable={this.props.fullscreenAvailable}
+								shareAvailable={this.props.shareAvailable}
+						/>
+					</div>
 
-				<div className="livestream__border-decoration-container" aria-hidden="true">
-					<div className="livestream__border-decoration"></div>
-					<div className="livestream__border-decoration"></div>
-					<div className="livestream__border-decoration"></div>
-					<div className="livestream__border-decoration"></div>
+					<div className="livestream__border-decoration-container" aria-hidden="true">
+						<div className="livestream__border-decoration"></div>
+						<div className="livestream__border-decoration"></div>
+						<div className="livestream__border-decoration"></div>
+						<div className="livestream__border-decoration"></div>
+					</div>
 				</div>
-			</div>
+		  </div>
 		);
 	}
 }
