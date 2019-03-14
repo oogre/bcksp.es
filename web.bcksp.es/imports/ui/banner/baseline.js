@@ -13,20 +13,22 @@ export default class BannerBaseline extends Component {
 	constructor(props){
 		super(props);
 	}
-	
+
 	render() {
 		return (
 			<div className="punchline">
 				<div className="container">
-					<h1 className="punchline__title" >
-						{ 	!this.props.isConnected &&
-								<SelfWrittenTemplate text={i18n.__("offline.baseline")}/>
-						}
-						{
-							this.props.isConnected &&
-								_.sample(i18n.__("online.baseline"))
-						}
-					</h1>
+					{ 	!this.props.isConnected &&
+						<h1 className="punchline__title" >
+							<SelfWrittenTemplate text={i18n.__("offline.baseline")}/>
+						</h1>
+					}
+					{
+						this.props.isConnected &&
+							<h1 className="page__title">
+								{ _.sample(i18n.__("online.baseline")) }
+							</h1>
+					}
 				</div>
 			</div>
 		);

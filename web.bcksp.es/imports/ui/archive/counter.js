@@ -26,16 +26,16 @@ class ArchiveCounter extends Component {
 	render() {
 		return (
 			<div className="counter">
-				<span>
+				<span className="counter__total-character">
 					<T count={this.getCharCount()}>archive.counter</T>
 				</span>
-				<span>
+				<span className="counter__total-percentage">
 					{
 						(this.getPerCent()).toFixed(2)+"%"
 					}
 				</span>
-				<svg width="100%" height="20px">
-					<rect rx="3" ry="3" x="0" y="0" width="100%" height="100%" fill={"#d8d8d8"} />
+				<svg width="100%" height="24px">
+					<rect rx="3" ry="3" x="0" y="0" width="100%" height="100%" fill={"#D8D8D8"} />
 					<rect rx="3" ry="3" x="0" y="0" width={this.getPerCent()+"%"} height="100%" fill={"#fff123"} />
 				</svg>
 			</div>

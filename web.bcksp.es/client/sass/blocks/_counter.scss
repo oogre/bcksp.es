@@ -1,0 +1,18 @@
+/*------------------------------------*\
+  > Counter
+\*------------------------------------*/
+
+.counter__total-character,
+.counter__total-percentage {
+  font-family: $font-title;
+}
+
+.counter__total-character {
+  font-size: $size-24;
+  margin-bottom: $size-16;
+}
+
+.counter__total-percentage {
+  font-size: $size-36;
+  float: right;
+}

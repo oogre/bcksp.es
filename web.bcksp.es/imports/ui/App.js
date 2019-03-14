@@ -27,9 +27,13 @@ class App extends Component {
 		return (
 			<div className="page__content">
 				<BannerBaseline isConnected={this.props.isConnected}/>
-				{ 
-					this.props.isConnected && 
-						<ArchiveCounter/> 
+				{
+					this.props.isConnected &&
+						<div className="container">
+							<div className="homepage-counter">
+								<ArchiveCounter/>
+							</div>
+						</div>
 				}
 				<LiveStream onShare={this.onShare.bind(this)}/>
 				{
@@ -44,8 +48,8 @@ class App extends Component {
 					!this.props.isConnected &&
 						<AboutPrivacy/>
 				}
-				{ 
-					this.props.isConnected && 
+				{
+					this.props.isConnected &&
 						<SouvenirPannel/>
 				}
 			</div>
