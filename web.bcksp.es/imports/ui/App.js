@@ -48,10 +48,12 @@ class App extends Component {
 					!this.props.isConnected &&
 						<AboutPrivacy/>
 				}
-				{
-					this.props.isConnected &&
-						<SouvenirPannel/>
-				}
+				<div className="container">
+					{
+						this.props.isConnected &&
+							<SouvenirPannel/>
+					}
+				</div>
 			</div>
 		);
 	}
