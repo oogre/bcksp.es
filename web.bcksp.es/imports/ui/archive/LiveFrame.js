@@ -53,9 +53,9 @@ export default class LiveFrame extends Component {
 	}
 	toggleFullscreen(){
 		if(!this.state.fullscreen){
-			this.streamElement.focus();	
+			this.streamElement.focus();
 		}else{
-			this.streamElement.blur();	
+			this.streamElement.blur();
 		}
 		this.setState({
 			fullscreen : !this.state.fullscreen
@@ -68,7 +68,7 @@ export default class LiveFrame extends Component {
 			this.toggleFullscreen();
 		}
 
-		if(	   !this.props.public 
+		if(	   !this.props.public
 			&& event.type == "keydown"
 			&& event.keyCode == 8 // BCKSP
 			&& !event.metaKey
@@ -78,8 +78,8 @@ export default class LiveFrame extends Component {
 			let text;
 			if(text = this.caret.getSelectedText()){
 				Meteor.call("Archives.methods.edit", {
-					text : text, 
-					startAt : this.caret.startAt, 
+					text : text,
+					startAt : this.caret.startAt,
 					stopAt : this.caret.stopAt
 				}, error => {if(error) log(e)});
 			}
@@ -92,24 +92,27 @@ export default class LiveFrame extends Component {
 			case 40 :
 				return true;
 			break;
-			default : 
+			default :
 				return false;
 		}
 	}
-	
+
 	render(){
 		return (
 			<div className="liveframe">
 				{
-					this.props.fullscreenAvailable!==false && 
-						<button onClick={this.toggleFullscreen.bind(this)}>
-							<T>archive.fullscreen.button</T>
+					this.props.fullscreenAvailable!==false &&
+						<button className="liveframe__fullscreen button--unstyled" onClick={this.toggleFullscreen.bind(this)}>
+							<span className="sr-only">
+								<T>archive.fullscreen.button</T>
+							</span>
+							<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg"><g fill="#000" fillRule="nonzero"><path d="M2 0h11.724a2 2 0 0 1 1.364 3.462L3.365 14.404A2 2 0 0 1 0 12.942V2a2 2 0 0 1 2-2zM2 39.942h11.724a2 2 0 0 0 1.364-3.462L3.365 25.538A2 2 0 0 0 0 27v10.942a2 2 0 0 0 2 2zM38.024 0H26.3a2 2 0 0 0-1.365 3.462L36.66 14.404a2 2 0 0 0 3.365-1.462V2a2 2 0 0 0-2-2zM38.024 39.942H26.3a2 2 0 0 1-1.365-3.462L36.66 25.538A2 2 0 0 1 40.024 27v10.942a2 2 0 0 1-2 2z"/><path d="M9.04 6.419L33.08 30.46l-2.12 2.121L6.918 8.54z"/><path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/></g></svg>
 						</button>
 				}
 				{
-					this.props.shareAvailable!==false && 
-						<ButtonShare 	left={this.state.position[0]} 
-										top={this.state.position[1]} 
+					this.props.shareAvailable!==false &&
+						<ButtonShare 	left={this.state.position[0]}
+										top={this.state.position[1]}
 										content={this.state.selectContent}
 										onShare={this.props.onShare && this.props.onShare.bind(this)}
 						/>
@@ -120,8 +123,8 @@ export default class LiveFrame extends Component {
 						spellCheck={false}
         				dangerouslySetInnerHTML={{__html: this.props.content }}
 				></div>
-				
-				
+
+
 			</div>
 		);
 	}

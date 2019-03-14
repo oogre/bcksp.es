@@ -38,7 +38,7 @@
   // Hover, focus, active interactions
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
-    outline-color: $color-primary;
+    outline-color: $primary;
   }
 }
 
@@ -58,4 +58,8 @@
 
 .button--secondary {
   @include button-default(#000, #fff);
+}
+
+.button--unstyled {
+  @include button-unstyled();
 }
