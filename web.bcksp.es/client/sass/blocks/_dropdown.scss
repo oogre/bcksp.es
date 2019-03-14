@@ -1,0 +1,151 @@
+/*------------------------------------*\
+  Dropdown
+\*------------------------------------*/
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+}
+
+.dropdown.open {
+  border-color: $grey-thunder;
+  border-bottom: 0;
+}
+
+// Dropdown Button and List buttons
+// ---------------------
+.dropdown__button,
+.dropdown__list-button {
+  font-family: $font-title;
+  font-size: $size-26;
+  text-align: left;
+}
+
+// Dropdown Button
+// Main dropdown button (open the list)
+// ---------------------
+.dropdown__button {
+  @include button-unstyled();
+
+  position: relative;
+  font-size: $size-26;
+  text-transform: capitalize;
+  cursor: pointer;
+  display: inline-block;
+  border: 2px solid transparent;
+  padding: $size-10 $size-10 0;
+}
+
+.dropdown__button:focus {
+  background: $grey-thunder;
+  color: #fff;
+}
+
+.dropdown__button:focus .dropdown__button-icon {
+  fill: #fff;
+}
+
+.dropdown__button-label {
+  position: relative;
+  padding-right: $size-48;
+  box-shadow: 0 4px 0 -2px $grey-thunder;
+}
+
+.dropdown__button.open .dropdown__button-label {
+  box-shadow: 0 3px 0 -2px $grey-thunder;
+}
+
+.dropdown__button-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: $grey-thunder;
+}
+
+.dropdown__button.open .dropdown__button-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdown__button:focus{
+  outline:none;
+}
+
+.dropdown__button.open {
+  border-color: $grey-thunder;
+  border-bottom-color: transparent;
+}
+
+// Dropdown content
+// ---------------------
+.dropdown__content {
+  position: absolute;
+  margin-top: -2px;
+  width: 100%;
+  border: 2px solid transparent;
+  background: #fff;
+}
+
+.dropdown.open .dropdown__content {
+  border-top: 0;
+  border-color: $grey-thunder;
+
+  &::before {
+    position: absolute;
+    content: "";
+    display: block;
+    width: calc(100% - 24px);
+    height: 1px;
+    background: $grey-thunder;
+    top: 0;
+    left: $size-12;
+  }
+}
+
+// Dropdown List
+// List containing all dropdown item
+// ---------------------
+.dropdown__list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+// Dropdown list button
+// Button of a dropdown list
+// ---------------------
+.dropdown__list-button {
+  @include button-unstyled();
+
+  cursor: pointer;
+  width: 100%;
+  padding: $size-10 $size-10 0 $size-10;
+  background: transparent;
+
+  &:hover,
+  &:focus {
+    background: $grey-thunder;
+    color: #fff;
+    outline: 0;
+  }
+}
+
+.dropdown__list-button-label {
+  display: block;
+  width: 100%;
+  box-shadow: 0 3px 0 -2px $grey-thunder;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.dropdown__list-button:hover .dropdown__list-button-label,
+.dropdown__list-button:focus .dropdown__list-button-label {
+  box-shadow: none;
+}
+
+.dropdown__list-item:last-child .dropdown__list-button-label {
+  box-shadow: none;
+}
