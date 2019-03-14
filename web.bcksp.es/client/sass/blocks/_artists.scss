@@ -31,7 +31,6 @@
 }
 
 .artists__title {
-  font-family: $font-body;
   font-size: $size-48;
   line-height: 0.5;
   color: #fff;
@@ -60,6 +59,10 @@
   height: 1px;
   background-color: #fff;
   margin-bottom: $size-24;
+}
+
+.artists__intro {
+  font-family: $font-title;
 }
 
 .artists__intro,
