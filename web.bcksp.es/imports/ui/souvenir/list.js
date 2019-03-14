@@ -49,8 +49,8 @@ class Souvenir extends Component {
 						{
 							this.props.isConnected &&
 							<li className="souvenir__item">
-								<a href={FlowRouter.path("item", {type : "download"})}>
-									<img src="#" src="/images/souvenirs/archive.svg" alt="" />
+								<a className="souvenir__link" href={FlowRouter.path("item", {type : "download"})}>
+									<img className="souvenir__link-image" src="#" src="/images/souvenirs/archive.svg" alt="" />
 									<span className="souvenir__link-title"><T>souvenir.item.download.title</T></span>
 									<span className="souvenir__link-badge"><T>souvenir.item.download.price</T></span>
 								</a>
@@ -78,7 +78,7 @@ class Souvenir extends Component {
 						<li className="souvenir__item">
 							<a className="souvenir__link" href={FlowRouter.path("item", {type : "poster"})}>
 								<div className="wrapper">
-									<img src="/images/souvenirs/poster.png" alt=""/>
+									<img className="souvenir__link-image" src="/images/souvenirs/poster.png" alt=""/>
 								</div>
 								<span className="souvenir__link-title"><T>souvenir.item.poster.title</T></span>
 								<span className="souvenir__link-badge"><T>souvenir.item.poster.price</T></span>
@@ -88,7 +88,7 @@ class Souvenir extends Component {
 						<li className="souvenir__item">
 							<a className="souvenir__link" href={FlowRouter.path("item", {type : "contact"})}>
 								<div className="wrapper">
-									<img src="#" alt=""/>
+									<img className="souvenir__link-image" src="#" alt=""/>
 								</div>
 								<span className="souvenir__link-title"><T>souvenir.item.contact.title</T></span>
 							</a>
@@ -97,7 +97,7 @@ class Souvenir extends Component {
 						<li className="souvenir__item">
 							<a href={FlowRouter.path("item", {type : "almanach"})}>
 								<div className="wrapper">
-									<img src="#"/>
+									<img className="souvenir__link-image" src="#"/>
 								</div>
 								<span className="souvenir__link-title"><T>souvenir.item.almanach.title</T></span>
 								<span className="souvenir__link-badge"><T>souvenir.item.almanach.price</T></span>

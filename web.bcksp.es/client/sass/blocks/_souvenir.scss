@@ -7,19 +7,33 @@
   margin: 0;
   list-style-type: none;
   display: flex;
-  max-width: 600px;
+  flex-wrap: wrap;
+  max-width: 940px;
 }
 
 .souvenir__item {
-  max-width: 300px;
+  max-width: 274px;
+  margin-bottom: $size-60;
+  margin-left: $size-60;
+}
+
+.souvenir__item:nth-child(3n+1) {
+  margin-left: 0;
 }
 
 // Souvenir Link
 // ---------------------
 .souvenir__link {
+  display: block;
+  max-width: 100%;
   text-align: center;
   text-transform: capitalize;
   position: relative;
+}
+
+.souvenir__link-image {
+  display: block;
+  max-width: 100%;
 }
 
 .souvenir__link-title {
