@@ -31,8 +31,10 @@ export default class About extends Component {
 		return (
 			<div className="page__content">
 				<div className="container">
-					<h1 className="page__title"><T>about.title</T></h1>
-					<h2 className="page__subtitle"><T>about.subtitle</T></h2>
+					<div className="page__header">
+						<h1 className="page__title"><T>about.title</T></h1>
+						<h2 className="page__subtitle"><T>about.subtitle</T></h2>
+					</div>
 					<AboutLong/>
 				</div>
 				<div className="slider">

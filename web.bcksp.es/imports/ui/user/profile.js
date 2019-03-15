@@ -21,7 +21,7 @@ class UserProfile extends Component {
 			email : ""
 		}
 	}
-	
+
 	static getDerivedStateFromProps(props, state) {
 		return {
 			email : props.userMail || "",
@@ -43,12 +43,12 @@ class UserProfile extends Component {
 		});
 		return false;
 	}
-	
+
 	handleDeleteArchive(event){
 		event.preventDefault();
 		needConfirmation("userprofile")
 		.then(data=>{
-			
+
 		}).catch(e=>{
 			console.log("Delete Archive Confirmation",e.message);
 		});
@@ -80,7 +80,7 @@ class UserProfile extends Component {
 		event.preventDefault();
 		needConfirmation("userprofile")
 		.then(data=>{
-			
+
 		}).catch(e=>{
 			console.log("Delete Account Confirmation",e.message);
 		});
@@ -91,8 +91,8 @@ class UserProfile extends Component {
 		return this.props.settings.blacklist.map((url, k) => (
 			<li key={k}>
 				<span style={{display: "inline-block"}}>
-					<MyToggleButton 
-						value={ true } 
+					<MyToggleButton
+						value={ true }
 						onToggle={flag=>{this.handleToggleBlacklist(url, flag)}}
 					/>
 				</span>
@@ -107,8 +107,8 @@ class UserProfile extends Component {
 		return this.props.settings.blindfield.class.map((c, k) => (
 			<li key={k}>
 				<span style={{display: "inline-block"}}>
-					<MyToggleButton 
-						value={ true } 
+					<MyToggleButton
+						value={ true }
 						onToggle={flag=>{this.handleToggleBlindfield(c, true, flag)}}
 					/>
 				</span>
@@ -123,8 +123,8 @@ class UserProfile extends Component {
 		return config.settings.blindfield.types.map((type, k) => (
 			<li key={k}>
 				<span style={{display: "inline-block"}}>
-					<MyToggleButton 
-						value={ this.props.settings.blindfield.types.includes(type.value) } 
+					<MyToggleButton
+						value={ this.props.settings.blindfield.types.includes(type.value) }
 						onToggle={flag=>{this.handleToggleBlindfield(type.value, false, flag)}}
 					/>
 				</span>
@@ -140,85 +140,93 @@ class UserProfile extends Component {
 	renderUserInfo(){
 		if(!this.props.isSettingsReady)return;
 		return (
-			<div className="fields-row">
-				<div className="fields-column">
-					<label htmlFor = "email">
-						<T>forms.email</T>
-					</label>
-					<input 	id = "email" 
-							type = "email" 
-							ref = "email"
-							name = "email"
-							placeholder = "email"
-							value = {Meteor.user().emails.pop().address}
-							disabled = {true}
-					/>
-				</div>
+			<div className="field">
+				<label className="field__label" htmlFor = "email">
+					<T>forms.email</T>
+				</label>
+				<input id = "email"
+						className = "input--text"
+						type = "email"
+						ref = "email"
+						name = "email"
+						placeholder = "email"
+						value = {Meteor.user().emails.pop().address}
+						disabled = {true}
+				/>
 			</div>
 		)
 	}
-	
+
 	render() {
 		return (
 			<div className="page__content">
-				<form className="login-user">
-					{
-						this.renderUserInfo()
-					}
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
+				<div className="container">
+					<div className="page__header">
+						<h1 className="page__title"><T>userprofile.title</T></h1>
+					</div>
+					<form>
+						{
+							this.renderUserInfo()
+						}
+
+						<hr className="field-separator" />
+
+						<div className="field">
+							<label className="field__label">
 								<T>userprofile.blacklist</T>
 							</label>
-							<ul>
-							{ this.renderBlacklist() }
+							<ul className="toggle-list">
+								{ this.renderBlacklist() }
 							</ul>
-						</div>	
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
+						</div>
+
+						<hr className="field-separator" />
+
+						<div className="field">
+							<label className="field__label">
 								<T>userprofile.blindfield.type</T>
 							</label>
-							<ul>
-							{ this.renderBlindfieldType() }
-							</ul>	
+							<ul className="toggle-list">
+								{ this.renderBlindfieldType() }
+							</ul>
 						</div>
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
+
+						<hr className="field-separator" />
+
+						<div className="field">
+							<label className="field__label">
 								<T>userprofile.blindfield.class</T>
 							</label>
-							<ul>
+							<ul className="toggle-list">
 								{ this.renderBlindfieldClass() }
 								<li>
 									<input type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
 								</li>
-							</ul>	
+							</ul>
 						</div>
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
+
+						<hr className="field-separator" />
+
+						<div className="field">
+							<label className="field__label">
 								<T>userprofile.archive</T>
 							</label>
 							<button	onClick = {this.handleDeleteArchive.bind(this)}>
 								<T>userprofile.deleteArchive</T>
 							</button>
 						</div>
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
-								<T>userprofile.account</T>
-							</label>
-							<button	onClick = {this.handleDeleteAccount.bind(this)}>
-								<T>userprofile.deleteAccount</T>
-							</button>
+						<div className="fields-row">
+							<div className="fields-column">
+								<label>
+									<T>userprofile.account</T>
+								</label>
+								<button	onClick = {this.handleDeleteAccount.bind(this)}>
+									<T>userprofile.deleteAccount</T>
+								</button>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		);
 	}

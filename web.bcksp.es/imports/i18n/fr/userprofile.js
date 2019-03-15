@@ -6,6 +6,7 @@
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	userprofile : {
+    title: "mon profile",
 		archive : "archive",
 		account : "compte",
 		deleteArchive : "supprimer mon archive",
