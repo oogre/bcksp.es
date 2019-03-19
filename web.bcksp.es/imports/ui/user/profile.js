@@ -90,13 +90,13 @@ class UserProfile extends Component {
 		if(!this.props.isSettingsReady)return;
 		return this.props.settings.blacklist.map((url, k) => (
 			<li key={k}>
-				<span style={{display: "inline-block"}}>
+				<span className="input-wrapper--inline">
 					<MyToggleButton
 						value={ true }
 						onToggle={flag=>{this.handleToggleBlacklist(url, flag)}}
 					/>
 				</span>
-				<span>
+				<span className="input-wrapper--inline">
 					 : {url}
 				</span>
 			</li>
@@ -106,14 +106,14 @@ class UserProfile extends Component {
 		if(!this.props.isSettingsReady)return;
 		return this.props.settings.blindfield.class.map((c, k) => (
 			<li key={k}>
-				<span style={{display: "inline-block"}}>
+				<span className="input-wrapper--inline">
+					 <span>{c} :</span>
+				</span>
+				<span className="input-wrapper--inline">
 					<MyToggleButton
 						value={ true }
 						onToggle={flag=>{this.handleToggleBlindfield(c, true, flag)}}
 					/>
-				</span>
-				<span>
-					 : {c}
 				</span>
 			</li>
 		))
@@ -121,18 +121,18 @@ class UserProfile extends Component {
 	renderBlindfieldType(){
 		if(!this.props.isSettingsReady)return;
 		return config.settings.blindfield.types.map((type, k) => (
-			<li key={k}>
-				<span style={{display: "inline-block"}}>
+			<li className="field" key={k}>
+				<label className="field__label" htmlFor="">
+					{type.value}
+				</label>
+				<span className="input-wrapper--inline">
+					<input className="input--text" type={type.value} defaultValue={type.placeholder} disabled/>
+				</span>
+				<span className="input-wrapper--inline">
 					<MyToggleButton
 						value={ this.props.settings.blindfield.types.includes(type.value) }
 						onToggle={flag=>{this.handleToggleBlindfield(type.value, false, flag)}}
 					/>
-				</span>
-				<span>
-					<input type={type.value} defaultValue={type.placeholder} disabled/>
-				</span>
-				<span>
-					 : {type.value}
 				</span>
 			</li>
 		))
@@ -171,10 +171,8 @@ class UserProfile extends Component {
 
 						<hr className="field-separator" />
 
-						<div className="field">
-							<label className="field__label">
-								<T>userprofile.blacklist</T>
-							</label>
+						<div>
+							<h2><T>userprofile.blacklist</T></h2>
 							<ul className="toggle-list">
 								{ this.renderBlacklist() }
 							</ul>
@@ -182,10 +180,8 @@ class UserProfile extends Component {
 
 						<hr className="field-separator" />
 
-						<div className="field">
-							<label className="field__label">
-								<T>userprofile.blindfield.type</T>
-							</label>
+						<div>
+							<h2><T>userprofile.blindfield.type</T></h2>
 							<ul className="toggle-list">
 								{ this.renderBlindfieldType() }
 							</ul>
@@ -193,14 +189,12 @@ class UserProfile extends Component {
 
 						<hr className="field-separator" />
 
-						<div className="field">
-							<label className="field__label">
-								<T>userprofile.blindfield.class</T>
-							</label>
+						<div>
+							<h2><T>userprofile.blindfield.class</T></h2>
 							<ul className="toggle-list">
 								{ this.renderBlindfieldClass() }
 								<li>
-									<input type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
+									<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
 								</li>
 							</ul>
 						</div>
@@ -211,19 +205,17 @@ class UserProfile extends Component {
 							<label className="field__label">
 								<T>userprofile.archive</T>
 							</label>
-							<button	onClick = {this.handleDeleteArchive.bind(this)}>
+							<button	className="button button--primary" onClick = {this.handleDeleteArchive.bind(this)}>
 								<T>userprofile.deleteArchive</T>
 							</button>
 						</div>
-						<div className="fields-row">
-							<div className="fields-column">
-								<label>
-									<T>userprofile.account</T>
-								</label>
-								<button	onClick = {this.handleDeleteAccount.bind(this)}>
-									<T>userprofile.deleteAccount</T>
-								</button>
-							</div>
+						<div className="field">
+							<label className="field__label">
+								<T>userprofile.account</T>
+							</label>
+							<button	className="button button--primary" onClick = {this.handleDeleteAccount.bind(this)}>
+								<T>userprofile.deleteAccount</T>
+							</button>
 						</div>
 					</form>
 				</div>

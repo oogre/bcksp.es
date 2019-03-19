@@ -64,4 +64,9 @@
 .menu--footer .menu__item-link {
   text-decoration: underline;
   text-transform: capitalize;
+
+  &:hover,
+  &:hover {
+    text-decoration: none;
+  }
 }

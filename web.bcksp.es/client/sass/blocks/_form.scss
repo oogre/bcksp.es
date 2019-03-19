@@ -34,6 +34,16 @@
   }
 }
 
+// Input Wrapper Inline
+// ---------------------
+.input-wrapper--inline {
+  display: inline-block;
+}
+
+.input-wrapper--inline + .input-wrapper--inline {
+  margin-left: $size-20;
+}
+
 // Input text Like
 // ---------------------
 
@@ -60,7 +70,7 @@
 .toggle-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 $size-20;
 }
 
 .toggle-list li {

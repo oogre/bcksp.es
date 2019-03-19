@@ -45,13 +45,12 @@ h3 {
 
 a {
     color: $color-link;
-    text-decoration: none;
     background-color: transparent; // Remove the gray background on active links in IE 10.
     -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
 
     @include hover {
-        color: $color-link-hover;
-        text-decoration: underline;
+        text-decoration: none;
+        background-color: $color-link-background-hover;;
     }
 }
 
@@ -72,5 +71,19 @@ a:not([href]):not([tabindex]) {
 
     &:focus {
         outline: 0;
+    }
+}
+
+// Link Unstyled
+// ---------------------
+.link--unstyled {
+    background: transparent;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: transparent;
     }
 }
