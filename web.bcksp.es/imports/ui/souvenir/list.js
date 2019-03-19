@@ -54,7 +54,7 @@ class Souvenir extends Component {
 								<a className="souvenir__link" href={FlowRouter.path("item", {type : "download"})}>
 									<img className="souvenir__link-image" src="#" src="/images/souvenirs/archive.svg" alt="" />
 									<span className="souvenir__link-title"><T>souvenir.item.download.title</T></span>
-									<span className="souvenir__link-badge"><T>souvenir.item.download.price</T></span>
+									<span className="souvenir__link-badge souvenir__link-badge--free"><T>souvenir.item.download.price</T></span>
 								</a>
 							</li>
 						}
@@ -97,9 +97,9 @@ class Souvenir extends Component {
 						</li>
 
 						<li className="souvenir__item">
-							<a href={FlowRouter.path("item", {type : "almanach"})}>
+							<a className="souvenir__link" href={FlowRouter.path("item", {type : "almanach"})}>
 								<div className="wrapper">
-									<img className="souvenir__link-image" src="#"/>
+									<img className="souvenir__link-image" src="#" alt=""/>
 								</div>
 								<span className="souvenir__link-title"><T>souvenir.item.almanach.title</T></span>
 								<span className="souvenir__link-badge"><T>souvenir.item.almanach.price</T></span>

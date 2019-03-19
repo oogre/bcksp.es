@@ -24,11 +24,17 @@
 // Souvenir Link
 // ---------------------
 .souvenir__link {
+  font-family: $font-title;
   display: block;
   max-width: 100%;
   text-align: center;
   text-transform: capitalize;
   position: relative;
+  text-decoration: none;
+
+  &:hover {
+    background: transparent;
+  }
 }
 
 .souvenir__link-image {
@@ -39,8 +45,8 @@
 .souvenir__link-title {
   display: block;
   width: 100%;
-  font-family: $font-body;
   font-size: $size-32;
+  margin-top: $size-22;
 }
 
 .souvenir__link-badge {
@@ -50,6 +56,10 @@
   font-size: $size-22;
   line-height: 2.54;
   text-align: center;
+}
+
+.souvenir__link-badge--free {
+  color: $red;
 }
 
 // Souvenir counter label
