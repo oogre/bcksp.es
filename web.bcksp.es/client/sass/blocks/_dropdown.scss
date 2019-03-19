@@ -103,6 +103,10 @@
   }
 }
 
+.dropdown.open .dropdown__button:focus + .dropdown__content::before {
+  display: none;
+}
+
 // Dropdown List
 // List containing all dropdown item
 // ---------------------
