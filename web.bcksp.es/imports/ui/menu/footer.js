@@ -80,7 +80,7 @@ class MenuFooter extends Component {
 									{
 										this.hasToDisplayLogoutBtn() &&
 											<li className="menu__item">
-												<button className="menu__item-link" onClick={this.handleLogout.bind(this)}>
+												<button className="button button--secondary" onClick={this.handleLogout.bind(this)}>
 													<T>forms.logout</T>
 												</button>
 											</li>
