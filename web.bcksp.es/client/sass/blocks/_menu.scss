@@ -15,7 +15,6 @@
 
 .menu--header .menu__item {
   display: block;
-  margin-left: $size-35;
 
   &:first-child {
     margin: 0;
@@ -27,6 +26,10 @@
   text-transform: uppercase;
   font-family: $font-title;
   color: $grey-thunder;
+}
+
+.menu--header .menu__item-link {
+  padding: $size-8 $size-18 $size-6;
 }
 
 // Menu Header Mobile

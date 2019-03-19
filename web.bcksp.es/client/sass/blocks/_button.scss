@@ -15,6 +15,7 @@
   font-family: $font-title;
   font-size: $size-16;
   transition: background .2s $easeInOutCubic;
+  text-decoration: none;
 
   // Hover, focus, active interactions
   &:hover:not([disabled]),
