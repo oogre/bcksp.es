@@ -8,11 +8,14 @@
 import T from './../../i18n/index.js';
 import LiveFrame from './LiveFrame.js';
 import React, { Component } from 'react';
+import Dropdown from './../shared/dropdown.js';
+import { config } from './../../startup/config.js';
 import { streamer } from './../../api/streamer.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { PublicArchive } from './../../api/archives/archives.js';
 import { PrivateArchive } from './../../api/archives/archives.js';
-import Dropdown from './../shared/dropdown.js';
+
+
 
 // LiveStream component
 class LiveStream extends Component {
@@ -50,14 +53,14 @@ class LiveStream extends Component {
 	componentDidMount(){
 		streamer.on('publicBackspaces', message =>{
 			this.setState({
-				publicBackspaces : 	message.content + this.state.publicBackspaces
+				publicBackspaces : message.content + this.state.publicBackspaces
 			});
 		});
 	}
 
 	getPublicArchive(){
 		if(!this.props.isPublicReady || !this.props.publicArchive)return "";
-		return this.state.publicBackspaces+this.props.publicArchive.content;
+		return (this.state.publicBackspaces+this.props.publicArchive.content).substr(0, config.archives.public.longBuffer.maxMaxLen);
 	}
 
 	getPrivateArchive(){

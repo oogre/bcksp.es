@@ -17,6 +17,7 @@ export default class LiveFrame extends Component {
 		};
 	}
 	hideShareButton(){
+		
 		this.hideShareButtonTimer = setTimeout(()=>{
 			this.setState({
 				selectContent : "",
@@ -43,6 +44,7 @@ export default class LiveFrame extends Component {
 			if(content != ""){
 				clearInterval(this.hideShareButtonTimer);
 				let offset = event.caret.getOffset();
+				offset.top -= document.querySelector(".livestream-container").offsetTop;
 				this.setState({
 					position : [offset.left, offset.top]
 				});

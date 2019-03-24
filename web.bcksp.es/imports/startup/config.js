@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-03-08 19:28:21
+  @Last Modified time: 2019-03-24 18:33:33
 \*----------------------------------------*/
 
 
@@ -34,7 +34,8 @@ export const config = {
 				maxLen : 140
 			},
 			longBuffer : {
-				maxLen : 1000
+				maxLen : 1000,
+				maxMaxLen : 2000
 			}
 		},
 		private : {
