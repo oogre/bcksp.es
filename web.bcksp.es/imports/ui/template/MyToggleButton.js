@@ -2,7 +2,7 @@
   bcksp.es - MyToggleButton.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-26 13:38:23
-  @Last Modified time: 2019-03-05 12:33:54
+  @Last Modified time: 2019-03-24 16:47:48
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ToggleButton from 'react-toggle-button'
@@ -20,7 +20,7 @@ class ThumbIcon extends Component {
 					textTransform: 'uppercase',
 					paddingTop: '4px'
 			}}>
-				{this.props.value ? "blacklisted" : "whitelisted"}
+				{this.props.value ? this.props.label[1] : this.props.label[0]}
 			</span>
 		);
 	}
@@ -50,13 +50,15 @@ export default class MyToggleButton extends Component {
 		super(props);
 	}
 	render() {
+		let activeLabel = this.props.activeLabel || "whitelisted";
+		let inactiveLabel = this.props.inactiveLabel || "blacklisted";
 		return (
 			<ToggleButton
 				value={this.props.value}
 				onToggle={this.props.onToggle.bind(this)}
-				activeLabel={ <LabelIcon value="whitelisted"/> }
-				inactiveLabel={ <LabelIcon value="blacklisted"/> }
-				thumbIcon={ <ThumbIcon value={this.props.value}/> }
+				activeLabel={ <LabelIcon value={activeLabel}/> }
+				inactiveLabel={ <LabelIcon value={inactiveLabel}/> }
+				thumbIcon={ <ThumbIcon value={this.props.value} label={[activeLabel, inactiveLabel]}/> }
 				thumbAnimateRange={[3, 125]}
 				colors={{
 					activeThumb: {

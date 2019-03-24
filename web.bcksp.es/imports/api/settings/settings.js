@@ -2,7 +2,7 @@
   bcksp.es - settings.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:40
-  @Last Modified time: 2019-01-03 15:31:02
+  @Last Modified time: 2019-03-24 16:31:04
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -10,7 +10,7 @@ import { config } from '../../startup/config.js';
 import { 
 	log
 } from './../../utilities/log.js';
-
+import SettingsUtil from './../../utilities/settings.js';
 
 export const Settings = new Mongo.Collection('settings');
 
@@ -18,15 +18,13 @@ if(Meteor.isServer){
 	Meteor.users.find({}).observeChanges({
 		added(id, user) {
 			if(Settings.find({owner : id}).count() > 0) return;
-
-			let settingsId = Settings.insert({
+			
+			let settingsId = SettingsUtil.create();
+			
+			Settings.update({
+				_id : settingsId
+			},{
 				owner : id,
-				blacklist : [],
-				blindfield : {
-					types : [],
-					class : ["bcksp-es-disabled"]
-				},
-				createdAt : new Date(),
 				updatedAt : new Date()
 			});
 

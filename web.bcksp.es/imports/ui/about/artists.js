@@ -2,7 +2,7 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2018-10-31 15:19:06
+  @Last Modified time: 2019-03-24 17:31:25
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -26,7 +26,7 @@ export default class AboutArtists extends Component {
 						<p className="artists__intro"><T>artists.intro</T></p>
 						<ul className="artists-list">
 							{
-								i18n.createTranslator("artists")("list").map((artist, k) =>(
+								i18n.__("artists.list").map((artist, k) =>(
 									<li className="artist" key={k} >
 										<h3 className="artist__name">{artist.name}</h3>
 										<p className="artist__description" dangerouslySetInnerHTML={{__html: artist.bio}} ></p>

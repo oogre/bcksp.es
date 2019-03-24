@@ -2,13 +2,18 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-01-09 17:41:49
+  @Last Modified time: 2019-03-24 17:30:19
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { needConfirmation } from './../../utilities/ui.js';
 import { ResetPassword, UpdateEmail } from '../../api/users/methods.js';
-import { SettingsBlacklistRemove, SettingsBlindFieldAdd, SettingsBlindFieldRemove } from '../../api/settings/methods.js';
+import { 
+	SettingsBlacklistRemove, 
+	SettingsBlindFieldAdd, 
+	SettingsBlindFieldRemove,
+	SettingsTogglePublishToPublicFeed
+} from '../../api/settings/methods.js';
 import T from './../../i18n/index.js';
 import { Settings } from './../../api/settings/settings.js';
 import { config } from '../../startup/config.js'
@@ -63,6 +68,12 @@ class UserProfile extends Component {
 		}
 		return false;
 	}
+	handleTogglePublishToPublicFeed(){
+		SettingsTogglePublishToPublicFeed.call((err, res) =>{
+			console.log(err, res);
+		});
+		return false;
+	}
 	handleToggleBlacklist(url){
 		SettingsBlacklistRemove.call({url});
 		return false;
@@ -86,6 +97,24 @@ class UserProfile extends Component {
 		});
 		return false;
 	}
+	renderRublishToPublicFeed(){
+		if(!this.props.isSettingsReady)return;
+		return (
+			<li>
+				<span className="input-wrapper--inline">
+					<MyToggleButton
+						value={ !this.props.settings.publishToPublicFeed }
+						onToggle={flag=>{this.handleTogglePublishToPublicFeed()}}
+						activeLabel={i18n.__("userprofile.yes")}
+						inactiveLabel={i18n.__("userprofile.no")}
+					/>
+				</span>
+				<span className="input-wrapper--inline">
+					 : 
+				</span>
+			</li>
+		);
+	}
 	renderBlacklist(){
 		if(!this.props.isSettingsReady)return;
 		return this.props.settings.blacklist.map((url, k) => (
@@ -94,6 +123,8 @@ class UserProfile extends Component {
 					<MyToggleButton
 						value={ true }
 						onToggle={flag=>{this.handleToggleBlacklist(url, flag)}}
+						activeLabel={i18n.__("userprofile.whitelisted")}
+						inactiveLabel={i18n.__("userprofile.blacklisted")}
 					/>
 				</span>
 				<span className="input-wrapper--inline">
@@ -113,6 +144,8 @@ class UserProfile extends Component {
 					<MyToggleButton
 						value={ true }
 						onToggle={flag=>{this.handleToggleBlindfield(c, true, flag)}}
+						activeLabel={i18n.__("userprofile.whitelisted")}
+						inactiveLabel={i18n.__("userprofile.blacklisted")}
 					/>
 				</span>
 			</li>
@@ -132,6 +165,8 @@ class UserProfile extends Component {
 					<MyToggleButton
 						value={ this.props.settings.blindfield.types.includes(type.value) }
 						onToggle={flag=>{this.handleToggleBlindfield(type.value, false, flag)}}
+						activeLabel={i18n.__("userprofile.whitelisted")}
+						inactiveLabel={i18n.__("userprofile.blacklisted")}
 					/>
 				</span>
 			</li>
@@ -169,6 +204,15 @@ class UserProfile extends Component {
 							this.renderUserInfo()
 						}
 
+						<hr className="field-separator" />
+
+						<div>
+							<h2><T>userprofile.publishToPublicFeed</T></h2>
+							<ul className="toggle-list">
+								{ this.renderRublishToPublicFeed() }
+							</ul>
+						</div>
+						
 						<hr className="field-separator" />
 
 						<div>

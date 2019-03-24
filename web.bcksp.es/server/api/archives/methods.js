@@ -2,17 +2,19 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-02-27 13:09:17
+  @Last Modified time: 2019-03-24 17:13:49
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { Archives } from './../../../imports/api/archives/archives.js';
+import { Settings } from './../../../imports/api/settings/settings.js';
 import { config } from './../../../imports/startup/config.js';
 import { streamer } from './../../../imports/api/streamer.js';
 import { 
 	checkString,
 	checkUserLoggedIn
 } from './../../../imports/utilities/validation.js';
+import { log } from './../../../imports/utilities/log.js';
 
 import * as ArchiveTools from '../../utilities.archive.js';
 
@@ -41,6 +43,13 @@ export const ArchiveAdd = new ValidatedMethod({
 					_id : 1
 				}
 			});
+			let mySettings = Settings.findOne({
+				owner : this.userId
+			}, {
+				fields : {
+					publishToPublicFeed : 1
+				}
+			});
 			let publicArchive = Archives.findOne({
 				type : config.archives.public.type
 			}, {
@@ -62,8 +71,14 @@ export const ArchiveAdd = new ValidatedMethod({
 					}
 				});
 			})
-			.then(()=>ArchiveTools.readAsync(publicArchive._id))
-			.then(longBuffer=>{
+			.then(()=>{
+				if(!mySettings.publishToPublicFeed){
+					log("publish to public feed cancelled by user's settings");
+				}
+			})
+			.then(async ()=>{
+				if(!mySettings.publishToPublicFeed)return;
+				let longBuffer = await ArchiveTools.readAsync(publicArchive._id);
 				longBuffer = text + longBuffer;
 				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxLen);
 				return ArchiveTools.writeAsync(publicArchive._id, longBuffer)
@@ -79,6 +94,9 @@ export const ArchiveAdd = new ValidatedMethod({
 						updatedAt : new Date()
 					}
 				});
+			})
+			.then(()=>{
+				if(!mySettings.publishToPublicFeed)return;
 				streamer.emit('publicBackspaces', {content : text});
 			})
 			.catch(err=>console.log(err));

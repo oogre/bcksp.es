@@ -33,9 +33,9 @@ export default class Dropdown extends React.Component {
   // fields rendered by any of child components.
   handleChildClick(event) {
     // If child is a link, toggle the dropdown
-    if(event.target.tagName.toLowerCase() === 'a') {
+    //if(event.target.tagName.toLowerCase() === 'a') {
       this.toggleDropdown();
-    }
+    //}
   }
 
   render() {
