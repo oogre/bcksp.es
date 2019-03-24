@@ -2,7 +2,7 @@
   bcksp.es - tools.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:38:28
-  @Last Modified time: 2019-03-10 19:56:14
+  @Last Modified time: 2019-03-24 18:05:04
 \*----------------------------------------*/
 
 import { isContentEditable, isInputField, isArray, isEmpty } from "./validation.js";
@@ -20,8 +20,8 @@ export function getContentEditableInParent(element){
 }
 
 export function getContent(element){
-	if(element instanceof NodeList) [].slice.call(element).reduce((memo, e) => memo += getContent(e), '');
-	if(! (element instanceof Element)) return '';
+    if(element instanceof element.ownerDocument.defaultView.NodeList) [].slice.call(element).reduce((memo, e) => memo += getContent(e), '');
+    if(! (element instanceof element.ownerDocument.defaultView.Element)) return '';
 	if(isInputField(element)) return element.value;
 	return element.innerHTML.replace(/(<([^>]+)>)/ig, ''); 
 }

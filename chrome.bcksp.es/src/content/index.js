@@ -2,7 +2,7 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-03-14 13:49:07
+  @Last Modified time: 2019-03-24 18:06:50
 \*----------------------------------------*/
 import Data from "./../utilities/Data.js";
 import Protocol from "./../utilities/Protocol.js";
@@ -166,7 +166,11 @@ class BackspaceListener{
 						}
 					}	
 				}else{
+					console.log("not InputField")
 					if(!Data.state.downFlag){
+						console.log("downFlag")
+						console.log(target)
+						console.log(getContent(target))
 						Data.setState({
 							innerText : getContent(target)
 						});
@@ -238,21 +242,18 @@ class BackspaceListener{
 		this.addListeners(target);
 		let self = this;
 		try{
-			var iframes = target.querySelectorAll("iframe");
-			if(iframes){
-				iframes.map(function(iframe){
-					try{
-						iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
-						iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
-						iframe.addEventListener("load", function(event) {
-								iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
-								iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
-						}, false);
-					}catch(e){}
-					//this.addListeners(iframe);
-				});
-			}
-		}catch(error){}
+			target.querySelectorAll("iframe")
+			.forEach(iframe => {
+				try{
+					iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
+					iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
+					iframe.addEventListener("load", function(event) {
+							iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
+							iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
+					}, false);
+				}catch(e){}
+			});
+		}catch(e){}
 	}
 	addListeners (element){
 		element.addEventListener("keydown", this.keyDownListener, true);

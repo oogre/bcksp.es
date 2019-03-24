@@ -2,7 +2,7 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-03-10 21:12:41
+  @Last Modified time: 2019-03-24 18:07:39
 \*----------------------------------------*/
 import Data from "./../utilities/Data.js";
 import Protocol from "./../utilities/Protocol.js";
@@ -236,7 +236,21 @@ class BackspaceListener{
 		});
 	}
 	setupListener(target){
-		this.addListeners(document);
+		this.addListeners(target);
+		let self = this;
+		try{
+			target.querySelectorAll("iframe")
+			.forEach(iframe => {
+				try{
+					iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
+					iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
+					iframe.addEventListener("load", function(event) {
+							iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
+							iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
+					}, false);
+				}catch(e){}
+			});
+		}catch(e){}
 	}
 	addListeners (element){
 		element.addEventListener("keydown", this.keyDownListener, true);
