@@ -2,7 +2,7 @@
   bcksp.es - backspoace.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:31:41
-  @Last Modified time: 2019-01-04 22:08:10
+  @Last Modified time: 2019-03-10 20:20:28
 \*----------------------------------------*/
 import { Caret } from 'caret-pos';
 import { error } from "./log.js";

@@ -2,7 +2,7 @@
   bcksp.es - tools.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:38:28
-  @Last Modified time: 2019-01-04 22:39:02
+  @Last Modified time: 2019-03-10 19:56:14
 \*----------------------------------------*/
 
 import { isContentEditable, isInputField, isArray, isEmpty } from "./validation.js";
