@@ -2,7 +2,7 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-03-24 18:06:50
+  @Last Modified time: 2019-03-26 13:44:08
 \*----------------------------------------*/
 import Data from "./../utilities/Data.js";
 import Protocol from "./../utilities/Protocol.js";
@@ -166,11 +166,7 @@ class BackspaceListener{
 						}
 					}	
 				}else{
-					console.log("not InputField")
 					if(!Data.state.downFlag){
-						console.log("downFlag")
-						console.log(target)
-						console.log(getContent(target))
 						Data.setState({
 							innerText : getContent(target)
 						});
