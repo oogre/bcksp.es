@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-03-02 13:22:40
+  @Last Modified time: 2019-03-26 11:30:05
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -10,6 +10,7 @@
   import About from '../imports/ui/About.js';
   import {setupView} from '../imports/utilities/ui.js';
   import Souvenir from '../imports/ui/souvenir/list.js';
+  import LiveStream from '../imports/ui/archive/LiveStream.js';
   import UserProfile from '../imports/ui/user/profile.js';
   import SouvenirItem from '../imports/ui/souvenir/item.js';
   import TemplateFull from '../imports/ui/template/full.js';
@@ -47,6 +48,16 @@ if(DEVELOPPMENT){
 	});	
 }
 
+FlowRouter.route( '/livefeed', {
+		name: 'livefeed',
+		action( params ) {
+			render(<LiveStream/>, document.getElementById('render-target'));
+			setupView();
+		},
+		subscriptions( params, queryParams ) {
+			
+		}
+	});
 
 FlowRouter.route( '/about', {
 	name: 'about',

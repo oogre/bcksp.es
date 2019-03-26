@@ -1,4 +1,5 @@
 /* CSS declarations go here */
+/*
 .fullscreen{
 	position: fixed;
     background: rgba(250, 250, 250, 0.9);
@@ -8,7 +9,7 @@
     height: 100%;
     font-size: 4em;
 }
-
+*/
 
 [contenteditable]:focus{
     outline: none;

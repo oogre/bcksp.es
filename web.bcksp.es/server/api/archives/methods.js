@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-03-24 17:13:49
+  @Last Modified time: 2019-03-26 11:44:00
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -12,7 +12,8 @@ import { config } from './../../../imports/startup/config.js';
 import { streamer } from './../../../imports/api/streamer.js';
 import { 
 	checkString,
-	checkUserLoggedIn
+	checkUserLoggedIn,
+	checkGreaterThan
 } from './../../../imports/utilities/validation.js';
 import { log } from './../../../imports/utilities/log.js';
 

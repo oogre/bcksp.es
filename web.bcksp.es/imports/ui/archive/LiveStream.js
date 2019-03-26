@@ -30,7 +30,8 @@ class LiveStream extends Component {
 		this.loaded = false;
 	}
 
-	handleSwitchStream(streamName, event){
+	handleSwitchStream(event){
+		let streamName = this.state.public ? "private" : "public"
 		event.preventDefault();
 		if(streamName == "public" && this.state.streamFrom != streamName){
 			this.setState({
@@ -74,6 +75,7 @@ class LiveStream extends Component {
 		}
 		return content;
 	}
+	
 	componentDidUpdate(){
 		if(!this.loaded && this.props.isPublicReady){
 			if(_.isFunction(this.props.onLoad)){
@@ -82,31 +84,28 @@ class LiveStream extends Component {
 			this.loaded = true;
 		}
 	}
+
 	render() {
+		let fullScreen = FlowRouter.getRouteName() == "livefeed";
+
 		return (
-		  <div className="livestream-container">
+		  <div className={"livestream-container" + (fullScreen ? " fullscreen" : "")}>
 				<div className="livestream">
 					<div className="livestream__content">
-
-						<Dropdown className="dropdown--livestream" label={this.state.livestreamTypeLabel}>
+						<Dropdown active={this.props.isConnected} className="dropdown--livestream" label={this.state.livestreamTypeLabel}>
 							<ul className="dropdown__list">
 								<li className="dropdown__list-item">
-									<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this, "public")}>
-											<span className="dropdown__list-button-label">
-												<T>archive.public.button</T>
-											</span>
+									<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this)}>
+										<span className="dropdown__list-button-label">
+											{
+												this.state.public ?
+													<T>archive.private.button</T>
+												:
+													<T>archive.public.button</T>
+											}
+										</span>
 									</button>
 								</li>
-								{
-									this.props.isConnected &&
-									<li className="dropdown__list-item">
-										<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this, "private")}>
-												<span className="dropdown__list-button-label">
-													<T>archive.private.button</T>
-												</span>
-											</button>
-									</li>
-								}
 							</ul>
 						</Dropdown>
 

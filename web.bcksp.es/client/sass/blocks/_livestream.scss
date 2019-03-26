@@ -2,6 +2,22 @@
   Livestream
 \*------------------------------------*/
 
+.livestream-container.fullscreen{
+    margin-bottom: 0;
+}
+.livestream-container.fullscreen .livestream{
+  height:99%;
+}
+.livestream-container.fullscreen .livestream__content{
+  height:100%;
+}
+.livestream-container.fullscreen .livestream__content{
+  height:100%;
+}
+.livestream-container.fullscreen .liveframe{
+  height: calc(99% - 3px);
+}
+
 .livestream-container {
   position: relative;
   height: 100%;
@@ -114,6 +130,10 @@
 
 // Liveframe Fullscreen Button
 // ---------------------
+.liveframe__fullscreen:hover {
+  outline-color: transparent;
+  background-color: transparent;
+}
 .liveframe__fullscreen {
   position: absolute;
   top: $size-54;
