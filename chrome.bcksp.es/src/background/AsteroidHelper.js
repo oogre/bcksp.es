@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-03-06 19:22:37
+  @Last Modified time: 2019-03-26 20:01:15
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import Data from "./../utilities/Data.js";
@@ -21,6 +21,7 @@ class AsteroidHelper{
 
 		this.subscribtionAddressList = [
 			"archive.private.counter",
+			"config",
 			"settings.private"
 		];
 		
@@ -83,6 +84,9 @@ class AsteroidHelper{
 		//});
 		
 		this.on("changed", {
+			config : ({maxCharPerBook}) => {
+				Data.setState({maxCharPerBook : maxCharPerBook});
+			},
 			archives : ({count}) => {
 				Data.setState({
 					archiveSize : count
@@ -90,18 +94,17 @@ class AsteroidHelper{
 			},
 			settings : settings=>{
 				if(isObject(settings.blindfield)){
-					Data.setState({
-						blindfields : settings.blindfield
-					});
+					Data.setState({blindfields : settings.blindfield});
 				}
 				if(isArray(settings.blacklist)){
-					Data.setState({
-						blacklist : settings.blacklist
-					});
+					Data.setState({blacklist : settings.blacklist});
 				}
 			}
 		});
 		this.on("added", {
+			config : ({maxCharPerBook}) => {
+				Data.setState({maxCharPerBook : maxCharPerBook});
+			},
 			archives : ({count}) => {
 				Data.setState({archiveSize : count});
 			},

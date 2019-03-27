@@ -2,9 +2,10 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-03-26 11:44:00
+  @Last Modified time: 2019-03-27 14:02:18
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
+import { htmlDecode } from'htmlencode';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { Archives } from './../../../imports/api/archives/archives.js';
 import { Settings } from './../../../imports/api/settings/settings.js';
@@ -36,6 +37,9 @@ export const ArchiveAdd = new ValidatedMethod({
 			text = text.replace(/&nbsp;/g, " ");
 			text = text.replace(/\n/g, " ");
 			text = text.replace(/\t/g, " ");
+			text = htmlDecode(text);
+			text = text+" ";
+			
 			let myArchive = Archives.findOne({
 				type : config.archives.private.type,
 				owner : this.userId
@@ -58,7 +62,6 @@ export const ArchiveAdd = new ValidatedMethod({
 					_id : 1
 				}
 			});
-			text = text+" ";
 			ArchiveTools.append(myArchive._id, text)
 			.then(()=>{
 				Archives.update({

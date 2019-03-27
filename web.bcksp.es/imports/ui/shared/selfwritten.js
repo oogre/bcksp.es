@@ -2,11 +2,11 @@
   bcksp.es - selfwritten.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 16:45:02
-  @Last Modified time: 2019-03-07 12:48:33
+  @Last Modified time: 2019-03-27 15:32:47
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import {lerp} from './../../utilities/math.js';
-export default class SelfWrittenTemplate extends Component {
+export default class SelfWritten extends Component {
 	constructor(props){
 		super(props);
 		this.timer;

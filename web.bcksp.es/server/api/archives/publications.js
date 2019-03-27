@@ -2,8 +2,9 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2019-01-03 16:56:59
+  @Last Modified time: 2019-03-27 13:38:30
 \*----------------------------------------*/
+import { htmlDecode } from'htmlencode';
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';
 import { config } from '../../../imports/startup/config.js';
@@ -24,6 +25,7 @@ if(Meteor.isServer){
 		});
 		ArchiveTools.readAsync(publicArchive._id)
 		.then(content=>{
+			content = htmlDecode(content);
 			this.added('publicArchive', publicArchive._id, {content : content});
 			this.ready();
 		})
@@ -55,6 +57,7 @@ if(Meteor.isServer){
 
 			ArchiveTools.readAsync(user.archive)
 			.then(content=>{
+				content = htmlDecode(content);
 				this.added('privateArchive', +new Date(), {content : content});	
 			});
 			
@@ -65,8 +68,9 @@ if(Meteor.isServer){
 				changed: (oldData, newData) => {
 					if (!initializing) {
 						let newCharLength = oldData.count-newData.count;
-						let content = ArchiveTools.readAsync(user.archive)
+						ArchiveTools.readAsync(user.archive)
 						.then(content=>{
+							content = htmlDecode(content);
 							if(newCharLength > 0){
 								this.added('privateArchive', +new Date(), {content : content.substr(0, newCharLength)});
 							}else{
@@ -93,5 +97,9 @@ if(Meteor.isServer){
 				}
 			});
 	});
-	
+	Meteor.publish("config", function(){
+		this.added('config', +new Date(), {
+			maxCharPerBook : config.book.getMaxChar()
+		});
+	});
 }

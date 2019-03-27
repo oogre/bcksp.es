@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-03-08 18:15:02
+  @Last Modified time: 2019-03-26 19:34:54
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -45,6 +45,16 @@ Data.on("*", (value, name) => log("---on---", name, value));
 
 Data.on("archiveSize", (value, name) =>{
 	sendMessage("archiveSize", value)
+	.then(data => info(data))
+	.catch(e => info(e.message));
+
+	sendMessage("archiveRatio", value/Data.state.maxCharPerBook)
+	.then(data => info(data))
+	.catch(e => info(e.message));
+});
+
+Data.on("maxCharPerBook", (value, name) =>{
+	sendMessage("archiveRatio", Data.state.archiveSize/value)
 	.then(data => info(data))
 	.catch(e => info(e.message));
 });
@@ -160,6 +170,10 @@ on("getBlindfields", (data, resolve, reject) =>{
 
 on("getArchiveSize", (data, resolve, reject) =>{
 	resolve(Data.state.archiveSize);
+});
+
+on("getArchiveRatio", (data, resolve, reject) =>{
+	resolve(Data.state.archiveSize/Data.state.maxCharPerBook);
 });
 
 on("archive, backspace", (data, resolve, reject) =>{

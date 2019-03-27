@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-03-24 17:30:19
+  @Last Modified time: 2019-03-27 15:32:02
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -17,7 +17,7 @@ import {
 import T from './../../i18n/index.js';
 import { Settings } from './../../api/settings/settings.js';
 import { config } from '../../startup/config.js'
-import MyToggleButton from "./../template/MyToggleButton.js";
+import MyToggleButton from "./../shared/MyToggleButton.js";
 
 class UserProfile extends Component {
 	constructor(props){

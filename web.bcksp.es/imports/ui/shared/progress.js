@@ -2,12 +2,12 @@
   bcksp.es - progress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-04 06:26:10
-  @Last Modified time: 2019-03-04 21:09:01
+  @Last Modified time: 2019-03-27 15:32:23
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
 // App component - represents the whole app
-export default class ProgressTemplate extends Component {
+export default class Progress extends Component {
 	constructor(props){
 		super(props);
 	}

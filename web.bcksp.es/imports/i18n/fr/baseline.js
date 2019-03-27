@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2019-03-07 12:51:50
+  @Last Modified time: 2019-03-27 15:11:27
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	online : {
@@ -17,7 +17,7 @@ i18n.addTranslation('fr-FR', {
 	},
 	offline : {
 		baseline: [
-			"un lieu pensé pour vos caractères supprimés",
+			"un lieu pensé pour vos caractères supprimés^",
 			"2000",
 			"un lieu pensé pour vos caractères supprimé^",
 			"un lieu pensé pour vos caractères supprim^",

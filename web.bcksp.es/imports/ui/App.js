@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2019-03-04 20:28:22
+  @Last Modified time: 2019-03-27 15:47:19
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -14,7 +14,6 @@ import HowtoList from './howto/list.js';
 import AboutPrivacy from './about/privacy.js';
 import SouvenirPannel from './souvenir/pannel.js';
 import T from './../i18n/index.js';
-
 // App component - represents the whole app
 class App extends Component {
 	constructor(props){

@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2019-03-04 21:40:08
+  @Last Modified time: 2019-03-27 14:55:42
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -31,8 +31,14 @@ class ArchiveCounter extends Component {
 				</span>
 				<span className="counter__total-percentage">
 					{
-						(this.getPerCent()).toFixed(2)+"%"
+						((this.getPerCent()).toFixed(2)).split(".").shift()
 					}
+					<span className="counter__total-percentage-float">
+					{
+						"."+((this.getPerCent()).toFixed(2)).split(".").pop()
+					}
+					</span>
+					%
 				</span>
 				<svg width="100%" height="24px">
 					<rect rx="3" ry="3" x="0" y="0" width="100%" height="100%" fill={"#D8D8D8"} />

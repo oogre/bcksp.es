@@ -2,7 +2,7 @@
   bcksp.es - Souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2019-03-04 22:20:17
+  @Last Modified time: 2019-03-27 15:33:12
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - About.js
@@ -17,19 +17,15 @@ import React, { Component } from 'react';
 import { config } from './../../startup/config.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
-import ProgressTemplate from "./../template/progress.js";
+import Progress from "./../shared/progress.js";
 
 // App component - represents the whole app
 class Souvenir extends Component {
 	constructor(props){
 		super(props);
-		this.state={
-			percent : 0.33
-		}
 	}
 
 	getPerCent(){
-		return this.state.percent;
 		if(!this.props.archive || !this.props.isPrivateReady)return 0 ;
 		return (this.props.archive.count / config.book.getMaxChar());
 	}
@@ -62,7 +58,7 @@ class Souvenir extends Component {
 							this.props.isConnected &&
 								<li className="souvenir__item">
 									<a className="souvenir__link" href={FlowRouter.path("item", {type : "book"})}>
-										<ProgressTemplate //souvenir__counter-label
+										<Progress //souvenir__counter-label
 											percent={this.getPerCent()}
 											colorFg="#fff123"
 											colorBg="#000000"
@@ -71,7 +67,7 @@ class Souvenir extends Component {
 											thicknessRatio={0.5}
 										>
 											<img src="/images/souvenirs/book.png"/>
-										</ProgressTemplate>
+										</Progress>
 										<span className="souvenir__link-title"><T>souvenir.item.book.title</T></span>
 										<span className="souvenir__link-badge"><T>souvenir.item.book.price</T></span>
 									</a>

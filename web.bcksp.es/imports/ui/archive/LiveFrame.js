@@ -30,12 +30,11 @@ export default class LiveFrame extends Component {
 		this.cancelHideShareButton = true;
 	}
 	componentDidMount(){
-		this.streamElement = document.querySelector(".stream");
+
 		document.addEventListener("keydown", this.handleKey.bind(this), true);
-		//this.streamElement.onkeydown = this.handleKey.bind(this);
 		document.addEventListener("keyup", this.handleKey.bind(this), true);
-		//this.streamElement.onkeyup = this.handleKey.bind(this);
-		this.caret = new Caret(this.streamElement);
+		
+		this.caret = new Caret(document.querySelector(".stream"));
 		this.caret.onCaretOff(event=>{
 			this.hideShareButton()
 		});
@@ -69,8 +68,10 @@ export default class LiveFrame extends Component {
 			event.preventDefault();
 			return false;
 		}
-		if(	((event.metaKey || event.ctrlKey ) && event.keyCode == 82) // CTRL+R OR CMD+R
+		if(		event.metaKey 
+			 || event.ctrlKey
 			 || event.key == "F5" // F5
+			 || event.keyCode == 9 // TAB
 		){
 			return true;
 		}
@@ -123,7 +124,12 @@ export default class LiveFrame extends Component {
 							<span className="sr-only">
 								<T>archive.fullscreen.button</T>
 							</span>
-							<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg"><g fill="#000" fillRule="nonzero"><path d="M2 0h11.724a2 2 0 0 1 1.364 3.462L3.365 14.404A2 2 0 0 1 0 12.942V2a2 2 0 0 1 2-2zM2 39.942h11.724a2 2 0 0 0 1.364-3.462L3.365 25.538A2 2 0 0 0 0 27v10.942a2 2 0 0 0 2 2zM38.024 0H26.3a2 2 0 0 0-1.365 3.462L36.66 14.404a2 2 0 0 0 3.365-1.462V2a2 2 0 0 0-2-2zM38.024 39.942H26.3a2 2 0 0 1-1.365-3.462L36.66 25.538A2 2 0 0 1 40.024 27v10.942a2 2 0 0 1-2 2z"/><path d="M9.04 6.419L33.08 30.46l-2.12 2.121L6.918 8.54z"/><path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/></g></svg>
+							<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg">
+								<g fill="#000" fillRule="nonzero">
+									<path d="M2 0h11.724a2 2 0 0 1 1.364 3.462L3.365 14.404A2 2 0 0 1 0 12.942V2a2 2 0 0 1 2-2zM2 39.942h11.724a2 2 0 0 0 1.364-3.462L3.365 25.538A2 2 0 0 0 0 27v10.942a2 2 0 0 0 2 2zM38.024 0H26.3a2 2 0 0 0-1.365 3.462L36.66 14.404a2 2 0 0 0 3.365-1.462V2a2 2 0 0 0-2-2zM38.024 39.942H26.3a2 2 0 0 1-1.365-3.462L36.66 25.538A2 2 0 0 1 40.024 27v10.942a2 2 0 0 1-2 2z"/><path d="M9.04 6.419L33.08 30.46l-2.12 2.121L6.918 8.54z"/>
+									<path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/>
+								</g>
+							</svg>
 						</a>
 				}
 				{
@@ -136,9 +142,13 @@ export default class LiveFrame extends Component {
 				}
 				<div className="liveframe__stream stream bcksp-es-disabled"
 					contentEditable={true}
+					suppressContentEditableWarning={true}
 					spellCheck={false}
-    				dangerouslySetInnerHTML={{__html: this.props.content }}
-				></div>
+				>
+					{
+						this.props.content
+					}
+				</div>
 			</div>
 		);
 	}

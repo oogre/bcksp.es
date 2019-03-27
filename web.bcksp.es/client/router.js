@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-03-26 11:30:05
+  @Last Modified time: 2019-03-26 17:24:50
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -51,7 +51,7 @@ if(DEVELOPPMENT){
 FlowRouter.route( '/livefeed', {
 		name: 'livefeed',
 		action( params ) {
-			render(<LiveStream/>, document.getElementById('render-target'));
+			render(<TemplateFull><LiveStream/></TemplateFull>, document.getElementById('render-target'));
 			setupView();
 		},
 		subscriptions( params, queryParams ) {

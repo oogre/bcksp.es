@@ -2,7 +2,7 @@
   bcksp.es - tools.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:38:28
-  @Last Modified time: 2019-03-24 18:05:04
+  @Last Modified time: 2019-03-27 14:32:27
 \*----------------------------------------*/
 
 import { isContentEditable, isInputField, isArray, isEmpty } from "./validation.js";
@@ -23,7 +23,8 @@ export function getContent(element){
     if(element instanceof element.ownerDocument.defaultView.NodeList) [].slice.call(element).reduce((memo, e) => memo += getContent(e), '');
     if(! (element instanceof element.ownerDocument.defaultView.Element)) return '';
 	if(isInputField(element)) return element.value;
-	return element.innerHTML.replace(/(<([^>]+)>)/ig, ''); 
+	return element.innerText; 
+    //return element.innerHTML.replace(/(<([^>]+)>)/ig, ''); 
 }
 
 export function getMessageFromError(error){

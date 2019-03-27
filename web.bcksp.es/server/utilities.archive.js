@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2018-12-17 07:59:53
+  @Last Modified time: 2019-03-27 13:28:50
 \*----------------------------------------*/
 import { config } from '../imports/startup/config.js';
 import CryptoJS from 'crypto-js';

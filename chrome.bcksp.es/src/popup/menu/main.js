@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2019-01-04 23:04:38
+  @Last Modified time: 2019-03-26 19:58:21
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
@@ -14,18 +14,38 @@ export default class MainMenu extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			'archiveSize' : 0
+			archiveSize : 0,
+			archiveRatio : 0
 		};
 	}
 	componentDidMount() {
 		sendMessage("getArchiveSize")
-		.then(archiveSize=> {
-			this.setState({'archiveSize' : archiveSize});
+		.then(archiveSize => {
+			this.setState({
+				archiveSize : archiveSize
+			});
 		})
 		.catch(e => info(e.message));
 		
-		on("archiveSize", (data, resolve, reject) =>{
-			this.setState({'archiveSize' : data});
+		on("archiveSize", (data, resolve, reject) => {
+			this.setState({
+				archiveSize : data
+			});
+			resolve(true);
+		});
+
+		sendMessage("getArchiveRatio")
+		.then(archiveRatio => {
+			this.setState({
+				archiveRatio : archiveRatio
+			});
+		})
+		.catch(e => info(e.message));
+
+		on("archiveRatio", (data, resolve, reject) => {
+			this.setState({
+				archiveRatio : data
+			});
 			resolve(true);
 		});
 	}
@@ -61,7 +81,8 @@ export default class MainMenu extends Component {
 					</button>
 				</li>
 				<li>
-					<p>{this.state.archiveSize} characters saved</p>
+					<p>{this.state.archiveSize} characters archived</p>
+					<p>{(this.state.archiveRatio * 100).toFixed(2)}%</p>
 				</li>
 				<li>
 					<button 
