@@ -49,7 +49,7 @@ export default class About extends Component {
 									<div className="text-block">
 										{
 											article.title &&
-												<a id={article.title.id} href={"#"+article.title.id}>
+												<a id={article.title.id} href={"#"+article.title.id} className="text-block__link--title">
 													<h3 className="text-block__title">
 														{ article.title.value }
 													</h3>
@@ -77,7 +77,7 @@ export default class About extends Component {
 						}
 					</div>
 				</div>
-				
+
 				<AboutArtists/>
 
 				<div className="container">

@@ -32,6 +32,7 @@
 
 .artists__title {
   font-size: $size-48;
+  text-transform: uppercase;
   line-height: 0.5;
   color: #fff;
   margin-bottom: $size-40;
@@ -69,6 +70,14 @@
 .artist__description {
   font-size: $size-26;
   line-height: 1.38;
+}
+
+.artist__description a {
+  color: #fff;
+
+  &:hover {
+    color: #000;
+  }
 }
 
 .artist__social-list {
