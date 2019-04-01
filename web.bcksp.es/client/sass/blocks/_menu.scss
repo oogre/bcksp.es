@@ -22,10 +22,17 @@
 }
 
 .menu__item-link {
+  line-height: 1;
+  padding: 0;
   text-decoration: underline;
   text-transform: uppercase;
   font-family: $font-title;
   color: $grey-thunder;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-link-background-hover;;
+  }
 }
 
 .menu--header .menu__item-link {

@@ -80,7 +80,7 @@ class MenuFooter extends Component {
 									{
 										this.hasToDisplayLogoutBtn() &&
 											<li className="menu__item">
-												<button className="button button--secondary" onClick={this.handleLogout.bind(this)}>
+												<button className="button--unstyled menu__item-link" onClick={this.handleLogout.bind(this)}>
 													<T>forms.logout</T>
 												</button>
 											</li>
@@ -108,14 +108,14 @@ class MenuFooter extends Component {
 								<p className="menu--footer__title">
 									<T>menus.supportedBy</T>
 								</p>
-								<ul className="buttons-list buttons-list--footer">
-									<li className="buttons-list__item buttons-list__item--fsoa">
-										<a className="buttons-list__link--fsoa" target="_blank" href="http://www.kunstenenerfgoed.be/">
+								<ul className="menu menu--footer">
+									<li className="menu__item ">
+										<a className="menu__item-link" target="_blank" href="http://www.kunstenenerfgoed.be/">
 											fwb
 										</a>
 									</li>
-									<li className="buttons-list__item">
-										<a className="buttons-list__link buttons-list__link" target="_blank" href="http://www.vgc.be/ondersteuning/subsidies/cultuur/subsidies-kunsten">
+									<li className="menu__item">
+										<a className="menu__item-link " target="_blank" href="http://www.vgc.be/ondersteuning/subsidies/cultuur/subsidies-kunsten">
 											<T>menus.helpUs</T>
 										</a>
 									</li>
