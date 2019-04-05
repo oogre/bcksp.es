@@ -2,16 +2,16 @@
   bcksp.es - archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:31:44
-  @Last Modified time: 2019-03-03 16:34:54
+  @Last Modified time: 2019-04-02 13:17:49
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	archive : {
 		counter : "{$count} charactèrs enregistré",
 		public : {
-			button : "flux public"
+			button : "archive public"
 		},
 		private : {
-			button : "flux privé"
+			button : "archive privée"
 		},
 		fullscreen : {
 			button : "plein écran"
