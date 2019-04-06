@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-04-03 15:25:23
+  @Last Modified time: 2019-04-06 14:23:39
 \*----------------------------------------*/
 
 
@@ -73,13 +73,13 @@ export const config = {
 				placeholder : "demo@gmail.com"
 			},{
 				value : "password",
-				placeholder : "password"
+				placeholder : "••••••••••"
 			},{
 				value : "text",
-				placeholder : "text"
+				placeholder : "bonjour"
 			},{
 				value : "search",
-				placeholder : "search"
+				placeholder : "image chatton érotique"
 			},{
 				value : "tel",
 				placeholder : "+32.495.876.315"

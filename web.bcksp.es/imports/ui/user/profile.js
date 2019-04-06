@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-03-27 15:32:02
+  @Last Modified time: 2019-04-06 14:20:57
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -100,77 +100,122 @@ class UserProfile extends Component {
 	renderRublishToPublicFeed(){
 		if(!this.props.isSettingsReady)return;
 		return (
-			<li>
-				<span className="input-wrapper--inline">
-					<MyToggleButton
-						value={ !this.props.settings.publishToPublicFeed }
-						onToggle={flag=>{this.handleTogglePublishToPublicFeed()}}
-						activeLabel={i18n.__("userprofile.yes")}
-						inactiveLabel={i18n.__("userprofile.no")}
-					/>
-				</span>
-				<span className="input-wrapper--inline">
-					 : 
-				</span>
-			</li>
+			<div>
+					<h2><T>userprofile.publishToPublicFeed</T></h2>
+					<ul className="toggle-list">
+						<li>
+							<span className="input-wrapper--inline">
+								<MyToggleButton
+									value={ !this.props.settings.publishToPublicFeed }
+									onToggle={flag=>{this.handleTogglePublishToPublicFeed()}}
+									activeLabel={i18n.__("userprofile.yes")}
+									inactiveLabel={i18n.__("userprofile.no")}
+								/>
+							</span>
+							<span className="input-wrapper--inline">
+								 : 
+							</span>
+						</li>
+					</ul>
+			</div>
 		);
 	}
 	renderBlacklist(){
 		if(!this.props.isSettingsReady)return;
-		return this.props.settings.blacklist.map((url, k) => (
-			<li key={k}>
-				<span className="input-wrapper--inline">
-					<MyToggleButton
-						value={ true }
-						onToggle={flag=>{this.handleToggleBlacklist(url, flag)}}
-						activeLabel={i18n.__("userprofile.whitelisted")}
-						inactiveLabel={i18n.__("userprofile.blacklisted")}
-					/>
-				</span>
-				<span className="input-wrapper--inline">
-					 : {url}
-				</span>
-			</li>
-		))
+		return (
+			<div>
+				<h2>{
+					_.isEmpty(this.props.settings.blacklist) ?
+						<T>userprofile.noBlacklist.title</T>
+					:
+						<T>userprofile.blacklist.title</T>
+				}</h2>
+				<ul className="toggle-list">{ 
+					_.isEmpty(this.props.settings.blacklist) ?
+						<li>
+							<span className="input-wrapper--inline">
+								<T>userprofile.noBlacklist.desc</T>
+							</span>
+						</li>
+					:
+						this.props.settings.blacklist.map((url, k) => (
+							<li key={k}>
+								<span className="input-wrapper--inline">
+									{url} 
+								</span>
+								<span className="input-wrapper--inline">
+									<MyToggleButton
+										value={ true }
+										onToggle={flag=>{this.handleToggleBlacklist(url, flag)}}
+										activeLabel={i18n.__("userprofile.whitelisted")}
+										inactiveLabel={i18n.__("userprofile.blacklisted")}
+									/>
+								</span>
+							</li>
+						))
+				}</ul>
+			</div>
+		);
 	}
 	renderBlindfieldClass(){
 		if(!this.props.isSettingsReady)return;
-		return this.props.settings.blindfield.class.map((c, k) => (
-			<li key={k}>
-				<span className="input-wrapper--inline">
-					 <span>{c} :</span>
-				</span>
-				<span className="input-wrapper--inline">
-					<MyToggleButton
-						value={ true }
-						onToggle={flag=>{this.handleToggleBlindfield(c, true, flag)}}
-						activeLabel={i18n.__("userprofile.whitelisted")}
-						inactiveLabel={i18n.__("userprofile.blacklisted")}
-					/>
-				</span>
-			</li>
-		))
+		return (
+			<div>
+				<h2><T>userprofile.blindfield.class.title</T></h2>
+				<ul className="toggle-list">
+					{ 
+						this.props.settings.blindfield.class.map((c, k) => (
+							<li key={k}>
+								<span className="input-wrapper--inline">
+									 <span>{c} :</span>
+								</span>
+								<span className="input-wrapper--inline">
+									<MyToggleButton
+										value={ true }
+										onToggle={flag=>{this.handleToggleBlindfield(c, true, flag)}}
+										activeLabel={i18n.__("userprofile.whitelisted")}
+										inactiveLabel={i18n.__("userprofile.blacklisted")}
+									/>
+								</span>
+							</li>
+						))
+					}
+					<li>
+						<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
+					</li>
+				</ul>
+			</div>
+		);
 	}
 	renderBlindfieldType(){
 		if(!this.props.isSettingsReady)return;
-		return config.settings.blindfield.types.map((type, k) => (
-			<li className="field" key={k}>
-				<label className="field__label" htmlFor="">
-					{type.value}
-				</label>
-				<span className="input-wrapper--inline">
-					<input className="input--text" type={type.value} defaultValue={type.placeholder} disabled/>
-				</span>
-				<span className="input-wrapper--inline">
-					<MyToggleButton
-						value={ this.props.settings.blindfield.types.includes(type.value) }
-						onToggle={flag=>{this.handleToggleBlindfield(type.value, false, flag)}}
-						activeLabel={i18n.__("userprofile.whitelisted")}
-						inactiveLabel={i18n.__("userprofile.blacklisted")}
-					/>
-				</span>
-			</li>
-		))
+		return (
+			<div>
+				<h2><T>userprofile.blindfield.type.title</T></h2>
+				<ul className="toggle-list">
+					{ 
+						config.settings.blindfield.types.map((type, k) => (
+							<li className="field" key={k}>
+								<label className="field__label" htmlFor="">
+									{type.value}
+								</label>
+								<span className="input-wrapper--inline">
+									<input className="input--text" type={type.value} defaultValue={type.placeholder} disabled/>
+								</span>
+								<span className="input-wrapper--inline">
+									<MyToggleButton
+										value={ this.props.settings.blindfield.types.includes(type.value) }
+										onToggle={flag=>{this.handleToggleBlindfield(type.value, false, flag)}}
+										activeLabel={i18n.__("userprofile.whitelisted")}
+										inactiveLabel={i18n.__("userprofile.blacklisted")}
+									/>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>	
+		);
 	}
 	renderUserInfo(){
 		if(!this.props.isSettingsReady)return;
@@ -206,42 +251,27 @@ class UserProfile extends Component {
 
 						<hr className="field-separator" />
 
-						<div>
-							<h2><T>userprofile.publishToPublicFeed</T></h2>
-							<ul className="toggle-list">
-								{ this.renderRublishToPublicFeed() }
-							</ul>
-						</div>
+						{ this.renderRublishToPublicFeed() }
 						
 						<hr className="field-separator" />
 
-						<div>
-							<h2><T>userprofile.blacklist</T></h2>
-							<ul className="toggle-list">
-								{ this.renderBlacklist() }
-							</ul>
-						</div>
+						{ 
+							this.renderBlacklist()
+						}
 
 						<hr className="field-separator" />
 
-						<div>
-							<h2><T>userprofile.blindfield.type</T></h2>
-							<ul className="toggle-list">
-								{ this.renderBlindfieldType() }
-							</ul>
-						</div>
+						{ 
+							this.renderBlindfieldType()
+						}
+						
 
 						<hr className="field-separator" />
 
-						<div>
-							<h2><T>userprofile.blindfield.class</T></h2>
-							<ul className="toggle-list">
-								{ this.renderBlindfieldClass() }
-								<li>
-									<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
-								</li>
-							</ul>
-						</div>
+						{
+							this.renderBlindfieldClass()
+						}
+						
 
 						<hr className="field-separator" />
 

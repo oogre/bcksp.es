@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-03-27 18:05:44
+  @Last Modified time: 2019-04-06 13:41:11
 \*----------------------------------------*/
 import Slider from "react-slick";
 import AboutLong from './about/long.js';
@@ -41,7 +41,7 @@ export default class About extends Component {
 							i18n.__("about.long").map((article, k) =>(
 								<div key={k}>
 									{
-										k == 1 &&
+										k == 2 &&
 											<div className="text-block">
 												<YoutubeEmbed className="logo--header__picture" youtubeID="hGB58ybRoJU"/>
 											</div>
