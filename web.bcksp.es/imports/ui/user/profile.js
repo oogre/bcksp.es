@@ -8,9 +8,9 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { needConfirmation } from './../../utilities/ui.js';
 import { ResetPassword, UpdateEmail } from '../../api/users/methods.js';
-import { 
-	SettingsBlacklistRemove, 
-	SettingsBlindFieldAdd, 
+import {
+	SettingsBlacklistRemove,
+	SettingsBlindFieldAdd,
 	SettingsBlindFieldRemove,
 	SettingsTogglePublishToPublicFeed
 } from '../../api/settings/methods.js';
@@ -110,7 +110,7 @@ class UserProfile extends Component {
 					/>
 				</span>
 				<span className="input-wrapper--inline">
-					 : 
+					 :
 				</span>
 			</li>
 		);
@@ -175,7 +175,7 @@ class UserProfile extends Component {
 	renderUserInfo(){
 		if(!this.props.isSettingsReady)return;
 		return (
-			<div className="field">
+			<div className="field field--profile">
 				<label className="field__label" htmlFor = "email">
 					<T>forms.email</T>
 				</label>
@@ -212,7 +212,7 @@ class UserProfile extends Component {
 								{ this.renderRublishToPublicFeed() }
 							</ul>
 						</div>
-						
+
 						<hr className="field-separator" />
 
 						<div>
@@ -238,7 +238,9 @@ class UserProfile extends Component {
 							<ul className="toggle-list">
 								{ this.renderBlindfieldClass() }
 								<li>
-									<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
+									<div className="field field--profile">
+										<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
+									</div>
 								</li>
 							</ul>
 						</div>

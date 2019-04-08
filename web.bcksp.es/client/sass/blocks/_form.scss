@@ -34,6 +34,13 @@
   }
 }
 
+// Field variation for profile
+.field--profile {
+  @include media-query("medium") {
+    max-width: 50%;
+  }
+}
+
 // Input Wrapper Inline
 // ---------------------
 .input-wrapper--inline {
