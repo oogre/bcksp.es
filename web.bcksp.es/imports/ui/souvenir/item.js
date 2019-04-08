@@ -29,7 +29,7 @@ class SouvenirItem extends Component {
 			displayForm : false
 		};
 	}
-	
+
 	async downloadArchive(){
 		return new Promise((resolve, reject)=>{
 			if(!this.props.isConnected) {
@@ -42,7 +42,7 @@ class SouvenirItem extends Component {
 				loading : true,
 			});
 			Meteor.call("Archives.methods.download", (error, data)=>{
-				this.setState({ 
+				this.setState({
 					loading : false,
 				});
 				if(error){
@@ -74,7 +74,7 @@ class SouvenirItem extends Component {
 			});
 
 			OrderBook.call(data, (error, data)=>{
-				this.setState({ 
+				this.setState({
 					loading : false,
 				});
 				if(error){
@@ -98,7 +98,7 @@ class SouvenirItem extends Component {
 		return new Promise((resolve, reject)=>{
 			let data = this.getFormContent();
 			data["poster.data"] = JSON.parse($("[data-design-poster]").attr("data-design-poster"));
-			
+
 			this.setState({
 				error : false,
 				success : false,
@@ -106,7 +106,7 @@ class SouvenirItem extends Component {
 			});
 
 			OrderPoster.call(data, (error, data)=>{
-				this.setState({ 
+				this.setState({
 					loading : false,
 				});
 				if(error){
@@ -135,7 +135,7 @@ class SouvenirItem extends Component {
 				loading : true,
 			});
 			Contact.call(data, (error, data)=>{
-				this.setState({ 
+				this.setState({
 					loading : false,
 				});
 				if(error){
@@ -158,13 +158,13 @@ class SouvenirItem extends Component {
 	action(event){
 		event.preventDefault();
 		switch(this.props.type){
-			case "book" : 
+			case "book" :
 				this.orderBook().then(()=>this.setState({ displayForm : false }));
 			break;
-			case "poster" : 
+			case "poster" :
 				this.orderPoster().then(()=>this.setState({ displayForm : false }));
 			break;
-			case "contact" : 
+			case "contact" :
 				this.contact().then(()=>this.setState({ displayForm : false }));
 			break;
 		}
@@ -174,66 +174,69 @@ class SouvenirItem extends Component {
 	firstAction(event){
 		event.preventDefault();
 		switch(this.props.type){
-			case "download" : 
+			case "download" :
 				this.downloadArchive().then(()=>this.setState({ displayForm : false }));
 			break;
-			case "book" : 
+			case "book" :
 				this.setState({ displayForm : "deliveryBook" });
 			break;
-			case "poster" : 
+			case "poster" :
 				this.setState({ displayForm : "deliveryPoster" });
 			break;
-			case "contact" : 
+			case "contact" :
 				this.setState({ displayForm : "contact" });
 			break;
 		}
 		return false;
 	}
-	
+
 	render() {
 		const currentItem = i18n.createTranslator("souvenir.item."+this.props.type);
 		const T2 = i18n.createComponent(currentItem);
 		return (
 			<div className="page__content">
 				<div className="container">
-					<h1>
-						<T2>title</T2>
-					</h1>
-					<div>
+					<div className="page__header">
+						<h1 className="page__title">
+							<T2>title</T2>
+						</h1>
+					</div>
+					<div className="shop">
 						{
 							this.state.displayForm != "deliveryPoster" &&
-								<div>
-									<img src={currentItem("img")}/>
-								</div>	
+								<div className="shop__example-illustration">
+									<img className="shop__example-illustration-img" src={currentItem("img")} alt="" />
+								</div>
 						}
 						{
-							!this.state.success && 
-							this.state.displayForm === false && 
-								<div>
-									<T2>description</T2>
-									<button onClick={this.firstAction.bind(this)}>
+							!this.state.success &&
+							this.state.displayForm === false &&
+								<div className="shop__example-detail">
+									<p className="shop__example-description"><T2>description</T2></p>
+									<p className="shop__example-price"><T2>price</T2></p>
+									<button className="button button--primary" onClick={this.firstAction.bind(this)}>
 										<T2>button</T2>
 									</button>
-								</div>	
+								</div>
 						}
 						{
-							!this.state.success && 
+							!this.state.success &&
 							this.state.displayForm == "deliveryBook" &&
 								<FormBook onSubmit={this.action.bind(this)}/>
 						}
 						{
-							!this.state.success && 
+							!this.state.success &&
 							this.state.displayForm == "deliveryPoster" &&
 								<FormPoster onSubmit={this.action.bind(this)}/>
 						}
 						{
-							!this.state.success && 
+							!this.state.success &&
 							this.state.displayForm == "contact" &&
 								<FormContact onSubmit={this.action.bind(this)}/>
 						}
 					</div>
 					{
-						this.state.error && 
+						this.state.error &&
 							<FixeError>
 								<span dangerouslySetInnerHTML={
 									{
@@ -243,7 +246,7 @@ class SouvenirItem extends Component {
 							</FixeError>
 					}
 					{
-						this.state.success && 
+						this.state.success &&
 							<FixeSuccess>
 								<span dangerouslySetInnerHTML={
 									{

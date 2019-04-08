@@ -16,6 +16,7 @@ constructor(props){
 		this.state = {
 			adressSameForDelivery : true,
 			sentence : false,
+			formVisible: false,
 		}
 	}
 	onSelect (data){
@@ -30,47 +31,75 @@ constructor(props){
 			adressSameForDelivery : this.refs.sameForDelivery.checked
 		});
 	}
+	showForm(){
+		this.setState({
+			formVisible: true
+		});
+	}
 	render(){
 		const currentItem = i18n.createTranslator("souvenir.item.poster.form");
 		return (
-			<form onSubmit={this.props.onSubmit.bind(this)}>
-				<GeneratorPoster sentence={this.state.sentence}/>
-				<div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<label>
-								<T>souvenir.item.poster.form.feed</T>
-							</label>
-							<LiveStream 
-								fullscreenAvailable={false} 
+			<form className="shop-creation" onSubmit={this.props.onSubmit.bind(this)}>
+				<div className="shop-creation__order">
+					{
+						!this.state.formVisible &&
+						<div>
+							<LiveStream
+								type="shop"
+								fullscreenAvailable={false}
 								shareAvailable={false}
 								onSelect={this.onSelect.bind(this)}
 								onLoad={this.onSelect.bind(this)}
 							/>
 						</div>
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<div>
-								<T>souvenir.delivery.label</T>
-							</div>
-							{
-								!Meteor.userId() && 
+					}
+
+					{
+						this.state.formVisible &&
+						<div className="shop-creation__form">
+							<div className="fields-row">
+								<div className="fields-column">
 									<div>
-										<label>
-											<T>souvenir.delivery.form.email.label</T>
-										</label>
-										<input type="email" name="poster.delivery.email" required/>
+										<T>souvenir.delivery.label</T>
 									</div>
-							}
+									{
+										!Meteor.userId() &&
+											<div>
+												<label>
+													<T>souvenir.delivery.form.email.label</T>
+												</label>
+												<input type="email" name="poster.delivery.email" required/>
+											</div>
+									}
+								</div>
+							</div>
+
 							<FormAdress name="poster.delivery"/>
+
+							<div className="fields-row">
+								<div className="fields-column">
+								</div>
+							</div>
 						</div>
-					</div>
-					<div className="fields-row">
-						<div className="fields-column">
-							<input type="submit" value={i18n.__("souvenir.item.poster.button")}/>
+					}
+				</div>
+				<div>
+					{
+						!this.state.formVisible &&
+						<div>
+							<GeneratorPoster sentence={this.state.sentence}/>
+							<button className="button button--primary" onClick={this.showForm.bind(this)}><T>Order Poster ></T></button>
 						</div>
-					</div>
+					}
+					{
+						this.state.formVisible &&
+						<div className="shop-creation__validation">
+							<div className="shop-creation__validation-preview">
+								<img alt="Souvenir preview" className="shop-creation__validation-preview-img" src="" />
+							</div>
+							<input type="submit" className="button button--primary" value={i18n.__("souvenir.item.poster.button")}/>
+						</div>
+					}
 				</div>
 			</form>
 		);

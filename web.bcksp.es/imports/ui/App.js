@@ -34,7 +34,7 @@ class App extends Component {
 							</div>
 						</div>
 				}
-				<LiveStream onShare={this.onShare.bind(this)}/>
+				<LiveStream type="home" onShare={this.onShare.bind(this)}/>
 				{
 					!this.props.isConnected &&
 						<AboutShort/>

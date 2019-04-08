@@ -1,0 +1,43 @@
+/*------------------------------------*\
+  > Generator
+  Page where user can generate a souvenir
+\*------------------------------------*/
+
+.generator {
+  max-width: 218px;
+  position: relative;
+}
+
+// Generator Preview
+// ---------------------
+
+.generator__preview-img {
+  max-width: 100%;
+  max-height: 306px;
+  margin-bottom: $size-32;
+  position: relative;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, .2);
+}
+
+.generator__button-new-layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  background: $grey-94;
+  transition: .2s opacity $easeInOutCubic;
+
+  &:hover,
+  &:focus {
+    opacity: .94;
+  }
+}
+
+.generator__button-new-layout-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

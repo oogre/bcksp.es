@@ -22,71 +22,21 @@
   position: relative;
   height: 100%;
   overflow: hidden;
-  margin-bottom: $size-118;
-
-  &::after {
-    z-index: z("livestream");
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 214px;
-    background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
-  }
 }
 
 .livestream {
-  margin: 0 auto $size-155;
-  max-width: 942px;
   position: relative;
-  z-index: z("livestream") + 1;
-  transform: translateX($size-12);
-}
-
-.livestream__border-decoration,
-.livestream__content {
-  max-width: calc(100% - #{$size-12});
-}
-
-.livestream__border-decoration {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 1px solid #000;
-  background: #fff;
-  z-index: z("card") - 1;
-}
-
-.livestream__border-decoration:nth-child(1) {
-  top: 12px;
-  left: -12px;
-}
-
-.livestream__border-decoration:nth-child(2) {
-  top: 9px;
-  left: -9px;
-}
-
-.livestream__border-decoration:nth-child(3) {
-  top: 6px;
-  left: -6px;
-}
-
-.livestream__border-decoration:nth-child(4) {
-  top: 3px;
-  left: -3px;
 }
 
 .livestream__content {
   position: relative;
   z-index: z("card");
-  padding: $size-44 $size-65;
   background: #fff;
   border: 1px solid #000;
+  padding: $size-15 $size-30;
  /* padding: $size-44 0 0 0;*/
 }
+
 
 .livestream__content .liveframe{
     max-height: 1100px;
@@ -142,4 +92,67 @@
 
 .liveframe__fullscreen-icon {
   display: block;
+}
+
+// Livestream Home Variation
+// ---------------------
+.livestream-container--home {
+  margin-bottom: $size-118;
+
+  &::after {
+    z-index: z("livestream");
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 214px;
+    background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
+  }
+}
+
+.livestream--home {
+  margin: 0 auto $size-155;
+  max-width: 942px;
+  z-index: z("livestream") + 1;
+  transform: translateX($size-12);
+}
+
+.livestream--home .livestream__content {
+  padding: $size-44 $size-65;
+}
+
+.livestream--home .livestream__border-decoration,
+.livestream--home .livestream__content {
+  max-width: calc(100% - #{$size-12});
+}
+
+.livestream--home .livestream__border-decoration {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  background: #fff;
+  z-index: z("card") - 1;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(1) {
+  top: 12px;
+  left: -12px;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(2) {
+  top: 9px;
+  left: -9px;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(3) {
+  top: 6px;
+  left: -6px;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(4) {
+  top: 3px;
+  left: -3px;
 }
