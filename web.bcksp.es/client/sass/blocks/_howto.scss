@@ -30,6 +30,7 @@
 }
 
 .step__title {
+  line-height: 1.09;
   text-transform: capitalize;
 }
 
@@ -60,16 +61,23 @@
 .step > div > div.right:first-child{
   /*display: none;*/
   // position: absolute;
-  float: right;
-  margin-right: -27%;
-  margin-top: 0.75rem;
+  position: absolute;
+  right: -125px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 // Step Content
 // ---------------------
-.step__content {
+.howto__item:nth-child(odd) .step__content {
   @include media-query("medium") {
     margin-left: $size-40;
+  }
+}
+
+.howto__item:nth-child(even) .step__content {
+  @include media-query("medium") {
+    margin-right: $size-112;
   }
 }
 
