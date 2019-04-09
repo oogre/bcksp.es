@@ -28,33 +28,35 @@ export default class SouvenirPannel extends Component {
 		};
 		return (
 			<div className="souvenir-pannel" onClick={()=>FlowRouter.go("souvenir")}>
-				<h3><T>souvenir.title</T></h3>
-				<div>
+				<div className="container">
+					<h3><T>souvenir.title</T></h3>
 					<div>
 						<p>
 							<T>souvenir.short</T>
 						</p>
 						<a href={FlowRouter.path("souvenir")}><T>menus.souvenir</T></a>
 					</div>
+				</div>
+				<div className="slider">
 					<Slider {...settings}>
 						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
-						<div>	
+						<div>
 							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
 						</div>
 					</Slider>
 				</div>
 			</div>
-		);	
+		);
 	}
 }

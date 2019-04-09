@@ -3,7 +3,7 @@
   Skin of https://github.com/akiran/react-slick
 \*------------------------------------*/
 
-.slider {
+.slick-slider {
   min-height: 600px;
 }
 
@@ -12,8 +12,27 @@
   width: 100px;
   background: $grey-thunder;
   z-index: z("slider") + 1;
+  opacity: 0;
+  transition: .2s opacity $easeInOutCubic;
 
   @include media-query("medium") {
     width: 230px;
   }
+
+  &:hover {
+    background: $grey-thunder;
+  }
+}
+
+.slick-slider:hover .slick-arrow,
+.slick-slider:focus-within .slick-arrow {
+  opacity: 1;
+}
+
+.slick-prev:before {
+  content: "<";
+}
+
+.slick-next:before {
+  content: ">";
 }
