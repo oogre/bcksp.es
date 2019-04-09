@@ -59,6 +59,7 @@
 .about--intro .about__title {
   font-family: $font-body;
   margin-bottom: $size-60;
+  max-width: none;
 }
 
 .about--intro .about__content {
