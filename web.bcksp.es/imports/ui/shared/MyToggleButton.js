@@ -2,7 +2,7 @@
   bcksp.es - MyToggleButton.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-26 13:38:23
-  @Last Modified time: 2019-03-24 16:47:48
+  @Last Modified time: 2019-04-06 22:54:26
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ToggleButton from 'react-toggle-button'
@@ -53,6 +53,7 @@ export default class MyToggleButton extends Component {
 		let activeLabel = this.props.activeLabel || "whitelisted";
 		let inactiveLabel = this.props.inactiveLabel || "blacklisted";
 		return (
+			<form className="wrapper__toggle-button">
 			<ToggleButton
 				value={this.props.value}
 				onToggle={this.props.onToggle.bind(this)}
@@ -129,6 +130,7 @@ export default class MyToggleButton extends Component {
 					height: "100%"
 				}}
 			/>
+			</form>
 		);
 	}
 }
