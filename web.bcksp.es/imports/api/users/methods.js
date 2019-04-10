@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2019-01-04 14:19:14
+  @Last Modified time: 2019-04-07 17:43:18
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -40,8 +40,12 @@ export const GetLoginTokenUser = new ValidatedMethod({
 export const ResetPassword = new ValidatedMethod({
 	name: 'Users.methods.reset.password',
 	validate({device, email}) {
-		checkValidDevice(device);
-		checkValidEmail(email, true);
+		try{
+			checkUserLoggedIn();	
+		}catch(error){
+			checkValidDevice(device);
+			checkValidEmail(email, true);
+		}
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -50,8 +54,8 @@ export const ResetPassword = new ValidatedMethod({
 	},
 	run({email}) {
 		if (this.isSimulation)return;
-		let user = Meteor.users.findOne({"emails.address" : email});
-		Meteor.users.update({_id : user.userId}, {
+		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
+		Meteor.users.update({_id : user._id}, {
 			$unset : {
 				"services.accessTokens.tokens" : null,
 				"services.resume.loginTokens" : null
@@ -61,6 +65,28 @@ export const ResetPassword = new ValidatedMethod({
 		return {
 			success : true,
 			message : i18n.__("methods.user.resetPassword.success")
+		};
+	}
+});
+
+export const UpdateEmail = new ValidatedMethod({
+	name: 'Users.methods.update.email',
+	validate({email}) {
+		checkUserLoggedIn();
+		checkValidEmail(email, false);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run({email}) {
+		if (this.isSimulation)return;
+		Accounts.addEmail(Meteor.userId(), email)
+		Accounts.sendVerificationEmail(Meteor.userId(), email)
+		return {
+			success : true,
+			message : i18n.__("methods.user.updateEmail.success")
 		};
 	}
 });
