@@ -30,7 +30,7 @@
   text-decoration: underline;
 
   &:hover {
-    color: #f06;
+    color: $color-body;
   }
 }
 
@@ -59,6 +59,7 @@
 .about--intro .about__title {
   font-family: $font-body;
   margin-bottom: $size-60;
+  max-width: none;
 }
 
 .about--intro .about__content {

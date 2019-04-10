@@ -53,6 +53,10 @@
   color: #fff;
 }
 
+.artist__name {
+  text-transform: uppercase;
+}
+
 .artist::before {
   display: block;
   content: "";

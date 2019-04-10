@@ -34,7 +34,7 @@ class App extends Component {
 							</div>
 						</div>
 				}
-				<LiveStream onShare={this.onShare.bind(this)}/>
+				<LiveStream type="home" onShare={this.onShare.bind(this)}/>
 				{
 					!this.props.isConnected &&
 						<AboutShort/>
@@ -47,12 +47,10 @@ class App extends Component {
 					!this.props.isConnected &&
 						<AboutPrivacy/>
 				}
-				<div className="container">
-					{
-						this.props.isConnected &&
-							<SouvenirPannel/>
-					}
-				</div>
+				{
+					this.props.isConnected &&
+						<SouvenirPannel/>
+				}
 			</div>
 		);
 	}

@@ -2,15 +2,15 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-04-07 17:25:31
+  @Last Modified time: 2019-04-10 22:21:59
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { needConfirmation } from './../../utilities/ui.js';
 import { ResetPassword, UpdateEmail } from '../../api/users/methods.js';
-import { 
-	SettingsBlacklistRemove, 
-	SettingsBlindFieldAdd, 
+import {
+	SettingsBlacklistRemove,
+	SettingsBlindFieldAdd,
 	SettingsBlindFieldRemove,
 	SettingsTogglePublishToPublicFeed
 } from '../../api/settings/methods.js';
@@ -109,7 +109,7 @@ class UserProfile extends Component {
 								/>
 							</span>
 							<span className="input-wrapper--inline">
-								 : 
+								 :
 							</span>
 						</li>
 					</ul>
@@ -126,7 +126,7 @@ class UserProfile extends Component {
 					:
 						<T>userprofile.blacklist.title</T>
 				}</h2>
-				<ul className="toggle-list">{ 
+				<ul className="toggle-list">{
 					_.isEmpty(this.props.settings.blacklist) ?
 						<li>
 							<span className="input-wrapper--inline">
@@ -137,7 +137,7 @@ class UserProfile extends Component {
 						this.props.settings.blacklist.map((url, k) => (
 							<li key={k}>
 								<span className="input-wrapper--inline">
-									{url} 
+									{url}
 								</span>
 								<span className="input-wrapper--inline">
 									<MyToggleButton
@@ -159,7 +159,7 @@ class UserProfile extends Component {
 			<div>
 				<h2><T>userprofile.blindfield.class.title</T></h2>
 				<ul className="toggle-list">
-					{ 
+					{
 						this.props.settings.blindfield.class.map((c, k) => (
 							<li key={k}>
 								<span className="input-wrapper--inline">
@@ -177,7 +177,9 @@ class UserProfile extends Component {
 						))
 					}
 					<li>
-						<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
+						<div className="field field--profile">
+							<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -189,7 +191,7 @@ class UserProfile extends Component {
 			<div>
 				<h2><T>userprofile.blindfield.type.title</T></h2>
 				<ul className="toggle-list">
-					{ 
+					{
 						config.settings.blindfield.types.map((type, k) => (
 							<li className="field" key={k}>
 								<label className="field__label" htmlFor="">
@@ -210,7 +212,7 @@ class UserProfile extends Component {
 						))
 					}
 				</ul>
-			</div>	
+			</div>
 		);
 	}
 	updateEmail(event){
@@ -259,12 +261,13 @@ class UserProfile extends Component {
 		if(!this.props.isSettingsReady)return;
 		return (
 			<form  onSubmit={this.updateEmail.bind(this)}>
-				<div className="field">
+				<div className="field field--profile">
 					<label className="field__label" htmlFor = "email">
 						<T>userprofile.userInfo.email</T>
 					</label>
 					<span className="input-wrapper--inline">
 						<input 	id="email"
+								className = "input--text"
 								ref="email"
 								name="email"
 								type="email"
@@ -310,7 +313,6 @@ class UserProfile extends Component {
 					<div className="page__header">
 						<h1 className="page__title"><T>userprofile.title</T></h1>
 					</div>
-					
 					<h2 className="page__subtitle">vie privée</h2>
 					{ this.renderRublishToPublicFeed() }
 					<hr className="field-separator" />

@@ -34,6 +34,13 @@
   }
 }
 
+// Field variation for profile
+.field--profile {
+  @include media-query("medium") {
+    max-width: 50%;
+  }
+}
+
 // Input Wrapper Inline
 // ---------------------
 .input-wrapper--inline {
@@ -49,6 +56,7 @@
 
 .input--text {
   display: block;
+  width: 100%;
   border: 1px solid $grey-74;
   border-radius: 3px;
   min-width: 296px;
@@ -64,6 +72,10 @@
   }
 }
 
+.input--text--address + .input--text--address {
+  margin-top: $size-20;
+}
+
 // Toggle List
 // ---------------------
 
@@ -75,4 +87,17 @@
 
 .toggle-list li {
   margin-bottom: $size-20;
+}
+
+// Fields Layout
+// ---------------------
+
+.fields-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $size-15;
+}
+
+.fields-column {
+  width: calc(50% - #{$size-20});
 }

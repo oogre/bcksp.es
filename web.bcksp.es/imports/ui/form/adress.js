@@ -19,36 +19,52 @@ export default class FormAdress extends Component {
 	render(){
 		return (
 			<div>
-				<div>
-					<label>
-						<T>souvenir.delivery.form.adress.fullname.label</T>
-					</label>
-					<input type="text" name={this.props.name + ".fullname"} required onInvalid={this.invalidHandler.bind(this)}/>
+				<div className="fields-row">
+					<div className="fields-column">
+						<div className="field">
+							<label className="field__label">
+								<T>souvenir.delivery.form.adress.fullname.label</T>
+							</label>
+							<input className="input--text" type="text" name={this.props.name + ".fullname"} required onInvalid={this.invalidHandler.bind(this)}/>
+						</div>
+					</div>
+					<div className="fields-column">
+						<div className="field">
+							<label className="field__label">
+								<T>souvenir.delivery.form.adress.fulladdress.label</T>
+							</label>
+							<input className="input--text input--text--address" type="text" name={this.props.name + ".address.1"} required/>
+							<input className="input--text input--text--address" type="text" name={this.props.name + ".address.2"}/>
+						</div>
+					</div>
 				</div>
-				<div>
-					<label>
-						<T>souvenir.delivery.form.adress.fulladdress.label</T>
-					</label>
-					<input type="text" name={this.props.name + ".address.1"} required/>
-					<input type="text" name={this.props.name + ".address.2"}/>
+				<div className="fields-row">
+					<div className="fields-column">
+						<div className="field">
+							<label className="field__label">
+								<T>souvenir.delivery.form.adress.city.label</T>
+							</label>
+							<input className="input--text" type="text" name={this.props.name + ".city"} required/>
+						</div>
+					</div>
+					<div className="fields-column">
+						<div className="field">
+							<label className="field__label">
+								<T>souvenir.delivery.form.adress.zip.label</T>
+							</label>
+							<input className="input--text" type="text" name={this.props.name + ".zip"} required/>
+						</div>
+					</div>
 				</div>
-				<div>
-					<label>
-						<T>souvenir.delivery.form.adress.city.label</T>
-					</label>
-					<input type="text" name={this.props.name + ".city"} required/>
-				</div>
-				<div>
-					<label>
-						<T>souvenir.delivery.form.adress.zip.label</T>
-					</label>
-					<input type="text" name={this.props.name + ".zip"} required/>
-				</div>
-				<div>
-					<label>
-						<T>souvenir.delivery.form.adress.country.label</T>
-					</label>
-					<input type="text" name={this.props.name + ".country"} required/>
+				<div className="fields-row">
+					<div className="fields-column">
+						<div className="field">
+							<label className="field__label">
+								<T>souvenir.delivery.form.adress.country.label</T>
+							</label>
+							<input className="input--text" type="text" name={this.props.name + ".country"} required/>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

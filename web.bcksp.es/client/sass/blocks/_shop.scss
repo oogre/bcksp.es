@@ -1,0 +1,86 @@
+/*------------------------------------*\
+  > Shop
+\*------------------------------------*/
+
+.shop {
+  @include media-query("medium") {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: no-wrap;
+  }
+}
+
+// Shop Example Illustration
+// Preview image of current generic item
+// ---------------------
+.shop__example-illustration {
+  @include media-query("medium") {
+    max-width: 442px;
+    max-height: 625px;
+    margin-right: $size-36;
+  }
+}
+
+.shop__example-illustration-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// Shop Example Detail
+// Detail of current item
+// ---------------------
+.shop__example-description {
+  font-size: $size-22;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.shop__example-price {
+  font-family: $font-title;
+  font-size: $size-26;
+}
+
+// Shop Creation Form
+// ---------------------
+
+.shop-creation {
+  width: 100%;
+
+  @include media-query("medium") {
+    display: flex;
+    flex-wrap: no-wrap;
+  }
+}
+
+.shop-creation__order {
+  @include media-query("medium") {
+    width: 100%;
+    max-width: 680px;
+    margin-right: $size-40;
+  }
+}
+
+// shop-creation__validation
+// ---------------------
+
+.shop-creation__validation {
+  width: 216px;
+}
+
+.shop-creation__validation-preview {
+  width: 100%;
+  height: 150px;
+  background: $grey-94;
+  position: relative;
+  margin-bottom: $size-16;
+}
+
+.shop-creation__validation-preview-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
