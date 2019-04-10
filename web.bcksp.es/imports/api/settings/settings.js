@@ -2,7 +2,7 @@
   bcksp.es - settings.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:40
-  @Last Modified time: 2019-03-24 16:31:04
+  @Last Modified time: 2019-04-07 17:59:44
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -24,8 +24,10 @@ if(Meteor.isServer){
 			Settings.update({
 				_id : settingsId
 			},{
-				owner : id,
-				updatedAt : new Date()
+				$set : {
+					owner : id,
+					updatedAt : new Date()
+				}
 			});
 
 			log("Settings : " + settingsId + " is created");
