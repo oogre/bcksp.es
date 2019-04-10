@@ -2,7 +2,7 @@
   bcksp.es - emails.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2019-03-02 17:27:23
+  @Last Modified time: 2019-04-07 21:09:13
 \*----------------------------------------*/
 
 i18n.addTranslation('fr-FR', {
@@ -36,6 +36,13 @@ i18n.addTranslation('fr-FR', {
 			content : 
 				"Bonjour.<br/>"+
 				"Voici un lien pour redéfinir votre mot de passe bcksp.es : <br/>"+
+				"{$url}<br/>"
+		},
+		verifyEmail : {
+			subject : "bcksp.es demande une confirmation de votre email",
+			content : 
+				"Bonjour.<br/>"+
+				"Voici un lien pour confirmer votre adresse email : <br/>"+
 				"{$url}<br/>"
 		}
 	}

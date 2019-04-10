@@ -2,12 +2,11 @@
   bcksp.es - forms.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:33:40
-  @Last Modified time: 2019-03-02 17:33:54
+  @Last Modified time: 2019-04-06 17:14:49
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	forms : {
 		logout : "déconnection",
-		email : "votre adresse eMail",
 		password : "votre nouveau mot de passe",
 		passwordConfirm : "confirmez votre nouveau mot de passe",
 		submit : {

@@ -2,7 +2,7 @@
   web.bitRepublic - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:39
-  @Last Modified time: 2019-03-27 14:02:15
+  @Last Modified time: 2019-04-07 17:52:02
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { htmlDecode } from'htmlencode';
@@ -49,7 +49,8 @@ Meteor.startup(() => {
 					log('The file has been saved!');
 				})
 				.catch(err => warn(err));
-
+				console.log(user);
+				Accounts.sendVerificationEmail(id, user.emails.pop().address)
 				log("Archive : " + archiveId + " is created");
 			}
 		});

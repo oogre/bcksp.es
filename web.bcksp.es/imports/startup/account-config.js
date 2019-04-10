@@ -2,7 +2,7 @@
   bitRepublic - account-config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-01-30 01:13:47
-  @Last Modified time: 2019-02-28 18:35:03
+  @Last Modified time: 2019-04-07 21:26:05
 \*----------------------------------------*/
 import React from 'react';
 import T from './../i18n/index.js';
@@ -25,7 +25,22 @@ if(Meteor.isServer){
 			return getMail("resetPassword", {"url" : url});
 		}
 	};
+	Accounts.emailTemplates.verifyEmail = {
+		subject(user) {
+			return i18n.__("email.verifyEmail.subject");
+		},
+		html(user, url) {
+			return getMail("verifyEmail", {"url" : url});
+		}
+	};
 }else{
+	Accounts.onEmailVerificationLink((token, done) => {
+		if(!Meteor.user()){
+			alert("need to be connected")
+		}else{
+			done();	
+		}
+	});
 	Accounts.onResetPasswordLink((token, done) => {
 		Meteor.setTimeout(() => {
 			const onComplete = () => {

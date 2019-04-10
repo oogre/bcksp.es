@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-04-06 14:30:37
+  @Last Modified time: 2019-04-07 17:25:31
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -14,6 +14,8 @@ import {
 	SettingsBlindFieldRemove,
 	SettingsTogglePublishToPublicFeed
 } from '../../api/settings/methods.js';
+import { getEmailOfCurrentUser } from '../../utilities/meteor.js';
+import { checkValidEmail } from '../../utilities/validation.js';
 import T from './../../i18n/index.js';
 import { Settings } from './../../api/settings/settings.js';
 import { config } from '../../startup/config.js'
@@ -23,14 +25,8 @@ class UserProfile extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			email : ""
-		}
-	}
-
-	static getDerivedStateFromProps(props, state) {
-		return {
-			email : props.userMail || "",
-			validEmail : true
+			email : "",
+			submitNewEmailVisible : false
 		}
 	}
 
@@ -217,79 +213,136 @@ class UserProfile extends Component {
 			</div>	
 		);
 	}
+	updateEmail(event){
+		event.preventDefault();
+		if(!this.state.submitNewEmailVisible)return false;
+		let newValue = $("input#email").val();
+		UpdateEmail.call({email : newValue}, (err, res) =>{
+			if (err) {
+				if(_.isArray(err.details)){
+					err.details.forEach((fieldError) => {
+						console.log(fieldError.details.value);
+					});
+				}else{
+					console.log(err);
+				}
+			}else{
+			console.log(res);
+			}
+		});
+		return false;
+	}
+	changeEmail(event){
+		event.preventDefault();
+		let newValue = event.target.value;
+		let defaultValue = this.state.email;
+		if(newValue != defaultValue){
+			try{
+				checkValidEmail(newValue, false);
+				this.setState({
+					submitNewEmailVisible : true
+				})
+			}catch(error){
+				this.setState({
+					submitNewEmailVisible : false
+				})
+			}
+		}else{
+			this.setState({
+				submitNewEmailVisible : false
+			})
+		}
+		return false;
+	}
+
 	renderUserInfo(){
 		if(!this.props.isSettingsReady)return;
 		return (
-			<div className="field">
-				<label className="field__label" htmlFor = "email">
-					<T>forms.email</T>
-				</label>
-				<input id = "email"
-						className = "input--text"
-						type = "email"
-						ref = "email"
-						name = "email"
-						placeholder = "email"
-						value = {Meteor.user().emails.pop().address}
-						disabled = {true}
-				/>
-			</div>
+			<form  onSubmit={this.updateEmail.bind(this)}>
+				<div className="field">
+					<label className="field__label" htmlFor = "email">
+						<T>userprofile.userInfo.email</T>
+					</label>
+					<span className="input-wrapper--inline">
+						<input 	id="email"
+								ref="email"
+								name="email"
+								type="email"
+								placeholder="email"
+								className="input--text"
+								defaultValue={this.state.email}
+								onChange={this.changeEmail.bind(this)}
+						/>
+					</span>
+					{
+						this.state.submitNewEmailVisible && 
+							<span className="input-wrapper--inline">
+								<input className="button button--primary" type="submit" value={i18n.__("userprofile.userInfo.submit")}/>
+							</span>
+					}
+				</div>
+			</form>
 		)
 	}
-
+	renderResetPassword(){
+		return (
+			<form  onSubmit={this.handleResetPassword.bind(this)}>
+				<div className="field">
+					<label className="field__label" htmlFor = "email">
+						<T>userprofile.userInfo.resetpassword</T>
+					</label>
+					<input className="button button--primary" type="submit" value={i18n.__("userprofile.userInfo.submit")}/>
+				</div>
+			</form>
+		)
+	}
 	render() {
+		if(!this.state.email){
+			getEmailOfCurrentUser()
+			.then(email=>{
+				this.setState({email : email});
+			})
+			.catch(error=>{})
+		}
 		return (
 			<div className="page__content">
 				<div className="container">
 					<div className="page__header">
 						<h1 className="page__title"><T>userprofile.title</T></h1>
 					</div>
-					<form>
-						{
-							this.renderUserInfo()
-						}
-
-						<hr className="field-separator" />
-
-						{ this.renderRublishToPublicFeed() }
-						
-						<hr className="field-separator" />
-
-						{ 
-							this.renderBlacklist()
-						}
-
-						<hr className="field-separator" />
-
-						{ 
-							this.renderBlindfieldType()
-						}
-						
-
-						<hr className="field-separator" />
-
-						{
-							this.renderBlindfieldClass()
-						}
-						
-
-						<hr className="field-separator" />
-
+					
+					<h2 className="page__subtitle">vie privée</h2>
+					{ this.renderRublishToPublicFeed() }
+					<hr className="field-separator" />
+					{ this.renderBlacklist() }
+					<hr className="field-separator" />
+					{ this.renderBlindfieldType() }
+					<hr className="field-separator" />
+					{ this.renderBlindfieldClass() }
+					<hr className="field-separator" />
+					<h2 className="page__subtitle">Votre identification</h2>
+					{ this.renderUserInfo() }
+					<hr className="field-separator" />
+					{ this.renderResetPassword() }
+					<hr className="field-separator" />
+					<h2 className="page__subtitle">Espace dangereux</h2>
+					<form  onSubmit={this.handleDeleteArchive.bind(this)}>
 						<div className="field">
 							<label className="field__label">
 								<T>userprofile.archive</T>
 							</label>
-							<button	className="button button--primary" onClick = {this.handleDeleteArchive.bind(this)}>
-								<T>userprofile.deleteArchive</T>
-							</button>
+							<input className="button button--secondary" type="submit" value={i18n.__("userprofile.deleteArchive")}/>
 						</div>
+					</form>
+
+					<hr className="field-separator" />
+
+					<form  onSubmit={this.handleDeleteAccount.bind(this)}>
 						<div className="field">
 							<label className="field__label">
 								<T>userprofile.account</T>
 							</label>
-							<button	className="button button--primary" onClick = {this.handleDeleteAccount.bind(this)}>
-								<T>userprofile.deleteAccount</T>
-							</button>
+							<input className="button button--secondary" type="submit" value={i18n.__("userprofile.deleteAccount")}/>
 						</div>
 					</form>
 				</div>
@@ -297,7 +350,6 @@ class UserProfile extends Component {
 		);
 	}
 }
-
 export default withTracker(self => {
 	return {
 		isConnected : !!Meteor.userId(),

@@ -2,7 +2,7 @@
   bcksp.es - userprofile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:32:25
-  @Last Modified time: 2019-04-06 14:21:01
+  @Last Modified time: 2019-04-06 22:26:11
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	userprofile : {
@@ -29,6 +29,12 @@ i18n.addTranslation('fr-FR', {
 				desc : ""
 			}
 		},
+		userInfo : {
+			email : "votre adresse eMail",
+			resetpassword : "changer votre mot de passe",
+			submit : "modifier"
+		},
+
 		publishToPublicFeed : "publier vos suppressions dans l'archive publique",
 		whitelisted : "whitelisted",
 		blacklisted : "blacklisted",
