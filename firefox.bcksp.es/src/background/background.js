@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-03-24 18:09:16
+  @Last Modified time: 2019-04-16 18:50:01
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -12,10 +12,10 @@ import { procrastinate } from './../utilities/timer.js';
 import { checkConnected } from './../utilities/validation.js';
 import { log, info, warn, error } from './../utilities/log.js';
 import { setIcon, setDefaultIcon } from './../utilities/icon.js';
-import { on, sendMessage, sendMessageToAllTab } from './../utilities/com.js';
+import { on, sendMessage, sendMessageToTab } from './../utilities/com.js';
 import { tabHandler, reloadTabs, getTabStatus } from './../utilities/tab.js';
 import { setBlindfield, setBlackList, getBlindfields, addToArchiveBuffer, getArchiveBuffer, clearArchiveBuffer } from './../utilities/localStorage.js';
-import { tabsUpdate, tabsCreate, tabsOnActivatedAddListener, runtimeOnInstalledAddListener, runtimeSetUninstallURL } from './../utilities/browser.js';
+import { tabsUpdate, tabsCreate, tabsOnActivatedAddListener, runtimeOnInstalledAddListener, runtimeSetUninstallURL, browserActionOnClickAddListener } from './../utilities/browser.js';
 
 Data.setState({
 	"loggedStatus": false
@@ -51,7 +51,7 @@ Data.on("archiveSize", (value, name) =>{
 
 Data.on("blindfields", (value, name) =>{
 	setBlindfield(value)
-	.then(blindfield => sendMessageToAllTab("blindfield", blindfield))
+	.then(blindfield => sendMessageToTab("blindfield", blindfield, {}))
 	.catch(e => error(e));
 });
 
@@ -82,6 +82,17 @@ tabsOnActivatedAddListener(({tabId}) => {
 			currentURLBlacklisted : data.blackListed
 		});
 	});
+	sendMessageToTab("closePopup");
+});
+
+browserActionOnClickAddListener((tab)=>{
+	sendMessageToTab("openPopup");
+});
+
+on("closePopup", (data, resolve, reject) => {
+	sendMessageToTab("closePopup")
+	.then(() => resolve())
+	.catch(e => reject(e));
 });
 
 on("forgotPwd", (data, resolve, reject) =>{

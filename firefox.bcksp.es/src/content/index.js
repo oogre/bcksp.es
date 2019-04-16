@@ -2,17 +2,56 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-03-24 18:07:39
+  @Last Modified time: 2019-04-16 18:47:42
 \*----------------------------------------*/
 import Data from "./../utilities/Data.js";
 import Protocol from "./../utilities/Protocol.js";
 import { on, sendMessage } from './../utilities/com.js';
 import { getContent, jQuery } from './../utilities/tools.js';
 import { log, info, warn, error } from './../utilities/log.js';
+import { runtimeId, runtimeGetURL } from './../utilities/browser.js';
 import { diff, getHighlightText, getCharBeforeCaret, specialCase } from './../utilities/backspace.js';
 import { checkString, checkTarget, isAcceptable, isInputField, isEmpty } from './../utilities/validation.js';
 
+var iframe;
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
+
+function openPopup(){
+	iframe = document.createElement('iframe');
+	// Must be declared at web_accessible_resources in manifest.json
+	iframe.src = runtimeGetURL('popup.html');
+	iframe.name = iframe.id = "bcksp_es_frame";
+	// Some styles for a fancy sidebar
+	iframe.style.cssText =  "position:fixed;"+
+							"top:10px;"+
+							"right:10px;"+
+							"display:block;"+
+							"width:300px;"+
+							"height:400px;"+
+							"z-index:100000;"+
+							"background-color:#fff;";
+	document.body.appendChild(iframe);
+}
+
+function closePopup(){
+	iframe.parentNode.removeChild(iframe);
+	iframe = null;
+}
+
+on("closePopup", (data, resolve) =>{
+	if(window != window.top)return;
+	closePopup();
+});
+
+on("openPopup", (data, resolve) =>{
+	if(window != window.top)return;
+	if(iframe){
+	        closePopup();
+	}else{
+	        openPopup();
+	}
+	resolve(true);
+});
 
 on("blindfield", (data, resolve) =>{
 	Data.setState({
@@ -237,7 +276,7 @@ class BackspaceListener{
 	}
 	setupListener(target){
 		this.addListeners(target);
-		let self = this;
+		/*let self = this;
 		try{
 			target.querySelectorAll("iframe")
 			.forEach(iframe => {
@@ -250,7 +289,7 @@ class BackspaceListener{
 					}, false);
 				}catch(e){}
 			});
-		}catch(e){}
+		}catch(e){}*/
 	}
 	addListeners (element){
 		element.addEventListener("keydown", this.keyDownListener, true);

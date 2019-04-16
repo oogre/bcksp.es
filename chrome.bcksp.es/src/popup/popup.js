@@ -2,7 +2,7 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2019-01-09 17:16:38
+  @Last Modified time: 2019-04-16 18:22:29
 \*----------------------------------------*/
 
 import ReactDOM from 'react-dom';
@@ -26,6 +26,13 @@ class Popup extends Component {
 			this.setState({loggedIn: isLoggedIn})
 		})
 		.catch(e => info(e.message));
+		window.addEventListener("blur", event =>{
+			sendMessage("closePopup")
+			.then(() => {
+				console.log("OK")
+			})
+			.catch(e => info(e.message));
+		});
 	}
 	handleLoginStatusChange(isLoggedIn){
 		if(isBoolean(isLoggedIn)){

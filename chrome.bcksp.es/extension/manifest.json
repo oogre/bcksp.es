@@ -7,7 +7,8 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["dist/content.js"]
+      "js": ["dist/content.js"],
+      "all_frames": true
     }
   ],
   "browser_action": {
@@ -18,16 +19,17 @@
       "48": "images/48.standby.png",
       "128": "images/128.standby.png"
     },
-    "default_title": "bcksp.es",
-    "default_popup": "popup.html"
+    "default_title": "bcksp.es"
   },
   "background": {
     "scripts": ["dist/background.js"]
   },
+  "web_accessible_resources": [
+    "popup.html"
+  ],
   "permissions": [
     "tabs",
     "activeTab",
-    "webRequest",
     "http://*/*",
     "https://*/*",
     "storage"

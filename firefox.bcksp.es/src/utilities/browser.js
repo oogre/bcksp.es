@@ -2,7 +2,7 @@
   bcksp.es - browser.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:29:49
-  @Last Modified time: 2019-01-05 18:21:10
+  @Last Modified time: 2019-04-16 18:43:15
 \*----------------------------------------*/
 export async function tabsQuery(req){
 	return browser.tabs.query(req);
@@ -36,8 +36,16 @@ export async function browserActionSetIcon(req){
 	return browser.browserAction.setIcon(req);
 }
 
+export function browserActionOnClickAddListener(req){
+	return browser.browserAction.onClicked.addListener(req);
+}
+
 export function runtimeId(){
 	return browser.runtime.id;
+}
+
+export function runtimeGetURL(file){
+	return browser.runtime.getURL(file)
 }
 
 export async function runtimeSendMessage(req){
