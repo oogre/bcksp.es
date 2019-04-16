@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-04-10 22:21:59
+  @Last Modified time: 2019-04-11 20:38:40
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -267,7 +267,6 @@ class UserProfile extends Component {
 					</label>
 					<span className="input-wrapper--inline">
 						<input 	id="email"
-								className = "input--text"
 								ref="email"
 								name="email"
 								type="email"
