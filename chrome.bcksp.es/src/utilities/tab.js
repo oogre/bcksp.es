@@ -2,7 +2,7 @@
   bcksp.es - tab.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:41:20
-  @Last Modified time: 2019-03-26 13:44:34
+  @Last Modified time: 2019-04-17 12:22:35
 \*----------------------------------------*/
 
 import { last, findWhere } from './tools.js';
@@ -10,7 +10,6 @@ import { config } from './../shared/config.js';
 import { isEmpty, isArray } from './validation.js';
 import { getIntoBlackList } from './localStorage.js';
 import { tabsQuery, tabsReload, tabsHighlight } from './browser.js';
-
 
 export async function tabHandler(){
 	return tabsQuery({ 

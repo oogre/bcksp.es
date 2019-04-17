@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-04-16 18:35:12
+  @Last Modified time: 2019-04-17 12:26:12
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -67,7 +67,14 @@ Data.on("blindfields", (value, name) =>{
 
 Data.on("blacklist", (value, name) =>{
 	setBlackList(value)
-	.then(urls => reloadTabs(urls))
+	.then(urls => {
+		urls.map(url=>{
+			sendMessageToTab("askReload", null, {
+				'url': "*://" + url.replace(/:\d+/, "") + "/*",
+			});
+		});
+	})
+	//.then(urls => reloadTabs(urls))
 	.catch(e => error(e));
 });
 

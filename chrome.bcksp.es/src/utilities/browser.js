@@ -2,7 +2,7 @@
   bcksp.es - browser.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:29:49
-  @Last Modified time: 2019-04-16 17:44:05
+  @Last Modified time: 2019-04-17 12:25:52
 \*----------------------------------------*/
 export async function tabsQuery(req){
 	return new Promise(resolve => chrome.tabs.query(req, tabs=>resolve(tabs)));
@@ -29,7 +29,7 @@ export function tabsOnActivatedAddListener(req){
 }
 
 export async function tabsSendMessage(id, req){
-	return new Promise(resolve => chrome.tabs.sendMessage(id, req, ()=>resolve()));	
+	return new Promise(resolve => chrome.tabs.sendMessage(id, req, () => resolve()));	
 }
 
 export async function browserActionSetIcon(req){
