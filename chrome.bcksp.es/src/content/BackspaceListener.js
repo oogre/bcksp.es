@@ -1,3 +1,4 @@
+import Data from "./../utilities/Data.js";
 import Protocol from "./../utilities/Protocol.js";
 import { sendMessage } from './../utilities/com.js';
 import { getContent } from './../utilities/tools.js';

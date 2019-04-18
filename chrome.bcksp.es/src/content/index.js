@@ -2,9 +2,8 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-04-17 12:59:15
+  @Last Modified time: 2019-04-18 09:10:21
 \*----------------------------------------*/
-import Data from "./../utilities/Data.js";
 import { jQuery } from './../utilities/tools.js';
 import BackspaceListener from './BackspaceListener.js';
 import { on, sendMessage } from './../utilities/com.js';
@@ -18,12 +17,13 @@ document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 on("askReload", (data, resolve) => {
 	if(window != window.top)return;
 	toggleReload();
-	resolve("ABCDEFGH");
+	resolve(true);
 });
 
 on("closePopup", (data, resolve) =>{
 	if(window != window.top)return;
 	closePopup();
+	resolve(true);
 });
 
 on("openPopup", (data, resolve) =>{
@@ -54,6 +54,7 @@ jQuery.fn.ready(() => {
 	.catch(e => error(e.message));
 
 	window.addEventListener("message", function(event) {
+		console.log(event);
 	    // We only accept messages from ourselves
 	    if (event.source != window)
 	        return;
