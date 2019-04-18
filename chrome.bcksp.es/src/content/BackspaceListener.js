@@ -1,6 +1,9 @@
-import { sendMessage } from './../utilities/com.js';
 import Protocol from "./../utilities/Protocol.js";
+import { sendMessage } from './../utilities/com.js';
 import { getContent } from './../utilities/tools.js';
+import { log, info, warn, error } from './../utilities/log.js';
+import { diff, getHighlightText, getCharBeforeCaret, specialCase } from './../utilities/backspace.js';
+import { checkString, checkTarget, isAcceptable, isInputField, isEmpty } from './../utilities/validation.js';
 
 export default class BackspaceListener{
 	constructor(){
