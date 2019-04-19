@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2019-03-27 13:38:30
+  @Last Modified time: 2019-04-19 13:27:19
 \*----------------------------------------*/
 import { htmlDecode } from'htmlencode';
 import { Meteor } from 'meteor/meteor';
@@ -101,5 +101,7 @@ if(Meteor.isServer){
 		this.added('config', +new Date(), {
 			maxCharPerBook : config.book.getMaxChar()
 		});
+		this.ready();
+		this.onStop(() => { } );
 	});
 }
