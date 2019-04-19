@@ -2,7 +2,7 @@
   bcksp.es - callToConnect.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 19:41:50
-  @Last Modified time: 2019-03-04 21:40:58
+  @Last Modified time: 2019-04-18 16:56:28
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
@@ -16,13 +16,12 @@ class CallToConnect extends Component {
 	hasToDisplayCallToConnect(){
 		return !this.props.isConnected && this.props.extensionInstalled;
 	}
-	
 
 	render() {
 		if(this.hasToDisplayCallToConnect()){
 			return (
 				<div className="call-to-connect">
-					<h1><T>extension.login.call.login</T></h1>
+					<h1><T>extension.call.login</T></h1>
 				</div>
 			);
 		}else{
