@@ -2,15 +2,18 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2019-03-05 12:50:41
+  @Last Modified time: 2019-04-18 17:44:28
 \*----------------------------------------*/
-
-import React, { Component } from 'react';
+import { MDText } from 'i18n-react';
 import FixeWait from './fixe/wait.js';
-import MyToggleButton from './MyToggleButton.js';
+import React, { Component } from 'react';
 import MessageError from './message/error.js';
+import MyToggleButton from './MyToggleButton.js';
 import { sendMessage } from './../utilities/com.js';
 import { getMessageFromError } from './../utilities/tools.js';
+import { log, info, warn, error } from './../utilities/log.js';
+
+const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class Blacklist extends Component {
 	constructor(props) {
@@ -27,13 +30,8 @@ export default class Blacklist extends Component {
 
 	componentDidMount() {
 		sendMessage("getUrlStatus")
-		.then(({url, blackListed}) =>{
-			this.setState({
-				currentURL: url,
-				isBlacklisted : !!blackListed
-			});
-		})
-		.catch(e => info(e.message));;
+		.then(({url, blackListed}) => this.setState({ currentURL : url, isBlacklisted : !!blackListed }))
+		.catch(e => error(e));
 	}
 
 	handleBlacklistChange(wasBlacklisted){
@@ -49,23 +47,9 @@ export default class Blacklist extends Component {
 			methodName = "blacklistRemove";
 		}
 		sendMessage(methodName, this.state.currentURL)
-		.then(data => {
-			this.setState({
-				isBlacklisted : !wasBlacklisted,
-				'has-success' : data.message,
-			});
-		})
-		.catch(e => {
-			this.setState({ 
-				error : getMessageFromError(e),
-				'has-success' : false,
-			});
-		})
-		.finally(()=>{
-			this.setState({ 
-				'is-loading' : false,
-			});
-		});
+		.then(data => this.setState({ isBlacklisted : !wasBlacklisted, 'has-success' : data.message }))
+		.catch(e => this.setState({ error : getMessageFromError(e), 'has-success' : false }))
+		.finally(() => this.setState({ 'is-loading' : false }));
 	}
 
 	render() {
@@ -76,14 +60,12 @@ export default class Blacklist extends Component {
 					{ this.state.currentURL } is 
 				</span>
 				<span>
-					<MyToggleButton value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)} />
+					<MyToggleButton 
+						value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)} 
+						activeLabel={ T.translate("userprofile.whitelisted") }
+						inactiveLabel={ T.translate("userprofile.blacklisted") }
+					/>
 				</span>
-				<span>
-					listed
-				</span>
-				<div>
-					<small>any change will reload the website</small>
-				</div>
 				{
 					this.state["error"] &&
 					<MessageError

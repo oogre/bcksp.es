@@ -2,15 +2,18 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2019-01-05 18:29:59
+  @Last Modified time: 2019-04-18 16:05:47
 \*----------------------------------------*/
+import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
 import LoginForm from './../form/login.js';
 import SignupForm from './../form/signup.js';
 import { config } from './../../shared/config.js';
 import ForgotPwdForm from './../form/forgotPwd.js';
 import { sendMessage } from './../../utilities/com.js';
+import { log, info, warn, error } from './../../utilities/log.js';
 
+const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class LoginMenu extends Component {
 	constructor(props) {
@@ -25,21 +28,23 @@ export default class LoginMenu extends Component {
 		if(!this.state.availableProcess.includes(data)){
 			throw new Error("Unknow process to switch to : "+data);
 		}
-		this.setState({currentProcess: data});
+		this.setState({ currentProcess : data });
 		return false;
 	}
+
 	handleGoBcksp(event){
 		sendMessage("openTab", config.getHomeUrl())
 		.then(data => info(data))
-		.catch(e => info(e.message));;
+		.catch(e => error(e));;
 	}
+
 	renderLoginBtn(){
 		return(
 			<li>
 				<p>
-					Already have an account?
+					<T.span text={{ key : "extension.login.title" }}/>
 					<button onClick={this.handleProcessSwitchTo.bind(this, "login")}>
-						log in now
+						<T.span text={{ key : "extension.login.button" }}/>
 					</button>
 				</p>	
 			</li>
@@ -50,9 +55,9 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<p>
-					Don't have an account?
+					<T.span text={{ key : "extension.signup.title" }}/>
 					<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
-						sign up now
+						<T.span text={{ key : "extension.signup.button" }}/>
 					</button>
 				</p>	
 			</li>
@@ -63,9 +68,9 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<p>
-					Have you forgot your password?
+					<T.span text={{ key : "extension.forgotpwd.title" }}/>
 					<button onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
-						If so click here
+						<T.span text={{ key : "extension.forgotpwd.button" }}/>
 					</button>
 				</p>
 			</li>
@@ -107,7 +112,7 @@ export default class LoginMenu extends Component {
 						className="" 
 						onClick={this.handleGoBcksp.bind(this)}
 					>
-							visit {config.bcksp_url}
+						<T.span text={{ key : "extension.visit" }}/>
 					</button>
 				</li>
 			</ul>

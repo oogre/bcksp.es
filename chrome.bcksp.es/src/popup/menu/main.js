@@ -2,13 +2,17 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2019-03-26 19:58:21
+  @Last Modified time: 2019-04-18 17:50:45
 \*----------------------------------------*/
 
+import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
 import Blacklist from './../blacklist.js';
 import { config } from './../../shared/config.js';
 import { sendMessage, on } from './../../utilities/com.js';
+import { log, info, warn, error } from './../../utilities/log.js';
+
+const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class MainMenu extends Component {
 	constructor(props) {
@@ -18,54 +22,45 @@ export default class MainMenu extends Component {
 			archiveRatio : 0
 		};
 	}
+
 	componentDidMount() {
 		sendMessage("getArchiveSize")
-		.then(archiveSize => {
-			this.setState({
-				archiveSize : archiveSize
-			});
-		})
-		.catch(e => info(e.message));
-		
-		on("archiveSize", (data, resolve, reject) => {
-			this.setState({
-				archiveSize : data
-			});
-			resolve(true);
-		});
+		.then(archiveSize => this.setState({ archiveSize : archiveSize}))
+		.catch(e => error(e));
 
 		sendMessage("getArchiveRatio")
-		.then(archiveRatio => {
-			this.setState({
-				archiveRatio : archiveRatio
-			});
-		})
-		.catch(e => info(e.message));
+		.then(archiveRatio => this.setState({ archiveRatio : archiveRatio }))
+		.catch(e => error(e));
+
+		on("archiveSize", (data, resolve, reject) => {
+			this.setState({ archiveSize : data });
+			resolve(true);
+		});
 
 		on("archiveRatio", (data, resolve, reject) => {
-			this.setState({
-				archiveRatio : data
-			});
+			this.setState({ archiveRatio : data });
 			resolve(true);
 		});
 	}
+
 	handleLogout(event){
 		sendMessage("logout")
-		.then(isLoggedIn => {
-			this.props.onLoginStatusChange(isLoggedIn);
-		})
-		.catch(e => info(e.message));
+		.then(isLoggedIn => this.props.onLoginStatusChange(isLoggedIn))
+		.catch(e => error(e));
 	}
+
 	handleMyFeed(event){
 		sendMessage("openTab", config.getHomeUrl())
 		.then(data => info(data))
-		.catch(e => info(e.message));
+		.catch(e => error(e));
 	}
+
 	handleMySettings(event){
 		sendMessage("openTab", config.getProfileUrl())
 		.then(data => info(data))
-		.catch(e => info(e.message));
+		.catch(e => error(e));
 	}
+
 	render() {
 		return (
 			<ul>
@@ -73,31 +68,28 @@ export default class MainMenu extends Component {
 					<Blacklist/>
 				</li>
 				<li>
-					<button 
-							className="" 
+					<button className="" 
 							onClick={this.handleMySettings.bind(this)}
-						>
-							other security settings
+					>
+							<T.span text={{ key : "extension.security.settings.button" }}/>
 					</button>
 				</li>
 				<li>
-					<p>{this.state.archiveSize} characters archived</p>
-					<p>{(this.state.archiveRatio * 100).toFixed(2)}%</p>
+					<T.p text={{ key : "extension.characters.archived", value : this.state.archiveSize }} />
+					<T.p text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
 				</li>
 				<li>
-					<button 
-							className="" 
+					<button className="" 
 							onClick={this.handleMyFeed.bind(this)}
-						>
-							access your archive
+					>
+							<T.span text={{ key: "extension.archive.button" }}/>
 					</button>
 				</li>
 				<li>
-					<button 
-							className="button--secondary logout" 
+					<button className="button--secondary logout" 
 							onClick={this.handleLogout.bind(this)}
-						>
-							logout
+					>
+							<T.span text={{ key: "forms.logout" }}/>
 					</button>
 				</li>
 			</ul>

@@ -2,21 +2,23 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:16:34
-  @Last Modified time: 2019-03-06 19:22:46
+  @Last Modified time: 2019-04-18 16:48:38
 \*----------------------------------------*/
 
 import Data from "./Data.js";
+import { MDText } from 'i18n-react';
 import { config } from './../shared/config.js';
 import { getContentEditableInParent, intersection } from "./tools.js";
 import { isString, isEmpty, isFunction, isArray } from 'underscore';
 import { setDefaultIcon } from './icon.js';
-
 export { isString, isEmpty, isFunction, isUndefined, isNull, isArray, isBoolean, isObject } from 'underscore';
+
+const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export async function checkConnected(){
 	if(!Data.state.connected){
 		setDefaultIcon(Data.state.loggedStatus);
-		throw new Error("Server is not accessible");
+		throw new Error("extension.server.offline");
 	}
 	return true;
 }
@@ -62,24 +64,24 @@ export function isAcceptable(elem){
 
 export async function isEmail(value, aggregator = {}){
 	let EmailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-	if(isEmpty(value)) throw new Error("Your email is empty");
-	if(!isString(value)) throw new Error("Your email must be a string");
-	if(!EmailRegExp.test(value)) throw new Error("Your email is wrong formatted");
+	if(isEmpty(value)) throw new Error(T.translate("extension.email.empty"));
+	if(!isString(value)) throw new Error(T.translate("extension.email.notString"));
+	if(!EmailRegExp.test(value)) throw new Error(T.translate("extension.email.wrongFormatted"));
 	aggregator.email = value;
 	return aggregator;
 }
 
 export async function isPwd(value, aggregator = {}){
-	if(isEmpty(value)) throw new Error("Your password is empty");
-	if(!isString(value)) throw new Error("Your password must be a string");
-	if(value.length < config.user.password.length.min) throw new Error("Your password is too short, min "+user.password.length.min+" characters");
-	if(value.length > config.user.password.length.max) throw new Error("Your password is too long, max "+user.password.length.max+" characters");
+	if(isEmpty(value)) throw new Error(T.translate("extension.password.empty"));
+	if(!isString(value)) throw new Error(T.translate("extension.password.notString"));
+	if(value.length < config.user.password.length.min) throw new Error(T.translate("extension.password.tooShort", { value : config.user.password.length.min }));
+	if(value.length > config.user.password.length.max) throw new Error(T.translate("extension.password.tooLong", { value : config.user.password.length.max }));
 	aggregator.password = value;
 	return aggregator;
 }
 
 export async function isPwdConf(value, aggregator = {}){
-	if(isEmpty(value)) throw new Error("Your password confirmation is empty");
-	if(aggregator.password != value) throw new Error("Your password confirmation must match your password");
+	if(isEmpty(value)) throw new Error(T.translate("extension.passwordconf.empty"));
+	if(aggregator.password != value) throw new Error(T.translate("extension.passwordconf.notMatch"));
 	return aggregator;
 }

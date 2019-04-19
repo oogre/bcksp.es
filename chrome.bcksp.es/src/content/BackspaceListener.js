@@ -6,15 +6,44 @@ import { log, info, warn, error } from './../utilities/log.js';
 import { diff, getHighlightText, getCharBeforeCaret, specialCase } from './../utilities/backspace.js';
 import { checkString, checkTarget, isAcceptable, isInputField, isEmpty } from './../utilities/validation.js';
 
+let bcksp;
+
 export default class BackspaceListener{
+	static start(){
+		if(bcksp) return;
+		sendMessage("isLogin")
+		.then(async (isLoggedIn) => {
+			if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
+			return true;
+		})
+		.then(() => sendMessage("getUrlStatus"))
+		.then(async ({blackListed}) => {
+			if(blackListed) throw new Error('This web site is blacklisted, so here bcksp.es in not available');
+			return true;
+		})
+		.then(() => bcksp = new BackspaceListener())
+		.catch(e => error(e.message));
+	}
+
+	static stop(){
+		if(!bcksp) return;
+		bcksp.kill();
+		bcksp = null;
+	}
+
+	static toggle(){
+		if(!bcksp) BackspaceListener.start();
+		else BackspaceListener.stop();
+	}
+	
 	constructor(){
-		sendMessage("getBlindfields")
-		.then(blindfields=>{
-			Data.setState({
-				blindfields : blindfields
-			});
-		});
+		this.elements = [];
 		log("BackspaceListener initializer");
+		
+		sendMessage("getBlindfields")
+		.then(blindfields => Data.setState({ blindfields : blindfields }));
+
+		
 		this.setupListener(document);
 		Protocol.add("Highlight", target => {
 			try{
@@ -189,23 +218,17 @@ export default class BackspaceListener{
 	}
 	setupListener(target){
 		this.addListeners(target);
-		/*let self = this;
-		try{
-			target.querySelectorAll("iframe")
-			.forEach(iframe => {
-				try{
-					iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
-					iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
-					iframe.addEventListener("load", function(event) {
-							iframe.contentWindow.document.addEventListener("keydown", self.keyDownListener, true);
-							iframe.contentWindow.document.addEventListener("keyup", self.keyUpListener, true);
-					}, false);
-				}catch(e){}
-			});
-		}catch(e){}*/
 	}
 	addListeners (element){
+		this.elements.push(element);
 		element.addEventListener("keydown", this.keyDownListener, true);
 		element.addEventListener("keyup", this.keyUpListener, true);	
+	}
+	kill(){
+		log("BackspaceListener killer");
+		this.elements.map(element => {
+			element.removeEventListener("keydown", this.keyDownListener, true);
+			element.removeEventListener("keyup", this.keyUpListener, true);	
+		});
 	}
 }

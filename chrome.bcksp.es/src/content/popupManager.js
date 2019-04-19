@@ -2,38 +2,11 @@
   bcksp.es - popupManager.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-04-17 12:28:31
-  @Last Modified time: 2019-04-17 12:44:39
+  @Last Modified time: 2019-04-18 10:14:08
 \*----------------------------------------*/
 import { runtimeGetURL } from './../utilities/browser.js';
 
 let iframe;
-let reloadBtn;
-export function openReload(){
-	reloadBtn = document.createElement('button');
-	reloadBtn.innerText = "bcksp.es ask to reload this page";
-	reloadBtn.addEventListener("click", ()=>{
-		location.reload();
-	}, true);
-	reloadBtn.style.cssText = 	"position:fixed;"+
-								"top:10px;"+
-								"right:50%;"+
-								"display:block;"+
-								"z-index:100000;";
-	document.body.appendChild(reloadBtn);
-}
-
-export function closeReload(){
-	reloadBtn.parentNode.removeChild(reloadBtn);
-	reloadBtn = null;
-}
-
-export function toggleReload(){
-	if(reloadBtn){
-		closeReload();
-	}else{
-		openReload();	
-	}
-}
 
 export function openPopup(){
 	iframe = document.createElement('iframe');

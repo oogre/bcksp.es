@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-03-26 20:01:15
+  @Last Modified time: 2019-04-19 13:25:37
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import Data from "./../utilities/Data.js";
@@ -19,105 +19,67 @@ class AsteroidHelper{
     		endpoint: config.getWebSocketUrl()
 		});
 
-		this.subscribtionAddressList = [
-			"archive.private.counter",
-			"config",
-			"settings.private"
-		];
-		
 		this.subscribtionList = [];
-
-		this.asteroid.on("connected", () =>{
-			log("connected");
-			Data.setState({
-				connected : true,
-			});
-		});
-
-		this.asteroid.on("disconnected", () =>{
-			log("disconnected");
-			Data.setState({
-				connected : false,
-			});
-		});
-
-		this.asteroid.on("loggedOut", () =>{
-			log("loggedOut");
+		this.subscribtionAddressList = [
+			"config",
+			"settings.private",
+			"archive.private.counter"
+		];		
+		
+		this.asteroid.on("connected", () => Data.setState({ connected : true }));
+		this.asteroid.on("disconnected", () => Data.setState({ connected : false }));
+		this.asteroid.on("loggedOut", () => {
 			Data.setState({
 				loggedStatus : false,
 				currentURLBlacklisted : false
 			});
 			this.stopSubsribtion();
 		});
-
-		this.asteroid.on("loggedIn", data =>{
-			log("loggedIn");
-			Data.setState({
-				"loggedStatus": true
-			});
+		this.asteroid.on("loggedIn", data => {
+			Data.setState({ "loggedStatus": true });
 			this.startSubsribtion();
 		});
 	}
 
 	stopSubsribtion(){
-		info("stopSubsribtion");
 		this.subscribtionList.map(subscribtion => {
 			this.asteroid.unsubscribe(subscribtion.id);
 			this.asteroid.subscriptions.cache.del(subscribtion.id);
+			info("Subsribtion : " + subscribtion.name + " is closed")
 		});
 		this.subscribtionList = [];
 	}
 
 	startSubsribtion (){
-		info("startSubsribtion");
-		this.subscribtionList = this.subscribtionAddressList.map(address =>{
-			info("subscribtion to : " + address);
+		this.subscribtionList = this.subscribtionAddressList.map(address => {
 			let sub = this.asteroid.subscribe(address);
-			sub.on("ready", () => {
-				info(address + " : ready");
-			});
+			sub.on("ready", () => info("Subsribtion : " + address + " is ready"));
 			return sub;
 		});
-		//if(Data.state.init)return;
-		//Data.setState({
-		//	"init": true
-		//});
-		
 		this.on("changed", {
-			config : ({maxCharPerBook}) => {
-				Data.setState({maxCharPerBook : maxCharPerBook});
-			},
-			archives : ({count}) => {
-				Data.setState({
-					archiveSize : count
-				});
-			},
-			settings : settings=>{
+			config : ({maxCharPerBook}) => Data.setState({ maxCharPerBook : maxCharPerBook }),
+			archives : ({count}) => Data.setState({ archiveSize : count }),
+			settings : settings => {
 				if(isObject(settings.blindfield)){
-					Data.setState({blindfields : settings.blindfield});
+					Data.setState({ blindfields : settings.blindfield });
 				}
 				if(isArray(settings.blacklist)){
-					Data.setState({blacklist : settings.blacklist});
+					Data.setState({ blacklist : settings.blacklist });
 				}
 			}
 		});
 		this.on("added", {
-			config : ({maxCharPerBook}) => {
-				Data.setState({maxCharPerBook : maxCharPerBook});
-			},
-			archives : ({count}) => {
-				Data.setState({archiveSize : count});
-			},
-			settings : settings=>{
+			config : ({maxCharPerBook}) => Data.setState({maxCharPerBook : maxCharPerBook}),
+			archives : ({count}) => Data.setState({archiveSize : count}),
+			settings : settings => {
 				if(isObject(settings.blindfield)){
-					Data.setState({blindfields : settings.blindfield});
+					Data.setState({ blindfields : settings.blindfield });
 				}
 				if(isArray(settings.blacklist)){
-					Data.setState({blacklist : settings.blacklist});
+					Data.setState({ blacklist : settings.blacklist });
 				}
 			}
 		});
-		
 	}
 
 	on(eventName, options){
@@ -130,15 +92,11 @@ class AsteroidHelper{
 		setIcon("sending");
 		data.device =  runtimeId();
 		return this.asteroid.call(methode, data)
-			.then(res => {
-				//info(res);
-				return res;
-			}).catch(error => {
+			.then(res => res)
+			.catch(error => {
 				error(error);
 				throw error;
-			}).finally(()=>{
-				setDefaultIcon(this.asteroid.loggedIn);
-			});
+			}).finally(() => setDefaultIcon(this.asteroid.loggedIn));
 	}
 }
 

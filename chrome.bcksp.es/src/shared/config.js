@@ -11,6 +11,7 @@ const conf = {
 		logout : "/logout",
 		profile : "/profile",
 		websocket : "/websocket",
+		translation : "/universe/locale/",//fr-FR
 		user : {
 			password : {
 				length : {
@@ -31,6 +32,7 @@ const conf = {
 		logout : "/logout",
 		profile : "/profile",
 		websocket : "/websocket",
+		translation : "/universe/locale/",//fr-FR
 		user : {
 			password : {
 				length : {
@@ -63,3 +65,18 @@ config.getProfileUrl = function(){
 config.getWebSocketUrl = function(){
 	return config.ws_protocol+config.address+config.websocket;
 };
+
+function getLang () {
+    return (
+        navigator.languages && navigator.languages[0] ||
+        navigator.language ||
+        navigator.browserLanguage ||
+        navigator.userLanguage ||
+        'en-US'
+    );
+}
+
+config.getTranslationUrl = function(){
+	return config.protocol+config.address+config.translation+getLang()+"?ts="+Math.floor(Math.random()*100);
+};
+
