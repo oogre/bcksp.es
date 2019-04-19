@@ -2,7 +2,7 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2019-04-18 16:05:47
+  @Last Modified time: 2019-04-19 14:09:15
 \*----------------------------------------*/
 import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
@@ -42,9 +42,9 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<p>
-					<T.span text={{ key : "extension.login.title" }}/>
+					<T.span text={{ key : "forms.login.title" }}/>
 					<button onClick={this.handleProcessSwitchTo.bind(this, "login")}>
-						<T.span text={{ key : "extension.login.button" }}/>
+						<T.span text={{ key : "forms.login.button" }}/>
 					</button>
 				</p>	
 			</li>
@@ -55,9 +55,9 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<p>
-					<T.span text={{ key : "extension.signup.title" }}/>
+					<T.span text={{ key : "forms.signup.title" }}/>
 					<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
-						<T.span text={{ key : "extension.signup.button" }}/>
+						<T.span text={{ key : "forms.signup.button" }}/>
 					</button>
 				</p>	
 			</li>
@@ -68,9 +68,9 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<p>
-					<T.span text={{ key : "extension.forgotpwd.title" }}/>
+					<T.span text={{ key : "forms.resetPassword.title" }}/>
 					<button onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
-						<T.span text={{ key : "extension.forgotpwd.button" }}/>
+						<T.span text={{ key : "forms.resetPassword.button" }}/>
 					</button>
 				</p>
 			</li>

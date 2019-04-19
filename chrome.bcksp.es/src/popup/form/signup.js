@@ -2,7 +2,7 @@
   bcksp.es - signup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:11:37
-  @Last Modified time: 2019-04-18 16:05:25
+  @Last Modified time: 2019-04-19 14:23:00
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -55,19 +55,19 @@ export default class SignupForm extends Component {
 				<div className="fields-row">
 					<div className="fields-column">
 						<label htmlFor="email">
-							<T.span text={{ key : "extension.signup.email" }}/>
+							<T.span text={{ key : "forms.signup.email" }}/>
 						</label>
 						<input id="email" type = "email" ref="email"name="email"/>
 					</div>
 					<div className="fields-column">
 						<label htmlFor="password">
-							<T.span text={{ key : "extension.signup.pwd" }}/>
+							<T.span text={{ key : "forms.signup.pwd" }}/>
 						</label>
 						<input id="password" type="password" ref="password" name="password"/>
 					</div>
 					<div className="fields-column">
 						<label htmlFor="passwordConfirm">
-							<T.span text={{ key : "extension.signup.pwdconf" }}/>
+							<T.span text={{ key : "forms.signup.pwdconf" }}/>
 						</label>
 						<input id="passwordConfirm" type="password" ref="passwordConfirm" name="passwordConfirm"/>
 					</div>
@@ -75,7 +75,7 @@ export default class SignupForm extends Component {
 				<div className="fields-row text-right">
 					<input 	className="button--secondary" 
 							type="submit" 
-							value={T.translate("extension.signup.button")}
+							value={T.translate("forms.signup.action")}
 					/>
 				</div>
 				{

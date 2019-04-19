@@ -2,7 +2,7 @@
   bcksp.es - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:00:44
-  @Last Modified time: 2019-04-18 15:49:16
+  @Last Modified time: 2019-04-19 14:10:05
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -55,13 +55,13 @@ export default class LoginForm extends Component {
 				<div className="fields-row">
 					<div className="fields-column">
 						<label htmlFor="email">
-							<T.span text={{ key : "extension.login.email" }}/>
+							<T.span text={{ key : "forms.login.email" }}/>
 						</label>
 						<input id="email" type = "email" ref="email"name="email"/>
 					</div>
 					<div className="fields-column">
 						<label htmlFor="password">
-							<T.span text={{ key : "extension.login.pwd" }}/>
+							<T.span text={{ key : "forms.login.pwd" }}/>
 						</label>
 						<input id="password" type="password" ref="password" name="password"/>
 					</div>
@@ -69,7 +69,7 @@ export default class LoginForm extends Component {
 				<div className="fields-row text-right">
 					<input 	className="button--secondary" 
 							type="submit" 
-							value={T.translate("extension.login.button")}
+							value={T.translate("forms.login.action")}
 					/>
 				</div>
 				{

@@ -2,7 +2,7 @@
   dev - enrollment.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-20 13:29:36
-  @Last Modified time: 2019-01-03 17:37:48
+  @Last Modified time: 2019-04-19 14:17:46
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
@@ -53,7 +53,7 @@ export default class UserPasswordSetup extends Component {
 			});
 
 			if (_.isFunction(this.props.onComplete)) {
-				alert( i18n.__("forms.success.resetPassword"));
+				alert( i18n.__("forms.resetPassword.success"));
 				this.props.onComplete();
 			}
 		})
@@ -126,7 +126,7 @@ export default class UserPasswordSetup extends Component {
 										type="password"
 										ref="password"
 										name="password"
-										placeholder={i18n.createTranslator("forms")("password")}
+										placeholder={i18n.__("forms.resetPassword.password")}
 									/>
 								</div>
 								<div className="fields-row">
@@ -134,7 +134,7 @@ export default class UserPasswordSetup extends Component {
 										type="password"
 										ref="password-check"
 										name="password-check"
-										placeholder={i18n.createTranslator("forms")("passwordConfirm")}
+										placeholder={i18n.__("forms.resetPassword.passwordConfirm")}
 									/>
 								</div>
 								<div className="fields-row">
@@ -146,7 +146,7 @@ export default class UserPasswordSetup extends Component {
 											(this.state['has-error'] ? "error " : "")
 										}
 										type="submit"
-										value={i18n.createTranslator("forms")("submit.setPassword")}
+										value={i18n.__("forms.resetPassword.submit")}
 									/>
 								</div>
 								{ 

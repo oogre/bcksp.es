@@ -2,7 +2,7 @@
   bcksp.es - forgotPwd.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-12-26 12:47:44
-  @Last Modified time: 2019-04-18 16:21:13
+  @Last Modified time: 2019-04-19 14:05:26
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -45,7 +45,7 @@ export default class ForgotPwdForm extends Component {
 				<div className="fields-row">
 					<div className="fields-column">
 						<label htmlFor="email">
-							<T.span text={{ key : "extension.forgotpwd.email" }}/>
+							<T.span text={{ key : "forms.resetPassword.email" }}/>
 						</label>
 						<input id="email" type = "email" ref="email"name="email"/>
 					</div>
@@ -53,7 +53,7 @@ export default class ForgotPwdForm extends Component {
 				<div className="fields-row text-right">
 					<input 	className="button--secondary" 
 							type="submit" 
-							value={T.translate("extension.forgotpwd.button")}
+							value={T.translate("forms.resetPassword.action")}
 					/>
 				</div>
 				{

@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2019-04-18 17:50:45
+  @Last Modified time: 2019-04-19 14:19:06
 \*----------------------------------------*/
 
 import { MDText } from 'i18n-react';
@@ -71,25 +71,25 @@ export default class MainMenu extends Component {
 					<button className="" 
 							onClick={this.handleMySettings.bind(this)}
 					>
-							<T.span text={{ key : "extension.security.settings.button" }}/>
+							<T.span text={{ key : "extension.links.security" }}/>
 					</button>
 				</li>
 				<li>
-					<T.p text={{ key : "extension.characters.archived", value : this.state.archiveSize }} />
+					<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
 					<T.p text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
 				</li>
 				<li>
 					<button className="" 
 							onClick={this.handleMyFeed.bind(this)}
 					>
-							<T.span text={{ key: "extension.archive.button" }}/>
+							<T.span text={{ key: "extension.links.archive" }}/>
 					</button>
 				</li>
 				<li>
 					<button className="button--secondary logout" 
 							onClick={this.handleLogout.bind(this)}
 					>
-							<T.span text={{ key: "forms.logout" }}/>
+							<T.span text={{ key: "forms.logout.action" }}/>
 					</button>
 				</li>
 			</ul>

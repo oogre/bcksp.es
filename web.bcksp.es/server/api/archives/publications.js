@@ -2,16 +2,14 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2019-04-19 13:27:19
+  @Last Modified time: 2019-04-19 13:38:28
 \*----------------------------------------*/
 import { htmlDecode } from'htmlencode';
 import { Meteor } from 'meteor/meteor';
-import { Archives } from '../../../imports/api/archives/archives.js';
-import { config } from '../../../imports/startup/config.js';
 import * as ArchiveTools from '../../utilities.archive.js';
-import { 
-	checkUserLoggedIn
-} from './../../../imports/utilities/validation.js';
+import { config } from '../../../imports/startup/config.js';
+import { Archives } from '../../../imports/api/archives/archives.js';
+import { checkUserLoggedIn } from './../../../imports/utilities/validation.js';
 
 
 if(Meteor.isServer){

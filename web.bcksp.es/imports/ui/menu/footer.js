@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2019-01-15 10:24:44
+  @Last Modified time: 2019-04-19 14:18:45
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -81,7 +81,7 @@ class MenuFooter extends Component {
 										this.hasToDisplayLogoutBtn() &&
 											<li className="menu__item">
 												<button className="button--unstyled menu__item-link" onClick={this.handleLogout.bind(this)}>
-													<T>forms.logout</T>
+													<T>forms.logout.action</T>
 												</button>
 											</li>
 									}
