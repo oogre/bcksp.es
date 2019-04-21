@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:11:04
-  @Last Modified time: 2019-03-24 16:12:48
+  @Last Modified time: 2019-04-21 17:35:09
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Settings } from './settings.js';

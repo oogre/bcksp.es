@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-04-19 13:25:37
+  @Last Modified time: 2019-04-21 17:37:36
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import Data from "./../utilities/Data.js";
@@ -21,7 +21,7 @@ class AsteroidHelper{
 
 		this.subscribtionList = [];
 		this.subscribtionAddressList = [
-			"config",
+			"archive.config",
 			"settings.private",
 			"archive.private.counter"
 		];		

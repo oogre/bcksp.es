@@ -4,7 +4,7 @@ import './fr.js';
 
 i18n.setLocale('fr-FR');
 i18n.setOptions({
-	hostUrl : process.env.ROOT_URL,
+	//hostUrl : process.env.ROOT_URL,
     purify: string => string
 });
 

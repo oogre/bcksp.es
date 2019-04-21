@@ -135,10 +135,8 @@ export default withTracker(self => {
 	let privateHandle = Meteor.userId() && Meteor.subscribe('archive.private');
 	return {
 		isConnected : !!Meteor.userId(),
-
 		isPublicReady  : publicHandle && publicHandle.ready(),
 		publicArchive  : PublicArchive.findOne({}),
-
 		isPrivateReady : privateHandle && privateHandle.ready(),
 		privateArchive : PrivateArchive.find({}, {sort : {_id : -1}}).fetch()
 	};

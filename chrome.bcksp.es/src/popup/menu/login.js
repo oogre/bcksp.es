@@ -2,7 +2,7 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2019-04-19 14:09:15
+  @Last Modified time: 2019-04-19 14:35:45
 \*----------------------------------------*/
 import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
@@ -112,7 +112,7 @@ export default class LoginMenu extends Component {
 						className="" 
 						onClick={this.handleGoBcksp.bind(this)}
 					>
-						<T.span text={{ key : "extension.visit" }}/>
+						<T.span text={{ key : "extension.links.visit" }}/>
 					</button>
 				</li>
 			</ul>
