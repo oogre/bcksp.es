@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2019-03-24 16:54:04
+  @Last Modified time: 2019-04-21 18:25:04
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -114,6 +114,14 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ type, classFlag=false }) {
+		if(	(classFlag && config.settings.blindfield.disabled.blocked.class.includes(type)) ||
+			(!classFlag && config.settings.blindfield.disabled.blocked.type.includes(type))
+		){
+			return {
+				success : true,
+				data : "Nothing Removed"
+			}
+		}
 		this.unblock();
 		let search = {
 			owner : this.userId
@@ -127,7 +135,7 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		}
-		value.$pull["blindfield."+(classFlag?"class":"types")] = type
+		value.$pull["blindfield."+(classFlag?"class":"types")] = type;
 		Settings.update(search, value);
 		return {
 			success : true,

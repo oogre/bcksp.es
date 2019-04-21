@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-04-11 20:38:40
+  @Last Modified time: 2019-04-21 18:25:42
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -192,7 +192,7 @@ class UserProfile extends Component {
 				<h2><T>userprofile.blindfield.type.title</T></h2>
 				<ul className="toggle-list">
 					{
-						config.settings.blindfield.types.map((type, k) => (
+						config.settings.blindfield.available.types.map((type, k) => (
 							<li className="field" key={k}>
 								<label className="field__label" htmlFor="">
 									{type.value}
@@ -203,9 +203,9 @@ class UserProfile extends Component {
 								<span className="input-wrapper--inline">
 									<MyToggleButton
 										value={ this.props.settings.blindfield.types.includes(type.value) }
-										onToggle={flag=>{this.handleToggleBlindfield(type.value, false, flag)}}
-										activeLabel={i18n.__("userprofile.whitelisted")}
-										inactiveLabel={i18n.__("userprofile.blacklisted")}
+										onToggle={ flag => this.handleToggleBlindfield(type.value, false, flag) }
+										activeLabel={ i18n.__("userprofile.whitelisted") }
+										inactiveLabel={ i18n.__("userprofile.blacklisted") }
 									/>
 								</span>
 							</li>

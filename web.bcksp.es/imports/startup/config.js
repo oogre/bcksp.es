@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-04-06 14:23:39
+  @Last Modified time: 2019-04-21 18:12:37
 \*----------------------------------------*/
 
 
@@ -68,29 +68,40 @@ export const config = {
 	},
 	settings : {
 		blindfield : {
-			types : [{
-				value : "email",
-				placeholder : "demo@gmail.com"
-			},{
-				value : "password",
-				placeholder : "••••••••••"
-			},{
-				value : "text",
-				placeholder : "bonjour"
-			},{
-				value : "search",
-				placeholder : "image chatton érotique"
-			},{
-				value : "tel",
-				placeholder : "+32.495.876.315"
-			},{
-				value : "number",
-				placeholder : 123
-			},{
-				value : "url",
-				placeholder : "https://bcksp.es"
-			}],
-			class : []
+			available : {
+				types : [{
+					value : "email",
+					placeholder : "demo@gmail.com"
+				},{
+					value : "password",
+					placeholder : "••••••••••"
+				},{
+					value : "text",
+					placeholder : "bonjour"
+				},{
+					value : "search",
+					placeholder : "image chatton érotique"
+				},{
+					value : "tel",
+					placeholder : "+32.495.876.315"
+				},{
+					value : "number",
+					placeholder : 123
+				},{
+					value : "url",
+					placeholder : "https://bcksp.es"
+				}]
+			},
+			disabled : {
+				default : {
+					class : ["bcksp-es-disabled"],
+					type : ["password"]	
+				},
+				blocked : {
+					class : ["bcksp-es-disabled"],
+					type : []
+				}
+			}
 		}
 	}
 
