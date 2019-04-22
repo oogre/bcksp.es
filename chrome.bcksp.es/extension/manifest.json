@@ -25,7 +25,8 @@
     "scripts": ["dist/background.js"]
   },
   "web_accessible_resources": [
-    "popup.html"
+    "popup.html",
+    "theme/*"
   ],
   "permissions": [
     "tabs",

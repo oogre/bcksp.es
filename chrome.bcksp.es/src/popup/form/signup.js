@@ -42,9 +42,9 @@ export default class SignupForm extends Component {
 			this.setState({ 'is-success' : true });
 			this.props.onSuccess(isLoggedIn)
 		})
-		.catch(error => this.setState({ 
-			'is-success' : false, 
-			error : getMessageFromError(error) 
+		.catch(error => this.setState({
+			'is-success' : false,
+			error : getMessageFromError(error)
 		}))
 		.finally(() => this.setState({ 'is-loading' : false }));
 	}
@@ -52,29 +52,29 @@ export default class SignupForm extends Component {
 	render() {
 		return (
 	    	<form className="signup-user" onSubmit={this.handleSignup.bind(this)}>
-				<div className="fields-row">
-					<div className="fields-column">
-						<label htmlFor="email">
+				<div>
+					<div className="field">
+						<label className="field__label" htmlFor="email">
 							<T.span text={{ key : "forms.signup.email" }}/>
 						</label>
-						<input id="email" type = "email" ref="email"name="email"/>
+						<input className="input--text" id="email" type = "email" ref="email"name="email"/>
 					</div>
-					<div className="fields-column">
-						<label htmlFor="password">
+					<div className="field">
+						<label className="field__label" htmlFor="password">
 							<T.span text={{ key : "forms.signup.pwd" }}/>
 						</label>
-						<input id="password" type="password" ref="password" name="password"/>
+						<input className="input--text" id="password" type="password" ref="password" name="password"/>
 					</div>
-					<div className="fields-column">
-						<label htmlFor="passwordConfirm">
+					<div className="field">
+						<label className="field__label" htmlFor="passwordConfirm">
 							<T.span text={{ key : "forms.signup.pwdconf" }}/>
 						</label>
-						<input id="passwordConfirm" type="password" ref="passwordConfirm" name="passwordConfirm"/>
+						<input className="input--text" id="passwordConfirm" type="password" ref="passwordConfirm" name="passwordConfirm"/>
 					</div>
 				</div>
 				<div className="fields-row text-right">
-					<input 	className="button--secondary" 
-							type="submit" 
+					<input 	className="button--secondary"
+							type="submit"
 							value={T.translate("forms.signup.action")}
 					/>
 				</div>

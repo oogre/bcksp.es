@@ -52,23 +52,26 @@ export default class LoginForm extends Component {
 	render() {
 		return (
 	    	<form className="login-user" onSubmit={this.handleLogin.bind(this)}>
-				<div className="fields-row">
-					<div className="fields-column">
-						<label htmlFor="email">
+				<div>
+
+			pjkdjskljdskljdsqkl
+
+					<div className="field">
+						<label className="field__label" htmlFor="email">
 							<T.span text={{ key : "forms.login.email" }}/>
 						</label>
-						<input id="email" type = "email" ref="email"name="email"/>
+						<input className="input--text" id="email" type = "email" ref="email"name="email"/>
 					</div>
-					<div className="fields-column">
-						<label htmlFor="password">
+					<div className="field">
+						<label className="field__label" htmlFor="password">
 							<T.span text={{ key : "forms.login.pwd" }}/>
 						</label>
-						<input id="password" type="password" ref="password" name="password"/>
+						<input className="input--text" id="password" type="password" ref="password" name="password"/>
 					</div>
 				</div>
-				<div className="fields-row text-right">
-					<input 	className="button--secondary" 
-							type="submit" 
+				<div className="field">
+					<input 	className="button--secondary"
+							type="submit"
 							value={T.translate("forms.login.action")}
 					/>
 				</div>

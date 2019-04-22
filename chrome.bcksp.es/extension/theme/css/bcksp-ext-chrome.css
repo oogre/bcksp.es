@@ -1,0 +1,62 @@
+/*------------------------------------*\
+  Bcksp.es - Extension
+  @authors Crucifix Arnaud (hello@crucifixarnaud.com)
+\*------------------------------------*/
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+body {
+  font-size: 16px;
+  color: #231f20;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.bcksp-popup {
+  padding: 1.25rem;
+  background: #fff;
+}
+
+.bcksp-popup__header {
+  border-bottom: 3px solid #000;
+  padding-bottom: 1.0625rem;
+}
+
+.bcksp-popup__body {
+  margin-top: 13px ;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.field__label {
+  display: block;
+  text-align: left;
+  font-size: .8125rem;
+  color: #231f20;
+  margin-bottom: 6px;
+}
+
+.field__label::first-letter {
+  text-transform: uppercase;
+}
+
+.input--text {
+  border-radius: 2px;
+  border: 1px solid #bdbdbd;
+  width: 100%;
+  line-height: 1.75;
+}
+
+
