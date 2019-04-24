@@ -73,7 +73,7 @@ export default class SignupForm extends Component {
 					</div>
 				</div>
 				<div className="fields-row text-right">
-					<input 	className="button--secondary"
+					<input 	className="button button--secondary"
 							type="submit"
 							value={T.translate("forms.signup.action")}
 					/>

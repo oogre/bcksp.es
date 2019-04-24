@@ -41,16 +41,16 @@ export default class LoginMenu extends Component {
 	renderLoginBtn(){
 		return(
 			<li>
-				<p>
-					<T.span text={{ key : "forms.login.title" }}/>
-					<button onClick={this.handleProcessSwitchTo.bind(this, "login")}>
+				<div className="bcksp-popup__body-footer">
+					<T.p text={{ key : "forms.login.title" }}/>
+					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "login")}>
 						<T.span text={{ key : "forms.login.button" }}/>
 					</button>
-				</p>	
+				</div>
 			</li>
 		);
 	}
-	
+
 	renderSignupBtn(){
 		return(
 			<li>
@@ -59,11 +59,11 @@ export default class LoginMenu extends Component {
 					<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
 						<T.span text={{ key : "forms.signup.button" }}/>
 					</button>
-				</p>	
+				</p>
 			</li>
 		);
 	}
-	
+
 	renderForgotPwdBtn(){
 		return(
 			<li>
@@ -81,35 +81,35 @@ export default class LoginMenu extends Component {
 		return (
 			<ul>
 				<li>
-					{ 
+					{
 						this.state.currentProcess == "signup" &&
 							<SignupForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
 					}
-					{ 
-						this.state.currentProcess == "login" && 
+					{
+						this.state.currentProcess == "login" &&
 							<LoginForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
 					}
-					{ 
+					{
 						this.state.currentProcess == "forgotPwd" &&
 							<ForgotPwdForm/>
 					}
 				</li>
 				{
-					(	this.state.currentProcess == "signup" 
+					(	this.state.currentProcess == "signup"
 					||  this.state.currentProcess == "forgotPwd")
 					&&	this.renderLoginBtn()
 				}
 				{
-					this.state.currentProcess == "login" && 
+					this.state.currentProcess == "login" &&
 						this.renderForgotPwdBtn()
 				}
-				{	(	this.state.currentProcess == "login" 
+				{	(	this.state.currentProcess == "login"
 					||  this.state.currentProcess == "forgotPwd")
 					&&	this.renderSignupBtn()
 				}
 				<li>
-					<button 
-						className="" 
+					<button
+						className=""
 						onClick={this.handleGoBcksp.bind(this)}
 					>
 						<T.span text={{ key : "extension.links.visit" }}/>

@@ -22,6 +22,10 @@ ul {
   list-style-type: none;
 }
 
+/*------------------------------------*\
+  > Popup
+\*------------------------------------*/
+
 .bcksp-popup {
   padding: 1.25rem;
   background: #fff;
@@ -33,8 +37,16 @@ ul {
 }
 
 .bcksp-popup__body {
-  margin-top: 13px ;
+  margin-top: 13px;
 }
+
+.bcksp-popup__body-footer {
+  margin-top: 18px;
+}
+
+/*------------------------------------*\
+  > Forms
+\*------------------------------------*/
 
 .field {
   margin-bottom: 10px;
@@ -59,4 +71,93 @@ ul {
   line-height: 1.75;
 }
 
+.error-message {
+  color: #FF0040;
+}
 
+/*------------------------------------*\
+  > Typography
+\*------------------------------------*/
+
+.bcksp-popup p {
+  font-size: .8125rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.bcksp-popup a {
+    color: #000;
+    font-size: .8125rem;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.bcksp-popup a:hover,
+.bcksp-popup a:focus {
+  text-decoration: none;
+  background-color: #fff123;
+}
+
+.bcksp-popup a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+
+    @include hover-focus {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+/*------------------------------------*\
+  > Buttons
+\*------------------------------------*/
+
+.button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  appearance: none;
+}
+
+.button--secondary {
+  display: inline-block;
+  background-color: #000;
+  border-radius: 2px;
+  color: #fff;
+  padding: .5rem 1.125rem .375rem;
+  text-transform: uppercase;
+  font-family: "GT Pressura Mono Trial", monospace;
+  font-size: 1rem;
+  transition: background .2s cubic-bezier(.645, .045, .355, 1);
+  text-decoration: none;
+}
+
+.button--secondary:hover:not([disabled]),
+.button--secondary:focus:not([disabled]) {
+  color: #fff;
+  text-decoration: none;
+  background: #000;
+}
+
+.button--secondary:active:not([disabled]) {
+  background: #000;
+}
+
+.button--text {
+  line-height: 1.5;
+  padding: 0;
+  color: #000;
+  font-size: .8125rem;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.button--text:hover,
+.button--text:focus {
+  text-decoration: none;
+  background-color: #fff123;
+}
