@@ -21,6 +21,7 @@ function openPopup(){
 	// Must be declared at web_accessible_resources in manifest.json
 	iframe.src = runtimeGetURL('popup.html');
 	iframe.name = iframe.id = "bcksp_es_frame";
+	iframe.setAttribute("class", "bcksp-frame");
 	// Some styles for a fancy sidebar
 	iframe.style.cssText =  "position:fixed;"+
 							"top:10px;"+
@@ -28,8 +29,7 @@ function openPopup(){
 							"display:block;"+
 							"width:300px;"+
 							"height:400px;"+
-							"z-index:100000;"+
-							"background-color:#fff;";
+							"z-index:100000;";
 	document.body.appendChild(iframe);
 }
 
@@ -106,11 +106,11 @@ class BackspaceListener{
 			try{
 				let content = getHighlightText(target);
 				log("Highlight", content.split("").reverse().join(""));
-				
+
 				sendMessage("archive", content)
 				.then(data => info(data))
 				.catch(e => info(e.message));
-				
+
 				return true;
 			}catch(e){
 				return false;
@@ -120,11 +120,11 @@ class BackspaceListener{
 			try{
 				let content = getCharBeforeCaret(target);
 				log("CharBeforeCaret", content);
-				
+
 				sendMessage("archive", content)
 				.then(data => info(data))
 				.catch(e => info(e.message));
-				
+
 				return true;
 			}catch(e){
 				return false;
@@ -139,18 +139,18 @@ class BackspaceListener{
 				sendMessage("archive", content.split("").reverse().join(""))
 				.then(data => info(data))
 				.catch(e => info(e.message));
-				
+
 				return true;
 			}catch(e){
 				return false;
 			}
 		});
 	}
-	
+
 	keyDownListener(event){
 		if(8 !== event.keyCode)return true;
 		let target;
-		
+
 		if(false === (target = checkTarget(this.activeElement))){
 			warn("Error with : " + this.activeElement);
 		}
@@ -203,13 +203,13 @@ class BackspaceListener{
 								});
 							}
 						}
-					}	
+					}
 				}else{
 					if(!Data.state.downFlag){
 						Data.setState({
 							innerText : getContent(target)
 						});
-					}					
+					}
 				}
 			}
 		});
@@ -219,14 +219,14 @@ class BackspaceListener{
 	}
 	keyUpListener(event){
 		if(8 !== event.keyCode)return true;
-		
+
 		if(isEmpty(Data.state.innerText)){
 			Data.setState({
 				downFlag : false,
 			});
 			return true;
 		}
-		
+
 		let target;
 		if(false === (target = checkTarget(this.activeElement))){
 			Data.setState({
@@ -234,7 +234,7 @@ class BackspaceListener{
 			});
 			warn("Error with : "+this.activeElement);
 		}
-		
+
 		if(!isAcceptable(target)){
 			log("This field is not acceptable");
 			Data.setState({
@@ -271,7 +271,7 @@ class BackspaceListener{
 		});
 		Data.setState({
 			downFlag : false,
-			innerText : "" 
+			innerText : ""
 		});
 	}
 	setupListener(target){
@@ -293,6 +293,6 @@ class BackspaceListener{
 	}
 	addListeners (element){
 		element.addEventListener("keydown", this.keyDownListener, true);
-		element.addEventListener("keyup", this.keyUpListener, true);	
+		element.addEventListener("keyup", this.keyUpListener, true);
 	}
 }

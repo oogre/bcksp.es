@@ -27,8 +27,18 @@ ul {
 \*------------------------------------*/
 
 .bcksp-popup {
+  position: relative;
+  margin-right: 4px;
+}
+
+.bcksp-popup__content {
   padding: 1.25rem;
   background: #fff;
+  border: 1px solid #000;
+  position: relative;
+  z-index: 1000;
+  position: relative;
+  z-index: 1001;
 }
 
 .bcksp-popup__header {
@@ -42,6 +52,32 @@ ul {
 
 .bcksp-popup__body-footer {
   margin-top: 18px;
+}
+
+.bcksp-popup__content,
+.bcksp-popup__border-decoration {
+  max-width: calc(100% - 2px);
+  max-height: calc(100% - 2px);
+}
+
+.bcksp-popup__border-decoration {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  background: #fff;
+  z-index: 999;
+}
+
+.bcksp-popup .bcksp-popup__border-decoration:nth-child(1) {
+  top: 4px;
+  left: 4px;
+}
+
+.bcksp-popup .bcksp-popup__border-decoration:nth-child(2) {
+  top: 2px;
+  left: 2px;
 }
 
 /*------------------------------------*\
