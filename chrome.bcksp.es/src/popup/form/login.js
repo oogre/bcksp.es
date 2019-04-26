@@ -53,9 +53,6 @@ export default class LoginForm extends Component {
 		return (
 	    	<form className="login-user" onSubmit={this.handleLogin.bind(this)}>
 				<div>
-
-			pjkdjskljdskljdsqkl
-
 					<div className="field">
 						<label className="field__label" htmlFor="email">
 							<T.span text={{ key : "forms.login.email" }}/>
@@ -70,7 +67,7 @@ export default class LoginForm extends Component {
 					</div>
 				</div>
 				<div className="field">
-					<input 	className="button--secondary"
+					<input 	className="button button--secondary"
 							type="submit"
 							value={T.translate("forms.login.action")}
 					/>

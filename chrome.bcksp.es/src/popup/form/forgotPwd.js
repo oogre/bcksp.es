@@ -42,18 +42,18 @@ export default class ForgotPwdForm extends Component {
 	render() {
 		return (
 	    	<form className="login-user" onSubmit={this.handleForgotPwd.bind(this)}>
-				<div className="fields-row">
-					<div className="fields-column">
-						<label htmlFor="email">
+				<div>
+					<div className="field">
+						<label className="field__label" htmlFor="email">
 							<T.span text={{ key : "forms.resetPassword.email" }}/>
 						</label>
-						<input id="email" type = "email" ref="email"name="email"/>
+						<input className="input--text" id="email" type = "email" ref="email" name="email"/>
 					</div>
 				</div>
-				<div className="fields-row text-right">
-					<input 	className="button--secondary" 
-							type="submit" 
-							value={T.translate("forms.resetPassword.action")}
+				<div className="field">
+					<input 	className="button button--secondary"
+						type="submit"
+						value={T.translate("forms.resetPassword.action")}
 					/>
 				</div>
 				{

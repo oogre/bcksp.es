@@ -54,12 +54,12 @@ export default class LoginMenu extends Component {
 	renderSignupBtn(){
 		return(
 			<li>
-				<p>
-					<T.span text={{ key : "forms.signup.title" }}/>
-					<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
+				<div className="bcksp-popup__body-footer">
+					<T.p text={{ key : "forms.signup.title" }}/>
+					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
 						<T.span text={{ key : "forms.signup.button" }}/>
 					</button>
-				</p>
+				</div>
 			</li>
 		);
 	}
@@ -67,12 +67,12 @@ export default class LoginMenu extends Component {
 	renderForgotPwdBtn(){
 		return(
 			<li>
-				<p>
-					<T.span text={{ key : "forms.resetPassword.title" }}/>
-					<button onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
+				<div className="bcksp-popup__body-footer">
+					<T.p text={{ key : "forms.resetPassword.title" }}/>
+					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
 						<T.span text={{ key : "forms.resetPassword.button" }}/>
 					</button>
-				</p>
+				</div>
 			</li>
 		);
 	}
