@@ -31,8 +31,7 @@ ul {
   margin-right: 4px;
 }
 
-.bcksp-popup__content {
-  padding: 1.25rem;
+.bcksp-popup__container {
   background: #fff;
   border: 1px solid #000;
   position: relative;
@@ -41,20 +40,25 @@ ul {
   z-index: 1001;
 }
 
+.bcksp-popup__header,
+.bcksp-popup__body {
+  margin: 1.25rem;
+}
+
 .bcksp-popup__header {
   border-bottom: 3px solid #000;
   padding-bottom: 1.0625rem;
 }
 
-.bcksp-popup__body {
+.bcksp-popup__content {
   margin-top: 13px;
 }
 
-.bcksp-popup__body-footer {
-  margin-top: 18px;
+.bcksp-popup__footer {
+  margin: 1.125rem 1.25rem;
 }
 
-.bcksp-popup__content,
+.bcksp-popup__container,
 .bcksp-popup__border-decoration {
   max-width: calc(100% - 2px);
   max-height: calc(100% - 2px);
@@ -196,4 +200,27 @@ ul {
 .button--text:focus {
   text-decoration: none;
   background-color: #fff123;
+}
+
+/*------------------------------------*\
+  > User Menu
+\*------------------------------------*/
+
+.bcksp-popup__user-menu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.bcksp-popup__user-menu-item {
+  /*max-width: 33%;*/
+}
+
+.bcksp-popup__user-menu-button {
+  word-break: break-word;
+  border-radius: 0;
+}
+
+.bcksp-popup__user-menu-item + .bcksp-popup__user-menu-item {
+  border-left: 1px solid #fff;
 }

@@ -45,7 +45,7 @@ class Popup extends Component {
 	render() {
 		return (
 			<div className="bcksp-popup">
-				<div className="bcksp-popup__content">
+				<div className="bcksp-popup__container">
 					<header className="bcksp-popup__header">
 						<img src="theme/images/bcksp-ext-logo.svg" alt="Bcksp.es" />
 					</header>
@@ -55,7 +55,7 @@ class Popup extends Component {
 							<T.span text={{ key: "extension.devmode" }}/>
 					}
 
-					<div className="bcksp-popup__body">
+					<div className="bcksp-popup__content">
 						{
 							!this.state.loggedIn ?
 								<LoginMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>

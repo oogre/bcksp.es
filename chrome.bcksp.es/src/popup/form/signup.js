@@ -51,7 +51,7 @@ export default class SignupForm extends Component {
 
 	render() {
 		return (
-	    	<form className="signup-user" onSubmit={this.handleSignup.bind(this)}>
+			<form className="signup-user" onSubmit={this.handleSignup.bind(this)}>
 				<div>
 					<div className="field">
 						<label className="field__label" htmlFor="email">
