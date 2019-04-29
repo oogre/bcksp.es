@@ -55,17 +55,17 @@ export default class Blacklist extends Component {
 	render() {
 		let self = this;
 		return (
-			<div class="security">
-				<span>
-					{ this.state.currentURL } is 
-				</span>
-				<span>
-					<MyToggleButton 
-						value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)} 
+			<div className="security">
+				<div className="field">
+					<span class="field__label">
+						{ this.state.currentURL } is
+					</span>
+					<MyToggleButton
+						value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)}
 						activeLabel={ T.translate("userprofile.whitelisted") }
 						inactiveLabel={ T.translate("userprofile.blacklisted") }
 					/>
-				</span>
+				</div>
 				{
 					this.state["error"] &&
 					<MessageError

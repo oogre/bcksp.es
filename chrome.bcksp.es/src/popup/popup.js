@@ -44,18 +44,32 @@ class Popup extends Component {
 
 	render() {
 		return (
-			<div>
-				{
-					config.isDevMode() && 
-						<T.span text={{ key: "extension.devmode" }}/>
-				}
-				{
-					!this.state.loggedIn ? 
-						<LoginMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>
-					:
-						<MainMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>
-				}
-				
+			<div className="bcksp-popup">
+				<div className="bcksp-popup__container">
+					<header className="bcksp-popup__header">
+						<img src="theme/images/bcksp-ext-logo.svg" alt="Bcksp.es" />
+					</header>
+
+					{
+						config.isDevMode() &&
+							<T.span text={{ key: "extension.devmode" }}/>
+					}
+
+					<div className="bcksp-popup__content">
+						{
+							!this.state.loggedIn ?
+								<LoginMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>
+							:
+								<MainMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>
+						}
+					</div>
+				</div>
+
+				<div className="bcksp-popup__border-decoration-container">
+					<div className="bcksp-popup__border-decoration"></div>
+					<div className="bcksp-popup__border-decoration"></div>
+				</div>
+
 			</div>
 		);
 	}

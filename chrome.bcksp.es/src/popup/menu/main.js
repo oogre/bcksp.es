@@ -63,36 +63,38 @@ export default class MainMenu extends Component {
 
 	render() {
 		return (
-			<ul>
-				<li>
-					<Blacklist/>
-				</li>
-				<li>
-					<button className="" 
-							onClick={this.handleMySettings.bind(this)}
-					>
-							<T.span text={{ key : "extension.links.security" }}/>
-					</button>
-				</li>
-				<li>
-					<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
-					<T.p text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
-				</li>
-				<li>
-					<button className="" 
-							onClick={this.handleMyFeed.bind(this)}
-					>
-							<T.span text={{ key: "extension.links.archive" }}/>
-					</button>
-				</li>
-				<li>
-					<button className="button--secondary logout" 
-							onClick={this.handleLogout.bind(this)}
-					>
-							<T.span text={{ key: "forms.logout.action" }}/>
-					</button>
-				</li>
-			</ul>
+			<div>
+					<div className="bcksp-popup__body">
+						<Blacklist/>
+					</div>
+					<div>
+						<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
+						<T.p text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
+					</div>
+					<ul className="bcksp-popup__user-menu">
+						<li class="bcksp-popup__user-menu-item">
+							<button className="button button--secondary bcksp-popup__user-menu-button"
+									onClick={this.handleMySettings.bind(this)}
+							>
+									<T.span text={{ key : "extension.links.security" }}/>
+							</button>
+						</li>
+						<li class="bcksp-popup__user-menu-item">
+							<button className="button button--secondary bcksp-popup__user-menu-button"
+									onClick={this.handleMyFeed.bind(this)}
+							>
+									<T.span text={{ key: "extension.links.archive" }}/>
+							</button>
+						</li>
+						<li class="bcksp-popup__user-menu-item">
+							<button className="button button--secondary bcksp-popup__user-menu-button logout"
+									onClick={this.handleLogout.bind(this)}
+							>
+									<T.span text={{ key: "forms.logout.action" }}/>
+							</button>
+						</li>
+					</ul>
+			</div>
 		);
 	}
 }
