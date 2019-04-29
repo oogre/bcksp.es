@@ -2,7 +2,7 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2019-03-04 22:15:39
+  @Last Modified time: 2019-04-22 21:59:41
 \*----------------------------------------*/
 i18n.addTranslation('fr-FR', {
 	souvenir : {
@@ -43,11 +43,11 @@ i18n.addTranslation('fr-FR', {
 			download : {
 				title : "télécharger mon archive",
 				img : "/images/logo-animated.gif",
-				description : 	"Nous pensons chez «bcksp.es» que toutes les données que vous nous confiez vous appartiennent.\
-								Il est donc radicalement important de notre point de vue que vous puissiez récupérer <b>sans aucun frais</b>\
-								l'entièreté des ces données.<br/>\
-								<small><u>PS</u> : Pour supprimer tout ou en partie votre archive, rendez-vous dans votre flux privé, \
-								selectionnez ce que vous voulez supprimer et appuyez sur votre touche backspace.</small>",
+				description : 	"Nous pensons que toutes les données que vous "+
+								"nous confiez vous appartiennent. Il est donc "+
+								"radicalement important que vous puissiez les récupérer "+
+								"sans aucun frais, ceci dans les meilleurs "+
+								"conditions possible.",
 				price : "gratuit",
 				button : "télécharger",
 				file : {
