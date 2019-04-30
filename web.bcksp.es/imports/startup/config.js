@@ -25,6 +25,7 @@ export const config = {
 		firefox : "jid1-P1oHEt4FsKJNoA@jetpack",
 		firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
 		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
+		"acr-chrome" : "fnkkmpbdnhbapbmbcpdfenolnbkbplob",
 		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb"
 	},
 	archives : {
@@ -95,7 +96,7 @@ export const config = {
 			disabled : {
 				default : {
 					class : ["bcksp-es-disabled"],
-					type : ["password"]	
+					type : ["password"]
 				},
 				blocked : {
 					class : ["bcksp-es-disabled"],
