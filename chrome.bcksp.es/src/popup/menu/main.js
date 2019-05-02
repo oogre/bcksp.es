@@ -66,9 +66,14 @@ export default class MainMenu extends Component {
 			<div>
 					<div className="bcksp-popup__body">
 						<Blacklist/>
-					</div>
-					<div>
-						<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
+						<div>
+							<div className="bcksp-popup__goal">
+								<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
+							</div>
+							<a href="#">
+								<T.span text={{ key: "extension.book.learnmore" }}/>
+							</a>
+						</div>
 					</div>
 					<div className="bcksp-popup__counter">
 						<div className="bcksp-popup__counter-foreground" style={{

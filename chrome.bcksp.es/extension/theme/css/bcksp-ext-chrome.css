@@ -29,6 +29,7 @@ ul {
 .bcksp-popup {
   position: relative;
   margin-right: 4px;
+  font-family: "GT Pressura Mono Trial", monospace;
 }
 
 .bcksp-popup__container {
@@ -221,6 +222,14 @@ ul {
 
 .bcksp-popup__user-menu-item + .bcksp-popup__user-menu-item {
   border-left: 1px solid #fff;
+}
+
+/*------------------------------------*\
+  > Goal
+\*------------------------------------*/
+
+.bcksp-popup__goal {
+  margin-bottom: 10px;
 }
 
 /*------------------------------------*\
