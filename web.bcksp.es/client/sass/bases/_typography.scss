@@ -88,3 +88,13 @@ a:not([href]):not([tabindex]) {
         background: transparent;
     }
 }
+
+// Selection color
+// ---------------------
+::selection {
+    background: #bef9f7;
+}
+
+::-moz-selection {
+    background: #bef9f7;
+}

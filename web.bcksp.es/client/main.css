@@ -14,14 +14,6 @@
 [contenteditable]:focus{
     outline: none;
 }
-.buttonShare{
-    position: absolute;
-    background: red;
-    width: 50px;
-    height: 20px;
-    transform: translate(-50%, -100%);
-    z-index: 100;
-}
 html, body, #render-target{
 	margin : 0;
 	padding : 0;
@@ -30,7 +22,7 @@ html, body, #render-target{
 }
 
 .hide{
-    display:none !important; 
+    display:none !important;
 }
 
 

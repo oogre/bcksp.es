@@ -17,20 +17,21 @@ export default class ButtonShare extends Component {
 		if(_.isFunction(this.props.onShare)){
 			this.props.onShare(this.props.content);
 		}else{
-			console.log(this.props.content);	
+			console.log(this.props.content);
 		}
 		return false;
 	}
 	render() {
 		return (
-			<div	className="buttonShare"
-					style={{	
+			<div	className="livefeed-share"
+					style={{
 						left: this.props.left+"px",
 						top: this.props.top+"px"
 					}}
 			>
-				<button onClick={this.onClick.bind(this)}>
+				<button className="button livefeed-share__button" onClick={this.onClick.bind(this)}>
 					<T>archive.share.button</T>
+					<div className="livefeed-share__button-decoration"></div>
 				</button>
 			</div>
 		);
