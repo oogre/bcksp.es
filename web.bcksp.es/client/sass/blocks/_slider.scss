@@ -4,35 +4,93 @@
 \*------------------------------------*/
 
 .slick-slider {
-  min-height: 600px;
+    // min-height: 600px;
+    background: $grey-27;
 }
 
 .slick-arrow {
-  height: 100%;
-  width: 100px;
-  background: $grey-thunder;
-  z-index: z("slider") + 1;
-  opacity: 0;
-  transition: .2s opacity $easeInOutCubic;
+    cursor: pointer;
+    border: 0;
+    position: absolute;
+    top: 0;
+    padding: 0;
+    height: 100%;
+    width: 244px;
+    background: $grey-27;
+    z-index: z("slider") + 1;
+    opacity: 0;
+    transition: .2s opacity $easeInOutCubic;
+    font-size: 0;
+    line-height: 0;
 
-  @include media-query("medium") {
-    width: 230px;
-  }
-
-  &:hover {
-    background: $grey-thunder;
-  }
+    @include media-query("medium") {
+        width: 230px;
+    }
 }
 
 .slick-slider:hover .slick-arrow,
 .slick-slider:focus-within .slick-arrow {
-  opacity: 1;
+    opacity: 1;
+}
+
+.slick-prev {
+    left: 0;
+}
+
+.slick-next {
+    right: 0;
+}
+
+.slick-arrow:before {
+    content: "";
+    display: block;
+    width: 25px;
+    height: 48px;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .slick-prev:before {
-  content: "<";
+    // For curious reason mime-type of imported image (PNG or SVG) are incorrect
+    // Temporary replace it with css triangle
+    // background-image: url("/images/images/icons/icon-arrow-left.svg");
+    width: 0;
+    height: 0;
+    left: 66px;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-right: 30px solid #fff;
 }
 
+
 .slick-next:before {
-  content: ">";
+    // For curious reason mime-type of imported image (PNG or SVG) are incorrect
+    // Temporary replace it with css triangle
+    // background-image: url("/images/images/icons/icon-arrow-right.svg");
+    width: 0;
+    height: 0;
+    right: 66px;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-left: 30px solid #fff;
+}
+
+
+// Slider slide
+// ---------------------
+.slider__slide {
+    margin-top: $size-10;
+}
+
+
+.slider__slide-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider__slide-content img {
+    display: block;
 }
