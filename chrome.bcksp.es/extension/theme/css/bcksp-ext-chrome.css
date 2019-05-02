@@ -222,3 +222,18 @@ ul {
 .bcksp-popup__user-menu-item + .bcksp-popup__user-menu-item {
   border-left: 1px solid #fff;
 }
+
+/*------------------------------------*\
+  > Counter
+\*------------------------------------*/
+
+.bcksp-popup__counter {
+  height: 9px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.bcksp-popup__counter-foreground {
+  background: #fff123;
+  height: 100%;
+}

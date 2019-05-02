@@ -69,7 +69,12 @@ export default class MainMenu extends Component {
 					</div>
 					<div>
 						<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
-						<T.p text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
+					</div>
+					<div className="bcksp-popup__counter">
+						<div className="bcksp-popup__counter-foreground" style={{
+							width: (this.state.archiveRatio * 100).toFixed(2) + "%",
+						}}></div>
+						<T.p className="sr-only" text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
 					</div>
 					<ul className="bcksp-popup__user-menu">
 						<li class="bcksp-popup__user-menu-item">
