@@ -37,17 +37,14 @@ class App extends Component {
 				}
 				<LiveStream type="home" onShare={this.onShare.bind(this)}/>
 
-				<div className="about-parallax">
-					<div id="aboutParallaxContainer" className="about-parallax__background"></div>
-					{
-						!this.props.isConnected &&
+				{
+					!this.props.isConnected &&
+					<div className="about-parallax">
+						<div id="aboutParallaxContainer" className="about-parallax__background"></div>
 							<AboutShort/>
-					}
-					{
-						!this.props.isConnected &&
 							<HowtoList/>
-					}
-				</div>
+					</div>
+				}
 
 				{
 					!this.props.isConnected &&

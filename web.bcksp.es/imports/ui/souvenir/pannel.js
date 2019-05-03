@@ -29,7 +29,7 @@ export default class SouvenirPannel extends Component {
 		return (
 			<div className="souvenir-pannel" onClick={()=>FlowRouter.go("souvenir")}>
 				<div className="container">
-					<div class="souvenir-pannel__intro">
+					<div className="souvenir-pannel__intro">
 						<h3><T>souvenir.title</T></h3>
 						<div>
 							<p>
@@ -41,27 +41,27 @@ export default class SouvenirPannel extends Component {
 				</div>
 				<div className="slider">
 					<Slider {...settings}>
-						<div class="slider__slide">
+						<div className="slider__slide">
 							<div className="slider__slide-content">
 								<img src="/images/photos/voodoo-alley.jpg" alt="#bcksp.es"/>
 							</div>
 						</div>
-						<div class="slider__slide">
+						<div className="slider__slide">
 							<div className="slider__slide-content">
 								<img src="/images/photos/hanging-beads.jpg" alt="#bcksp.es"/>
 							</div>
 						</div>
-						<div class="slider__slide">
+						<div className="slider__slide">
 							<div className="slider__slide-content">
 								<img src="/images/photos/swamp.jpg" alt="#bcksp.es"/>
 							</div>
 						</div>
-						<div class="slider__slide">
+						<div className="slider__slide">
 							<div className="slider__slide-content">
 								<img src="/images/photos/nola-street.jpg" alt="#bcksp.es"/>
 							</div>
 						</div>
-						<div class="slider__slide">
+						<div className="slider__slide">
 							<div className="slider__slide-content">
 								<img src="/images/photos/voodoo-alley.jpg" alt="#bcksp.es"/>
 							</div>

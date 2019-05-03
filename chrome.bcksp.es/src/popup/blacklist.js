@@ -57,7 +57,7 @@ export default class Blacklist extends Component {
 		return (
 			<div className="security">
 				<div className="field">
-					<span class="field__label">
+					<span className="field__label">
 						{ this.state.currentURL } is
 					</span>
 					<MyToggleButton
