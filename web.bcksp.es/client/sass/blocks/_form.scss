@@ -10,6 +10,10 @@
   margin-bottom: $size-40;
 }
 
+.field--fullwidth {
+  width: 100%;
+}
+
 .field__label {
   display: block;
   font-family: $font-title;
@@ -74,6 +78,12 @@
 
 .input--text--address + .input--text--address {
   margin-top: $size-20;
+}
+
+// Input Radio
+// ---------------------
+.input--radio__input {
+  margin-right: 1rem;
 }
 
 // Toggle List
