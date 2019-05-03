@@ -26,7 +26,6 @@
 }
 
 .about__content a {
-  color: #fff;
   text-decoration: underline;
 
   &:hover {
@@ -77,6 +76,10 @@
 
 .about--intro,
 .about--intro .about__title {
+  color: #fff;
+}
+
+.about--intro a {
   color: #fff;
 }
 
