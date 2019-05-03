@@ -1,0 +1,16 @@
+/*------------------------------------*\
+  > Call To connect
+  Callt o action display on top of the page if the user has the extension but is not connect
+\*------------------------------------*/
+
+.call-to-connect {
+  padding: $size-10;
+  background: $primary;
+}
+
+.call-to-connect__title {
+  margin-bottom: 0;
+  font-size: $size-24;
+  font-family: $font-title;
+  text-align: center;
+}

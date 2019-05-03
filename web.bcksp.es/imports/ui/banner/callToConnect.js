@@ -21,7 +21,7 @@ class CallToConnect extends Component {
 		if(this.hasToDisplayCallToConnect()){
 			return (
 				<div className="call-to-connect">
-					<h1><T>extension.call.login</T></h1>
+						<p className="call-to-connect__title"><T>extension.call.login</T></p>
 				</div>
 			);
 		}else{
