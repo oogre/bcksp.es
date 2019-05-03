@@ -22,7 +22,7 @@ export default class HowtoList extends Component {
 	render() {
 		return (
 		<div className="container">
-			<ul className="howto">
+			<ul id="howto" className="howto">
 				<li className="howto__item">
 					<HowtoStep k={0}>
 						<HowtoBadge url="/images/download.light.gif"/>
@@ -46,7 +46,7 @@ export default class HowtoList extends Component {
 						</div>
 					</HowtoStep>
 				</li>
-				
+
 				<li className="howto__item">
 					<HowtoStep k={2}>
 						<HowtoBadge url="/images/bcksp.es.gif"/>

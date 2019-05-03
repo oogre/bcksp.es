@@ -2,22 +2,6 @@
   Livestream
 \*------------------------------------*/
 
-.livestream-container.fullscreen{
-    margin-bottom: 0;
-}
-.livestream-container.fullscreen .livestream{
-  height:99%;
-}
-.livestream-container.fullscreen .livestream__content{
-  height:100%;
-}
-.livestream-container.fullscreen .livestream__content{
-  height:100%;
-}
-.livestream-container.fullscreen .liveframe{
-  height: calc(99% - 3px);
-}
-
 .livestream-container {
   position: relative;
   height: 100%;
@@ -50,7 +34,7 @@
 
 .livestream__content .liveframe::-webkit-scrollbar-track {
     background-color: transparent;
-    border-left : solid 1px $grey-50;
+    border-left: 1px solid $grey-50;
     margin-left: 20px;
 }
 
@@ -96,21 +80,6 @@
 
 // Livestream Home Variation
 // ---------------------
-.livestream-container--home {
-  margin-bottom: $size-118;
-
-  &::after {
-    z-index: z("livestream");
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 214px;
-    background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
-  }
-}
-
 .livestream--home {
   margin: 0 auto $size-155;
   max-width: 942px;
@@ -156,3 +125,40 @@
   top: 3px;
   left: -3px;
 }
+
+// Livestream connected variation
+// ---------------------
+
+.livestream-container--connected {
+  margin-bottom: $size-118;
+
+  &::after {
+    z-index: z("livestream");
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 214px;
+    background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
+  }
+}
+
+// Fullscreen
+// ---------------------
+.livestream-container.fullscreen{
+    margin-bottom: 0;
+}
+.livestream-container.fullscreen .livestream{
+  height:99%;
+}
+.livestream-container.fullscreen .livestream__content{
+  height:100%;
+}
+.livestream-container.fullscreen .livestream__content{
+  height:100%;
+}
+.livestream-container.fullscreen .liveframe{
+  height: calc(99% - 3px);
+}
+

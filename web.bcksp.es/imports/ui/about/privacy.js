@@ -16,7 +16,7 @@ export default class AboutPrivacy extends Component {
 
 	render() {
 		return (
-			<div className="about">
+			<div id="aboutPrivacy" className="about">
 				<div className="container about__container">
 					<h2 className="about__title"><T>privacy.title</T></h2>
 					<div className="about__content">
