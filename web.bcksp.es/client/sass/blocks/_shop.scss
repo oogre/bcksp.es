@@ -6,7 +6,7 @@
   @include media-query("medium") {
     display: flex;
     justify-content: space-between;
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
   }
 }
 
@@ -30,6 +30,11 @@
 // Shop Example Detail
 // Detail of current item
 // ---------------------
+
+.shop__example-detail {
+  max-width: 460px;
+}
+
 .shop__example-description {
   font-size: $size-22;
 

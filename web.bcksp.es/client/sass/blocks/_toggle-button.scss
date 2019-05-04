@@ -4,6 +4,10 @@
 * @Last Modified by:   oogre
 * @Last Modified time: 2019-04-06 22:56:51
 */
+.wrapper__toggle-button {
+  font-family: $font-title;
+}
+
 .wrapper__toggle-button:focus-within{
 	outline: -webkit-focus-ring-color auto 5px;
 }

@@ -16,12 +16,12 @@ export default class AboutShort extends Component {
 
 	render() {
 		return (
-			<div className="about--intro">
-				<div className="container about__container">
+			<div id="aboutIntro" className="about--intro">
+				<div className="container about__container about--intro__container">
 					<h2 className="about__title"><T>about.title</T></h2>
 					<div className="about__content">
-						<T 
-							about={FlowRouter.path("about")} 
+						<T
+							about={FlowRouter.path("about")}
 							souvenir={FlowRouter.path("souvenir")}
 						>
 							about.short

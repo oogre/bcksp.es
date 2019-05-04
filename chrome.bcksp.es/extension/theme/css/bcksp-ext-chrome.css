@@ -29,6 +29,7 @@ ul {
 .bcksp-popup {
   position: relative;
   margin-right: 4px;
+  font-family: "GT Pressura Mono Trial", monospace;
 }
 
 .bcksp-popup__container {
@@ -210,17 +211,38 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
-}
-
-.bcksp-popup__user-menu-item {
-  /*max-width: 33%;*/
+  align-items: stretch;
 }
 
 .bcksp-popup__user-menu-button {
   word-break: break-word;
   border-radius: 0;
+  height: 100%;
 }
 
 .bcksp-popup__user-menu-item + .bcksp-popup__user-menu-item {
   border-left: 1px solid #fff;
+}
+
+/*------------------------------------*\
+  > Goal
+\*------------------------------------*/
+
+.bcksp-popup__goal {
+  margin-bottom: 10px;
+}
+
+/*------------------------------------*\
+  > Counter
+\*------------------------------------*/
+
+.bcksp-popup__counter {
+  height: 9px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.bcksp-popup__counter-foreground {
+  background: #fff123;
+  height: 100%;
 }

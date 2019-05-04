@@ -19,6 +19,7 @@ class App extends Component {
 	constructor(props){
 		super(props);
 	}
+
 	onShare(data){
 		console.log(data);
 	}
@@ -35,14 +36,16 @@ class App extends Component {
 						</div>
 				}
 				<LiveStream type="home" onShare={this.onShare.bind(this)}/>
+
 				{
 					!this.props.isConnected &&
-						<AboutShort/>
+					<div className="about-parallax">
+						<div id="aboutParallaxContainer" className="about-parallax__background"></div>
+							<AboutShort/>
+							<HowtoList/>
+					</div>
 				}
-				{
-					!this.props.isConnected &&
-						<HowtoList/>
-				}
+
 				{
 					!this.props.isConnected &&
 						<AboutPrivacy/>

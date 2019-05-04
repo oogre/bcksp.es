@@ -56,13 +56,13 @@ export default class Blacklist extends Component {
 			});
 		})
 		.catch(e => {
-			this.setState({ 
+			this.setState({
 				error : getMessageFromError(e),
 				'has-success' : false,
 			});
 		})
 		.finally(()=>{
-			this.setState({ 
+			this.setState({
 				'is-loading' : false,
 			});
 		});
@@ -71,9 +71,9 @@ export default class Blacklist extends Component {
 	render() {
 		let self = this;
 		return (
-			<div class="security">
+			<div className="security">
 				<span>
-					{ this.state.currentURL } is 
+					{ this.state.currentURL } is
 				</span>
 				<span>
 					<MyToggleButton value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)} />

@@ -33,6 +33,7 @@ h6 {
     @extend %title;
     font-weight: 400;
     line-height: 1.4;
+    text-transform: uppercase;
 }
 
 h3 {
@@ -87,4 +88,14 @@ a:not([href]):not([tabindex]) {
     &:active {
         background: transparent;
     }
+}
+
+// Selection color
+// ---------------------
+::selection {
+    background: #bef9f7;
+}
+
+::-moz-selection {
+    background: #bef9f7;
 }

@@ -89,7 +89,7 @@ class LiveStream extends Component {
 		let fullScreen = FlowRouter.getRouteName() == "livefeed";
 
 		return (
-		  <div className={ `livestream-container ${(this.props.type ? " livestream-container--" + this.props.type : "")} ${(fullScreen ? " fullscreen" : "")}` }>
+		  <div className={ `livestream-container ${(this.props.type ? " livestream-container--" + this.props.type : "")} ${(fullScreen ? " fullscreen" : "")} ${(this.props.isConnected ? " livestream-container--connected" : "")}` }>
 				<div className={ `livestream ${(this.props.type ? "livestream--" + this.props.type : "") }` }>
 					<div className="livestream__content">
 						<Dropdown active={this.props.isConnected} className="dropdown--livestream" label={this.state.livestreamTypeLabel}>

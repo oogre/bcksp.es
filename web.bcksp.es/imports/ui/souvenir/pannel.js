@@ -17,42 +17,54 @@ export default class SouvenirPannel extends Component {
 
 	render() {
 		var settings = {
-			dots: true,
+			dots: false,
 			infinite: true,
 			speed: 500,
 			slidesToShow: 1,
 			slidesToScroll: 1,
 			adaptiveHeight: true,
-			autoplay : true,
+			autoplay : false,
 			arrows : true
 		};
 		return (
 			<div className="souvenir-pannel" onClick={()=>FlowRouter.go("souvenir")}>
 				<div className="container">
-					<h3><T>souvenir.title</T></h3>
-					<div>
-						<p>
-							<T>souvenir.short</T>
-						</p>
-						<a href={FlowRouter.path("souvenir")}><T>menus.souvenir</T></a>
+					<div className="souvenir-pannel__intro">
+						<h3><T>souvenir.title</T></h3>
+						<div>
+							<p>
+								<T>souvenir.short</T>
+							</p>
+							<a className="button button--secondary" href={FlowRouter.path("souvenir")}><T>menus.souvenir</T></a>
+						</div>
 					</div>
 				</div>
 				<div className="slider">
 					<Slider {...settings}>
-						<div>
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
+						<div className="slider__slide">
+							<div className="slider__slide-content">
+								<img src="/images/photos/voodoo-alley.jpg" alt="#bcksp.es"/>
+							</div>
 						</div>
-						<div>
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
+						<div className="slider__slide">
+							<div className="slider__slide-content">
+								<img src="/images/photos/hanging-beads.jpg" alt="#bcksp.es"/>
+							</div>
 						</div>
-						<div>
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
+						<div className="slider__slide">
+							<div className="slider__slide-content">
+								<img src="/images/photos/swamp.jpg" alt="#bcksp.es"/>
+							</div>
 						</div>
-						<div>
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
+						<div className="slider__slide">
+							<div className="slider__slide-content">
+								<img src="/images/photos/nola-street.jpg" alt="#bcksp.es"/>
+							</div>
 						</div>
-						<div>
-							<img className="logo--header__picture" src="/images/logo-animated.gif" alt="#bcksp.es"/>
+						<div className="slider__slide">
+							<div className="slider__slide-content">
+								<img src="/images/photos/voodoo-alley.jpg" alt="#bcksp.es"/>
+							</div>
 						</div>
 					</Slider>
 				</div>

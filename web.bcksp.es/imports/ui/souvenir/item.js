@@ -203,7 +203,7 @@ class SouvenirItem extends Component {
 					</div>
 					<div className="shop">
 						{
-							this.state.displayForm != "deliveryPoster" &&
+							this.state.displayForm != "deliveryPoster" && this.state.displayForm != "deliveryBook" &&
 								<div className="shop__example-illustration">
 									<img className="shop__example-illustration-img" src={currentItem("img")} alt="" />
 								</div>
