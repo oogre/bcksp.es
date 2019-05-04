@@ -15,8 +15,10 @@ export default class LiveFrame extends Component {
 			position : [-1000, -1000],
 			fullscreen : FlowRouter.getRouteName() == "livefeed"
 		};
+		this.handleKey = this.handleKey.bind(this);
 	}
 	hideShareButton(){
+		return false;
 		if(this.cancelHideShareButton === true)return;
 		this.hideShareButtonTimer = Meteor.setTimeout(()=>{
 			this.setState({
@@ -28,12 +30,13 @@ export default class LiveFrame extends Component {
 	componentWillUnmount(){
 		Meteor.clearTimeout(this.hideShareButtonTimer);
 		this.cancelHideShareButton = true;
+		document.removeEventListener("keydown", this.handleKey, true);
+		document.removeEventListener("keyup", this.handleKey, true);
+		
 	}
 	componentDidMount(){
-
-		document.addEventListener("keydown", this.handleKey.bind(this), true);
-		document.addEventListener("keyup", this.handleKey.bind(this), true);
-		
+		document.addEventListener("keydown", this.handleKey, true);
+		document.addEventListener("keyup", this.handleKey, true);
 		this.caret = new Caret(document.querySelector(".stream"));
 		this.caret.onCaretOff(event=>{
 			this.hideShareButton()
