@@ -2,7 +2,7 @@
   bcksp.es - icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:32:08
-  @Last Modified time: 2019-03-06 19:22:59
+  @Last Modified time: 2019-05-04 23:37:41
 \*----------------------------------------*/
 
 import Data from "./Data.js";
@@ -41,6 +41,7 @@ export function setIcon(name){
 			path: icons[name]
 		});
 	}else if(isArray(icons[name]) && undefined === timers.icons){
+		clearInterval(timers.icons);
 		timers.icons = setInterval(() => {
 			browserActionSetIcon({
 				path: icons[name][0]

@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-04-19 13:31:35
+  @Last Modified time: 2019-05-09 17:57:07
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -22,7 +22,7 @@ Data.setState({
 	"loggedStatus" : false
 });
 
-Data.on("*", (value, name) => log("---on---", name, value));
+Data.on("*", (value, name) => info("---on---", name, value));
 
 Data.on("connected", connectionStatus => {
 	if(!connectionStatus) return;
@@ -40,14 +40,14 @@ Data.on("loggedStatus", loggedIn => {
 		tabHandler()
 		.then(tab => tabsUpdate({ url : config.getLogoutUrl() }))
 		.catch(() => tabsCreate({ url : config.getLogoutUrl() }))
-		.finally(() => sendMessageToTab("logout", null, {}));
+		.finally(() => sendMessageToTab("logout", null, {}).catch(()=>{}));
 	}else{
 		AsteroidHelper.call("Users.methods.login.token")
 		.then(res => {
 			tabHandler()
 			.then(tab => tabsUpdate({ url : config.getLoginUrl(res.data) }))
 			.catch(() => tabsCreate({ url : config.getLoginUrl(res.data) }))
-			.finally(()=> sendMessageToTab("login", null, {}));
+			.finally(()=> sendMessageToTab("login", null, {}).catch(()=>{}));
 		}).catch(err => warn("no way to auto connect to the website"));
 	}
 	setDefaultIcon(loggedIn);
@@ -108,12 +108,17 @@ tabsOnActivatedAddListener(({tabId}) => {
 });
 
 browserActionOnClickAddListener(tab => {
-	 sendMessageToTab("openPopup");
+	 sendMessageToTab("openPopup")
+	 .catch(e => {
+	 	tabHandler()
+	 	.then(tab => tabsUpdate({ url : config.getHomeUrl() }))
+		.catch(() => tabsCreate({ url : config.getHomeUrl() }));
+	 });
 });
 
 on("closePopup", (data, resolve, reject) => {
 	sendMessageToTab("closePopup")
-	.then(() => resolve())
+	.then(() => resolve(true))
 	.catch(e => reject(e));
 });
 
@@ -159,8 +164,12 @@ on("blacklistRemove", (data, resolve, reject) => {
 	.catch(e => reject(e));
 });
 
+on("isConnected", (data, resolve, reject) => {
+	resolve(Data.state.connected);
+});
+
 on("isLogin", (data, resolve, reject) => {
-	resolve(AsteroidHelper.asteroid.loggedIn);
+	resolve(Data.state.loggedStatus);//AsteroidHelper.asteroid.loggedIn);
 });
 
 on("openTab", (data, resolve, reject) => {

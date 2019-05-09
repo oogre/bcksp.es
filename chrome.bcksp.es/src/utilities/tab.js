@@ -2,7 +2,7 @@
   bcksp.es - tab.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:41:20
-  @Last Modified time: 2019-04-17 12:22:35
+  @Last Modified time: 2019-05-07 15:50:15
 \*----------------------------------------*/
 
 import { last, findWhere } from './tools.js';

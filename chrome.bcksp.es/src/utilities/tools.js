@@ -2,7 +2,7 @@
   bcksp.es - tools.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:38:28
-  @Last Modified time: 2019-04-18 15:56:35
+  @Last Modified time: 2019-05-07 16:42:10
 \*----------------------------------------*/
 
 import { config } from './../shared/config.js';
@@ -28,20 +28,15 @@ export function getContent(element){
 }
 
 export function getMessageFromError(error){
-    console.log(error);
 	if(isArray(error.details) && !isEmpty(error.details)){
-        console.log(1);
 		return error.details.map(e=>e.details.value).join(", ");
 	}
 	if(error.errorType == "Meteor.Error"){
-        console.log(2);
 		return error.reason;
 	}
 	if(error.name == "Error"){
-        console.log(3);
 		return error.message;
 	}
-    console.log(4);
 	return error.toString();
 }
 
