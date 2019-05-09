@@ -1,14 +1,11 @@
 import i18n from 'meteor/universe:i18n';
-
+import { config } from './../startup/config.js';
 import './fr.js';
 
-
-
-//i18n.setLocale('en-US');
 i18n.setOptions({
 	//hostUrl : process.env.ROOT_URL,
     purify: string => string,
-    defaultLocale: 'fr-FR',
+    defaultLocale: config.languages.available[0],
 });
 
 export default i18n.createComponent();

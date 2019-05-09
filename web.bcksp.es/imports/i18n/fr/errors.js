@@ -2,9 +2,9 @@
   bcksp.es - errors.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2019-04-19 13:56:16
+  @Last Modified time: 2019-05-04 18:59:05
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('fr', {
 	errors : {
 		server : {
 			offline : "le serveur est injoignable"

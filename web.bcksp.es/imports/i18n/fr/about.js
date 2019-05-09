@@ -2,9 +2,14 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2019-04-06 13:48:24
+  @Last Modified time: 2019-05-04 19:31:15
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('en', {
+	about : {
+		title : 	"the deletion archivist manifesto"
+	}
+});
+i18n.addTranslation('fr', {
 	about : {
 					//"The deletion <br/>archivist manifesto",
 		title : 	"manifest de l'archiviste des textes effacés",

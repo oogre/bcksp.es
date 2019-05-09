@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-04-06 13:41:11
+  @Last Modified time: 2019-05-04 18:43:40
 \*----------------------------------------*/
 import Slider from "react-slick";
 import AboutLong from './about/long.js';
@@ -29,6 +29,7 @@ export default class About extends Component {
 			autoplay : false,
 			arrows : true
 		};
+		console.log(i18n.__("about"));
 		return (
 			<div className="page__content">
 				<div className="container">

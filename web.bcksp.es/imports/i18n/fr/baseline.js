@@ -2,9 +2,9 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2019-03-27 15:11:27
+  @Last Modified time: 2019-05-04 18:58:57
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('fr', {
 	online : {
 		baseline: [
 			"Salut! Qu'as-tu supprimé aujourd'hui?",

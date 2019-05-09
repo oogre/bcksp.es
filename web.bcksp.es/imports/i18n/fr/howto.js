@@ -2,9 +2,9 @@
   bcksp.es - howto.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:34:18
-  @Last Modified time: 2019-03-02 17:34:39
+  @Last Modified time: 2019-05-04 18:59:26
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('fr', {
 	howto:{
 		step : {
 			download : {

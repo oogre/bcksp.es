@@ -2,9 +2,9 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:35:25
-  @Last Modified time: 2019-03-27 18:03:37
+  @Last Modified time: 2019-05-04 18:58:52
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('fr', {
 	artists: {
 		title : "auteurs",
 		intro : "La réalisation de bcksp.es "+ 

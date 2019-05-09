@@ -2,10 +2,8 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-04-21 18:12:37
+  @Last Modified time: 2019-05-04 19:36:28
 \*----------------------------------------*/
-
-
 export const config = {
 	book : {
 		page : {
@@ -19,6 +17,18 @@ export const config = {
 		},
 		getMaxChar : ()=>{
 			return config.book.page.count * config.book.page.line.count * config.book.page.line.char.count;
+		}
+	},
+	languages : {
+		available : ["fr", "en"],
+		get : ()=>{
+			let userLang = (navigator.languages && navigator.languages[0] ||
+							navigator.language ||
+							navigator.browserLanguage ||
+							navigator.userLanguage ||
+							'fr');
+			userLang = userLang.toLowerCase().replace('_', '-').split("-").shift();
+			return config.languages.available.includes(userLang) ? userLang : config.languages.available[0];
 		}
 	},
 	devices : {

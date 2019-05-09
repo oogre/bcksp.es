@@ -2,9 +2,9 @@
   bcksp.es - menus.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:25:25
-  @Last Modified time: 2019-03-02 17:25:53
+  @Last Modified time: 2019-05-04 18:59:30
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('fr', {
 	menus: {
 		open : "ouvrir&nbsp;le&nbsp;menu",
 		about : "à&nbsp;propos",

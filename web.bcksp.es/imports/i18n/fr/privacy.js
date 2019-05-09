@@ -2,9 +2,9 @@
   bcksp.es - privacy.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:38:13
-  @Last Modified time: 2019-03-02 17:38:31
+  @Last Modified time: 2019-05-04 18:59:43
 \*----------------------------------------*/
-i18n.addTranslation('fr-FR', {
+i18n.addTranslation('fr', {
 	privacy : {
 		title : 	"vie privée",
 		short : 	"<p>L'aspect privé de vos donnés est un sujet que nous prennons réellement au sérieux. "+
