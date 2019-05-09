@@ -25,6 +25,7 @@
     "react-modal": "^3.8.1",
     "react-slick": "^0.23.2",
     "react-toggle-button": "^2.2.0",
+    "react-tooltip": "^3.10.0",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

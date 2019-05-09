@@ -8,6 +8,7 @@
 import T from './../../i18n/index.js';
 import LiveFrame from './LiveFrame.js';
 import React, { Component } from 'react';
+import Tooltip from './../shared/tooltip.js';
 import Dropdown from './../shared/dropdown.js';
 import { config } from './../../startup/config.js';
 import { streamer } from './../../api/streamer.js';
@@ -92,23 +93,18 @@ class LiveStream extends Component {
 		  <div className={ `livestream-container ${(this.props.type ? " livestream-container--" + this.props.type : "")} ${(fullScreen ? " fullscreen" : "")} ${(this.props.isConnected ? " livestream-container--connected" : "")}` }>
 				<div className={ `livestream ${(this.props.type ? "livestream--" + this.props.type : "") }` }>
 					<div className="livestream__content">
-						<Dropdown active={this.props.isConnected} className="dropdown--livestream" label={this.state.livestreamTypeLabel}>
+						<Dropdown active={this.props.isConnected} className="dropdown--livestream" label={this.state.livestreamTypeLabel} data-tip data-for="dropdown-tooltip">
 							<ul className="dropdown__list">
 								<li className="dropdown__list-item">
 									<button className="dropdown__list-button" onClick={this.handleSwitchStream.bind(this)}>
 										<span className="dropdown__list-button-label">
-											{
-												this.state.public ?
-													<T>archive.private.button</T>
-												:
-													<T>archive.public.button</T>
-											}
+											<T>{"archive."+(this.state.public ? "private" : "public")+".button"}</T>
 										</span>
 									</button>
 								</li>
 							</ul>
 						</Dropdown>
-
+						
 						<LiveFrame	public={ this.state.public }
 								content={ this.state.public ? this.getPublicArchive() : this.getPrivateArchive() }
 								onSelect={_.isFunction(this.props.onSelect) && this.props.onSelect.bind(this)}
@@ -124,7 +120,11 @@ class LiveStream extends Component {
 						<div className="livestream__border-decoration"></div>
 						<div className="livestream__border-decoration"></div>
 					</div>
+
 				</div>
+				<Tooltip id="dropdown-tooltip">
+					<T>{"archive."+this.state.streamFrom+".tooltip"}</T>
+				</Tooltip>
 		  </div>
 		);
 	}

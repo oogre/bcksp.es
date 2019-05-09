@@ -1,10 +1,9 @@
-import { render, createPortal } from 'react-dom';
 import { Caret } from 'caret-pos';
-import React, { Component } from 'react';
 import T from './../../i18n/index.js';
+import React, { Component } from 'react';
+import Tooltip from './../shared/tooltip.js';
 import { log } from './../../utilities/log.js';
 import ButtonShare from './../button/share.js';
-
 
 // LiveStream component
 export default class LiveFrame extends Component {

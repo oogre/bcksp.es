@@ -65,8 +65,11 @@ export default class Dropdown extends React.Component {
   }
 
   render() {
+    //this.props["data-tip"] && this.props["data-for"])
+    let p = _.omit(this.props, ["active", "children", "label"]);
+    p.className += " " + "dropdown" + (this.state.open ? " open" : "");
     return (
-      <div className={'dropdown ' + this.props.className + (this.state.open ? ' open' : '')}>
+      <div {...p}>
         {
           this.renderButton()
         }
