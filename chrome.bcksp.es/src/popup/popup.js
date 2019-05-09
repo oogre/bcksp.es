@@ -2,13 +2,14 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2019-04-18 15:30:35
+  @Last Modified time: 2019-05-09 18:15:34
 \*----------------------------------------*/
 
 import ReactDOM from 'react-dom';
 import { MDText } from 'i18n-react';
 import MainMenu from "./menu/main.js";
 import LoginMenu from "./menu/login.js";
+import OfflineMenu from "./menu/offline.js";
 import React, { Component } from 'react';
 import { config } from './../shared/config.js';
 import { sendMessage } from './../utilities/com.js';
@@ -21,14 +22,21 @@ class Popup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loggedIn : false
+			loggedIn : false,
+			connected : false
 		};
 	}
 
 	componentDidMount() {
-		sendMessage("isLogin")
+		sendMessage("isConnected")
+		.then(isConnected=>{
+			this.setState({ connected : isConnected });
+			if(!isConnected)throw new Error(T.translate("errors.server.offline"));
+			return sendMessage("isLogin")
+		})
 		.then(isLoggedIn => this.setState({ loggedIn : isLoggedIn }))
 		.catch(e => error(e));
+
 		window.addEventListener("blur", event =>{
 			sendMessage("closePopup")
 			.then(() => { })
@@ -57,9 +65,15 @@ class Popup extends Component {
 
 					<div className="bcksp-popup__content">
 						{
-							!this.state.loggedIn ?
+							!this.state.connected &&
+								<OfflineMenu/>
+						}
+						{
+							this.state.connected && !this.state.loggedIn &&
 								<LoginMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>
-							:
+						}
+						{
+							this.state.connected && this.state.loggedIn &&
 								<MainMenu onLoginStatusChange={this.handleLoginStatusChange.bind(this)}/>
 						}
 					</div>

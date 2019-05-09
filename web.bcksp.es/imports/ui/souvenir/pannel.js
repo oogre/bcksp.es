@@ -2,7 +2,7 @@
   bcksp.es - pannel.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-11 13:53:56
-  @Last Modified time: 2019-03-04 21:42:09
+  @Last Modified time: 2019-05-04 17:42:09
 \*----------------------------------------*/
 
 import Slider from "react-slick";
@@ -27,7 +27,7 @@ export default class SouvenirPannel extends Component {
 			arrows : true
 		};
 		return (
-			<div className="souvenir-pannel" onClick={()=>FlowRouter.go("souvenir")}>
+			<div className="souvenir-pannel" /*onClick={()=>FlowRouter.go("souvenir")}*/>
 				<div className="container">
 					<div className="souvenir-pannel__intro">
 						<h3><T>souvenir.title</T></h3>

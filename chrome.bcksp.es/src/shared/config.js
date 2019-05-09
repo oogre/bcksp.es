@@ -1,6 +1,8 @@
 const conf = {
 	DEV : {
-		// localStorage.setItem("DEV", true)
+		languages : {
+			available : ["fr"]
+		},
 		senderTimeout : 6000,
 		standard_url : "*://*.bcksp.es/*",
 		protocol : "http://",
@@ -22,6 +24,9 @@ const conf = {
 		}	
 	},
 	PROD : {
+		languages : {
+			available : ["fr"]
+		},
 		senderTimeout : 6000,
 		standard_url : "*://*.bcksp.es/*",
 		protocol : "https://",
@@ -67,13 +72,13 @@ config.getWebSocketUrl = function(){
 };
 
 function getLang () {
-    return (
-        navigator.languages && navigator.languages[0] ||
-        navigator.language ||
-        navigator.browserLanguage ||
-        navigator.userLanguage ||
-        'en-US'
-    );
+    let userLang = (navigator.languages && navigator.languages[0] ||
+					navigator.language ||
+					navigator.browserLanguage ||
+					navigator.userLanguage ||
+					'fr');
+	userLang = userLang.toLowerCase().replace('_', '-').split("-").shift();
+	return config.languages.available.includes(userLang) ? userLang : config.languages.available[0];
 }
 
 config.getTranslationUrl = function(){

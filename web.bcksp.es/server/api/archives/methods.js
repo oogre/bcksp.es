@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-03-27 14:02:18
+  @Last Modified time: 2019-05-05 16:41:45
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { htmlDecode } from'htmlencode';
@@ -84,7 +84,7 @@ export const ArchiveAdd = new ValidatedMethod({
 				if(!mySettings.publishToPublicFeed)return;
 				let longBuffer = await ArchiveTools.readAsync(publicArchive._id);
 				longBuffer = text + longBuffer;
-				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxLen);
+				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxMaxLen);
 				return ArchiveTools.writeAsync(publicArchive._id, longBuffer)
 			})
 			.then(()=>{
