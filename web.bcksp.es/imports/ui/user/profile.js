@@ -262,7 +262,7 @@ class UserProfile extends Component {
 		return (
 			<form  onSubmit={this.updateEmail.bind(this)}>
 				<div className="field field--profile">
-					<label className="field__label" htmlFor = "email">
+					<label className="field__label" htmlFor="email">
 						<T>userprofile.userInfo.email</T>
 					</label>
 					<span className="input-wrapper--inline">
@@ -277,7 +277,7 @@ class UserProfile extends Component {
 						/>
 					</span>
 					{
-						this.state.submitNewEmailVisible && 
+						this.state.submitNewEmailVisible &&
 							<span className="input-wrapper--inline">
 								<input className="button button--primary" type="submit" value={i18n.__("userprofile.userInfo.submit")}/>
 							</span>
@@ -290,7 +290,7 @@ class UserProfile extends Component {
 		return (
 			<form  onSubmit={this.handleResetPassword.bind(this)}>
 				<div className="field">
-					<label className="field__label" htmlFor = "email">
+					<label className="field__label">
 						<T>userprofile.userInfo.resetpassword</T>
 					</label>
 					<input className="button button--primary" type="submit" value={i18n.__("userprofile.userInfo.submit")}/>
