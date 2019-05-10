@@ -19,10 +19,10 @@ constructor(props){
 					<div className="shop-creation__form">
 						<div className="fields-row">
 							<div className="field">
-								<label className="field__label">
+								<label htmlFor="bookAuthor" className="field__label">
 									<T>souvenir.item.book.form.author.label</T>
 								</label>
-								<input className="input--text" type="text" name="book.author"/>
+								<input id="bookAuthor" className="input--text" type="text" name="book.author"/>
 							</div>
 						</div>
 						<div className="field">
