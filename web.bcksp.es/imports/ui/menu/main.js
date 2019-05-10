@@ -43,7 +43,7 @@ class MenuMain extends Component {
 
 	render() {
 		return (
-			<nav>
+			<nav className="main-navigation">
 				<button type="button" className="menu--header__mobile-trigger" onClick={this.handleOpenMobileMenu.bind(this)}>
 					<div className="bar"></div>
 					<div className="bar"></div>

@@ -2,6 +2,14 @@
   Menu
 \*------------------------------------*/
 
+.main-navigation {
+  display: none;
+
+  @include media-query("medium") {
+    display: block;
+  }
+}
+
 // Menu Header
 // ---------------------
 .menu--header {

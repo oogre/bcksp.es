@@ -3,7 +3,11 @@
 \*------------------------------------*/
 
 .main-header {
-  padding: $size-40 $size-60;
+  padding: $size-20;
+
+  @include media-query("medium") {
+    padding: $size-40 $size-60;
+  }
 }
 
 .main-header__container {

@@ -8,6 +8,10 @@
   overflow: hidden;
 }
 
+.livestream-container {
+  margin: 0 $size-20;
+}
+
 .livestream {
   position: relative;
 }
@@ -75,20 +79,32 @@
 }
 
 .liveframe__fullscreen-icon {
-  display: block;
+  display: none;
+
+  @include media-query("medium") {
+    display: block;
+  }
 }
 
 // Livestream Home Variation
 // ---------------------
 .livestream--home {
-  margin: 0 auto $size-155;
+  margin: 0 auto $size-60;
   max-width: 942px;
   z-index: z("livestream") + 1;
   transform: translateX($size-12);
+
+  @include media-query("medium") {
+    margin-bottom: $size-155;
+  }
 }
 
 .livestream--home .livestream__content {
-  padding: $size-44 $size-65;
+  padding: $size-20;
+
+  @include media-query("medium") {
+    padding: $size-44 $size-65;
+  }
 }
 
 .livestream--home .livestream__border-decoration,
