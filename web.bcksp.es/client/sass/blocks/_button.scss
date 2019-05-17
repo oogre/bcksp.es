@@ -16,6 +16,7 @@
   font-size: $size-16;
   transition: background .2s $easeInOutCubic;
   text-decoration: none;
+  line-height: 1.0625;
 
   // Hover, focus, active interactions
   &:hover:not([disabled]),
