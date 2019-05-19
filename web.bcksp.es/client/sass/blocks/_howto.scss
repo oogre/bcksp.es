@@ -4,10 +4,11 @@
 
 .howto {
   padding: 0;
-  margin: -200px 0 22px;
+  margin: $size-20 0 22px;
   list-style-type: none;
 
   @include media-query("medium") {
+    margin-top: -200px;
     display: flex;
     flex-direction: column;
   }
@@ -50,9 +51,12 @@
 // Temporary positionning (wait for final design)
 .step > div > div.left:first-child{
   /*display: none;*/
-  float: left;
-  margin-left: -27%;
-  margin-right: 40px;
+
+  @include media-query("medium") {
+    float: left;
+    margin-left: -27%;
+    margin-right: 40px;
+  }
 }
 
 // @warning Made by vince
@@ -61,10 +65,13 @@
 .step > div > div.right:first-child{
   /*display: none;*/
   // position: absolute;
-  position: absolute;
-  right: -125px;
-  top: 50%;
-  transform: translateY(-50%);
+
+  @include media-query("medium") {
+    position: absolute;
+    right: -125px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 // Step Content
@@ -84,4 +91,9 @@
 .step__content p {
   font-size: $size-22;
   line-height: 1.36;
+}
+
+// howto__item-picture
+.howto__item-picture {
+  margin: 0 auto;
 }

@@ -14,7 +14,7 @@ export default class HowtoBadge extends Component {
 
 	render() {
 		return (
-			<div className="logo--header__picture" style={{
+			<div className="howto__item-picture" style={{
 				backgroundImage : "url('"+this.props.url+"')",
 				display: "block",
 				width: "256px",

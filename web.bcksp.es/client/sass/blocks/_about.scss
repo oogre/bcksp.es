@@ -3,7 +3,11 @@
 \*------------------------------------*/
 
 .about {
-  padding: $size-112 0 $size-205;
+  padding: 0;
+
+  @include media-query("medium") {
+    padding: $size-112 0 $size-205;
+  }
 }
 
 .about__container {
@@ -37,8 +41,12 @@
 // ---------------------
 .about--intro {
   position: relative;
-  padding: 0 0 $size-205;
-  margin-top: -$size-500;
+  padding: $size-40 0;
+
+  @include media-query("medium") {
+    padding: 0 0 $size-205;
+    margin-top: -$size-500;
+  }
 }
 
 .about--intro__container {
@@ -47,23 +55,28 @@
 }
 
 .about-parallax {
-  margin-top: -$size-500;
   position: relative;
+
+  @include media-query("medium") {
+    margin-top: -$size-500;
+  }
 }
 
 .about-parallax__background {
   // position: absolute;
-  position: sticky;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: z("about-intro") - 1;
-  background: $grey-thunder no-repeat right center;
-  background-position: top right;
+  display: none;
 
   @include media-query("medium") {
+    display: block;
+    position: sticky;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: z("about-intro") - 1;
+    background: $grey-thunder no-repeat right center;
+    background-position: top right;
     padding-left: $size-230;
     background-image: url("/images/backgrounds/eraser-background.png");
   }
@@ -96,6 +109,14 @@
 
 .about--intro .about__content {
   margin-bottom: $size-126;
+}
+
+.about--intro {
+  background: $grey-thunder;
+
+  @include media-query("medium") {
+    background: transparent;
+  }
 }
 
 // About Long variation

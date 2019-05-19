@@ -65,10 +65,10 @@ constructor(props){
 									{
 										!Meteor.userId() &&
 											<div className="field">
-												<label className="field__label">
+												<label htmlFor="posterDeliveryEmail" className="field__label">
 													<T>souvenir.delivery.form.email.label</T>
 												</label>
-												<input className="input--text" type="email" name="poster.delivery.email" required/>
+												<input id="posterDeliveryEmail" className="input--text" type="email" name="poster.delivery.email" required/>
 											</div>
 									}
 								</div>

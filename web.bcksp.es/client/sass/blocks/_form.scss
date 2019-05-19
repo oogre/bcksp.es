@@ -58,8 +58,8 @@
 // Input text Like
 // ---------------------
 
-.input--text {
-  display: block;
+.input--text,
+.textarea {
   width: 100%;
   border: 1px solid $grey-74;
   border-radius: 3px;

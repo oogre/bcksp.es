@@ -4,9 +4,13 @@
 
 .punchline__title {
   text-align: center;
-  font-size: $size-70;
   font-weight: $font-weight-body;
   margin-bottom: $size-80;
+  font-size: $size-30;
+
+  @include media-query("medium") {
+    font-size: $size-70;
+  }
 }
 
 .caret {
