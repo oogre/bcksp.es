@@ -12,10 +12,10 @@ export default class YoutubeEmbed extends Component {
 	}
 	render() {
 		return (
-			<iframe className={this.props.className} src={"https://www.youtube-nocookie.com/embed/"+this.props.youtubeID+"?modestbranding=1&showinfo=0&rel=0&cc_load_policy=1&iv_load_policy=3&theme=light&fs=0&color=white&controls=0&disablekb=1"} 
+			<iframe title="" className={this.props.className} src={"https://www.youtube-nocookie.com/embed/"+this.props.youtubeID+"?modestbranding=1&showinfo=0&rel=0&cc_load_policy=1&iv_load_policy=3&theme=light&fs=0&color=white&controls=0&disablekb=1"}
 					width={ this.props.width || "560" }
 					height={ this.props.height || "315" }
-					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 					frameBorder="0">
 			</iframe>
 		);

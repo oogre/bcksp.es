@@ -29,7 +29,7 @@ export default class About extends Component {
 			autoplay : false,
 			arrows : true
 		};
-		console.log(i18n.__("about"));
+		// console.log(i18n.__("about"));
 		return (
 			<div className="page__content">
 				<div className="container">
@@ -44,7 +44,7 @@ export default class About extends Component {
 									{
 										k == 2 &&
 											<div className="text-block">
-												<YoutubeEmbed className="logo--header__picture" youtubeID="hGB58ybRoJU"/>
+												<YoutubeEmbed youtubeID="hGB58ybRoJU"/>
 											</div>
 									}
 									<div className="text-block">

@@ -35,7 +35,7 @@ export default class AboutArtists extends Component {
 												artist.links.map((link, k) =>(
 													<li className="artist__social-list-item" key={k} >
 														<a className="artist__social-link" href={link}>
-															<img src="/images/icons/icon-globe.svg"/>
+															<img alt="" src="/images/icons/icon-globe.svg"/>
 															<div className="sr-only">
 																{link}
 															</div>
