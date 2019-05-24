@@ -218,6 +218,18 @@ export default class BackspaceListener{
 	}
 	setupListener(target){
 		this.addListeners(target);
+		let self = this;
+		try{
+			target.querySelectorAll("iframe")
+			.forEach(iframe => {
+				try{
+					self.addListeners(iframe.contentWindow.document);
+					iframe.addEventListener("load", function(event) {
+							self.addListeners(iframe.contentWindow.document);
+					}, false);
+				}catch(e){}
+			});
+		}catch(e){}
 	}
 	addListeners (element){
 		this.elements.push(element);
