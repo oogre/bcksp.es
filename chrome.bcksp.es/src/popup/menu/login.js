@@ -109,18 +109,18 @@ export default class LoginMenu extends Component {
 							||  this.state.currentProcess == "forgotPwd")
 							&&	this.renderSignupBtn()
 						}
-						<li>
-							<button
-								className=""
-								onClick={this.handleGoBcksp.bind(this)}
-							>
-								<T.span text={{ key : "extension.links.visit" }}/>
-							</button>
-						</li>
 					</ul>
 				</div>
-
+				<div className="bcksp-popup__extension-link">
+					<button
+							className="button button--secondary button--extension-link"
+							onClick={this.handleGoBcksp.bind(this)}
+						>
+							<T.span text={{ key : "extension.links.visit" }}/>
+					</button>
+				</div>
 			</div>
+
 		);
 	}
 }

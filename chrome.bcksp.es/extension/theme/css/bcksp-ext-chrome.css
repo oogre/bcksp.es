@@ -246,3 +246,20 @@ ul {
   background: #fff123;
   height: 100%;
 }
+
+/*------------------------------------*\
+  > Extension-link
+\*------------------------------------*/
+
+.bcksp-popup__extension-link {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.button--extension-link {
+  border-radius: 0;
+  width: 100%;
+  text-align: center;
+}
