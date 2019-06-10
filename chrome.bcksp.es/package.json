@@ -1,6 +1,6 @@
 {
   "name": "bcksp.es",
-  "version": "0.3.0",
+  "version": "2.0.0.3",
   "description": "We archive backspaces, then we turn them into books.",
   "main": "index.js",
   "scripts": {
