@@ -2,7 +2,7 @@
   bcksp.es - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:00:44
-  @Last Modified time: 2019-01-04 17:31:59
+  @Last Modified time: 2019-06-07 16:51:56
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -10,9 +10,9 @@ import React, { Component } from 'react';
 import FixeWait from './../fixe/wait.js';
 import MessageError from './../message/error.js';
 import { sendMessage } from './../../utilities/com.js';
-import { getMessageFromError } from './../../utilities/tools.js';
+import { handleError, T } from './../../utilities/tools.js';
 import { isEmail, isPwd, isObject } from './../../utilities/validation.js';
-
+import { log, info, warn, error } from './../../utilities/log.js';
 
 export default class LoginForm extends Component {
 	constructor(props) {
@@ -32,46 +32,42 @@ export default class LoginForm extends Component {
 		});
 
 		isEmail(ReactDom.findDOMNode(this.refs.email).value)
-			.then(data => isPwd(ReactDom.findDOMNode(this.refs.password).value, data))
-			.then(data => sendMessage("login", data))
-			.then(isLoggedIn => {
-				if(isObject(isLoggedIn) && isLoggedIn.error){
-					throw new Error(isLoggedIn.reason);
-				}
-				this.setState({
-					'is-success' : true
-				});
-				return isLoggedIn;
-			})
-			.then(isLoggedIn => this.props.onSuccess(isLoggedIn))
-			.catch(error => {
-				this.setState({
-					'is-success' : false,
-					error : getMessageFromError(error)
-				});
-			})
-			.finally(()=>{
-				this.setState({ 
-					'is-loading' : false,
-				});
-			});
+		.then(data => isPwd(ReactDom.findDOMNode(this.refs.password).value, data))
+		.then(data => sendMessage("login", data))
+		.then(isLoggedIn => {
+			if(isObject(isLoggedIn) && isLoggedIn.error){
+				throw new Error(isLoggedIn.reason);
+			}
+			this.setState({ 'is-success' : true });
+			return isLoggedIn;
+		})
+		.then(isLoggedIn => this.props.onSuccess(isLoggedIn))
+		.catch(error => this.setState({ 'is-success' : false, error : handleError(error)}))
+		.finally(() => this.setState({ 'is-loading' : false }));
 	}
 
 	render() {
 		return (
 	    	<form className="login-user" onSubmit={this.handleLogin.bind(this)}>
-				<div className="fields-row">
-					<div className="fields-column">
-						<label htmlFor="email">email</label>
-						<input id="email" type = "email" ref="email"name="email"/>
+				<div>
+					<div className="field">
+						<label className="field__label" htmlFor="email">
+							<T.span text={{ key : "forms.login.email" }}/>
+						</label>
+						<input className="input--text" id="email" type = "email" ref="email"name="email"/>
 					</div>
-					<div className="fields-column">
-						<label htmlFor="password">password</label>
-						<input id="password" type="password" ref="password" name="password"/>
+					<div className="field">
+						<label className="field__label" htmlFor="password">
+							<T.span text={{ key : "forms.login.pwd" }}/>
+						</label>
+						<input className="input--text" id="password" type="password" ref="password" name="password"/>
 					</div>
 				</div>
-				<div className="fields-row text-right">
-					<input className="button--secondary" type="submit" value="login"/>
+				<div className="field">
+					<input 	className="button button--secondary"
+							type="submit"
+							value={T.translate("forms.login.action")}
+					/>
 				</div>
 				{
 					this.state["error"] &&

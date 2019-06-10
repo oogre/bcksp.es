@@ -1,11 +1,11 @@
 {
   "name": "bcksp.es",
-  "version": "0.2.0",
+  "version": "2.0.0.3",
   "description": "We archive backspaces, then we turn them into books.",
   "main": "index.js",
   "scripts": {
     "build": "webpack -w --display-error-details --progress --colors",
-    "start": "web-ext run -s extension/"
+    "start": "web-ext run"
   },
   "author": "",
   "license": "MPL-2.0",
@@ -21,10 +21,11 @@
     "webpack": "3.10.0"
   },
   "dependencies": {
-    "caret-pos": "https://github.com/oogre/caret-pos/tarball/79f830900cb69c43de8cebf7b8c9868fdd1d8d2f",
     "asteroid": "https://github.com/oogre/asteroid/tarball/df69c5171dcca1c13009f33a774ca628801314da",
+    "caret-pos": "https://github.com/oogre/caret-pos/tarball/79f830900cb69c43de8cebf7b8c9868fdd1d8d2f",
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",
+    "i18n-react": "0.7.0",
     "react-toggle-button": "2.2.0",
     "underscore": "^1.9.0"
   }
