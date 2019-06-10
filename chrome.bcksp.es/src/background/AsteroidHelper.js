@@ -2,9 +2,10 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-04-21 17:37:36
+  @Last Modified time: 2019-06-10 21:44:05
 \*----------------------------------------*/
 import { createClass } from "asteroid";
+import { onLogin } from "asteroid/lib/common/login-method";
 import Data from "./../utilities/Data.js";
 import { config } from './../shared/config.js';
 import { runtimeId } from './../utilities/browser.js';
@@ -88,15 +89,29 @@ class AsteroidHelper{
 		});
 	}
 
+	async createUser(data){
+		data.device =  runtimeId();
+		return this.asteroid.createUser(data);
+	}
+	
+	async loginWithPassword(data){
+		data.device =  runtimeId();
+		return this.asteroid.loginWithPassword(data);		
+	}
+
 	async call(methode, data={}){
 		setIcon("sending");
 		data.device =  runtimeId();
 		return this.asteroid.call(methode, data)
-			.then(res => res)
+			.then(res => {
+				return res;
+			})
 			.catch(error => {
 				error(error);
 				throw error;
-			}).finally(() => setDefaultIcon(this.asteroid.loggedIn));
+			}).finally(() => {
+				setDefaultIcon(this.asteroid.loggedIn);
+			});
 	}
 }
 

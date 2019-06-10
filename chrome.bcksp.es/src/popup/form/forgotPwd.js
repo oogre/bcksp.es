@@ -2,19 +2,16 @@
   bcksp.es - forgotPwd.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-12-26 12:47:44
-  @Last Modified time: 2019-04-19 14:05:26
+  @Last Modified time: 2019-06-07 16:51:40
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
-import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
 import FixeWait from './../fixe/wait.js';
 import MessageError from './../message/error.js';
 import { sendMessage } from './../../utilities/com.js';
 import { isEmail } from './../../utilities/validation.js';
-import { getMessageFromError } from './../../utilities/tools.js';
-
-const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
+import { handleError, T } from './../../utilities/tools.js';
 
 export default class ForgotPwdForm extends Component {
 	constructor(props) {
@@ -35,7 +32,7 @@ export default class ForgotPwdForm extends Component {
 		isEmail(ReactDom.findDOMNode(this.refs.email).value)
 		.then(data => sendMessage("forgotPwd", data))
 		.then(data => this.setState({'has-success' : data.message}))
-		.catch(e => this.setState({ error : getMessageFromError(e), 'has-success' : false }))
+		.catch(e => this.setState({ error : handleError(e), 'has-success' : false }))
 		.finally(()=> this.setState({ 'is-loading' : false}));
 	}
 

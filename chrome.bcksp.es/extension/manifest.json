@@ -11,13 +11,17 @@
       "all_frames": true
     }
   ],
+  "icons": { 
+    "48": "images/48.ExtIcon_Loggedin_Whitelisted.png",
+    "128": "images/128.ExtIcon_Loggedin_Whitelisted.png"
+  },
   "browser_action": {
     "browser_style": true,
     "default_icon": {
-      "19": "images/19.standby.png",
-      "38": "images/38.standby.png",
-      "48": "images/48.standby.png",
-      "128": "images/128.standby.png"
+      "19": "images/19.ExtIcon_Loggedin_Whitelisted.png",
+      "38": "images/38.ExtIcon_Loggedin_Whitelisted.png",
+      "48": "images/48.ExtIcon_Loggedin_Whitelisted.png",
+      "128": "images/128.ExtIcon_Loggedin_Whitelisted.png"
     },
     "default_title": "bcksp.es"
   },

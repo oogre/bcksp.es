@@ -2,7 +2,7 @@
   bcksp.es - reactive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 17:14:14
-  @Last Modified time: 2019-04-19 13:02:16
+  @Last Modified time: 2019-06-10 20:27:14
 \*----------------------------------------*/
 import { isObject, isFunction, isArray } from './validation.js';
 import { mapObject } from './tools.js';
@@ -12,6 +12,7 @@ class Data{
 	constructor(){
 		this.state = {
 			timers : {},
+			currentIcon:"",
 			blacklist : [],
 			innerText : "",
 			archiveSize : 0,
@@ -29,7 +30,6 @@ class Data{
 			return [];
 		});
 		this.actions["*"] = [];
-		this.iconHistory = [];
 	}
 
 	setState(data){
@@ -51,18 +51,6 @@ class Data{
 		if(!isFunction(cb)) throw new Error("Data.on takes a function as second argument");
 		if(!isArray(this.actions[name]))this.actions[name] = [];
 		this.actions[name].push(cb);
-	}
-
-	addIconHistory(name){
-		this.iconHistory.push(name);
-		if(this.iconHistory.length > 5){
-			this.iconHistory.shift()
-		}
-	}
-
-	getCurrentIconStatus(){
-		if(this.iconHistory.length == 0 ) return "";
-		return this.iconHistory[this.iconHistory.length-1];
 	}
 }
 

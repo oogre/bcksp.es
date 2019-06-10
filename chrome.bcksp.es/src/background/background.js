@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-05-09 17:57:07
+  @Last Modified time: 2019-06-10 21:58:34
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -18,13 +18,10 @@ import { tabHandler, reloadTabs, getTabStatus } from './../utilities/tab.js';
 import { setBlindfield, setBlackList, getBlindfields, addToArchiveBuffer, getArchiveBuffer, clearArchiveBuffer } from './../utilities/localStorage.js';
 import { tabsUpdate, tabsCreate, tabsOnActivatedAddListener, runtimeOnInstalledAddListener, runtimeSetUninstallURL, browserActionOnClickAddListener } from './../utilities/browser.js';
 
-Data.setState({
-	"loggedStatus" : false
-});
-
 Data.on("*", (value, name) => info("---on---", name, value));
 
 Data.on("connected", connectionStatus => {
+	setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 	if(!connectionStatus) return;
 	getTranslation()
 	.then(data => {
@@ -90,6 +87,10 @@ Data.on("currentURLBlacklisted", (value, name) => {
 	setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 });
 
+Data.setState({
+	"loggedStatus" : false
+});
+
 runtimeOnInstalledAddListener(data => {
 	if(data.reason == "install"){
 		tabHandler()
@@ -131,14 +132,14 @@ on("forgotPwd", (data, resolve, reject) => {
 
 on("signup", (data, resolve, reject) => {
 	checkConnected()
-	.then(() => AsteroidHelper.asteroid.createUser(data))
+	.then(() => AsteroidHelper.createUser(data))
 	.then(data => resolve(!!data))
 	.catch(e => reject(e));
 });
 
 on("login", (data, resolve, reject) => {
 	checkConnected()
-	.then(() => AsteroidHelper.asteroid.loginWithPassword(data))
+	.then(() => AsteroidHelper.loginWithPassword(data))
 	.then(data => resolve(!!data))
 	.catch(e => reject(e));
 });
@@ -206,19 +207,16 @@ on("archive, backspace", (data, resolve, reject) => {
 	if(data) addToArchiveBuffer(data);
 	setIcon("backspacing");
 	procrastinate(config.senderTimeout, "deferredArchiveAdd")
-	.then(async message => {
-		await checkConnected();
+	.then(message => checkConnected())
+	.then(() => {
 		let archive = getArchiveBuffer();
 		if(archive.length < 1) throw new Error("Archive Add cancelled, casue local archive is empty");
-		return 	AsteroidHelper.call("Archives.methods.add", { 
-					text: archive.split("").reverse().join("") 
-				})
-				.then(() => {
-					clearArchiveBuffer();
-					resolve("archived")
-				})
-				.catch(e => reject(e))
-				.finally(() => setDefaultIcon(AsteroidHelper.asteroid.loggedIn));
+		return archive.split("").reverse().join("");
+	})
+	.then(archive => AsteroidHelper.call("Archives.methods.add", { text: archive }))
+	.then(() => {
+		clearArchiveBuffer();
+		resolve("archived")
 	})
 	.catch(e => reject(e));
 });

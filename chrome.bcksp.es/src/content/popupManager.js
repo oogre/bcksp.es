@@ -2,9 +2,11 @@
   bcksp.es - popupManager.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-04-17 12:28:31
-  @Last Modified time: 2019-05-04 19:42:17
+  @Last Modified time: 2019-06-06 23:05:11
 \*----------------------------------------*/
 import { runtimeGetURL } from './../utilities/browser.js';
+import { sendMessage } from './../utilities/com.js';
+
 
 let iframe;
 
@@ -19,7 +21,7 @@ export function openPopup(){
 							"right:10px;"+
 							"display:block;"+
 							"width:300px;"+
-							"height:400px;"+
+							"height:500px;"+
 							"z-index:100000;"+
 							"border: 0;";
 	document.body.appendChild(iframe);

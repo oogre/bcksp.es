@@ -2,18 +2,15 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2019-04-18 17:44:28
+  @Last Modified time: 2019-06-07 16:51:29
 \*----------------------------------------*/
-import { MDText } from 'i18n-react';
 import FixeWait from './fixe/wait.js';
 import React, { Component } from 'react';
+import { T } from './../utilities/tools.js';
 import MessageError from './message/error.js';
 import MyToggleButton from './MyToggleButton.js';
 import { sendMessage } from './../utilities/com.js';
-import { getMessageFromError } from './../utilities/tools.js';
 import { log, info, warn, error } from './../utilities/log.js';
-
-const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class Blacklist extends Component {
 	constructor(props) {
@@ -48,7 +45,7 @@ export default class Blacklist extends Component {
 		}
 		sendMessage(methodName, this.state.currentURL)
 		.then(data => this.setState({ isBlacklisted : !wasBlacklisted, 'has-success' : data.message }))
-		.catch(e => this.setState({ error : getMessageFromError(e), 'has-success' : false }))
+		.catch(e => this.setState({ error : handleError(e), 'has-success' : false }))
 		.finally(() => this.setState({ 'is-loading' : false }));
 	}
 

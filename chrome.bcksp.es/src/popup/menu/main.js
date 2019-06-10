@@ -2,17 +2,15 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2019-04-19 14:19:06
+  @Last Modified time: 2019-06-07 15:53:31
 \*----------------------------------------*/
 
-import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
 import Blacklist from './../blacklist.js';
+import { T } from './../../utilities/tools.js';
 import { config } from './../../shared/config.js';
 import { sendMessage, on } from './../../utilities/com.js';
 import { log, info, warn, error } from './../../utilities/log.js';
-
-const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class MainMenu extends Component {
 	constructor(props) {
@@ -60,7 +58,11 @@ export default class MainMenu extends Component {
 		.then(data => info(data))
 		.catch(e => error(e));
 	}
-
+	handleLearnMore(event){
+		sendMessage("openTab", config.getAboutUrl())
+		.then(data => info(data))
+		.catch(e => error(e));
+	}
 	render() {
 		return (
 			<div>
@@ -70,15 +72,18 @@ export default class MainMenu extends Component {
 							<div className="bcksp-popup__goal">
 								<T.p text={{ key : "extension.archive.length", value : this.state.archiveSize }} />
 							</div>
-							<a href="#">
-								<T.span text={{ key: "extension.book.learnmore" }}/>
+							<a href="#" onClick={this.handleLearnMore.bind(this)}>
+								<T.span text={{ key: "extension.learnmore" }}/>
 							</a>
 						</div>
 					</div>
 					<div className="bcksp-popup__counter">
-						<div className="bcksp-popup__counter-foreground" style={{
-							width: (this.state.archiveRatio * 100).toFixed(2) + "%",
-						}}></div>
+						<div className="bcksp-popup__counter-foreground" 
+							title={(this.state.archiveRatio * 100).toFixed(2) + "%"}
+							style={{
+								width: (this.state.archiveRatio * 100).toFixed(2) + "%",
+							}}>
+						</div>
 						<T.p className="sr-only" text={{ key : "extension.archive.ratio", value : (this.state.archiveRatio * 100).toFixed(2) }} />
 					</div>
 					<ul className="bcksp-popup__user-menu">

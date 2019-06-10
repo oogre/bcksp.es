@@ -2,20 +2,17 @@
   bcksp.es - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:00:44
-  @Last Modified time: 2019-04-19 14:10:05
+  @Last Modified time: 2019-06-07 16:51:56
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
-import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
 import FixeWait from './../fixe/wait.js';
 import MessageError from './../message/error.js';
 import { sendMessage } from './../../utilities/com.js';
-import { getMessageFromError } from './../../utilities/tools.js';
+import { handleError, T } from './../../utilities/tools.js';
 import { isEmail, isPwd, isObject } from './../../utilities/validation.js';
 import { log, info, warn, error } from './../../utilities/log.js';
-
-const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class LoginForm extends Component {
 	constructor(props) {
@@ -45,7 +42,7 @@ export default class LoginForm extends Component {
 			return isLoggedIn;
 		})
 		.then(isLoggedIn => this.props.onSuccess(isLoggedIn))
-		.catch(error => this.setState({ 'is-success' : false, error : getMessageFromError(error)}))
+		.catch(error => this.setState({ 'is-success' : false, error : handleError(error)}))
 		.finally(() => this.setState({ 'is-loading' : false }));
 	}
 

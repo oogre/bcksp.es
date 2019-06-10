@@ -2,18 +2,15 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:16:34
-  @Last Modified time: 2019-04-19 13:51:42
+  @Last Modified time: 2019-06-07 16:55:02
 \*----------------------------------------*/
 
 import Data from "./Data.js";
-import { MDText } from 'i18n-react';
 import { config } from './../shared/config.js';
-import { getContentEditableInParent, intersection } from "./tools.js";
-import { isString, isEmpty, isFunction, isArray } from 'underscore';
 import { setDefaultIcon } from './icon.js';
+import { isString, isEmpty, isFunction, isArray } from 'underscore';
+import { getContentEditableInParent, intersection, T } from "./tools.js";
 export { isString, isEmpty, isFunction, isUndefined, isNull, isArray, isBoolean, isObject } from 'underscore';
-
-const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export async function checkConnected(){
 	if(!Data.state.connected){
@@ -25,13 +22,13 @@ export async function checkConnected(){
 
 export function checkString(value){
 	if(!isString(value) || isEmpty(value))
-			throw new Error(T.translate("errors.type.not-a-string", { value: value }));
+			throw new Error(T.translate("errors.type.not-a-string", { $value: value }));
 	return value;
 }
 
 export function checkFunction(value){
 	if(!isFunction(value))
-			throw new Error(T.translate("errors.type.not-a-function", { value: value }));
+			throw new Error(T.translate("errors.type.not-a-function", { $value: value }));
 	return value;
 }
 
@@ -63,7 +60,7 @@ export function isAcceptable(elem){
 }
 
 export async function isEmail(value, aggregator = {}){
-	let EmailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+	let EmailRegExp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 	if(isEmpty(value)) throw new Error(T.translate("errors.email.required"));
 	if(!isString(value)) throw new Error(T.translate("errors.email.not-a-string"));
 	if(!EmailRegExp.test(value)) throw new Error(T.translate("errors.email.not-an-email"));
@@ -74,8 +71,8 @@ export async function isEmail(value, aggregator = {}){
 export async function isPwd(value, aggregator = {}){
 	if(isEmpty(value)) throw new Error(T.translate("errors.password.required"));
 	if(!isString(value)) throw new Error(T.translate("errors.password.not-a-string"));
-	if(value.length < config.user.password.length.min) throw new Error(T.translate("errors.password.min-string", { length : config.user.password.length.min }));
-	if(value.length > config.user.password.length.max) throw new Error(T.translate("errors.password.max-string", { length : config.user.password.length.max }));
+	if(value.length < config.user.password.length.min) throw new Error(T.translate("errors.password.min-string", { $length : config.user.password.length.min }));
+	if(value.length > config.user.password.length.max) throw new Error(T.translate("errors.password.max-string", { $length : config.user.password.length.max }));
 	aggregator.password = value;
 	return aggregator;
 }

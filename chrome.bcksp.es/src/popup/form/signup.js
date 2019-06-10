@@ -2,19 +2,16 @@
   bcksp.es - signup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:11:37
-  @Last Modified time: 2019-04-19 14:23:00
+  @Last Modified time: 2019-06-07 16:54:34
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
-import { MDText } from 'i18n-react';
 import React, { Component } from 'react';
 import FixeWait from './../fixe/wait.js';
 import MessageError from './../message/error.js';
 import { sendMessage } from './../../utilities/com.js';
-import { getMessageFromError } from './../../utilities/tools.js';
+import { handleError, T } from './../../utilities/tools.js';
 import { isEmail, isPwd, isPwdConf } from './../../utilities/validation.js';
-
-const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });;
 
 export default class SignupForm extends Component {
 	constructor(props) {
@@ -44,7 +41,7 @@ export default class SignupForm extends Component {
 		})
 		.catch(error => this.setState({
 			'is-success' : false,
-			error : getMessageFromError(error)
+			error : handleError(error)
 		}))
 		.finally(() => this.setState({ 'is-loading' : false }));
 	}
