@@ -176,6 +176,10 @@ ul {
   appearance: none;
 }
 
+.button:focus {
+  outline: none;
+}
+
 .button--secondary {
   display: inline-block;
   background-color: #000;
@@ -193,7 +197,7 @@ ul {
 .button--secondary:focus:not([disabled]) {
   color: #fff;
   text-decoration: none;
-  background: #000;
+  background: #333;
 }
 
 .button--secondary:active:not([disabled]) {
