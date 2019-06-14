@@ -34,7 +34,7 @@ constructor(props){
 									<div className="field">
 										<label className="input--radio">
 											<input className="input--radio__input" type="radio" name="book.finishing" value="basic" defaultChecked/>
-											<T>souvenir.item.book.form.finishing.basic</T>
+											<span className="input--radio__label"><T>souvenir.item.book.form.finishing.basic</T></span>
 										</label>
 									</div>
 								</div>
@@ -42,7 +42,7 @@ constructor(props){
 									<div className="field">
 										<label className="input--radio">
 											<input className="input--radio__input" type="radio" name="book.finishing" value="premium"/>
-											<T>souvenir.item.book.form.finishing.premium</T>
+											<span className="input--radio__label"><T>souvenir.item.book.form.finishing.premium</T></span>
 										</label>
 									</div>
 								</div>
