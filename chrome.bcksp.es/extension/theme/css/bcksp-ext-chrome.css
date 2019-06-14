@@ -3,6 +3,12 @@
   @authors Crucifix Arnaud (hello@crucifixarnaud.com)
 \*------------------------------------*/
 
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
 body,
 html {
   padding: 0;
@@ -109,7 +115,7 @@ ul {
   border-radius: 2px;
   border: 1px solid #bdbdbd;
   width: 100%;
-  line-height: 1.75;
+  line-height: 2.5;
   padding: 0 3px;
 }
 
