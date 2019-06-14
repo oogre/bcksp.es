@@ -21,7 +21,10 @@ class CallToConnect extends Component {
 		if(this.hasToDisplayCallToConnect()){
 			return (
 				<div className="call-to-connect">
+					<div className="container--large">
 						<p className="call-to-connect__title"><T>extension.call.login</T></p>
+						<p className="call-to-connect__content"><T>extension.call.instruction</T></p>
+					</div>
 				</div>
 			);
 		}else{

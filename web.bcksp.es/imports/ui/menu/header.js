@@ -16,7 +16,7 @@ export default class MenuHeader extends Component {
 	render() {
 		return (
 			<header className="main-header">
-				<div className="main-header__container">
+				<div className="container--large main-header__container">
 					<h1 className="logo logo--header">
 						<a className="link--unstyled" href={FlowRouter.path("home")}>
 							<img className="logo--header__picture" src="/images/logo.svg" alt="#bcksp.es"/>

@@ -3,7 +3,7 @@
 \*------------------------------------*/
 
 .main-header {
-  padding: $size-20;
+  padding: $size-20 0;
 
   @include media-query("medium") {
     padding: $size-40 $size-60;
@@ -12,9 +12,6 @@
 
 .main-header__container {
   display: flex;
-  max-width: 1324px;
-  margin: 0 auto;
-  width: 100%;
   justify-content: space-between;
 }
 

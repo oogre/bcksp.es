@@ -4,13 +4,28 @@
 \*------------------------------------*/
 
 .call-to-connect {
-  padding: $size-10;
+  padding: $size-40 0;
   background: $primary;
+  display: none;
+
+  @include media-query("medium") {
+    display: block;
+  }
+}
+
+.call-to-connect__title,
+.call-to-connect__content {
+  margin-bottom: 0;
 }
 
 .call-to-connect__title {
   margin-bottom: 0;
-  font-size: $size-24;
+  font-size: $size-38;
   font-family: $font-title;
-  text-align: center;
+}
+
+
+.call-to-connect__content {
+  font-family: $font-body;
+  font-size: $size-22;
 }
