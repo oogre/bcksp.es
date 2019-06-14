@@ -110,6 +110,12 @@ ul {
   border: 1px solid #bdbdbd;
   width: 100%;
   line-height: 1.75;
+  padding: 0 3px;
+}
+
+.input--text:focus {
+  border-color: #000;
+  outline: 1px solid #000;
 }
 
 .error-message {
