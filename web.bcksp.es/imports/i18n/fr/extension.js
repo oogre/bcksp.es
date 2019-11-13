@@ -8,7 +8,8 @@ i18n.addTranslation('fr', {
 	extension : {
 		devmode : "DEV MODE",
 		call : {
-			login : "Identifiez-vous en clickant sur l'extension"
+			login : "Identifiez-vous en clickant sur l'extension",
+			instruction: "Cliquez sur l'icone du plugin dans votre browser toolbar pour vous identifiez et commencer votre archive."
 		},
 		visit : "visitez notre site : bcksp.es",
 		archive : {

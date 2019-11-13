@@ -3,6 +3,12 @@
   @authors Crucifix Arnaud (hello@crucifixarnaud.com)
 \*------------------------------------*/
 
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
 body,
 html {
   padding: 0;
@@ -109,7 +115,13 @@ ul {
   border-radius: 2px;
   border: 1px solid #bdbdbd;
   width: 100%;
-  line-height: 1.75;
+  line-height: 2.5;
+  padding: 0 3px;
+}
+
+.input--text:focus {
+  border-color: #000;
+  outline: 1px solid #000;
 }
 
 .error-message {
@@ -164,6 +176,10 @@ ul {
   appearance: none;
 }
 
+.button:focus {
+  outline: none;
+}
+
 .button--secondary {
   display: inline-block;
   background-color: #000;
@@ -181,7 +197,7 @@ ul {
 .button--secondary:focus:not([disabled]) {
   color: #fff;
   text-decoration: none;
-  background: #000;
+  background: #333;
 }
 
 .button--secondary:active:not([disabled]) {

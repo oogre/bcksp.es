@@ -3,14 +3,29 @@
   Define all general rules for layout conpomnent (container, etc)
 \*------------------------------------*/
 
+.container,
+.container--large {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 $size-16;
+
+}
+
 // Container, default centered container containing content
 // ---------------------
 .container {
   max-width: 942px;
-  margin: 0 auto;
-  padding: 0 $size-16;
 
   @include media-query("desktop") {
+    padding: 0;
+  }
+}
+
+// Larger version of the container
+.container--large {
+  max-width: 1324px;
+
+  @include media-query("xl") {
     padding: 0;
   }
 }

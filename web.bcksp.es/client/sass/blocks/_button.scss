@@ -22,12 +22,13 @@
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
     color: $text-color;
+    outline: none;
     text-decoration: none;
-    background: darken($color-background, 10%);
+    background: lighten($color-background, 20%);
   }
 
   &:active:not([disabled]) {
-    background: darken($color-background, 15%);
+    background: lighten($color-background, 25%);
   }
 }
 

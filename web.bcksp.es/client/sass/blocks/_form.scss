@@ -73,6 +73,7 @@
 
   &:focus {
     border-color: #000;
+    outline: 1px solid #000;
   }
 }
 
@@ -82,8 +83,128 @@
 
 // Input Radio
 // ---------------------
+// .input--radio {
+
+// }
+
+// .input--radio__input {
+//   margin-right: 1rem;
+// }
+
+
+// Input Radio
+.input--radio {
+    position: relative;
+}
+
 .input--radio__input {
-  margin-right: 1rem;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+}
+
+.input--radio__label {
+  position: relative;
+  padding-left: $size-26;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+  font-weight: $font-weight-title;
+  font-family: $font-title;
+  font-size: $size-16;
+  color: $color-body;
+}
+
+// Fake Radio Input
+.input--radio__label:before {
+  display: block;
+  content: "";
+  border-radius: 100%;
+  height: $size-18;
+  width: $size-18;
+  border: 1px solid $grey-78;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  // top: 50%;
+  // transform: translateY(-50%);
+  top: 2px;
+}
+
+
+// Fake Radio Active
+.input--radio__label:after {
+  display: block;
+  content: "";
+  border-radius: 100%;
+  height: $size-8;
+  width: $size-8;
+  background: $color-body;
+  left: 5px;
+  margin: auto;
+  position: absolute;
+  top: 7px;
+  // top: 50%;
+  // transform: translateY(-50%);
+  opacity: 0;
+}
+
+.input--radio__input:checked + .input--radio__label:before {
+  border-color: $color-body;
+}
+
+
+.input--radio__input:checked + .input--radio__label:after {
+  opacity: 1;
+}
+
+// Focus State
+.input--radio__input:focus + .input--radio__label:before {
+  background: $grey-91;
+}
+
+.input--radio__input:focus::checked + .input--radio__label:before {
+  border-color: $color-body;
+  background: $grey-91;
+}
+
+// Disabled State
+.input--radio__input:disabled + .input--radio__label {
+  color: fade-out(#000, .8);
+  cursor: not-allowed;
+}
+
+.input--radio__input:disabled + .input--radio__label:before {
+  border-color: fade-out(#000, .9);
+}
+
+// Error state
+.input--radio.error .input--radio__input + .input--radio__label:before {
+  border-color: $functional-error;
+}
+
+.input--radio.error .input--radio__input + .input--radio__label:after {
+  background: $functional-error;
+}
+
+// Variation for radio inline
+.input--radio--inline {
+  margin-bottom: $size-10;
+
+  @include media-query("medium") {
+    display: inline;
+    margin-left: $size-20;
+    margin-bottom: 0;
+
+    &:first-of-type {
+        margin-left: 0;
+    }
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+  }
 }
 
 // Toggle List
