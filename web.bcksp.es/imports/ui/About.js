@@ -2,47 +2,39 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-05-04 18:43:40
+  @Last Modified time: 2019-11-13 18:57:47
 \*----------------------------------------*/
 import Slider from "react-slick";
+import T from './../i18n/index.js';
 import AboutLong from './about/long.js';
 import React, { Component } from 'react';
 import AboutPress from './about/press.js';
 import AboutArtists from './about/artists.js';
 import YoutubeEmbed from './shared/youtubeEmbed.js';
+import GalleryKenBurns from './gallery/kenBurns.js';
 
-import T from './../i18n/index.js';
 // App component - represents the whole app
 export default class About extends Component {
 	constructor(props){
 		super(props);
+		
 	}
-
+	
 	render() {
-		var settings = {
-			dots: true,
-			infinite: true,
-			speed: 500,
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			adaptiveHeight: true,
-			autoplay : false,
-			arrows : true
-		};
-		// console.log(i18n.__("about"));
 		return (
 			<div className="page__content">
 				<div className="container">
 					<div className="page__header">
 						<h1 className="page__title"><T>about.title</T></h1>
-						<h2 className="page__subtitle"><T>about.subtitle</T></h2>
 					</div>
 					<div className="about--long">
+						<GalleryKenBurns samplePath="/images/j.vache/j.vache.[ID].jpg" idmax={73}/>
+						<div className="about__content">
 						{
 							i18n.__("about.long").map((article, k) =>(
 								<div key={k}>
 									{
-										k == 2 &&
+										k == 1 &&
 											<div className="text-block">
 												<YoutubeEmbed youtubeID="hGB58ybRoJU"/>
 											</div>
@@ -76,6 +68,7 @@ export default class About extends Component {
 								</div>
 							))
 						}
+						</div>
 					</div>
 				</div>
 

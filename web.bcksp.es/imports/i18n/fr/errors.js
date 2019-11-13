@@ -2,7 +2,7 @@
   bcksp.es - errors.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2019-05-04 18:59:05
+  @Last Modified time: 2019-06-07 16:39:49
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	errors : {
@@ -17,6 +17,7 @@ i18n.addTranslation('fr', {
 			"already-exists" : "nous connaissons déjà cet eMail",
 		},
 		password : {
+			wrong : "ce mot de passe est incorrect",
 			required : "nous avons besoin de votre mot de passe pour sécuriser votre archive",
 			"not-a-string" : "nous attendons que votre mot de passe soit du texte",
 			"min-string" : "nous attendons que votre mot de passe compte au minimum {$length} charactèrs",
@@ -38,9 +39,9 @@ i18n.addTranslation('fr', {
 			"no-match" : "nous avons besoin que l'identifiant de votre extension soit reconnu (votre id : {$deviceId})",
 		},
 		type : {
-			"not-a-function" : "nous avons besoin que cette donnée soit une fonction : '{value}'",
+			"not-a-function" : "nous avons besoin que cette donnée soit une fonction : '{$value}'",
 			"not-recognize": "nous ne comprenons pas ces informations, il semble y avoir un problème",
-			"not-a-string" : "nous avons besoin que cette donnée soit du texte : '{value}'",
+			"not-a-string" : "nous avons besoin que cette donnée soit du texte : '{$value}'",
 			"not-a-number" : "nous avons besoin que cette donnée soit un nombre",
 			"greater-than" : "{$a} est plus petit que {$b}",
 		}

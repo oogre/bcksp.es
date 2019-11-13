@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:35:17
-  @Last Modified time: 2019-03-03 13:25:36
+  @Last Modified time: 2019-05-19 12:12:49
 \*----------------------------------------*/
 import FormAdress from "./adress.js";
 import T from './../../i18n/index.js';
@@ -17,13 +17,12 @@ constructor(props){
 			adressSameForDelivery : true,
 			sentence : false,
 			formVisible: false,
+			shapes : {}
 		}
 	}
 	onSelect (data){
 		if(!_.isEmpty(data)){
-			this.setState({
-				sentence : data
-			});
+			this.setState({ sentence : data });
 		}
 	}
 	toggleDeliveryAdress(){
@@ -35,6 +34,9 @@ constructor(props){
 		this.setState({
 			formVisible: true
 		});
+	}
+	shapeHandler(shapes){
+		this.setState({ shapes: shapes });
 	}
 	render(){
 		const currentItem = i18n.createTranslator("souvenir.item.poster.form");
@@ -83,15 +85,15 @@ constructor(props){
 					{
 						!this.state.formVisible &&
 						<div>
-							<GeneratorPoster sentence={this.state.sentence}/>
+							<GeneratorPoster sentence={this.state.sentence} onShapes={this.shapeHandler.bind(this)}/>
 							<button className="button button--primary" onClick={this.showForm.bind(this)}><T>Order Poster ></T></button>
 						</div>
 					}
 					{
 						this.state.formVisible &&
 						<div className="shop-creation__validation">
-							<div className="shop-creation__validation-preview">
-								<img alt="Souvenir preview" className="shop-creation__validation-preview-img" src="" />
+							<div>
+								<GeneratorPoster sentence={this.state.sentence} shapes={this.state.shapes} disallowRegenerate={true}/>
 							</div>
 							<input type="submit" className="button button--primary" value={i18n.__("souvenir.item.poster.button")}/>
 						</div>
@@ -101,3 +103,6 @@ constructor(props){
 		);
 	}
 }
+//<div className="shop-creation__validation-preview">
+//<img alt="Souvenir preview" className="shop-creation__validation-preview-img" src="" />
+//</div>

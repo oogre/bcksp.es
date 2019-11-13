@@ -2,67 +2,85 @@
   bcksp.es - adress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:22:01
-  @Last Modified time: 2019-02-25 21:55:02
+  @Last Modified time: 2019-05-20 13:35:11
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
-
+import FixeError from './../fixe/error.js';
+import TextInput from './../shared/textInput.js';
+import { checkString } from './../../utilities/validation.js'
 export default class FormAdress extends Component {
 
 	constructor(props){
 		super(props);
 	}
-	invalidHandler(event){
-		console.log(event.target, event.type);
-	}
+	
 	render(){
 		return (
 			<div>
 				<div className="fields-row">
 					<div className="fields-column">
 						<div className="field">
-							<label htmlFor={this.props.name + ".fullname"} className="field__label">
-								<T>souvenir.delivery.form.adress.fullname.label</T>
-							</label>
-							<input id={this.props.name + ".fullname"} className="input--text" type="text" name={this.props.name + ".fullname"} required onInvalid={this.invalidHandler.bind(this)}/>
+							<TextInput 
+								name={ this.props.name + ".fullname" }
+								label={ i18n.__("souvenir.delivery.form.adress.fullname.label") }
+								type="text"
+								validators={[checkString]}
+								error={this.props.errors[this.props.name + ".fullname"]}
+							/>
 						</div>
 					</div>
 					<div className="fields-column">
 						<div className="field">
-							<label htmlFor={this.props.name + ".address.1"} className="field__label">
-								<T>souvenir.delivery.form.adress.fulladdress.label</T>
-							</label>
-							<input id={this.props.name + ".address.1"} className="input--text input--text--address" type="text" name={this.props.name + ".address.1"} required/>
-							<input className="input--text input--text--address" type="text" name={this.props.name + ".address.2"}/>
-						</div>
-					</div>
-				</div>
-				<div className="fields-row">
-					<div className="fields-column">
-						<div className="field">
-							<label htmlFor={this.props.name + ".city"} className="field__label">
-								<T>souvenir.delivery.form.adress.city.label</T>
-							</label>
-							<input id={this.props.name + ".city"} className="input--text" type="text" name={this.props.name + ".city"} required/>
-						</div>
-					</div>
-					<div className="fields-column">
-						<div className="field">
-							<label htmlFor={this.props.name + ".zip"} className="field__label">
-								<T>souvenir.delivery.form.adress.zip.label</T>
-							</label>
-							<input id={this.props.name + ".zip"} className="input--text" type="text" name={this.props.name + ".zip"} required/>
+							<TextInput 
+								name={ this.props.name + ".address.1" }
+								label={ i18n.__("souvenir.delivery.form.adress.fulladdress.label") }
+								type="text"
+								validators={[checkString]}
+							/>
+							<TextInput 
+								name={ this.props.name + ".address.2" }
+								type="text"
+								error={this.props.errors[this.props.name + ".address.2"]}
+							/>
 						</div>
 					</div>
 				</div>
 				<div className="fields-row">
 					<div className="fields-column">
 						<div className="field">
-							<label htmlFor={this.props.name + ".country"} className="field__label">
-								<T>souvenir.delivery.form.adress.country.label</T>
-							</label>
-							<input id={this.props.name + ".country"} className="input--text" type="text" name={this.props.name + ".country"} required/>
+							<TextInput 
+								name={ this.props.name + ".city" }
+								label={ i18n.__("souvenir.delivery.form.adress.city.label") }
+								type="text"
+								validators={[checkString]}
+								error={this.props.errors[this.props.name + ".city"]}
+							/>
+						</div>
+					</div>
+					<div className="fields-column">
+						<div className="field">
+							<TextInput 
+								name={ this.props.name + ".zip" }
+								label={ i18n.__("souvenir.delivery.form.adress.zip.label") }
+								type="text"
+								validators={[checkString]}
+								error={this.props.errors[this.props.name + ".zip"]}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="fields-row">
+					<div className="fields-column">
+						<div className="field">
+							<TextInput 
+								name={ this.props.name + ".country" }
+								label={ i18n.__("souvenir.delivery.form.adress.country.label") }
+								type="text"
+								validators={[checkString]}
+								error={this.props.errors[this.props.name + ".country"]}
+							/>
 						</div>
 					</div>
 				</div>

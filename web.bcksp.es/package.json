@@ -7,6 +7,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
     "bcrypt": "^3.0.2",
+    "bezier-easing": "^2.1.0",
     "bowser": "^2.0.0-beta.3",
     "caret-pos": "https://github.com/oogre/caret-pos/tarball/79f830900cb69c43de8cebf7b8c9868fdd1d8d2f",
     "crypto-js": "^3.1.9-1",
@@ -15,6 +16,7 @@
     "file-saver": "^2.0.1",
     "fs-extra": "^7.0.1",
     "htmlencode": "0.0.4",
+    "kenburns": "^2.0.3",
     "meteor-node-stubs": "^0.3.2",
     "moment": "^2.22.1",
     "mutation-observer": "^1.0.3",

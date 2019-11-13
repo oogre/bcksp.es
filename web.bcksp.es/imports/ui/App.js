@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2019-03-27 15:47:19
+  @Last Modified time: 2019-11-12 18:41:07
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -36,7 +36,6 @@ class App extends Component {
 						</div>
 				}
 				<LiveStream type="home" onShare={this.onShare.bind(this)}/>
-
 				{
 					!this.props.isConnected &&
 					<div className="about-parallax">

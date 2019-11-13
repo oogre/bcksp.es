@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Tooltip from './../shared/tooltip.js';
 import { log } from './../../utilities/log.js';
 import ButtonShare from './../button/share.js';
+import { mobileAndTabletcheck } from './../../utilities/ui.js';;
 
 // LiveStream component
 export default class LiveFrame extends Component {
@@ -16,8 +17,11 @@ export default class LiveFrame extends Component {
 		};
 		this.handleKey = this.handleKey.bind(this);
 	}
+	isContentEditable(){
+		return !mobileAndTabletcheck();
+	}
 	hideShareButton(){
-		return false;
+		//return false;
 		if(this.cancelHideShareButton === true)return;
 		this.hideShareButtonTimer = Meteor.setTimeout(()=>{
 			this.setState({
@@ -63,6 +67,7 @@ export default class LiveFrame extends Component {
 	}
 	
 	handleKey(event){
+
 		if(	   event.keyCode == 27 // ESC
 			&& this.state.fullscreen
 		){
@@ -122,6 +127,7 @@ export default class LiveFrame extends Component {
 					this.props.fullscreenAvailable!==false &&
 						<a 	href={FlowRouter.path(this.state.fullscreen ? "home" : "livefeed")} 
 							className="liveframe__fullscreen button--unstyled" 
+							title={i18n.__("archive.fullscreen.tooltip")}
 						>
 							<span className="sr-only">
 								<T>archive.fullscreen.button</T>
@@ -132,6 +138,7 @@ export default class LiveFrame extends Component {
 									<path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/>
 								</g>
 							</svg>
+							
 						</a>
 				}
 				{
@@ -143,7 +150,7 @@ export default class LiveFrame extends Component {
 						/>
 				}
 				<div className="liveframe__stream stream bcksp-es-disabled"
-					contentEditable={true}
+					contentEditable={ this.isContentEditable() }
 					suppressContentEditableWarning={true}
 					spellCheck={false}
 				>

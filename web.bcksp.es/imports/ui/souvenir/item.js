@@ -2,7 +2,7 @@
   bcksp.es - download.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-26 16:22:51
-  @Last Modified time: 2019-03-03 14:10:13
+  @Last Modified time: 2019-05-20 13:29:10
 \*----------------------------------------*/
 
 import saveAs from 'file-saver';
@@ -26,7 +26,8 @@ class SouvenirItem extends Component {
 			error : false,
 			success : false,
 			loading : false,
-			displayForm : false
+			displayForm : false,
+			errors : {}
 		};
 	}
 
@@ -78,11 +79,18 @@ class SouvenirItem extends Component {
 					loading : false,
 				});
 				if(error){
-					console.log(error);
 					this.setState({
 						error : getMessageFromError(error),
 						success : false,
 					});
+					if(_.isArray(error.details) && !_.isEmpty(error.details)){
+						this.setState({
+							errors : 	error.details.reduce((mem, {details}) => {
+											mem[details.origin] = details.value;
+											return mem;
+										}, {})
+						});
+					}
 					reject();
 					return;
 				}
@@ -222,7 +230,7 @@ class SouvenirItem extends Component {
 						{
 							!this.state.success &&
 							this.state.displayForm == "deliveryBook" &&
-								<FormBook onSubmit={this.action.bind(this)}/>
+								<FormBook onSubmit={this.action.bind(this)} errors={this.state.errors}/>
 						}
 						{
 							!this.state.success &&

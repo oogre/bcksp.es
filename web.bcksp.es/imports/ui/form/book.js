@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:35:17
-  @Last Modified time: 2019-02-27 13:17:22
+  @Last Modified time: 2019-05-20 13:30:21
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
@@ -53,7 +53,7 @@ constructor(props){
 								<label className="field__label">
 									<T>souvenir.delivery.label</T>
 								</label>
-								<FormAdress name="book.delivery"/>
+								<FormAdress name="book.delivery" errors={this.props.errors}/>
 							</div>
 						</div>
 					</div>

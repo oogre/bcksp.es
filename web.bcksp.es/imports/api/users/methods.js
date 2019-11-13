@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2019-04-07 17:43:18
+  @Last Modified time: 2019-06-10 22:38:52
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -10,7 +10,9 @@ import { config } from './../../startup/config.js';
 import { 
 	checkValidDevice,
 	checkUserLoggedIn,
-	checkValidEmail
+	checkValidEmail,
+	checkValidPassword,
+	checkString
 } from './../../utilities/validation.js';
 import T from './../../i18n/index.js';
 
@@ -88,5 +90,55 @@ export const UpdateEmail = new ValidatedMethod({
 			success : true,
 			message : i18n.__("methods.user.updateEmail.success")
 		};
+	}
+});
+
+export const CreateUser = new ValidatedMethod({
+	name: 'customCreateUser',
+	validate({email, password, device}) {
+		checkValidDevice(device);
+		checkValidEmail(email, false);
+		checkValidPassword(password, password);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run({email, password}) {
+		if (this.isSimulation)return;
+		return Accounts.CreateUser({
+			email, 
+			password
+		});
+	}
+});
+
+export const Login = new ValidatedMethod({
+	name: 'customLogin',
+	validate({email, password}) {
+		checkValidDevice(device);
+		checkValidEmail(email, true);
+		checkValidPassword(password);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run({email, password}) {
+		if (this.isSimulation)return;
+
+		return new Promise((resolve, reject)=>{
+			let user = Meteor.users.findOne({"emails.address" : email})
+      		let result = Accounts._checkPassword(user, password);
+      		if(result.error){
+      			reject(result.error);
+      		}else{
+      			let stampedLoginToken = Accounts._generateStampedLoginToken()
+      			Accounts._insertLoginToken(user._id, stampedLoginToken);
+      			resolve(stampedLoginToken.token);
+      		}
+		});
 	}
 });

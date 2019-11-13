@@ -29,8 +29,9 @@
   background: $grey-94;
   transition: .2s opacity $easeInOutCubic;
 
-  &:hover,
-  &:focus {
+  &:hover
+  //, &:focus /* DISABLED BY VINCE */ 
+  {
     opacity: .94;
   }
 }

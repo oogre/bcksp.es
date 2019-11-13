@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-05-05 16:41:45
+  @Last Modified time: 2019-06-10 20:12:14
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { htmlDecode } from'htmlencode';

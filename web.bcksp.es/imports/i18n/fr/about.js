@@ -2,41 +2,76 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2019-05-04 19:31:15
+  @Last Modified time: 2019-11-13 19:11:17
 \*----------------------------------------*/
-i18n.addTranslation('en', {
-	about : {
-		title : 	"the deletion archivist manifesto"
-	}
-});
+
 i18n.addTranslation('fr', {
 	about : {
 					//"The deletion <br/>archivist manifesto",
-		title : 	"manifest de l'archiviste des textes effacés",
-		subtitle :  "le projet",
-		short : 	"<p>Lorsque l’on supprime du texte quand nous écrivons, une part de nous "+
-					"s'envole avec les mots perdus.</p>"+
+		title : 	"manifest de l'archiviste des ratures",
+		short : 	"<p>Les outils numériques ont fait émerger dans la pratique de l'écriture "+
+					"de multiples erreurs, hésitations, reformulations et corrections. "+
+					"Celles-çi, bien que plus nombreuses qu'à l'époque de la plume, "+
+					"se font aussi plus discrète. Lorsque nous restons face à la scène, rien ne dépasse "+
+					"la performance est sans accroche, lisse et sans sueur.</p>"+
 					""+
-					"<p>«bcksp.es» fournit un outils permettant d'attraper ces poussières de pensée et les archive. "+
-					"La vocation de «bcksp.es» est d'éditer votre archive de texte supprimé sous forme de livre intime.</p>"+
+					"<p><h6><i>Lorsque je supprime du texte, une part de moi s'envole avec les mots perdus.</i></h6><p>"+
+					"<ul>"+
+					"<li><strong>«bcksp.es»</strong> permet d'archiver ces poussières de pensée dans un livre intime.</li>"+
 					""+
-					"<p>Nous tirons notre nom de la touche «Backspace» du clavier informatique. "+
+					"<li><strong>«bcksp.es»</strong> est une porte vers un espace intérieur où l'erreur et le doute "+
+					"sont vêtu des aprêts d'une poésie brutaliste mais non moins dénuée de sens.</li>"+
+					""+
+					"<li><strong>«bcksp.es»</strong> organise votre archive dans l'ordre dans laquelle elle s'écrit, erreur après erreur.</li>"+
+					""+
+					"<li><strong>«bcksp.es»</strong> considére ses utilisateurs comme auteurs, "+
+					"en partageant les bénéfices généré par l'exploitation de leur archive.</li>"+
+					""+
+					"<li><strong>«bcksp.es»</strong> chiffre vos données sur tout le chemin et au-delà.</li>"+
+					""+
+					"<li><strong>«bcksp.es»</strong> vous propose d'éditer le livre de votre archive.</li>"+
+					""+
+					"<li><strong>«bcksp.es»</strong> tire son nom de la touche «Backspace» du clavier informatique. "+
 					"Celle-ci est située au-dessus de la touche «Enter». Elle est utilisée "+
 					"pour effacer les derniers caractères saisis, ceux situés à gauche "+
-					"du curseur d’écriture. C'est elle qui déclanche la mécanique d'archivage de «bcksp.es»</p>"+
-					"<a href=\"{$about}\">en savoir plus</a></p>",
+					"du curseur d’écriture. C'est elle qui déclanche la mécanique d'archivage de «bcksp.es»</li>"+
+					"</ul>"+
+					"<a href=\"{$about}\">pour en savoir plus</a>",
 		long : [
 			{
 				content : [{
-					text:	"Le souhait de bcksp.es est de mettre en lumière "+
-							"une part intime et obscure de notre humanité. "+
-							"Il nous paraît que l'archive et la lecture "+
-							"de nos suppressions offre un point de vue singulier "+ 
+					text:	"<p>Jusque l'invention des caratères typographiques mobiles "+
+							"et du clavier, l'écriture était exclusivement une activité de dessin. "+
+							"Celle-ci ayant comme but de représenter la pensée des hommes et des femmes. "+
+							"Au travers de cette technique passait quelque chose de plus que les conceptes "+
+							"véhiculés par le vocabulaire, la grammaire et toutes ces choses que l'on peu appelé langue."+
+							"</p>"+
+							"<p>Par le biai d'outils techniques, nous avons fait comme si le schéma de Claude Shannon "+
+							"était capable de synthétiser la communication écrite entre humain. "+
+							"De ce fait, nous nous sommes fait déposséder de nos ratures. "+
+							"Nous avons perdu le droit d'imaginer ce que l'autre/auteur voulait "+
+							"nous dire avant de se rétracter en gommant, en barrant, en recouvrant, en arrachant "+
+							"ce mystérieux mot. Nous n'avons plus la liberté d'entrer dans son esprit pour "+
+							"y découvrir ce mot masqué, avec plus ou moins d'adresse"+
+							"</p>"+
+							"<p>De plus, ces objets techniques ont fait émerger dans la pratique de l'écriture "+
+							"de multiples erreurs, hésitations, reformulations et corrections. "+
+							"Celles-çi, bien que plus nombreuses qu'à l'époque de la plume, "+
+							"se sont aussi faites radicalement plus discrète. Lorsque nous restons face à la scène, "+
+							"rien ne dépasse, la performance est sans accroche, lisse et sans sueur. "+
+							"Mais lorsqu'il s'agit de rédiger sur un clavier le doute, les cocquilles et l'auto-sensure "+
+							"dirigent nos doigts sans tarder vers cette fameuse touche «Backspace»."+
+							"</p>"+
+							"<p>Le souhait de «bcksp.es» est de mettre en lumière "+
+							"une part devenue intime et obscure de notre humanité. "+
+							"Il nous paraît que l'archivage et la lecture "+
+							"de nos ratures offre un point de vue singulier "+ 
 							"sur la mécanique cérébrale travaillant pour former "+
-							"nos communications écrites. "+
-							"L'aventure «bcksp.es» est une porte vers un espace "+
+							"la communication écrite."+
+							"</p>"+
+							"<p>«Bcksp.es» ouvre une porte vers un espace "+
 							"intérieur où l'erreur et le doute sont vêtu des aprêts "+
-							"d'une poésie brutaliste mais non moins dénuée de sens."
+							"d'une poésie brutaliste mais non moins dénuée de sens.</p>"
 				}],
 			}, {
 				title:{
@@ -44,12 +79,13 @@ i18n.addTranslation('fr', {
 					id : "edition"
 				},
 				content : [{
-					text: 	"Nous avons conçu «bcksp.es» pour être un dispositif "+
-							"d'édition de livres uniques. Le contenu de ces livres "+
-							"est constitué du texte que vous supprimez après l'avoir écrit. "+
-							"Le processus de rédaction de ces livres est rendu possible "+
-							"par l'installation volontaire d'un logiciel de capture "+
-							"du texte supprimé."
+					text: 	"<p>«Bcksp.es» est concu pour être un dispositif "+
+							"d'édition de livres intimes. Le contenu de ces livres "+
+							"est constitué du texte que vous supprimez durant "+
+							"votre navigation sur internet. Votre archive compile "+
+							"dans l'ordre d'arrivée chaque caratères que vous supprimez "+
+							"en appuyant sur la touche backspace."+
+							"</p>"
 				},{
 					subtitle:"votre archive",
 					text :  "La constitution de votre archive est un processus lent, "+
@@ -65,6 +101,7 @@ i18n.addTranslation('fr', {
 							"ce qui est nécéssaire pour la production d'un livre de 128 pages "+
 							"au format poche. Lorsque votre archive atteint cette quantitée "+
 							"Le processus d'impression à la demande s'active sur la page «souvenir». "+
+							"Nous vous tiendrons informé de cet événement par un eMail. "+
 							"Vous avez alors la possibilité de commander l'impression de votre livre. "
 					}
 				],
@@ -77,7 +114,7 @@ i18n.addTranslation('fr', {
 					text: 	"Nous vous garrantissons que dans notre projet, vous n'êtes pas "+
 							"le produit. Bcksp.es à l'ambition de vous considérer comme auteur. "+
 							"De notre point de vue, il va de soi que aucune donné stockée "+
-							"sur notre service ne peut être publié sans votre accord explicite. "+
+							"sur notre service ne peut être vendue sans votre accord explicite. "+
 							"Il ne sera fait aucun usage de vos informations afin de réaliser des "+
 							"profits à votre encontre. Nous croyons que les paradigmes qui font "+
 							"vivre les gros du web sont inéquitable et donc périmé."+
@@ -89,14 +126,10 @@ i18n.addTranslation('fr', {
 					subtitle:"une histoire sensible",
 					text :  "Il s’agit aussi d’un processus dévoilant des questions sensibles "+
 							"relatives au «Big Data» et à la protection des données. "+
-							"Nous ne prétendons pas apporter de solutions aux questions "+
-							"relative à cette thématique. Nous faisons juste la proposition "+
-							"d'un mode de fonctionnement basé sur les principes de paternité "+
-							"et de cession des oeuvres d'art."
-				},{
-					text :  "Par ce projet, nous souhaitons livrer aux yeux du plus grand nombre, "+
-							"une représentation de ce à quoi peut ressembler le flux de données"+
-							"et de bruits que constitue ce fameux «Big Data» monstre informe de notre temps."
+							"Nous ne prétendons pas apporter de solutions à ces questions. "+
+							"Tout du moins, «Bcksp.es» propose de prendre un point de vue "+
+							"sur un de vos flux de données privées. Cela afin de montrer, de rendre sensible "+
+							"donc pensable ce monstre informe mal perçue, angoissant ou simplement ignorée."
 				}]
 			}, { 
 				title : {
