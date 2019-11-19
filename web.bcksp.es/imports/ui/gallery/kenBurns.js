@@ -2,8 +2,9 @@
   bcksp.es - kenBurns.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:24:50
-  @Last Modified time: 2019-11-13 18:16:31
+  @Last Modified time: 2019-11-19 19:19:31
 \*----------------------------------------*/
+import raf from 'raf';//requestAnimationFrame
 import ReactDom from 'react-dom';
 import rectCrop from "rect-crop";
 import bezierEasing from "bezier-easing";
@@ -33,31 +34,54 @@ export default class GalleryKenBurns extends Component {
 			'imageID' : this.getRandomID()
 		};
 	}
-	getRandomID(){
-		return randomCeil(this.props.idmin, this.props.idmax);
+	componentDidMount(){
+		this.isPlaying = true;
+		this.kenBurns = new KenBurnsDOM(ReactDom.findDOMNode(this.refs.KenBurnsParent));
 	}
-	
+	componentWillUnmount(){
+		this.isPlaying = false;
+	}
+	animate(source, fromCrop, toCrop, duration){
+		return new Promise((resolve, reject) => {
+				let start;
+				const render = (now: number) => {
+					if(!this.isPlaying)return resolve(this.isPlaying);
+					if (!start) start = now;
+					var p = Math.min((now - start) / duration, 1);
+					if (p < 1) {
+			  			raf(render);
+					} else {
+						return resolve(this.isPlaying);
+					}
+					this.kenBurns.animateStep(source, fromCrop, toCrop, p);
+				};
+				raf(render);
+			});
+	}
+
 	loaded(event){
-		var kenBurns = new KenBurnsDOM(ReactDom.findDOMNode(this.refs.KenBurnsParent));
 		let oZoom = this.props.zoom;
 		let oPos = [this.props.pos.x, this.props.pos.y];
 		let dZoom = randomAround(oZoom, this.props.zoomDivergeance);
 		let dPos = [randomAround(oPos[0], this.props.posDivergeance), randomAround(oPos[1], this.props.posDivergeance)];
-		kenBurns.animate(
+		this.animate(
 			ReactDom.findDOMNode(this.refs.KenBurnsImg),
 			rectCrop(oZoom, oPos),
 			rectCrop(dZoom, dPos),
-			this.props.timer,
-			bezierEasing(0, 0, 1, 1)
-		);
-		Meteor.setTimeout(()=>{
-			this.setState({
-				'imageID' : this.getRandomID()
-			})
-		}, this.props.timer);
+			this.props.timer
+		).then(hasToLoadAnotherOne=>{
+			if(hasToLoadAnotherOne){
+				this.setState({
+					'imageID' : this.getRandomID()
+				})	
+			}
+		});
 	}
 	getImageURI(id){
 		return this.props.samplePath.replace("[ID]", id)
+	}
+	getRandomID(){
+		return randomCeil(this.props.idmin, this.props.idmax);
 	}
 	render() {
 		return (
