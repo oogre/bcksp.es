@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2019-11-19 17:17:13
+  @Last Modified time: 2019-11-19 18:26:02
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', {
@@ -98,8 +98,8 @@ i18n.addTranslation('fr', {
 							"C'est alors que les parties les plus belles et sensibles "+
 							"de votre archive se constitueront."
 				},{
-					text :  "La taille maximum de votre archive est de 131.072 charactères "+
-							"ce qui est nécéssaire pour la production d'un livre de 128 pages "+
+					text :  "La taille maximum de votre archive est de {$bookMaxChar} charactères "+
+							"ce qui est nécéssaire pour la production d'un livre de {$bookMaxPage} pages "+
 							"au format poche. Lorsque votre archive atteint cette quantitée "+
 							"Le processus d'impression à la demande s'active sur la page «souvenir». "+
 							"Nous vous tiendrons informé de cet événement par un eMail. "+

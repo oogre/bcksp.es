@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-11-13 18:57:47
+  @Last Modified time: 2019-11-19 18:34:03
 \*----------------------------------------*/
 import Slider from "react-slick";
 import T from './../i18n/index.js';
@@ -10,6 +10,7 @@ import AboutLong from './about/long.js';
 import React, { Component } from 'react';
 import AboutPress from './about/press.js';
 import AboutArtists from './about/artists.js';
+import { config } from './../startup/config.js'
 import YoutubeEmbed from './shared/youtubeEmbed.js';
 import GalleryKenBurns from './gallery/kenBurns.js';
 
@@ -44,22 +45,30 @@ export default class About extends Component {
 											article.title &&
 												<a id={article.title.id} href={"#"+article.title.id} className="text-block__link--title">
 													<h3 className="text-block__title">
-														{ article.title.value }
+														{article.title.value}
 													</h3>
 												</a>
 										}
 										{
-											article.content.map((subarticle, k) => (
-												<span key={k}>
+											article.content.map((subarticle, k2) => (
+												<span key={k2}>
 													{
 														subarticle.subtitle &&
 															<h2 className="text-block__subtitle">
-																{ subarticle.subtitle }
+																{subarticle.subtitle}
 															</h2>
 													}
 													{
 														subarticle.text &&
-															<p dangerouslySetInnerHTML={{__html:subarticle.text}}></p>
+															<p dangerouslySetInnerHTML={
+																{
+																	__html:i18n.__("about.long."+k+".content."+k2+".text", {
+																		bookMaxChar:config.book.getMaxChar(), 
+																		bookMaxPage:config.book.page.count,
+																		download:FlowRouter.path("item", {type : "download"})
+																	})
+																}
+															}></p>
 													}
 												</span>
 											))
