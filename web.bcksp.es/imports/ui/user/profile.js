@@ -2,7 +2,7 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2019-04-21 18:25:42
+  @Last Modified time: 2019-11-19 17:51:40
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -97,7 +97,7 @@ class UserProfile extends Component {
 		if(!this.props.isSettingsReady)return;
 		return (
 			<div>
-					<h2><T>userprofile.publishToPublicFeed</T></h2>
+					<h2><T>userprofile.publishToPublicFeed.title</T></h2>
 					<ul className="toggle-list">
 						<li>
 							<span className="input-wrapper--inline">
@@ -110,6 +110,11 @@ class UserProfile extends Component {
 							</span>
 							<span className="input-wrapper--inline">
 								 :
+							</span>
+						</li>
+						<li>
+							<span className="input-wrapper--inline">
+								<T maxCounter={config.archives.public.longBuffer.maxMaxLen}>userprofile.publishToPublicFeed.desc</T>
 							</span>
 						</li>
 					</ul>
@@ -126,14 +131,14 @@ class UserProfile extends Component {
 					:
 						<T>userprofile.blacklist.title</T>
 				}</h2>
-				<ul className="toggle-list">{
-					_.isEmpty(this.props.settings.blacklist) ?
-						<li>
-							<span className="input-wrapper--inline">
-								<T>userprofile.noBlacklist.desc</T>
-							</span>
-						</li>
-					:
+				<ul className="toggle-list">
+					<li>
+						<span className="input-wrapper--inline">
+							<T>userprofile.noBlacklist.desc</T>
+						</span>
+					</li>
+					{
+						!_.isEmpty(this.props.settings.blacklist) &&
 						this.props.settings.blacklist.map((url, k) => (
 							<li key={k}>
 								<span className="input-wrapper--inline">
@@ -149,7 +154,8 @@ class UserProfile extends Component {
 								</span>
 							</li>
 						))
-				}</ul>
+					}
+				</ul>
 			</div>
 		);
 	}
@@ -159,6 +165,11 @@ class UserProfile extends Component {
 			<div>
 				<h2><T>userprofile.blindfield.class.title</T></h2>
 				<ul className="toggle-list">
+					<li>
+						<span className="input-wrapper--inline">
+							<T>userprofile.blindfield.class.desc</T>
+						</span>
+					</li>
 					{
 						this.props.settings.blindfield.class.map((c, k) => (
 							<li key={k}>
@@ -191,6 +202,11 @@ class UserProfile extends Component {
 			<div>
 				<h2><T>userprofile.blindfield.type.title</T></h2>
 				<ul className="toggle-list">
+					<li>
+						<span className="input-wrapper--inline">
+							<T>userprofile.blindfield.type.desc</T>
+						</span>
+					</li>
 					{
 						config.settings.blindfield.available.types.map((type, k) => (
 							<li className="field" key={k}>

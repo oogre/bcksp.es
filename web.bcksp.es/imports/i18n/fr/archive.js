@@ -2,7 +2,7 @@
   bcksp.es - archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:31:44
-  @Last Modified time: 2019-11-12 17:46:27
+  @Last Modified time: 2019-11-19 17:20:17
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	archive : {
@@ -27,7 +27,8 @@ i18n.addTranslation('fr', {
 			button : "archive publique"
 		},
 		private : {
-			tooltip : "<strong>En direct</strong><br/>Votre archive de texte supprimé",
+			tooltip : 	"<strong> 🔴 FLUX DIRECT 🔴 </strong><br/>\
+						Votre archive de texte supprimé",
 			button : "archive privée"
 		},
 		fullscreen : {

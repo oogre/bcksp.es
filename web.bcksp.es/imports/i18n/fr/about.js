@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2019-11-13 19:11:17
+  @Last Modified time: 2019-11-19 17:17:13
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', {
@@ -17,10 +17,15 @@ i18n.addTranslation('fr', {
 					""+
 					"<p><h6><i>Lorsque je supprime du texte, une part de moi s'envole avec les mots perdus.</i></h6><p>"+
 					"<ul>"+
-					"<li><strong>«bcksp.es»</strong> permet d'archiver ces poussières de pensée dans un livre intime.</li>"+
+					"<li><strong>«bcksp.es»</strong> tire son nom de la touche «Backspace» du clavier informatique. "+
+					"Celle-ci est située au-dessus de la touche «Enter». Elle est utilisée "+
+					"pour effacer les derniers caractères saisis, ceux situés à gauche "+
+					"du curseur d’écriture. C'est elle qui déclanche la mécanique d'archivage de «bcksp.es»</li>"+
+					""+
+					"<li><strong>«bcksp.es»</strong> archive les mots que vous supprimez en appuyant sur la touche «Backspace».</li>"+
 					""+
 					"<li><strong>«bcksp.es»</strong> est une porte vers un espace intérieur où l'erreur et le doute "+
-					"sont vêtu des aprêts d'une poésie brutaliste mais non moins dénuée de sens.</li>"+
+					"sont vêtu des aprêts d'une poésie brutaliste non moins dénuée de sens.</li>"+
 					""+
 					"<li><strong>«bcksp.es»</strong> organise votre archive dans l'ordre dans laquelle elle s'écrit, erreur après erreur.</li>"+
 					""+
@@ -31,12 +36,8 @@ i18n.addTranslation('fr', {
 					""+
 					"<li><strong>«bcksp.es»</strong> vous propose d'éditer le livre de votre archive.</li>"+
 					""+
-					"<li><strong>«bcksp.es»</strong> tire son nom de la touche «Backspace» du clavier informatique. "+
-					"Celle-ci est située au-dessus de la touche «Enter». Elle est utilisée "+
-					"pour effacer les derniers caractères saisis, ceux situés à gauche "+
-					"du curseur d’écriture. C'est elle qui déclanche la mécanique d'archivage de «bcksp.es»</li>"+
 					"</ul>"+
-					"<a href=\"{$about}\">pour en savoir plus</a>",
+					"<a href=\"/about\">pour en savoir plus</a>",
 		long : [
 			{
 				content : [{
@@ -137,21 +138,21 @@ i18n.addTranslation('fr', {
 					id : "security"
 				},
 				content : [{
-					text : 	"Nous garantissons que tout est fait en notre pouvoir "+
-							"pour sécurisé vos données de manière optimal."+
+					text : 	"Nous garantissons que tout est fait "+
+							"pour sécurisé vos données de manière optimal. "+
 							"Tous les algorithmes nécéssaire à la capture, "+
-							"au transfert et au stockage de vos données sont Open Source."+
+							"au transfert et au stockage de vos données sont Open Source. "+
 							"De ce fait, nos activité sont donc potentiellement soumis "+
 							"à un audit permanant de toutes personnes désireuses de s'assurer "+
-							"de notre sérieux. Si une faille devait remontée via ce canal, "+
+							"de notre sérieux. Si une faille devait être signalée, "+
 							"soyez certains qu'elle sera corrigée dans les plus brefs délais."
 				},{
-					subtitle:"crypté sur tout le chemin et au-delà",
-					text :  "Toutes les données gérée par bcksp.es sont transférées de façon cryptées "+
-							"via les protocolss HTTPS et WSS. Sur nos serveurs, les archives "+
-							"sont cryptées au moyen de la librairie <a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>, "+
-							"de l'algorithme <a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES</a> "+
-							"et d'une clef sécurisée unique pour chaque utilisateur. "+
+					subtitle:"les données sont chiffrées sur tout leur chemin et au-delà",
+					text :  "Toutes les données gérée par bcksp.es sont transférées de façon chiffré "+
+							"via les protocols HTTPS et WSS. Sur nos serveurs, les archives "+
+							"sont chiffrées par l'implémentation de l'algorithme <a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES</a>, "+
+							"de la librairie <a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>. "+
+							"De plus, chaque archive est sécurisée par une clef unique. "+
 							"Ce triple verou vous garantit une des meilleurs sécurité accessible "+
 							"à notre connaissance."
 					}
@@ -162,11 +163,22 @@ i18n.addTranslation('fr', {
 					id : "licence"
 				},
 				content : [{
-					subtitle:"open source",
-					text: 	"L'application web et des extensions sont open source, "+
-							"vous pouvez trouver l'entièreté de nos algorithmes "+
-							"sur <a target=\"_blank\" href=\"https://github.com/oogre/bcksp.es\">github</a>. "+
-							"Ce code source est protégé par la licence <a target=\"_blank\" href=\"https://creativecommons.org/licenses/by-sa/4.0/deed.fr\">CC-BY-SA 4.0</a>."
+					subtitle:"Licence",
+					text: 	"Le code source de l'application web et des extensions est sous licence «creative commons» <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\" rel=\"nofollow\"><img src=\"https://camo.githubusercontent.com/6dcc300ab83c479af6c1c1f004b6f9dad77e7736/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d434325323042592d2d5341253230342e302d6c69676874677265792e737667\" alt=\"License: CC BY-SA 4.0\" data-canonical-src=\"https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg\" style=\"max-width:100%;\"></a>."+
+							"<p>Cela signifie que vous êtes autorisé à :</br>"+
+    						"<ul>"+
+    						"<li><strong>Partager</strong> — copier, distribuer et communiquer le matériel par tous moyens et sous tous formats</li>"+
+							"<li><strong>Adapter</strong> — remixer, transformer et créer à partir du matériel pour toute utilisation, y compris commerciale.</li>"+
+							"</ul></p>"+
+    						"<p>L'Offrant ne peut retirer les autorisations concédées par la licence tant que vous appliquez les termes de cette licence.</br>"+
+							"Selon les conditions suivantes :</br>"+
+    						"<ul>"+
+    						"<li><strong>Attribution</strong> — Vous devez créditer l'œuvre, intégrer un lien vers la licence et indiquer si des modifications ont été effectuées à l'œuvre. Vous devez indiquer ces informations par tous les moyens raisonnables, sans toutefois suggérer que l'Offrant vous soutient ou soutient la façon dont vous avez utilisé son œuvre.</li>"+
+    						"<li><strong>Partage dans les Mêmes Conditions</strong> — Dans le cas où vous effectuez un remix, que vous transformez, ou créez à partir du matériel composant l'œuvre originale, vous devez diffuser l'œuvre modifiée dans les même conditions, c'est à dire avec la même licence avec laquelle l'œuvre originale a été diffusée.</li>"+
+    						"<li><strong>Pas de restrictions complémentaires</strong> — Vous n'êtes pas autorisé à appliquer des conditions légales ou des mesures techniques qui restreindraient légalement autrui à utiliser l'œuvre dans les conditions décrites par la licence."+
+    						"</ul></p>"+
+    						"Vous pouvez trouver le code source de «bcksp.es» "+
+							"sur notre page <a target=\"_blank\" href=\"https://github.com/oogre/bcksp.es\">github</a>."
 				},{
 					subtitle:"les livres, les posters, ...",
 					text: 	"Toutes les éditions produites par «bcksp.es» ont un status standard d'œuvre d'art."+
@@ -213,7 +225,7 @@ i18n.addTranslation('fr', {
 				},{
 					text :  "Notre projet bcksp.es ne génère de bénéfice qu'au travers de la transformation "+
 							"de votre archive en objet d'art, nous sommes donc financé par invitation payante "+
-							"à exposer ces oeuvres et par la ventes de celle-ci en tant qu'objet d'art."
+							"à exposer ces œuvres et par la ventes de celle-ci en tant qu'objet d'art."
 				},{
 					subtitle:"subsides et donnations",
 					text :  "De plus bcksp.es peut-être financé également au travers de dont ou de subsides. "+

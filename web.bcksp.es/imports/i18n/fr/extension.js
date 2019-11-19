@@ -2,14 +2,14 @@
   bcksp.es - extension.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:38:50
-  @Last Modified time: 2019-06-05 11:47:55
+  @Last Modified time: 2019-11-19 17:18:09
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	extension : {
 		devmode : "DEV MODE",
 		call : {
 			login : "Identifiez-vous en clickant sur l'extension",
-			instruction: "Cliquez sur l'icone du plugin dans votre browser toolbar pour vous identifiez et commencer votre archive."
+			instruction: "Cliquez sur l'icone <img rel=\"icon\" src=\"/images/favicons/favicon-16x16.png\"> dans votre browser toolbar pour vous identifiez et commencer votre archive."
 		},
 		visit : "visitez notre site : bcksp.es",
 		archive : {

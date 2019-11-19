@@ -2,7 +2,7 @@
   bcksp.es - howto.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:34:18
-  @Last Modified time: 2019-11-12 19:06:22
+  @Last Modified time: 2019-11-19 17:04:16
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	howto:{
@@ -15,7 +15,7 @@ i18n.addTranslation('fr', {
 			},
 			connect : {
 				title : "identifiez-vous",
-				desc : "Clickez sur l'icone 🔙. Une adresse email et un mot de passe suffisent à vous identifier.",
+				desc : "Clickez sur l'icone <img rel=\"icon\" src=\"/images/favicons/favicon-16x16.png\">. Une adresse email et un mot de passe suffisent à vous identifier.",
 			},
 			continue : {
 				title : "reprennez votre vie normale",
