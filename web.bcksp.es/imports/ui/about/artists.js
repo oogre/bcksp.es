@@ -2,7 +2,7 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2019-03-24 17:31:25
+  @Last Modified time: 2019-11-26 14:57:54
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -22,7 +22,11 @@ export default class AboutArtists extends Component {
 
 					</div>
 					<div className="artists__column">
-						<h3 className="artists__title"><T>artists.title</T></h3>
+						<a id={i18n.__("artists.title")} href={"#"+i18n.__("artists.title")} className="text-block__link--title">
+							<h3 className="text-block__title artists__title">
+								<T>artists.title</T>
+							</h3>
+						</a>
 						<p className="artists__intro"><T>artists.intro</T></p>
 						<ul className="artists-list">
 							{

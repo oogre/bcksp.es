@@ -1,20 +1,21 @@
 /*----------------------------------------*\
-  web.bitRepublic - error.js
+  bcksp.es - success.js
   @author Evrard Vincent (vincent@ogre.be)
-  @Date:   2018-05-20 23:44:23
-  @Last Modified time: 2019-12-19 22:23:41
+  @Date:   2019-12-19 21:22:35
+  @Last Modified time: 2019-12-19 21:22:50
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
-
-
-export default class MessageError extends Component {
+export default class MessageSuccess extends Component {
 	constructor(props){
 		super(props);
 	}
+	renderError(message){
+
+	}
 	render() {
 		return (
-			<div className="message error-message">
+			<div className="message success-message">
 				{ this.props.messages }
 			</div>
 		);

@@ -2,13 +2,13 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2019-11-19 18:26:02
+  @Last Modified time: 2019-11-26 15:20:16
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', {
 	about : {
 					//"The deletion <br/>archivist manifesto",
-		title : 	"manifest de l'archiviste des ratures",
+		title : 	"manifest<br/>de l'archiviste <br/>des ratures",
 		short : 	"<p>Les outils numériques ont fait émerger dans la pratique de l'écriture "+
 					"de multiples erreurs, hésitations, reformulations et corrections. "+
 					"Celles-çi, bien que plus nombreuses qu'à l'époque de la plume, "+
@@ -147,7 +147,7 @@ i18n.addTranslation('fr', {
 							"de notre sérieux. Si une faille devait être signalée, "+
 							"soyez certains qu'elle sera corrigée dans les plus brefs délais."
 				},{
-					subtitle:"les données sont chiffrées sur tout leur chemin et au-delà",
+					subtitle:"chiffrement sur <br/> toute la ligne",
 					text :  "Toutes les données gérée par bcksp.es sont transférées de façon chiffré "+
 							"via les protocols HTTPS et WSS. Sur nos serveurs, les archives "+
 							"sont chiffrées par l'implémentation de l'algorithme <a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES</a>, "+
@@ -155,8 +155,9 @@ i18n.addTranslation('fr', {
 							"De plus, chaque archive est sécurisée par une clef unique. "+
 							"Ce triple verou vous garantit une des meilleurs sécurité accessible "+
 							"à notre connaissance."
-					}
-				],
+				},{
+					text :  "Avez-vous réfléchit aux conditions de conservation de votre livre d'archive à votre domicile?"
+				}],
 			}, {
 				title:{
 					value : "droit d'auteur",
@@ -181,10 +182,10 @@ i18n.addTranslation('fr', {
 							"sur notre page <a target=\"_blank\" href=\"https://github.com/oogre/bcksp.es\">github</a>."
 				},{
 					subtitle:"les livres, les posters, ...",
-					text: 	"Toutes les éditions produites par «bcksp.es» ont un status standard d'œuvre d'art."+
-							"Toutes les éditions réalisées par «bcksp.es» ont comme co-auteur "+
+					text: 	"Toutes les éditions produites par «bcksp.es» ont un status d'œuvre d'art. "+
+							"Toutes les éditions réalisées par «bcksp.es» ont pour co-auteur "+
 							"Vincent Evrard (auteur de «bcksp.es») et l'utilisateur ayant produit le contenu imprimé. "+
-							"Les auteurs/ayants droits seront toujours mentionné sur l'objet."
+							"Les noms des auteurs sont mentionné sur l'objet si ils le souhaitent."
 					
 				},{
 					subtitle:"vos données",

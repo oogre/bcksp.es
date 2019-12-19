@@ -2,7 +2,7 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2019-05-04 18:59:47
+  @Last Modified time: 2019-11-26 16:09:32
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	souvenir : {
@@ -49,6 +49,9 @@ i18n.addTranslation('fr', {
 								"sans aucun frais, ceci dans les meilleurs "+
 								"conditions possible.",
 				price : "gratuit",
+				button : {
+					create : "téléchargez votre archive"
+				},
 				button : "télécharger",
 				file : {
 					name : "archive.bcksp.es",
@@ -62,7 +65,11 @@ i18n.addTranslation('fr', {
 								En participant à cette étape-ci que nous allons publier votre archive. \
 								Cette publication ne sera imprimée qu'à deux exemplaires, un pour vous, un pour nous.\
 								Le contenu de votre archive sera supprimé de nos serveurs après imprimession.",
-				button : "passer commande",
+				button : {
+					create : "créez votre livre",
+					continue : "valider ce livre",
+					buy : "commander votre livre"
+				},
 				price : "à partir de ... €",
 				form : {
 					author : {
@@ -84,10 +91,17 @@ i18n.addTranslation('fr', {
 
 			poster : {
 				title : "créer un poster",
-				img : "/images/logo-animated.gif",
-				description : "",
-				button : "passer commande",
-				price : "...€",
+				img : "/images/souvenirs/poster.jpg",
+				description : "Soutenez notre démarche en achetant un poster personalisé. "+
+							  "Il vous suffit de selectionner le texte dans votre archive "+
+							  "pour le voir apparaitre sur votre poster. "+
+							  "Il sera imprimé sur un papier premium format 594x841mm.",
+				button : {
+					create : "créez votre poster",
+					continue : "valider ce poster",
+					buy : "commander votre poster"
+				},
+				price : "10€",
 				text : 	"L'effondrement, la divination,<br/>"+
 						"cet instant fragile et ténu qui<br/>"+
 						"en lui seul révèle tout de quelqu'un.<br/>"+
@@ -111,10 +125,21 @@ i18n.addTranslation('fr', {
 			},
 
 			contact : {
-				title : "demande particulière",
-				img : "/images/logo-animated.gif",
+				title : "Dites nous bonjour",
+				img : "/images/souvenirs/contact.1.jpg",
 				description : "",
-				button : "nous contacter"
+				button : "envoyer",
+				form : {
+					email : {
+						label : "Votre adresse email"
+					},
+					subject : {
+						label : "Sujet de votre message"
+					},
+					message : {
+						label : "Votre message"
+					}
+				}
 			},
 			
 			almanach : {

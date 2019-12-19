@@ -2,7 +2,7 @@
   bcksp.es - download.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-26 16:22:51
-  @Last Modified time: 2019-05-20 13:29:10
+  @Last Modified time: 2019-11-26 16:05:12
 \*----------------------------------------*/
 
 import saveAs from 'file-saver';
@@ -26,9 +26,17 @@ class SouvenirItem extends Component {
 			error : false,
 			success : false,
 			loading : false,
-			displayForm : false,
+			displayForm : this.getFormToDisplay(),
 			errors : {}
 		};
+	}
+
+	getFormToDisplay(){
+		if(FlowRouter.current().params.type == "contact"){
+			return "contact";
+		} else {
+			return false;
+		}
 	}
 
 	async downloadArchive(){
@@ -191,9 +199,9 @@ class SouvenirItem extends Component {
 			case "poster" :
 				this.setState({ displayForm : "deliveryPoster" });
 			break;
-			case "contact" :
-				this.setState({ displayForm : "contact" });
-			break;
+			//case "contact" :
+			//	this.setState({ displayForm : "contact" });
+			//break;
 		}
 		return false;
 	}
@@ -223,7 +231,7 @@ class SouvenirItem extends Component {
 									<p className="shop__example-description"><T2>description</T2></p>
 									<p className="shop__example-price"><T2>price</T2></p>
 									<button className="button button--primary" onClick={this.firstAction.bind(this)}>
-										<T2>button</T2>
+										<T2>button.create</T2>
 									</button>
 								</div>
 						}

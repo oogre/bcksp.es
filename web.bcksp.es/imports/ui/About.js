@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-11-19 18:34:03
+  @Last Modified time: 2019-11-26 15:08:42
 \*----------------------------------------*/
 import Slider from "react-slick";
 import T from './../i18n/index.js';
@@ -55,7 +55,11 @@ export default class About extends Component {
 													{
 														subarticle.subtitle &&
 															<h2 className="text-block__subtitle">
-																{subarticle.subtitle}
+																<p dangerouslySetInnerHTML={
+																	{
+																		__html:i18n.__("about.long."+k+".content."+k2+".subtitle")
+																	}
+																}></p>
 															</h2>
 													}
 													{

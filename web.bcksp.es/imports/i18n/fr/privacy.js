@@ -2,7 +2,7 @@
   bcksp.es - privacy.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:38:13
-  @Last Modified time: 2019-11-12 19:25:17
+  @Last Modified time: 2019-11-26 14:17:29
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	privacy : {
@@ -17,6 +17,7 @@ i18n.addTranslation('fr', {
 					"Chacun est donc libre, entre autre de lire les algorithmes nécéssaires à faire vivre ce projet. "+
 					"Cela signifie aussi que nous sommes soumis à un audit permanant venant de la communauté. "+
 					"Soyez assuré que toute faille de sécurité ou manquement à nos engagements sera documenté et corrigé.<br>"+
-					"Pour en savoir plus sur <a href=\"{$about}\">nos engagements</a></p>"
+					"Pour en savoir plus sur <a href=\"{$privacy}\">nos engagements</a></p>",
+		link :      "pour en savoir plus"
 	}
 });

@@ -2,7 +2,7 @@
   dev - enrollment.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-20 13:29:36
-  @Last Modified time: 2019-04-19 14:17:46
+  @Last Modified time: 2019-12-19 23:11:23
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
@@ -10,8 +10,7 @@ import ReactDom from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 // https://reactcommunity.org/react-modal/
 import ReactModal from 'react-modal';
-
-import MessageError from '../message/error.js';
+import MessageManager from "./../message/manager.js";
 import FixeWait from '../fixe/wait.js';
 
 import T from './../../i18n/index.js';
@@ -27,18 +26,18 @@ export default class UserPasswordSetup extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			'error' : false,
 			'is-loading' : false,
-			'has-success' : false
+			status : ""
 		};
 		this.closeCallBack = null;
+		this.messageManager = React.createRef();
 	}
 	handleSetPwd (event){
 		event.preventDefault();
+		this.messageManager.current.setError(false);
+		this.messageManager.current.setSuccess(false);
 		this.setState({
-			'error' : false,
-			'is-loading' : true,
-			'has-success' : false
+			'is-loading' : true
 		});
 
 		asyncIt(
@@ -48,9 +47,7 @@ export default class UserPasswordSetup extends Component {
 		)
 		.then(password => resetPassword(this.props.token, password))
 		.then(() => {
-			this.setState({
-				'has-success' : true
-			});
+			this.messageManager.current.setSuccess(true);
 
 			if (_.isFunction(this.props.onComplete)) {
 				alert( i18n.__("forms.resetPassword.success"));
@@ -58,16 +55,7 @@ export default class UserPasswordSetup extends Component {
 			}
 		})
 		.catch( error => {
-			if(_.isArray(error.details)){
-				this.setState({
-					error : error.details.map(e=>e.details.value).join(", ")
-				});	
-			}else{
-				this.setState({
-					error : error.reason || error.message
-				});	
-			}
-			
+			this.messageManager.current.setError(true, error);
 		})
 		.finally(()=>{
 			this.setState({
@@ -78,6 +66,13 @@ export default class UserPasswordSetup extends Component {
 		
 		return false;
 	}
+	
+	handleStatusChange(e){
+		this.setState({
+			status : e
+		});
+	}
+
 	render() {
 		const modalStyle = {
 			overlay : {
@@ -142,19 +137,13 @@ export default class UserPasswordSetup extends Component {
 										className={
 											"button--primary--fw " +
 											(this.state['is-loading'] ? "loading " : "") +
-											(this.state['has-success'] ? "success " : "") +
-											(this.state['has-error'] ? "error " : "")
+											this.state.status
 										}
 										type="submit"
 										value={i18n.__("forms.resetPassword.submit")}
 									/>
 								</div>
-								{ 
-									this.state["error"] && 
-										<MessageError 
-											messages={this.state["error"]} 
-										/>
-								}
+								<MessageManager ref={this.messageManager} onChange={this.handleStatusChange.bind(this)}/>
 								{
 									this.state['is-loading'] &&
 										<FixeWait />

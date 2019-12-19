@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:35:17
-  @Last Modified time: 2019-05-19 12:12:49
+  @Last Modified time: 2019-11-26 16:04:15
 \*----------------------------------------*/
 import FormAdress from "./adress.js";
 import T from './../../i18n/index.js';
@@ -86,7 +86,7 @@ constructor(props){
 						!this.state.formVisible &&
 						<div>
 							<GeneratorPoster sentence={this.state.sentence} onShapes={this.shapeHandler.bind(this)}/>
-							<button className="button button--primary" onClick={this.showForm.bind(this)}><T>Order Poster ></T></button>
+							<button className="button button--primary" onClick={this.showForm.bind(this)}><T>souvenir.item.poster.button.continue</T></button>
 						</div>
 					}
 					{
@@ -95,7 +95,7 @@ constructor(props){
 							<div>
 								<GeneratorPoster sentence={this.state.sentence} shapes={this.state.shapes} disallowRegenerate={true}/>
 							</div>
-							<input type="submit" className="button button--primary" value={i18n.__("souvenir.item.poster.button")}/>
+							<input type="submit" className="button button--primary" value={i18n.__("souvenir.item.poster.button.buy")}/>
 						</div>
 					}
 				</div>

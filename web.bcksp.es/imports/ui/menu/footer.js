@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2019-06-10 22:42:39
+  @Last Modified time: 2019-11-26 14:58:28
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -49,12 +49,12 @@ class MenuFooter extends Component {
 										</a>
 									</li>
 									<li className="menu__item">
-										<a className="menu__item-link" href={FlowRouter.path("contact")}>
+										<a className="menu__item-link" href={FlowRouter.path("item", {type : "contact"})}>
 											<T>menus.contact</T>
 										</a>
 									</li>
 									<li className="menu__item">
-										<a className="menu__item-link" href={FlowRouter.path("authors")}>
+										<a className="menu__item-link" href={FlowRouter.path("about")+"#auteurs"}>
 											<T>menus.authors</T>
 										</a>
 									</li>

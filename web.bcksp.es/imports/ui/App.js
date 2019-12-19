@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2019-11-12 18:41:07
+  @Last Modified time: 2019-11-26 13:52:49
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';

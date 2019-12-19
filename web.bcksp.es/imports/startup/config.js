@@ -2,9 +2,12 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-05-04 19:36:28
+  @Last Modified time: 2019-11-26 16:55:45
 \*----------------------------------------*/
 export const config = {
+	souvenir : {
+		almanach : false
+	},
 	book : {
 		page : {
 			count : 128,

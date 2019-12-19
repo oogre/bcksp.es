@@ -2,7 +2,7 @@
   bcksp.es - Souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2019-03-27 15:33:12
+  @Last Modified time: 2019-11-26 16:55:29
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - About.js
@@ -34,7 +34,9 @@ class Souvenir extends Component {
 		if(!this.props.archive || !this.props.isPrivateReady)return 0 ;
 		return config.book.getMaxChar() - this.props.archive.count;
 	}
-
+	changePicture(){
+		console.log("YO");
+	}
 	render() {
 		return (
 			<div className="page__content">
@@ -86,21 +88,23 @@ class Souvenir extends Component {
 						<li className="souvenir__item">
 							<a className="souvenir__link" href={FlowRouter.path("item", {type : "contact"})}>
 								<div className="wrapper">
-									<img className="souvenir__link-image" src="#" alt=""/>
+									<img className="souvenir__link-image" src="/images/souvenirs/contact.1.jpg" alt=""/>
 								</div>
 								<span className="souvenir__link-title"><T>souvenir.item.contact.title</T></span>
 							</a>
 						</li>
-
-						<li className="souvenir__item">
-							<a className="souvenir__link" href={FlowRouter.path("item", {type : "almanach"})}>
-								<div className="wrapper">
-									<img className="souvenir__link-image" src="#" alt=""/>
-								</div>
-								<span className="souvenir__link-title"><T>souvenir.item.almanach.title</T></span>
-								<span className="souvenir__link-badge"><T>souvenir.item.almanach.price</T></span>
-							</a>
-						</li>
+						{
+							config.souvenir.almanach &&
+							<li className="souvenir__item">
+								<a className="souvenir__link" href={FlowRouter.path("item", {type : "almanach"})}>
+									<div className="wrapper">
+										<img className="souvenir__link-image" src="#" alt=""/>
+									</div>
+									<span className="souvenir__link-title"><T>souvenir.item.almanach.title</T></span>
+									<span className="souvenir__link-badge"><T>souvenir.item.almanach.price</T></span>
+								</a>
+							</li>
+						}
 					</ul>
 				</div>
 			</div>

@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-04-06 13:31:24
+  @Last Modified time: 2019-11-26 14:49:35
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -91,7 +91,12 @@ FlowRouter.route( '/souvenir/:type', {
 	},
 	subscriptions( params, queryParams ) {
 		
-	}
+	},
+	triggersEnter: [(context, redirect)=>{
+		if(context.params.type == "download" && !Meteor.userId()){
+			redirect(FlowRouter.path("souvenir"));
+		}
+	}]
 });
 
 FlowRouter.route( '/login/:token', {
@@ -110,7 +115,7 @@ let loginRoutes = FlowRouter.group({
 	name : 'loginRoutes',
 	triggersEnter: [(context, redirect)=>{
 		if(!Meteor.userId()){
-			redirect("/");
+			redirect(FlowRouter.path("home"));
 		}
 	}]
 });
