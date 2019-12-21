@@ -16,8 +16,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { PublicArchive } from './../../api/archives/archives.js';
 import { PrivateArchive } from './../../api/archives/archives.js';
 
-
-
 // LiveStream component
 class LiveStream extends Component {
 	constructor(props){
@@ -51,6 +49,8 @@ class LiveStream extends Component {
 	}
 	componentWillUnmount(){
 		streamer.stop("publicBackspaces");
+		this.props.privateHandle && this.props.privateHandle.stop();
+		this.props.publicHandle && this.props.publicHandle.stop();
 	}
 	componentDidMount(){
 		streamer.on('publicBackspaces', message =>{
@@ -88,7 +88,6 @@ class LiveStream extends Component {
 
 	render() {
 		let fullScreen = FlowRouter.getRouteName() == "livefeed";
-
 		return (
 		  <div className={ `livestream-container ${(this.props.type ? " livestream-container--" + this.props.type : "")} ${(fullScreen ? " fullscreen" : "")} ${(this.props.isConnected ? " livestream-container--connected" : "")}` }>
 				<div className={ `livestream ${(this.props.type ? "livestream--" + this.props.type : "") }` }>
@@ -136,8 +135,10 @@ export default withTracker(self => {
 	return {
 		isConnected : !!Meteor.userId(),
 		isPublicReady  : publicHandle && publicHandle.ready(),
+		publicHandle : publicHandle,
 		publicArchive  : PublicArchive.findOne({}),
 		isPrivateReady : privateHandle && privateHandle.ready(),
+		privateHandle : privateHandle,
 		privateArchive : PrivateArchive.find({}, {sort : {_id : -1}}).fetch()
 	};
 })(LiveStream);

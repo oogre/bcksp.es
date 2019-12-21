@@ -2,11 +2,12 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-11-26 14:49:35
+  @Last Modified time: 2019-12-21 01:14:13
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
   import App from '../imports/ui/App.js';
+  import Stat from '../imports/ui/Stat.js';
   import About from '../imports/ui/About.js';
   import {setupView} from '../imports/utilities/ui.js';
   import Souvenir from '../imports/ui/souvenir/list.js';
@@ -19,6 +20,18 @@
 
 const DEVELOPPMENT = true;
 
+FlowRouter.wait();
+Tracker.autorun(() => {
+    const subscribtion = Meteor.subscribe('getRoles');    
+    const shouldInitializeRouter =
+        subscribtion.ready() &&
+        Roles.subscription.ready() &&
+        !FlowRouter._initialized; // eslint-disable-line no-underscore-dangle
+    if (shouldInitializeRouter) {
+        FlowRouter.initialize();
+    }
+});
+
 if(DEVELOPPMENT){
 	FlowRouter.route( '/', {
 		name: 'home',
@@ -27,7 +40,6 @@ if(DEVELOPPMENT){
 			setupView();
 		},
 		subscriptions( params, queryParams ) {
-			
 		}
 	});
 }else{
@@ -135,6 +147,30 @@ loginRoutes.route("/profile", {
 	},
 	subscriptions( params, queryParams ) {
 		this.register('settings.private', Meteor.subscribe('settings.private'));
+	}
+});
+
+
+
+let adminRoutes = FlowRouter.group({
+	name : 'adminRoutes',
+	triggersEnter: [(context, redirect)=>{
+		if(!Meteor.userId() ||!Roles.userIsInRole(Meteor.userId(),['admin'])) {
+			redirect(FlowRouter.path("home"));
+		}
+	}]
+});
+
+
+
+adminRoutes.route("/stat", {
+	name: "stat",
+	action( params ) {
+		render(<TemplateFull><Stat/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		this.register('getInfo', Meteor.subscribe('getInfo'));
 	}
 });
 

@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2019-11-12 17:22:29
+  @Last Modified time: 2019-12-20 20:55:23
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	online : {
@@ -112,13 +112,14 @@ i18n.addTranslation('fr', {
 			"un livre intime pour vos mot^s effacés",
 			"un livre intime pour vos mots^ effacés",
 			"un livre intime pour vos mots ^effacés",
+			"2000",
 			"un livre intime pour vos mots^effacés",
 			"un livre intime pour vos mot^effacés",
 			"un livre intime pour vos mo^effacés",
 			"un livre intime pour vos m^effacés",
 			"un livre intime pour vos ^effacés",
 			"un livre intime pour vos^effacés",
-			"2000",
+			"1000",
 			"un livre intime pour vos ^ceffacés",
 			"un livre intime pour vos c^effacés",
 			"un livre intime pour vos ca^effacés",

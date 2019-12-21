@@ -2,7 +2,7 @@
   bcksp.es - Souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2019-11-26 16:55:29
+  @Last Modified time: 2019-12-21 00:13:09
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - About.js
@@ -24,7 +24,9 @@ class Souvenir extends Component {
 	constructor(props){
 		super(props);
 	}
-
+	componentWillUnmount(){
+		this.props.handle && this.props.handle.stop();
+	}
 	getPerCent(){
 		if(!this.props.archive || !this.props.isPrivateReady)return 0 ;
 		return (this.props.archive.count / config.book.getMaxChar());
@@ -116,6 +118,7 @@ export default withTracker(self => {
 	return {
 		isConnected : Meteor.userId(),
 		isPrivateReady : handle && handle.ready(),
+		handle : handle,
 		archive : Archives.findOne({}, {fields : {count : 1}})
 	};
 })(Souvenir);

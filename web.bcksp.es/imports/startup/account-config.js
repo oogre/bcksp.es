@@ -2,7 +2,7 @@
   bitRepublic - account-config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-01-30 01:13:47
-  @Last Modified time: 2019-04-07 21:26:05
+  @Last Modified time: 2019-12-20 20:20:27
 \*----------------------------------------*/
 import React from 'react';
 import T from './../i18n/index.js';
@@ -11,6 +11,7 @@ import { config } from './config.js';
 import { Accounts } from 'meteor/accounts-base';
 import { getMail } from './../ui/template/mail.js';
 import UserPasswordSetup from './../ui/user/passwordSetup.js'
+import { getMessageFromError } from './../utilities/ui.js';
 
 
 
@@ -34,13 +35,17 @@ if(Meteor.isServer){
 		}
 	};
 }else{
+	delete Accounts._accountsCallbacks['verify-email'];
 	Accounts.onEmailVerificationLink((token, done) => {
-		if(!Meteor.user()){
-			alert("need to be connected")
-		}else{
-			done();	
-		}
+		Accounts.verifyEmail(token, function (error) {
+			if (error) {
+				console.log(getMessageFromError(error));
+			}else{
+				done();	
+			}
+		});
 	});
+	delete Accounts._accountsCallbacks["reset-password"];
 	Accounts.onResetPasswordLink((token, done) => {
 		Meteor.setTimeout(() => {
 			const onComplete = () => {

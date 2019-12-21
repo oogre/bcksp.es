@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2019-05-05 16:14:28
+  @Last Modified time: 2019-12-21 00:13:13
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -16,6 +16,10 @@ import { Archives } from './../../api/archives/archives.js';
 class ArchiveCounter extends Component {
 	constructor(props){
 		super(props);
+	}
+
+	componentWillUnmount(){
+		this.props.handle && this.props.handle.stop();
 	}
 	getCharCount(){
 		if(!this.props.archive || !this.props.isReady)return 0 ;
@@ -76,6 +80,7 @@ export default withTracker(self => {
 	let handle = Meteor.userId() && Meteor.subscribe('archive.private.counter');
 	return {
 		isReady : 	handle && handle.ready() && Meteor.userId(),
+		handle : 	handle,
 		archive : 	Archives.findOne({
 						type : config.archives.private.type
 					})

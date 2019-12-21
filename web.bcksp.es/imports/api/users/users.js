@@ -2,7 +2,7 @@
   web.bitRepublic - users.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:17:11
-  @Last Modified time: 2019-01-03 15:32:42
+  @Last Modified time: 2019-12-20 22:14:47
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -33,6 +33,16 @@ if(Meteor.isServer){
 			});
 
 			log("Archive "+id+" is attached to user : " + archive.owner);
+		}
+	});
+	Meteor.users.find({}).observeChanges({
+		added(id, user) {
+			let emails = user.emails;
+			let first = _.chain(emails).filter(email=>!email.verified).first().value();
+			if((!user.services.email) || (user.services.email.verificationTokens.length == 0 && first)){
+				Accounts.sendVerificationEmail(id);
+				log("Verification email is send");
+			}
 		}
 	});
 }

@@ -2,7 +2,7 @@
   dev - enrollment.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-20 13:29:36
-  @Last Modified time: 2019-12-19 23:11:23
+  @Last Modified time: 2019-12-20 21:03:07
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
@@ -47,8 +47,8 @@ export default class UserPasswordSetup extends Component {
 		)
 		.then(password => resetPassword(this.props.token, password))
 		.then(() => {
+			this.setState({'is-loading' : false });
 			this.messageManager.current.setSuccess(true);
-
 			if (_.isFunction(this.props.onComplete)) {
 				alert( i18n.__("forms.resetPassword.success"));
 				this.props.onComplete();
@@ -56,14 +56,8 @@ export default class UserPasswordSetup extends Component {
 		})
 		.catch( error => {
 			this.messageManager.current.setError(true, error);
+			this.setState({'is-loading' : false });
 		})
-		.finally(()=>{
-			this.setState({
-				'is-loading' : false,
-			});
-		});
-		
-		
 		return false;
 	}
 	

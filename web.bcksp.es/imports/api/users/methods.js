@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2019-06-10 22:38:52
+  @Last Modified time: 2019-12-20 20:46:35
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
@@ -56,14 +56,20 @@ export const ResetPassword = new ValidatedMethod({
 	},
 	run({email}) {
 		if (this.isSimulation)return;
+		
 		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
+		let emails = user.emails;
+		let last = _.chain(emails).filter(email=>email.verified).last().value();
+		let first = _.chain(emails).filter(email=>!email.verified).first().value();
+		
+		Accounts.sendResetPasswordEmail(user._id, (last || first).address);
+		
 		Meteor.users.update({_id : user._id}, {
 			$unset : {
 				"services.accessTokens.tokens" : null,
 				"services.resume.loginTokens" : null
 			}
 		});
-		Accounts.sendResetPasswordEmail(user._id);
 		return {
 			success : true,
 			message : i18n.__("methods.user.resetPassword.success")

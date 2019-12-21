@@ -2,7 +2,7 @@
   bcksp.es - selfwritten.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 16:45:02
-  @Last Modified time: 2019-03-27 15:32:47
+  @Last Modified time: 2019-12-20 20:51:17
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import {lerp} from './../../utilities/math.js';
@@ -17,6 +17,9 @@ export default class SelfWritten extends Component {
 	}
 	componentDidMount(){
 		this.updateTxt();
+	}
+	componentWillUnmount(){
+		Meteor.clearInterval(this.timer);
 	}
 
 	updateTxt(){
