@@ -2,43 +2,15 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2019-11-26 16:09:32
+  @Last Modified time: 2019-12-21 14:20:05
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	souvenir : {
 		title : 	"Rendez-vous à la boutique",
-		title2 : 	"matérialiser votre mémoire",
+		title2 : 	"matérialiser vos ratures",
 		subtitle : 	"la boutique",
 		short : 	"Faites vivre ce projet, en faisant produire via notre boutique \
 					tout sorte de goodies affichants vos meilleurs mots supprimés.",
-		delivery : {
-			label : "adresse de livraison",
-			form : {
-				email : {
-					label : "adress email"
-				},
-				adress : {
-					fullname : {
-						label : "nom complet"
-					},
-					fulladdress : {
-						label : "adresse et numéros"
-					},
-					city : {
-						label : "ville"
-					},
-					state : {
-						label : "état"
-					},
-					zip : {
-						label : "code postal"
-					},
-					country : {
-						label : "pays"
-					}
-				}
-			}
-		},
 		item : {
 			download : {
 				title : "télécharger mon archive",
@@ -125,7 +97,7 @@ i18n.addTranslation('fr', {
 			},
 
 			contact : {
-				title : "Dites nous bonjour",
+				title : "Une demande particulière?",
 				img : "/images/souvenirs/contact.1.jpg",
 				description : "",
 				button : "envoyer",
@@ -148,6 +120,34 @@ i18n.addTranslation('fr', {
 				description : "",
 				button : "passer commande",
 				price : "...€"
+			}
+		},
+		delivery : {
+			label : "adresse de livraison",
+			form : {
+				email : {
+					label : "adress email"
+				},
+				adress : {
+					fullname : {
+						label : "nom complet"
+					},
+					fulladdress : {
+						label : "adresse et numéros"
+					},
+					city : {
+						label : "ville"
+					},
+					state : {
+						label : "état"
+					},
+					zip : {
+						label : "code postal"
+					},
+					country : {
+						label : "pays"
+					}
+				}
 			}
 		}
 	}

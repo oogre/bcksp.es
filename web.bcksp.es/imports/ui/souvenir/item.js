@@ -2,7 +2,7 @@
   bcksp.es - download.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-26 16:22:51
-  @Last Modified time: 2019-11-26 16:05:12
+  @Last Modified time: 2019-12-21 14:19:52
 \*----------------------------------------*/
 
 import saveAs from 'file-saver';

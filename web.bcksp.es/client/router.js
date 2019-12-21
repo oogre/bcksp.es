@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-12-21 01:14:13
+  @Last Modified time: 2019-12-21 14:51:45
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -13,7 +13,7 @@
   import Souvenir from '../imports/ui/souvenir/list.js';
   import LiveStream from '../imports/ui/archive/LiveStream.js';
   import UserProfile from '../imports/ui/user/profile.js';
-  import SouvenirItem from '../imports/ui/souvenir/item.js';
+  import SouvenirItemDownLoadDescription from '../imports/ui/souvenir/items/download/description.js';
   import TemplateFull from '../imports/ui/template/full.js';
   import TemplateMini from '../imports/ui/template/mini.js';
   
@@ -94,7 +94,7 @@ FlowRouter.route( '/souvenir', {
 		
 	}
 });
-
+/*
 FlowRouter.route( '/souvenir/:type', {
 	name: 'item',
 	action( params ) {
@@ -110,6 +110,7 @@ FlowRouter.route( '/souvenir/:type', {
 		}
 	}]
 });
+*/
 
 FlowRouter.route( '/login/:token', {
 	name: 'login',
@@ -150,6 +151,18 @@ loginRoutes.route("/profile", {
 	}
 });
 
+
+
+loginRoutes.route( '/souvenir/download', {
+	name: 'downloadArchive',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemDownLoadDescription/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
 
 
 let adminRoutes = FlowRouter.group({
