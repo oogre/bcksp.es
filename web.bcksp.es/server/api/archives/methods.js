@@ -2,23 +2,23 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-06-10 20:12:14
+  @Last Modified time: 2020-01-09 14:23:06
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
-import { htmlDecode } from'htmlencode';
-import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { Archives } from './../../../imports/api/archives/archives.js';
-import { Settings } from './../../../imports/api/settings/settings.js';
-import { config } from './../../../imports/startup/config.js';
-import { streamer } from './../../../imports/api/streamer.js';
+
 import { 
 	checkString,
 	checkUserLoggedIn,
 	checkGreaterThan
 } from './../../../imports/utilities/validation.js';
+import * as ArchiveTools from './utilities.archive.js';
 import { log } from './../../../imports/utilities/log.js';
+import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
+import { config } from './../../../imports/startup/config.js';
+import { Archives } from './../../../imports/api/archives/archives.js';
+import { Settings } from './../../../imports/api/settings/settings.js';
 
-import * as ArchiveTools from '../../utilities.archive.js';
+
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
@@ -34,20 +34,8 @@ export const ArchiveAdd = new ValidatedMethod({
 	run({ text }) {
 		this.unblock();
 		if(Meteor.isServer){
-			text = text.replace(/&nbsp;/g, " ");
-			text = text.replace(/\n/g, " ");
-			text = text.replace(/\t/g, " ");
-			text = htmlDecode(text);
-			text = text+" ";
+			text = ArchiveTools.cleanInput(text);
 			
-			let myArchive = Archives.findOne({
-				type : config.archives.private.type,
-				owner : this.userId
-			}, {
-				field : {
-					_id : 1
-				}
-			});
 			let mySettings = Settings.findOne({
 				owner : this.userId
 			}, {
@@ -55,59 +43,20 @@ export const ArchiveAdd = new ValidatedMethod({
 					publishToPublicFeed : 1
 				}
 			});
-			let publicArchive = Archives.findOne({
-				type : config.archives.public.type
-			}, {
-				field : {
-					_id : 1
+
+			ArchiveTools.publishToPrivateArchive(text)
+			.then(()=>{
+				if(mySettings.publishToPublicFeed){
+					ArchiveTools.publishToPublicArchive(text);
 				}
-			});
-			ArchiveTools.append(myArchive._id, text)
-			.then(()=>{
-				Archives.update({
-					_id : myArchive._id
-				},{
-					$inc : {
-						count : text.length
-					},
-					$set : {
-						updatedAt : new Date()
-					}
-				});
-			})
-			.then(()=>{
-				if(!mySettings.publishToPublicFeed){
-					log("publish to public feed cancelled by user's settings");
-				}
-			})
-			.then(async ()=>{
-				if(!mySettings.publishToPublicFeed)return;
-				let longBuffer = await ArchiveTools.readAsync(publicArchive._id);
-				longBuffer = text + longBuffer;
-				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxMaxLen);
-				return ArchiveTools.writeAsync(publicArchive._id, longBuffer)
-			})
-			.then(()=>{
-				Archives.update({
-					_id : publicArchive._id
-				}, {
-					$inc : {
-						count : text.length
-					},
-					$set : {
-						updatedAt : new Date()
-					}
-				});
-			})
-			.then(()=>{
-				if(!mySettings.publishToPublicFeed)return;
-				streamer.emit('publicBackspaces', {content : text});
+				ArchiveTools.incrementPublicArchiveCounter(text.length);
 			})
 			.catch(err=>console.log(err));
 		}
 		return "YES";
 	}
 });
+
 
 export const ArchiveDownload = new ValidatedMethod({
 	name: 'Archives.methods.download',
@@ -167,27 +116,7 @@ export const ArchiveEdit = new ValidatedMethod({
 	run({ text, startAt, stopAt  }) {
 		this.unblock();
 		if(Meteor.isServer){
-			let myArchive = Archives.findOne({
-				type : config.archives.private.type,
-				owner : this.userId
-			}, {
-				field : {
-					_id : 1
-				}
-			});
-			ArchiveTools.splice(myArchive._id, text, startAt, stopAt)
-			.then(data=>{
-				Archives.update({
-					_id : myArchive._id
-				}, {
-					$inc : {
-						count : -(stopAt - startAt), 
-					},
-					$set : {
-						updatedAt : new Date()
-					}
-				});
-			})
+			unpublishToPrivateArchive(text, startAt, stopAt)
 			.catch(err=>console.log(err));
 		}
 	}

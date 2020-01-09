@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-11-26 16:55:45
+  @Last Modified time: 2020-01-09 17:11:42
 \*----------------------------------------*/
 export const config = {
 	souvenir : {
@@ -39,7 +39,10 @@ export const config = {
 		firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
 		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
 		"acr-chrome" : "fnkkmpbdnhbapbmbcpdfenolnbkbplob",
-		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb"
+		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb",
+		config : {
+			pingInterval : 10 * 60 * 1000
+		}
 	},
 	archives : {
 		public : {

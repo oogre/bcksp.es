@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2019-06-10 21:58:34
+  @Last Modified time: 2020-01-09 20:34:44
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -38,6 +38,7 @@ Data.on("loggedStatus", loggedIn => {
 		.then(tab => tabsUpdate({ url : config.getLogoutUrl() }))
 		.catch(() => tabsCreate({ url : config.getLogoutUrl() }))
 		.finally(() => sendMessageToTab("logout", null, {}).catch(()=>{}));
+		Data.setState({ pingStatus : false });
 	}else{
 		AsteroidHelper.call("Users.methods.login.token")
 		.then(res => {
@@ -46,8 +47,27 @@ Data.on("loggedStatus", loggedIn => {
 			.catch(() => tabsCreate({ url : config.getLoginUrl(res.data) }))
 			.finally(()=> sendMessageToTab("login", null, {}).catch(()=>{}));
 		}).catch(err => warn("no way to auto connect to the website"));
+		Data.setState({ pingStatus : true });
 	}
 	setDefaultIcon(loggedIn);
+});
+
+Data.on("pingStatus", (value, name) => {	
+	if(Data.state.pingID){
+		Data.setState({ pingID : clearInterval(Data.state.pingID) });	
+	}
+	if(value){
+		AsteroidHelper.call("Users.methods.ping");
+		Data.setState({ 
+			pingID : setInterval(()=> AsteroidHelper.call("Users.methods.ping"), config.pingInterval)
+		});
+	}
+});
+
+Data.on("pingInterval", (value, name) => {
+	config.pingInterval = value;
+	Data.setState({ pingStatus : false });
+	Data.setState({ pingStatus : true });
 });
 
 Data.on("archiveSize", (value, name) => {

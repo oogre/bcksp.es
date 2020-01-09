@@ -40,7 +40,8 @@ export default class LiveFrame extends Component {
 	componentDidMount(){
 		document.addEventListener("keydown", this.handleKey, true);
 		document.addEventListener("keyup", this.handleKey, true);
-		this.caret = new Caret(document.querySelector(".stream"));
+		let stream = document.querySelector(".stream");
+		this.caret = new Caret(stream);
 		this.caret.onCaretOff(event=>{
 			this.hideShareButton()
 		});
@@ -64,6 +65,21 @@ export default class LiveFrame extends Component {
 				this.hideShareButton();
 			}
 		});
+		
+		//document.querySelector(".stream");
+		//console.log(stream.firstChild);
+		//console.log(this.props.content);
+		/*let range = new Range();
+		console.log(range.setStart);
+		range.setStart(stream.firstChild, 0);
+		range.setEnd(stream.firstChild, 40);
+
+		// toString of a range returns its content as text (without tags)
+		//alert(range); // Example: italic
+
+		// apply this range for document selection (explained later)
+		document.getSelection().addRange(range);
+		*/
 	}
 	
 	handleKey(event){

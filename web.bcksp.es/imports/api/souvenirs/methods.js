@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2019-02-28 18:35:04
+  @Last Modified time: 2019-12-23 15:47:07
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import T from './../../i18n/index.js';
@@ -20,25 +20,16 @@ import { config } from './../../startup/config.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { getMail } from './../../ui/template/mail.js';
 
-export const OrderPoster = new ValidatedMethod({
-	name: 'Souvenir.methods.order.poster',
+
+
+export const CreatePoster  = new ValidatedMethod({
+	name: 'Souvenir.methods.create.poster',
 	validate(data) {
-		try{
-			checkUserLoggedIn();
-		}catch(e){
-			checkValidEmail(data['poster.delivery.email'], false);
-		}
-		
-		checkString(data['poster.delivery.fullname'], 'poster.delivery.fullname');	
-		checkString(data['poster.delivery.address.1'] + " " + data['poster.delivery.address.2'], 'poster.delivery.address.1', 'poster.delivery.address.2');
-		checkString(data['poster.delivery.city'], 'poster.delivery.city');
-		checkString(data['poster.delivery.zip'], 'poster.delivery.zip');
-		checkString(data['poster.delivery.country'], 'poster.delivery.country');
-		checkObject(data['poster.data'], 'poster.data');
-		checkArray(data['poster.data'].shapes, 'poster.data');
-		checkString(data['poster.data'].sentence, 'poster.data');
-		checkNumber(data['poster.data'].fontSize, 'poster.data');
-		checkNumber(data['poster.data'].lineHeight, 'poster.data');
+		checkObject(data, 'data');
+		checkArray(data.shapes, 'shapes');
+		checkString(data.sentence, 'sentence');
+		checkNumber(data.fontSize, 'fontSize');
+		checkNumber(data.lineHeight, 'lineHeight');
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -47,23 +38,84 @@ export const OrderPoster = new ValidatedMethod({
 	},
 	run(data) {
 		if (this.isSimulation)return;
-		let email = Meteor.userId() ? Meteor.user().emails[0].address : data['poster.delivery.email'];
-		let orderID = Souvenirs.insert({
+		let itemID = Souvenirs.insert({
 			type : "poster",
-			data : data['poster.data'],
-			email : email,
-			delivery : {
-				fullname : data['poster.delivery.fullname'],
-				address : data['poster.delivery.address.1'] + " " + data['poster.delivery.address.2'],
-				city : data['poster.delivery.city'],
-				zip : data['poster.delivery.zip'],
-				country : data['poster.delivery.country'],
-			},
+			data : data,
 			createdAt : new Date(),
 			updatedAt : new Date(),
 			status : 0
 		});
-		
+		return {
+			success : true,
+			data : itemID
+		};
+	}
+});
+
+export const OrderPoster = new ValidatedMethod({
+	name: 'Souvenir.methods.order.poster',
+	validate(data) {
+		checkObject(data, 'data');
+		checkObject(data.souvenir, 'data.souvenir');
+		checkString(data.souvenir._id, 'data.souvenir._id');
+		if(!Souvenirs.findOne({_id : data.souvenir._id})){
+			throw new ValidationError([{
+				name: 'type',
+				type: 'not-recognize',
+				details: {
+				  value: i18n.__("errors.type.not-recognize"),
+				  origin : "data.souvenir._id",
+				}
+			}]);
+		}
+		try{
+			checkUserLoggedIn();
+		}catch(e){
+			checkValidEmail(data.souvenir.email, false);
+		}
+		checkString(data.souvenir.fullname, 'souvenir.fullname');	
+		checkString(data.souvenir.address["1"] + " " + data.souvenir.address["2"], 'souvenir.address.1', 'souvenir.address.2');
+		checkString(data.souvenir.city, 'souvenir.city');
+		checkString(data.souvenir.zip, 'souvenir.zip');
+		checkString(data.souvenir.country, 'souvenir.country');
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run(data) {
+		if (this.isSimulation)return;
+
+		console.log({
+			_id : data.souvenir._id,
+			email : data.souvenir.delivery.email,
+			delivery : {
+				fullname : data.souvenir.delivery.fullname,
+				address : data.souvenir.delivery.address["1"] + " " + data.souvenir.delivery.address["2"],
+				city : data.souvenir.delivery.city,
+				zip : data.souvenir.delivery.zip,
+				country : data.souvenir.delivery.country,
+			}
+		});
+/*
+		Souvenirs.update({
+			_id : data.souvenir._id
+		},{
+			$set : {
+				email : data.souvenir.delivery.email,
+				delivery : {
+					fullname : data.souvenir.delivery.fullname,
+					address : data.souvenir.delivery.address["1"] + " " + data.souvenir.delivery.address["2"],
+					city : data.souvenir.delivery.city,
+					zip : data.souvenir.delivery.zip,
+					country : data.souvenir.delivery.country,
+				},
+				status : 1	
+			}
+		});
+		*/
+		/*
 		Email.send({
 			from : process.env.MAIL_ADDRESS,
 			to : process.env.MAIL_ADDRESS,
@@ -77,7 +129,11 @@ export const OrderPoster = new ValidatedMethod({
 			subject : i18n.__("email.posterConfirm.subject"), 
 			html : getMail("posterConfirm", {orderID : orderID})
 		});
-		return orderID; 
+		*/
+		return {
+			success : true,
+			data : data.souvenir._id
+		};
 	}
 });
 

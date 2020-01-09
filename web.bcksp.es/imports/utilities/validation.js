@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2019-06-07 16:30:59
+  @Last Modified time: 2020-01-09 14:52:24
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
@@ -92,6 +92,17 @@ export function checkUserLoggedIn(){
 			type: 'required',
 			details: {
 				value : i18n.__("errors.login.required")
+			}
+		}]);
+	return true;
+}
+
+export function checkUserRole(role){
+	if(!Roles.userIsInRole(Meteor.userId(), role))throw new ValidationError([{
+			name: 'role',
+			type: 'required',
+			details: {
+				value : "You have to be "+role+" to access this ressourse"
 			}
 		}]);
 	return true;

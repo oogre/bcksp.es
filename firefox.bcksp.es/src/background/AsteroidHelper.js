@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-06-10 21:44:05
+  @Last Modified time: 2020-01-09 20:33:52
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import { onLogin } from "asteroid/lib/common/login-method";
@@ -22,6 +22,7 @@ class AsteroidHelper{
 
 		this.subscribtionList = [];
 		this.subscribtionAddressList = [
+			"devices.config",
 			"archive.config",
 			"settings.private",
 			"archive.private.counter"
@@ -58,6 +59,7 @@ class AsteroidHelper{
 			return sub;
 		});
 		this.on("changed", {
+			deviceConfig : conf => Data.setState({ pingInterval : conf.pingInterval }),
 			config : ({maxCharPerBook}) => Data.setState({ maxCharPerBook : maxCharPerBook }),
 			archives : ({count}) => Data.setState({ archiveSize : count }),
 			settings : settings => {
@@ -70,6 +72,7 @@ class AsteroidHelper{
 			}
 		});
 		this.on("added", {
+			deviceConfig : conf => Data.setState({ pingInterval : conf.pingInterval }),
 			config : ({maxCharPerBook}) => Data.setState({maxCharPerBook : maxCharPerBook}),
 			archives : ({count}) => Data.setState({archiveSize : count}),
 			settings : settings => {

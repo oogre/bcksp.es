@@ -2,7 +2,7 @@
   bcksp.es - adress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:22:01
-  @Last Modified time: 2019-11-26 16:00:55
+  @Last Modified time: 2019-12-23 15:14:47
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -21,12 +21,30 @@ export default class FormAdress extends Component {
 			<div>
 				<div className="fields-row">
 					<div className="fields-column">
+						{
+							!Meteor.userId() &&
+								<div className="field">
+									<TextInput 
+										name={ this.props.name + ".email" }
+										label={ i18n.__("souvenir.delivery.form.email.label") }
+										type="email"
+										validators={[checkString]}
+										required={true}
+										//error={this.props.errors[this.props.name + ".fullname"]}
+									/>
+								</div>
+						}
+					</div>
+				</div>
+				<div className="fields-row">
+					<div className="fields-column">
 						<div className="field">
 							<TextInput 
 								name={ this.props.name + ".fullname" }
 								label={ i18n.__("souvenir.delivery.form.adress.fullname.label") }
 								type="text"
 								validators={[checkString]}
+								required={true}
 								//error={this.props.errors[this.props.name + ".fullname"]}
 							/>
 						</div>
@@ -38,6 +56,7 @@ export default class FormAdress extends Component {
 								label={ i18n.__("souvenir.delivery.form.adress.fulladdress.label") }
 								type="text"
 								validators={[checkString]}
+								required={true}
 							/>
 							<TextInput 
 								name={ this.props.name + ".address.2" }
@@ -55,6 +74,7 @@ export default class FormAdress extends Component {
 								label={ i18n.__("souvenir.delivery.form.adress.city.label") }
 								type="text"
 								validators={[checkString]}
+								required={true}
 								//error={this.props.errors[this.props.name + ".city"]}
 							/>
 						</div>
@@ -66,6 +86,7 @@ export default class FormAdress extends Component {
 								label={ i18n.__("souvenir.delivery.form.adress.zip.label") }
 								type="text"
 								validators={[checkString]}
+								required={true}
 								//error={this.props.errors[this.props.name + ".zip"]}
 							/>
 						</div>
@@ -79,6 +100,7 @@ export default class FormAdress extends Component {
 								label={ i18n.__("souvenir.delivery.form.adress.country.label") }
 								type="text"
 								validators={[checkString]}
+								required={true}
 								//error={this.props.errors[this.props.name + ".country"]}
 							/>
 						</div>

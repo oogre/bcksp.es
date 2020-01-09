@@ -2,7 +2,7 @@
   bcksp.es - textInput.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-05-19 14:49:06
-  @Last Modified time: 2019-05-20 13:41:34
+  @Last Modified time: 2019-12-23 15:14:08
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -45,6 +45,7 @@ export default class TextInput extends Component {
 					type={ this.props.type } 
 					name={ this.props.name }
 					onChange={this.validationHandler.bind(this)}
+					required={ this.props.required }
 				/>
 				{
 					(this.props.error || this.state.error) &&

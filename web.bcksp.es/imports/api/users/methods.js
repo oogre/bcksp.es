@@ -2,11 +2,10 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2019-12-20 20:46:35
+  @Last Modified time: 2020-01-09 20:37:19
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
-import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { config } from './../../startup/config.js';
+import T from './../../i18n/index.js';
 import { 
 	checkValidDevice,
 	checkUserLoggedIn,
@@ -14,7 +13,32 @@ import {
 	checkValidPassword,
 	checkString
 } from './../../utilities/validation.js';
-import T from './../../i18n/index.js';
+import { config } from './../../startup/config.js';
+import {getMainEmail} from './../../utilities/meteor.js';
+import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
+
+
+export const UsersPing = new ValidatedMethod({
+	name: 'Users.methods.ping',
+	validate({device}) {
+		checkUserLoggedIn();
+		checkValidDevice(device);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run({device}) {
+		Meteor.users.update({
+			_id : this.userId
+		}, {
+			$set : {
+				"pingAt" : new Date()
+			}
+		});
+	}
+});
 
 export const GetLoginTokenUser = new ValidatedMethod({
 	name: 'Users.methods.login.token',
@@ -39,6 +63,9 @@ export const GetLoginTokenUser = new ValidatedMethod({
 });
 
 
+
+
+
 export const ResetPassword = new ValidatedMethod({
 	name: 'Users.methods.reset.password',
 	validate({device, email}) {
@@ -58,11 +85,9 @@ export const ResetPassword = new ValidatedMethod({
 		if (this.isSimulation)return;
 		
 		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
-		let emails = user.emails;
-		let last = _.chain(emails).filter(email=>email.verified).last().value();
-		let first = _.chain(emails).filter(email=>!email.verified).first().value();
 		
-		Accounts.sendResetPasswordEmail(user._id, (last || first).address);
+
+		Accounts.sendResetPasswordEmail(user._id, getMainEmail(user.emails));
 		
 		Meteor.users.update({_id : user._id}, {
 			$unset : {

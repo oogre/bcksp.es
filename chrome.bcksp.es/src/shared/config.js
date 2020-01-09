@@ -4,6 +4,7 @@ const conf = {
 	languages : {
 		available : ["fr"]
 	},
+	pingInterval : 0,
 	senderTimeout : 6000,
 	standard_url : "*://*.bcksp.es/*",
 	protocol : "https://",

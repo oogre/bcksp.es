@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2019-12-21 14:51:45
+  @Last Modified time: 2020-01-09 15:23:49
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -14,6 +14,9 @@
   import LiveStream from '../imports/ui/archive/LiveStream.js';
   import UserProfile from '../imports/ui/user/profile.js';
   import SouvenirItemDownLoadDescription from '../imports/ui/souvenir/items/download/description.js';
+  import SouvenirItemPosterDescription from '../imports/ui/souvenir/items/poster/description.js';
+  import SouvenirItemPosterCreation from '../imports/ui/souvenir/items/poster/creation.js';
+  import SouvenirItemPosterOrder from '../imports/ui/souvenir/items/poster/order.js';
   import TemplateFull from '../imports/ui/template/full.js';
   import TemplateMini from '../imports/ui/template/mini.js';
   
@@ -164,6 +167,43 @@ loginRoutes.route( '/souvenir/download', {
 	}
 });
 
+FlowRouter.route( '/souvenir/poster', {
+	name: 'posterDescription',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemPosterDescription/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+FlowRouter.route( '/souvenir/poster/creation', {
+	name: 'posterCreation',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemPosterCreation/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+FlowRouter.route( '/souvenir/poster/order/:id', {
+	name: 'posterOrder',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemPosterOrder id={params.id}/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		this.register('getSouvenir', Meteor.subscribe('getSouvenir',  params.id));
+	}
+});
+
+
+
+
+
 
 let adminRoutes = FlowRouter.group({
 	name : 'adminRoutes',
@@ -174,8 +214,6 @@ let adminRoutes = FlowRouter.group({
 	}]
 });
 
-
-
 adminRoutes.route("/stat", {
 	name: "stat",
 	action( params ) {
@@ -183,7 +221,8 @@ adminRoutes.route("/stat", {
 		setupView();
 	},
 	subscriptions( params, queryParams ) {
-		this.register('getInfo', Meteor.subscribe('getInfo'));
+		this.register('archive.public.counter', Meteor.subscribe('archive.public.counter'));
+		this.register('users.counter', Meteor.subscribe('users.counter'));
 	}
 });
 

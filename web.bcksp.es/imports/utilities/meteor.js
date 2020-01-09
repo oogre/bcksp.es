@@ -2,7 +2,7 @@
   bcksp.es - meteor.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 16:12:39
-  @Last Modified time: 2019-04-06 22:10:18
+  @Last Modified time: 2020-01-09 13:15:40
 \*----------------------------------------*/
 import {checkUserLoggedIn} from "./validation.js";
 
@@ -23,9 +23,18 @@ export async function getEmailOfCurrentUser(){
 			return reject(err);
 		}
 		if(!Meteor.user())return reject();
-		let emails = Meteor.user().emails;
-		let last = _.chain(emails).filter(email=>email.verified).last().value();
-		let first = _.chain(emails).filter(email=>!email.verified).first().value();
-		return resolve((last || first).address);
+		return resolve(getMainEmail(Meteor.user().emails));
+		//let emails = Meteor.user().emails;
+		//let last = _.chain(emails).filter(email=>email.verified).last().value();
+		//let first = _.chain(emails).filter(email=>!email.verified).first().value();
+		//return resolve((last || first).address);
 	});
+}
+
+
+
+export function getMainEmail(emails){
+	let last = _.chain(emails).filter(email=>email.verified).last().value();
+	let first = _.chain(emails).filter(email=>!email.verified).first().value();
+	return (last || first).address;
 }
