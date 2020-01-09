@@ -2,7 +2,7 @@
   bcksp.es - press.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 19:20:53
-  @Last Modified time: 2019-03-24 17:32:40
+  @Last Modified time: 2020-01-09 23:22:36
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -21,7 +21,7 @@ export default class AboutPress extends Component {
 					<h3 className="text-block__title"><T>press.title</T></h3>
 					<ul className="press-list">
 						{
-							i18n.__("press.testimonies").map((testimony, k) =>(
+							Object.values(i18n.__("press.testimonies")).map((testimony, k) =>(
 								<li className="press-list__item" key={k} >
 									<p>« {testimony} »</p>
 								</li>

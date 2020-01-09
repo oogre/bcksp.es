@@ -2,7 +2,7 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2019-11-26 14:57:54
+  @Last Modified time: 2020-01-09 23:22:51
 \*----------------------------------------*/
 import React, { Component } from 'react';
 
@@ -30,13 +30,13 @@ export default class AboutArtists extends Component {
 						<p className="artists__intro"><T>artists.intro</T></p>
 						<ul className="artists-list">
 							{
-								i18n.__("artists.list").map((artist, k) =>(
+								Object.values(i18n.__("artists.list")).map((artist, k) =>(
 									<li className="artist" key={k} >
 										<h3 className="artist__name">{artist.name}</h3>
 										<p className="artist__description" dangerouslySetInnerHTML={{__html: artist.bio}} ></p>
 										<ul className="artist__social-list">
 											{
-												artist.links.map((link, k) =>(
+												Object.values(artist.links).map((link, k) =>(
 													<li className="artist__social-list-item" key={k} >
 														<a className="artist__social-link" href={link}>
 															<img alt="" src="/images/icons/icon-globe.svg"/>

@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 15:37:26
-  @Last Modified time: 2019-03-27 15:31:17
+  @Last Modified time: 2020-01-09 23:20:24
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import T from './../../i18n/index.js';
@@ -15,13 +15,16 @@ export default class BannerBaseline extends Component {
 	}
 
 	render() {
+		;
 		return (
 			<div className="punchline">
 				<div className="container">
-					{ 	!this.props.isConnected &&
+					{ 	
+						!this.props.isConnected &&
 						<h1 className="punchline__title" >
-							<SelfWritten text={i18n.__("offline.baseline")}/>
+							<SelfWritten text={ Object.values(i18n.__("offline.baseline")) } />
 						</h1>
+						
 					}
 					{
 						this.props.isConnected &&

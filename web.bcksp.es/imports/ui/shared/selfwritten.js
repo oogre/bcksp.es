@@ -2,7 +2,7 @@
   bcksp.es - selfwritten.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 16:45:02
-  @Last Modified time: 2019-12-20 20:51:17
+  @Last Modified time: 2020-01-09 23:20:41
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import {lerp} from './../../utilities/math.js';

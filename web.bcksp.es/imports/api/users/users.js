@@ -2,7 +2,7 @@
   web.bitRepublic - users.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:17:11
-  @Last Modified time: 2020-01-09 16:56:12
+  @Last Modified time: 2020-01-09 23:24:53
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -31,7 +31,7 @@ if(Meteor.isServer){
 					archive : id
 				}
 			});
-			log(" >>> ARCHIVE IS LINKED TO HIS USER");
+			log(">>> ARCHIVE IS LINKED TO HIS USER");
 		}
 	});
 	Meteor.users.find({}).observeChanges({

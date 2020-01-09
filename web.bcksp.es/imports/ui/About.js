@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2019-11-26 15:08:42
+  @Last Modified time: 2020-01-09 23:26:25
 \*----------------------------------------*/
 import Slider from "react-slick";
 import T from './../i18n/index.js';
@@ -32,7 +32,7 @@ export default class About extends Component {
 						<GalleryKenBurns samplePath="/images/j.vache/j.vache.[ID].jpg" idmax={73}/>
 						<div className="about__content">
 						{
-							i18n.__("about.long").map((article, k) =>(
+							Object.values(i18n.__("about.long")).map((article, k) =>(
 								<div key={k}>
 									{
 										k == 1 &&
@@ -50,7 +50,7 @@ export default class About extends Component {
 												</a>
 										}
 										{
-											article.content.map((subarticle, k2) => (
+											Object.values(article.content).map((subarticle, k2) => (
 												<span key={k2}>
 													{
 														subarticle.subtitle &&
