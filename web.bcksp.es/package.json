@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
-    "bcrypt": "^3.0.2",
+    "bcrypt": "^3.0.7",
     "bezier-easing": "^2.1.0",
     "bowser": "^2.0.0-beta.3",
     "caret-pos": "https://github.com/oogre/caret-pos/tarball/79f830900cb69c43de8cebf7b8c9868fdd1d8d2f",
