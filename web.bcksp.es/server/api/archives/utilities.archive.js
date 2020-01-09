@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-01-09 15:27:06
+  @Last Modified time: 2020-01-09 21:08:49
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -104,7 +104,7 @@ export async function publishToPrivateArchive(content){
 export async function publishToPublicArchive(content){
 	streamer.emit('publicBackspaces', {content : content});
 	let longBuffer = await readAsync(__Public_Archive_ID__);
-	longBuffer = text + longBuffer;
+	longBuffer = content + longBuffer;
 	longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxMaxLen);
 	return writeAsync(__Public_Archive_ID__, longBuffer)
 }

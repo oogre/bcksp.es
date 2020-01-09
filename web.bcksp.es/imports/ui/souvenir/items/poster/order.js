@@ -2,7 +2,7 @@
   bcksp.es - order.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-22 15:33:33
-  @Last Modified time: 2019-12-23 15:52:55
+  @Last Modified time: 2020-01-09 22:19:18
 \*----------------------------------------*/
 import FormAdress from "./../../../form/adress.js";
 import T from './../../../../i18n/index.js';
@@ -50,10 +50,10 @@ class SouvenirItemPosterOrder extends Component {
 			});
 			if(error){
 				console.log(error);
-				/*this.setState({
-					error : getMessageFromError(error),
-					success : false,
-				});*/
+				//this.setState({
+				//	error : getMessageFromError(error),
+				//	success : false,
+				//});
 				return;
 			}
 			this.setState({
@@ -95,7 +95,6 @@ class SouvenirItemPosterOrder extends Component {
 	}
 }
 export default withTracker(self => {
-	
 	return {
 		isReady : FlowRouter.subsReady("getSouvenir"),
 		souvenir : Souvenirs.findOne({_id : self.id})

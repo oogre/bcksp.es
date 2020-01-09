@@ -2,7 +2,7 @@
   bcksp.es - errors.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2019-06-07 16:39:49
+  @Last Modified time: 2020-01-09 20:46:35
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	errors : {
@@ -29,6 +29,9 @@ i18n.addTranslation('fr', {
 		},
 		login : {
 			required : "nous avons besoin que vous soyez connecté pour procéder à cette opération"
+		},
+		role : {
+			required : "vous n'avez pas le droit requis pour accéder à cette resource. ({$role})"
 		},
 		url : {
 			"not-a-string" : "nous ne parvenons pas à reconnaître cette URL"
