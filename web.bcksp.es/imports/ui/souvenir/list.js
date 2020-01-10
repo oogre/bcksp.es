@@ -2,10 +2,9 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2019-12-21 14:37:32
+  @Last Modified time: 2020-01-09 23:43:20
 \*----------------------------------------*/
 
-import moment from 'moment';
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
 import { config } from './../../startup/config.js';

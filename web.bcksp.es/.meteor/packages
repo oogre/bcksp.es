@@ -26,7 +26,7 @@ kadira:flow-router
 mdg:validated-method
 mdg:validation-error
 universe:i18n
-react-meteor-data
+react-meteor-data@2.0.0
 rocketchat:streamer
 ddp-rate-limiter@1.0.7
 loren:login-links

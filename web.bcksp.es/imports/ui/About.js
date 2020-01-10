@@ -2,9 +2,8 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-01-09 23:26:25
+  @Last Modified time: 2020-01-09 23:47:03
 \*----------------------------------------*/
-import Slider from "react-slick";
 import T from './../i18n/index.js';
 import AboutLong from './about/long.js';
 import React, { Component } from 'react';
