@@ -2,12 +2,38 @@
   bcksp.es - textInput.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-05-19 14:49:06
-  @Last Modified time: 2019-12-23 15:14:08
+  @Last Modified time: 2020-01-10 18:47:11
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip';
 
-export default class TextInput extends Component {
+
+const TextInput = ({name, validator, label, error, defaultValue}) => {
+	return (
+		<div className="field">
+			<label 
+				htmlFor={ name } 
+				className="field__label"
+			>
+				{ label }
+			</label>
+			<input 
+				id={ name } 
+				className="input--text" 
+				type="text"
+				name={ name }
+				ref={validator}
+				defaultValue={defaultValue}
+			/>
+			{ error }
+		</div>
+	);
+};
+
+
+export default TextInput;
+/*
+class TextInput extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -44,16 +70,10 @@ export default class TextInput extends Component {
 					className="input--text" 
 					type={ this.props.type } 
 					name={ this.props.name }
-					onChange={this.validationHandler.bind(this)}
-					required={ this.props.required }
+					ref={this.props.validators}
 				/>
-				{
-					(this.props.error || this.state.error) &&
-						<span>
-							{ (this.props.error || this.state.error) }
-						</span>
-				}
 			</div>
 		);
 	}
 }
+*/

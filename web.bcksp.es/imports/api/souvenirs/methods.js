@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2019-12-23 15:47:07
+  @Last Modified time: 2020-01-10 19:34:45
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import T from './../../i18n/index.js';
@@ -56,25 +56,26 @@ export const OrderPoster = new ValidatedMethod({
 	name: 'Souvenir.methods.order.poster',
 	validate(data) {
 		checkObject(data, 'data');
-		checkObject(data.souvenir, 'data.souvenir');
-		checkString(data.souvenir._id, 'data.souvenir._id');
+		checkObject(data.souvenir, 'souvenir');
+		checkString(data.souvenir._id, 'souvenir._id');
 		if(!Souvenirs.findOne({_id : data.souvenir._id})){
 			throw new ValidationError([{
 				name: 'type',
 				type: 'not-recognize',
 				details: {
 				  value: i18n.__("errors.type.not-recognize"),
-				  origin : "data.souvenir._id",
+				  origin : "souvenir._id",
 				}
 			}]);
 		}
 		try{
 			checkUserLoggedIn();
+			data.souvenir.owner = this.userId;
 		}catch(e){
-			checkValidEmail(data.souvenir.email, false);
+			checkValidEmail(data.souvenir.email, false, 'souvenir.email');
 		}
 		checkString(data.souvenir.fullname, 'souvenir.fullname');	
-		checkString(data.souvenir.address["1"] + " " + data.souvenir.address["2"], 'souvenir.address.1', 'souvenir.address.2');
+		checkString(data.souvenir.address, 'souvenir.address');
 		checkString(data.souvenir.city, 'souvenir.city');
 		checkString(data.souvenir.zip, 'souvenir.zip');
 		checkString(data.souvenir.country, 'souvenir.country');
@@ -85,19 +86,6 @@ export const OrderPoster = new ValidatedMethod({
 		noRetry: true,
 	},
 	run(data) {
-		if (this.isSimulation)return;
-
-		console.log({
-			_id : data.souvenir._id,
-			email : data.souvenir.delivery.email,
-			delivery : {
-				fullname : data.souvenir.delivery.fullname,
-				address : data.souvenir.delivery.address["1"] + " " + data.souvenir.delivery.address["2"],
-				city : data.souvenir.delivery.city,
-				zip : data.souvenir.delivery.zip,
-				country : data.souvenir.delivery.country,
-			}
-		});
 /*
 		Souvenirs.update({
 			_id : data.souvenir._id
@@ -132,9 +120,10 @@ export const OrderPoster = new ValidatedMethod({
 		*/
 		return {
 			success : true,
-			data : data.souvenir._id
+			data : data
 		};
 	}
+	
 });
 
 export const OrderBook = new ValidatedMethod({

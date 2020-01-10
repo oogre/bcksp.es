@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-01-09 23:31:46
+  @Last Modified time: 2020-01-10 19:26:44
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
@@ -133,27 +133,30 @@ export function checkValidDevice(value){
 	return value;	
 }
 
-export function checkValidEmail(value, hasToExist = true){
+export function checkValidEmail(value, hasToExist = true, origin=undefined){
 	let EmailRegExp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 	if(_.isEmpty(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'required',
 				details: {
-				  value: i18n.__("errors.email.required")
+				  value: i18n.__("errors.email.required"),
+				  origin : origin
 				}
 			}]);
 	if(!_.isString(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.email.not-a-string")
+				  value: i18n.__("errors.email.not-a-string"),
+				  origin : origin
 				}
 			}]);
 	if(!EmailRegExp.test(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'not-an-email',
 				details: {
-				  value: i18n.__("errors.email.not-an-email")
+				  value: i18n.__("errors.email.not-an-email"),
+				  origin : origin
 				}
 			}]);
 
@@ -163,14 +166,16 @@ export function checkValidEmail(value, hasToExist = true){
 				name: 'email',
 				type: 'no-match',
 				details: {
-				  value: i18n.__("errors.email.no-match")
+				  value: i18n.__("errors.email.no-match"),
+				  origin : origin
 				}
 			}]);
 	if( !hasToExist && userExistance) throw new ValidationError([{
 			name: 'email',
 			type: 'already-exists',
 			details: {
-			  value: i18n.__("errors.email.already-exists")
+			  	value: i18n.__("errors.email.already-exists"),
+				origin : origin
 			}
 		}]);
 	return value;
