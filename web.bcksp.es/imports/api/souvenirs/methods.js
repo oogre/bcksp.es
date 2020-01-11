@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-01-10 19:34:45
+  @Last Modified time: 2020-01-11 16:19:48
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import T from './../../i18n/index.js';
@@ -15,7 +15,8 @@ import {
 	checkObject,
 	checkArray
 } from './../../utilities/validation.js';
-import { Souvenirs } from './souvenirs.js';
+import { getMainEmail } from './../../utilities/meteor.js';
+import { Souvenirs, Orders, OrderState } from './souvenirs.js';
 import { config } from './../../startup/config.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { getMail } from './../../ui/template/mail.js';
@@ -42,8 +43,7 @@ export const CreatePoster  = new ValidatedMethod({
 			type : "poster",
 			data : data,
 			createdAt : new Date(),
-			updatedAt : new Date(),
-			status : 0
+			updatedAt : new Date()
 		});
 		return {
 			success : true,
@@ -54,11 +54,10 @@ export const CreatePoster  = new ValidatedMethod({
 
 export const OrderPoster = new ValidatedMethod({
 	name: 'Souvenir.methods.order.poster',
-	validate(data) {
-		checkObject(data, 'data');
-		checkObject(data.souvenir, 'souvenir');
-		checkString(data.souvenir._id, 'souvenir._id');
-		if(!Souvenirs.findOne({_id : data.souvenir._id})){
+	validate({souvenir}) {
+		checkObject(souvenir, 'souvenir');
+		checkString(souvenir._id, 'souvenir._id');
+		if(!Souvenirs.findOne({_id : souvenir._id})){
 			throw new ValidationError([{
 				name: 'type',
 				type: 'not-recognize',
@@ -70,57 +69,58 @@ export const OrderPoster = new ValidatedMethod({
 		}
 		try{
 			checkUserLoggedIn();
-			data.souvenir.owner = this.userId;
+			souvenir.email = getMainEmail(Meteor.user().emails);
 		}catch(e){
-			checkValidEmail(data.souvenir.email, false, 'souvenir.email');
+			checkValidEmail(souvenir.email, false, 'souvenir.email');
 		}
-		checkString(data.souvenir.fullname, 'souvenir.fullname');	
-		checkString(data.souvenir.address, 'souvenir.address');
-		checkString(data.souvenir.city, 'souvenir.city');
-		checkString(data.souvenir.zip, 'souvenir.zip');
-		checkString(data.souvenir.country, 'souvenir.country');
+		checkString(souvenir.fullname, 'souvenir.fullname');	
+		checkString(souvenir.address, 'souvenir.address');
+		checkString(souvenir.city, 'souvenir.city');
+		checkString(souvenir.zip, 'souvenir.zip');
+		checkString(souvenir.country, 'souvenir.country');
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
 	applyOptions: {
 		noRetry: true,
 	},
-	run(data) {
-/*
-		Souvenirs.update({
-			_id : data.souvenir._id
-		},{
-			$set : {
-				email : data.souvenir.delivery.email,
-				delivery : {
-					fullname : data.souvenir.delivery.fullname,
-					address : data.souvenir.delivery.address["1"] + " " + data.souvenir.delivery.address["2"],
-					city : data.souvenir.delivery.city,
-					zip : data.souvenir.delivery.zip,
-					country : data.souvenir.delivery.country,
-				},
-				status : 1	
-			}
+	run({souvenir}) {
+		let orderID = Orders.insert({
+			souvenir : souvenir._id,
+			contact : souvenir.email,
+			delivery : {
+				fullname : souvenir.fullname,
+				address : souvenir.address,
+				city : souvenir.city,
+				zip : souvenir.zip,
+				country : souvenir.country,
+			},
+			createdAt : new Date(),
+			updatedAt : new Date(),
+			status : OrderState.RESERVED
 		});
-		*/
-		/*
-		Email.send({
-			from : process.env.MAIL_ADDRESS,
-			to : process.env.MAIL_ADDRESS,
-			subject : "[" + orderID + "] : Commande de poster", 
-			text : "", 
-		});
+		
+		if (!this.isSimulation){
+			Email.send({
+				from : process.env.MAIL_ADDRESS,
+				to : process.env.MAIL_ADDRESS,
+				subject : "[" + orderID + "] : Commande de poster", 
+				text : "", 
+			});
 
-		Email.send({
-			from : process.env.MAIL_ADDRESS,
-			to : email,
-			subject : i18n.__("email.posterConfirm.subject"), 
-			html : getMail("posterConfirm", {orderID : orderID})
-		});
-		*/
+			Email.send({
+				from : process.env.MAIL_ADDRESS,
+				to : souvenir.email,
+				subject : i18n.__("email.posterConfirm.subject"), 
+				html : getMail("posterConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
+			});
+		}
+		
 		return {
 			success : true,
-			data : data
+			data : {
+				order_id : orderID
+			}
 		};
 	}
 	

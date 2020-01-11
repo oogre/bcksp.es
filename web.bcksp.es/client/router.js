@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-01-09 15:23:49
+  @Last Modified time: 2020-01-11 16:16:44
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -17,6 +17,8 @@
   import SouvenirItemPosterDescription from '../imports/ui/souvenir/items/poster/description.js';
   import SouvenirItemPosterCreation from '../imports/ui/souvenir/items/poster/creation.js';
   import SouvenirItemPosterOrder from '../imports/ui/souvenir/items/poster/order.js';
+  import OrderDetail from '../imports/ui/order/detail.js';
+  
   import TemplateFull from '../imports/ui/template/full.js';
   import TemplateMini from '../imports/ui/template/mini.js';
   
@@ -196,12 +198,20 @@ FlowRouter.route( '/souvenir/poster/order/:id', {
 		setupView();
 	},
 	subscriptions( params, queryParams ) {
-		this.register('getSouvenir', Meteor.subscribe('getSouvenir',  params.id));
+		this.register('souvenir.get', Meteor.subscribe('souvenir.get',  params.id));
 	}
 });
 
-
-
+FlowRouter.route( '/order/:id', {
+	name: 'orderDetail',
+	action( params ) {
+		render(<TemplateFull><OrderDetail id={params.id}/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		this.register('order.get', Meteor.subscribe('order.get',  params.id));
+	}
+});
 
 
 
@@ -223,6 +233,7 @@ adminRoutes.route("/stat", {
 	subscriptions( params, queryParams ) {
 		this.register('archive.public.counter', Meteor.subscribe('archive.public.counter'));
 		this.register('users.counter', Meteor.subscribe('users.counter'));
+		this.register('order.all', Meteor.subscribe('order.all'));
 	}
 });
 

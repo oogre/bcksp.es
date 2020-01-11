@@ -2,7 +2,7 @@
   bcksp.es - adress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:22:01
-  @Last Modified time: 2020-01-10 19:31:16
+  @Last Modified time: 2020-01-11 13:16:12
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -22,6 +22,7 @@ const FormAdress = ({className, children, name, onSubmit}) => {
   			console.log(v)
   		})
   		.catch(error=>{
+  			console.log(error);
   			for(let e of error?.details){
   				setError(e?.details?.origin || "main" , e.type, e.details.value);		
   			}

@@ -2,7 +2,7 @@
   bcksp.es - order.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-22 15:33:33
-  @Last Modified time: 2020-01-10 19:15:24
+  @Last Modified time: 2020-01-11 13:58:44
 \*----------------------------------------*/
 import React from 'react';
 import T from './../../../../i18n/index.js';
@@ -46,7 +46,7 @@ const SouvenirItemPosterOrder = ({isReady, souvenir}) => {
 
 export default withTracker(self => {
 	return {
-		isReady : FlowRouter.subsReady("getSouvenir"),
+		isReady : FlowRouter.subsReady("souvenir.get"),
 		souvenir : Souvenirs.findOne({_id : self.id})
 	};
 })(SouvenirItemPosterOrder);

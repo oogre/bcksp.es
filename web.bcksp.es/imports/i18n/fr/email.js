@@ -2,13 +2,13 @@
   bcksp.es - emails.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2019-05-04 18:59:01
+  @Last Modified time: 2020-01-11 14:02:39
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', {
 	email : {
 		posterConfirm : {
-			subject : "votre commande d'un livre bcksp.es",
+			subject : "votre commande d'un poster bcksp.es",
 			content : 
 				"Bonjour et merci.<br/>"+
 				"Voici l'identifiant de votre commande : {$orderID}<br/>"+
