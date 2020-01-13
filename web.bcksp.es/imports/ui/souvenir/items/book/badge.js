@@ -2,7 +2,7 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:27:09
-  @Last Modified time: 2019-12-21 14:31:43
+  @Last Modified time: 2020-01-11 17:44:44
 \*----------------------------------------*/
 
 import T from './../../../../i18n/index.js';
@@ -28,7 +28,7 @@ class SouvenirItemBookBadge extends Component {
 	render() {
 		return (
 			<li className="souvenir__item">
-				<a className="souvenir__link" href={FlowRouter.path("item", {type : "book"})}>
+				<a className="souvenir__link" href={FlowRouter.path("bookDescription")}>
 					<Progress //souvenir__counter-label
 						percent={this.getPerCent()}
 						colorFg="#fff123"

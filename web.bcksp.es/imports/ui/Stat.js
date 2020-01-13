@@ -2,7 +2,7 @@
   bcksp.es - Stat.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 00:31:09
-  @Last Modified time: 2020-01-11 16:18:26
+  @Last Modified time: 2020-01-11 17:12:59
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -65,7 +65,7 @@ class Stat extends Component {
 									<td><a href={FlowRouter.path("orderDetail", {id : order._id})}>{ order._id }</a></td>
 									<td>{ order.souvenir?._id || "undefined" }</td>
 									<td>{ order.souvenir?.type || "undefined" }</td>
-									<td>{ OrderState.properties[order.status].name }</td>
+									<td>{ order.status }</td>
 								</tr>
 							))
 						}

@@ -2,7 +2,7 @@
   bcksp.es - souvenirs.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:35
-  @Last Modified time: 2020-01-11 15:33:09
+  @Last Modified time: 2020-01-11 17:12:43
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -11,9 +11,12 @@ import './publications.js';
 export const Souvenirs = new Mongo.Collection('souvenir');
 export const Orders = new Mongo.Collection('order');
 
+
+
 Orders.helpers({
   populate: function () {
   	this.souvenir = Souvenirs.findOne(this.souvenir);
+  	this.status = OrderState.properties[this.status].name
   	return this;
   }
 });

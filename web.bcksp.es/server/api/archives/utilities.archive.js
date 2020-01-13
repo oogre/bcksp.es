@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-01-09 21:08:49
+  @Last Modified time: 2020-01-12 23:31:01
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -32,7 +32,7 @@ export function getArchivePath(name){
 export async function readAsync(name){
 	return fsExtra.readFile(getArchivePath(name), "utf8")
 			.then( data =>{
-				return decrypt(data, name)
+				return htmlDecode(decrypt(data, name))
 			});
 }
 

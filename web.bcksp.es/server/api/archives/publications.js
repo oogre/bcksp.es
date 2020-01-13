@@ -2,55 +2,95 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-01-09 14:52:59
+  @Last Modified time: 2020-01-13 00:52:02
 \*----------------------------------------*/
-import { htmlDecode } from'htmlencode';
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
 import { config } from '../../../imports/startup/config.js';
-import { Archives } from '../../../imports/api/archives/archives.js';
+import { Archives, PrivateArchive } from '../../../imports/api/archives/archives.js';
 import { checkUserLoggedIn, checkUserRole } from './../../../imports/utilities/validation.js';
 
 
 
 Meteor.publish("archive.public", function(){
+	let archive = Archives.findOne({ 
+		_id : __Public_Archive_ID__
+	});
 	ArchiveTools.readAsync(__Public_Archive_ID__)
 	.then(content=>{
-		content = htmlDecode(content);
-		this.added('publicArchive', __Public_Archive_ID__, {content : content});
+		archive.content = content;
+		this.added('archives', archive._id, archive);
 		this.ready();
 	})
 	this.onStop(() => { } );
 });
 
+
+
+Meteor.publish('archive.private.2', function(){
+	if(!this.userId)return this.ready();
+	let initializing = true;
+	let archiveCursor = Archives.find({ 
+		type : config.archives.private.type,
+		owner : this.userId
+	});
+
+	let archive = archiveCursor.fetch()[0];
+
+	ArchiveTools.readAsync(archive._id)
+	.then(content=>{
+		archive.content = content;
+		this.added('archives', archive._id, archive);
+		this.ready();
+	});
+
+	let handle = archiveCursor.observe({
+		changed: (oldData, newData) => {
+			if (initializing)return null;
+			let newCharLength = oldData.count - newData.count;
+			ArchiveTools.readAsync(archive._id)
+			.then(content=>{
+				if(newCharLength > 0){
+					this.changed('archives', archive._id, {
+						stream : content.substr(0, newCharLength)
+					});		
+				}else{
+					this.changed('archives', archive._id, { 
+						stream : false,
+						content : content
+					});		
+				}
+			});	
+		}
+	});
+	initializing = false;
+	
+	this.onStop(() => handle && handle.stop() );
+});
+
+
 Meteor.publish("archive.private", function(){
 	let initializing = true;
 	let handle;
 	if(this.userId){
-		let user = Meteor.users.findOne({
-			_id : this.userId
-		}, { 
-			fields : {
-				archive : 1,
-			}
+		let archiveCursor = Archives.find({ 
+			type : config.archives.private.type,
+			owner : this.userId 
 		});
 
-		ArchiveTools.readAsync(user.archive)
+		let archive = archiveCursor.fetch()[0];
+
+		ArchiveTools.readAsync(archive._id)
 		.then(content=>{
-			content = htmlDecode(content);
 			this.added('privateArchive', +new Date(), {content : content});	
 		});
 		
-		handle = Archives.find({ 
-			type : config.archives.private.type,
-			owner : this.userId 
-		}).observe({
+		handle = archiveCursor.observe({
 			changed: (oldData, newData) => {
 				if (!initializing) {
 					let newCharLength = oldData.count-newData.count;
-					ArchiveTools.readAsync(user.archive)
+					ArchiveTools.readAsync(archive._id)
 					.then(content=>{
-						content = htmlDecode(content);
 						if(newCharLength > 0){
 							this.added('privateArchive', +new Date(), {content : content.substr(0, newCharLength)});
 						}else{

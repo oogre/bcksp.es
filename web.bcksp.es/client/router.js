@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-01-11 16:16:44
+  @Last Modified time: 2020-01-12 21:58:00
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -15,7 +15,10 @@
   import UserProfile from '../imports/ui/user/profile.js';
   import SouvenirItemDownLoadDescription from '../imports/ui/souvenir/items/download/description.js';
   import SouvenirItemPosterDescription from '../imports/ui/souvenir/items/poster/description.js';
+  import SouvenirItemBookDescription from '../imports/ui/souvenir/items/book/description.js';
   import SouvenirItemPosterCreation from '../imports/ui/souvenir/items/poster/creation.js';
+  import SouvenirItemBookCreation from '../imports/ui/souvenir/items/book/creation.js';
+  
   import SouvenirItemPosterOrder from '../imports/ui/souvenir/items/poster/order.js';
   import OrderDetail from '../imports/ui/order/detail.js';
   
@@ -180,6 +183,17 @@ FlowRouter.route( '/souvenir/poster', {
 	}
 });
 
+FlowRouter.route( '/souvenir/book', {
+	name: 'bookDescription',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemBookDescription/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
 FlowRouter.route( '/souvenir/poster/creation', {
 	name: 'posterCreation',
 	action( params ) {
@@ -188,6 +202,17 @@ FlowRouter.route( '/souvenir/poster/creation', {
 	},
 	subscriptions( params, queryParams ) {
 		
+	}
+});
+
+FlowRouter.route( '/souvenir/book/creation', {
+	name: 'bookCreation',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemBookCreation/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+	
 	}
 });
 

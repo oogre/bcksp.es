@@ -13,7 +13,7 @@ import Dropdown from './../shared/dropdown.js';
 import { config } from './../../startup/config.js';
 import { streamer } from './../../api/streamer.js';
 import { withTracker } from 'meteor/react-meteor-data';
-import { PublicArchive } from './../../api/archives/archives.js';
+import { Archives } from './../../api/archives/archives.js';
 import { PrivateArchive } from './../../api/archives/archives.js';
 
 // LiveStream component
@@ -136,7 +136,7 @@ export default withTracker(self => {
 		isConnected : !!Meteor.userId(),
 		isPublicReady  : publicHandle && publicHandle.ready(),
 		publicHandle : publicHandle,
-		publicArchive  : PublicArchive.findOne({}),
+		publicArchive  : Archives.find({ type : Archives.Type.PUBLIC }).fetch()[0],
 		isPrivateReady : privateHandle && privateHandle.ready(),
 		privateHandle : privateHandle,
 		privateArchive : PrivateArchive.find({}, {sort : {_id : -1}}).fetch()

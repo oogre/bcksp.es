@@ -2,7 +2,7 @@
   bcksp.es - poster.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-10 15:11:10
-  @Last Modified time: 2019-05-19 12:21:19
+  @Last Modified time: 2020-01-11 17:38:46
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { Component } from 'react';
@@ -49,7 +49,7 @@ export default class GeneratorPoster extends Component {
     let ratio = this.props.sentence.length / 200;
     let size = lerp(50, 10, Math.pow(ratio, 0.35));
     return (
-      <div className="generator">
+      <div className={this.props.className + " generator"}>
         <div className="generator__preview">
           <div className="generator__preview-img"
             data-design-poster={JSON.stringify({
