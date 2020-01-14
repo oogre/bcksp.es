@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-01-13 00:39:13
+  @Last Modified time: 2020-01-13 18:36:45
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -19,8 +19,7 @@ import FixeSuccess from './../../../fixe/success.js'
 import { withTracker } from 'meteor/react-meteor-data';
 import { getMessageFromError } from "./../../../../utilities/ui.js";
 //import LiveStream from './../../../archive/LiveStream.js';
-import ArchiveWrapper from './../../../archive/wrapper.js';
-
+import PrivateArchiveWrapper from './../../../archive/privateArchiveWrapper.js';
 const SouvenirItemBookCreation = ({}) => {
 	return (
 		<div className="page__content">
@@ -33,7 +32,7 @@ const SouvenirItemBookCreation = ({}) => {
 				<div className="shop">
 					<form className="shop-creation" onSubmit={data=>{console.log(data);return false;}}>
 						<div className="shop-creation__order">
-							<ArchiveWrapper selector="private"/>
+							<PrivateArchiveWrapper raw={true}/>
 						</div>
 						<div>
 							<input type="submit" value={i18n.__("souvenir.item.book.button.continue")} className="button button--primary"/>
