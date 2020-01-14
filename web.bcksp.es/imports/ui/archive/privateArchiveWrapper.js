@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-01-14 08:30:29
+  @Last Modified time: 2020-01-14 21:49:38
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -16,7 +16,7 @@ import { intro, preface } from './../../api/books/intro.js';
 let privateStreamedContent = "";
 
 
-const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false}) => {
+const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false, author}) => {
 	if(!isReady)return (null);
 	if(archive.stream){
 		privateStreamedContent = archive.stream + privateStreamedContent;
@@ -31,7 +31,7 @@ const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false}) => {
 			handle.stop();
 		}
 	}, []); 
-	if(raw) return ( <ArchiveBook intro={intro} preface={preface} content={archive.content}/> );
+	if(raw) return ( <ArchiveBook intro={intro} preface={preface} content={archive.content} author={author}/> );
 	
 	return (
 		<LiveFrame	

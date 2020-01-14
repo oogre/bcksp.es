@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-01-13 18:36:45
+  @Last Modified time: 2020-01-14 22:14:13
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -14,13 +14,29 @@
 import T from './../../../../i18n/index.js';
 import FixeWait from './../../../fixe/wait.js'
 import React, { Component } from 'react';
-import FixeError from './../../../fixe/error.js'
-import FixeSuccess from './../../../fixe/success.js'
-import { withTracker } from 'meteor/react-meteor-data';
-import { getMessageFromError } from "./../../../../utilities/ui.js";
-//import LiveStream from './../../../archive/LiveStream.js';
 import PrivateArchiveWrapper from './../../../archive/privateArchiveWrapper.js';
-const SouvenirItemBookCreation = ({}) => {
+import TextInput from './../../../shared/textInput.js';
+import { useForm } from 'react-hook-form'
+
+
+const SouvenirItemBookCreation = () => {
+	const { register, watch, handleSubmit, errors, setError} = useForm();
+  	const author = watch("author", "John Doe");
+	const onSubmitHandler = data => {
+		/*
+  		onSubmit(data)
+  		.then(v=>{
+  			//setSuccess({message : v});
+  			console.log(v)
+  		})
+  		.catch(error=>{
+  			console.log(error);
+  			for(let e of error?.details){
+  				setError(e?.details?.origin || "main" , e.type, e.details.value);		
+  			}
+  		});
+  		*/
+  	};
 	return (
 		<div className="page__content">
 			<div className="container">
@@ -30,11 +46,27 @@ const SouvenirItemBookCreation = ({}) => {
 					</h1>
 				</div>
 				<div className="shop">
-					<form className="shop-creation" onSubmit={data=>{console.log(data);return false;}}>
+					<form className="shop-creation" onSubmit={handleSubmit(onSubmitHandler)}>
 						<div className="shop-creation__order">
-							<PrivateArchiveWrapper raw={true}/>
+							<PrivateArchiveWrapper raw={true} author={author}/>
 						</div>
 						<div>
+							<div className="field">
+								<label 
+									htmlFor="author"
+									className="field__label"
+								>
+									author
+								</label>
+								<input 
+									id="author"
+									className="input--text" 
+									type="text"
+									name="author"
+									ref={register({maxLength: 32})}
+									defaultValue={author}
+								/>
+							</div>
 							<input type="submit" value={i18n.__("souvenir.item.book.button.continue")} className="button button--primary"/>
 						</div>
 					</form>

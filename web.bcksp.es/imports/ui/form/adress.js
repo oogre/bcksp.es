@@ -2,12 +2,11 @@
   bcksp.es - adress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:22:01
-  @Last Modified time: 2020-01-11 13:16:12
+  @Last Modified time: 2020-01-14 21:53:02
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
 import React, { useState } from 'react';
-import FixeError from './../fixe/error.js';
 import TextInput from './../shared/textInput.js';
 import { useForm } from 'react-hook-form'
 

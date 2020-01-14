@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 20:06:21
-  @Last Modified time: 2020-01-14 08:37:05
+  @Last Modified time: 2020-01-14 23:16:07
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -10,6 +10,28 @@ import React, { useEffect, useState } from 'react';
 import { config } from './../../startup/config.js';
 
 let page = 0;
+
+
+String.prototype.debit = function(size=1){
+	size = Math.ceil(size);
+	if(size==Infinity) return [this.toString()];
+	if(size<1)return false;
+	if(this.length==0) return false;
+	return this.match(new RegExp(".{1,"+ size +"}","g"))
+};
+
+String.prototype.symetricPad = function(size=0, char=" "){
+	let count = size - this.length;
+	if(count < 0) return false;
+	if(count == 0)return this.toString()
+	if(count == 1)return this.toString()+char;
+
+	let padding = (new Array(count)).fill(char).join("");
+	padding = padding.debit(padding.length/2)
+	return padding[0]+this.toString()+padding[1];
+}
+
+const whitePage = (count=1)=>(new Array(count)).fill(0).map(()=>(new Array(config.book.page.getMaxChar())).fill(" ").join("")).join("")  ;
 
 const ArchiveLine = ({content}) =>{
 	return (
@@ -26,6 +48,8 @@ const ArchiveLine = ({content}) =>{
 
 const ArchivePage = ({content, bellePage, margin, header, fontSize}) =>{
 	page ++;
+	// cut content into 32 lines block
+	content = content.debit(config.book.page.line.char.count)
 	return (
 		<span className="page--wrapper" style={{
 			width: "50%",
@@ -67,7 +91,7 @@ const ArchivePage = ({content, bellePage, margin, header, fontSize}) =>{
 				overflow: "hidden"
 			}}>
 			{	
-				content.match(new RegExp(".{1,"+config.book.page.line.char.count+"}","g"))
+				content
 				.map((lineContent, k) => (
 					<ArchiveLine 
 						key={k}
@@ -82,6 +106,8 @@ const ArchivePage = ({content, bellePage, margin, header, fontSize}) =>{
 
 const ArchivesFolio = ({content, margin, height, header, fontSize, folioCount}) => {
 	const isBellePage = k => k%2==1;
+	// cut intro into 1 pages block
+	content = content.debit(config.book.page.getMaxChar())
 	return (
 		<div className="folio" style={{
 			display: "flex",
@@ -91,7 +117,7 @@ const ArchivesFolio = ({content, margin, height, header, fontSize, folioCount}) 
 			height : height + "px"
 		}}>
 		{	
-			content.match(new RegExp(".{1,"+ config.book.page.getMaxChar() +"}","g"))
+			content
 			.map((pageContent, k) => (
 				<ArchivePage 
 					key={k}
@@ -107,16 +133,10 @@ const ArchivesFolio = ({content, margin, height, header, fontSize, folioCount}) 
 	);
 }
 
-
-
-
-const whitePage = (count=1)=>(new Array(count)).fill(0).map(()=>(new Array(config.book.page.getMaxChar())).fill(" ").join("")).join("")  ;
-
-const ArchiveBook = ({intro, preface, content}) => {
+const ArchiveBook = ({intro=false, preface=false, content=false, author=false}) => {
 	const [fontSize, setFontSize] = useState(10);
 	const [width, setWidth] = useState(10);
 	const archivePage = config.book.page.count - (2 + ((intro?.length||0)+(preface?.length||0))/config.book.page.getMaxChar());
-	content = whitePage(1) + content + whitePage(archivePage);
 	const margin = {
 		top : fontSize * width * 1 / 210,
 		bottom : fontSize * width * 0.635 / 210,
@@ -156,6 +176,25 @@ const ArchiveBook = ({intro, preface, content}) => {
 			window.removeEventListener("resize", computeFontSize);
 		}
 	}, []);
+	
+	if(intro){
+		intro = intro.replace("[          NUMBER+DATE         ]",  (moment().format('MM-YYYY')+" 1/2").symetricPad(config.book.page.line.char.count));
+		if(author){
+			intro = intro.replace("[         AUTHOR NAME          ]", author.symetricPad(config.book.page.line.char.count));	
+		}
+		// cut intro into 2 pages block
+		intro = intro.debit(2*config.book.page.getMaxChar());
+	}
+	if(preface){
+		// cut intro into 2 pages block
+		preface = preface.debit(2*config.book.page.getMaxChar());
+	}
+	if(content){
+		// pad content to fit the book
+		content = whitePage(1) + content + whitePage(archivePage);
+		// cut intro into 2 pages block
+		content = content.debit(2*config.book.page.getMaxChar());
+	}
 
 	return (
 		<div id="book" style={{
@@ -165,7 +204,6 @@ const ArchiveBook = ({intro, preface, content}) => {
 		}}>
 		{ 
 			intro
-			.match(new RegExp(".{1,"+ 2*config.book.page.getMaxChar()+"}","g"))
 			.map((folioContent, k) => (
 				<ArchivesFolio 
 					key={k}
@@ -178,7 +216,6 @@ const ArchiveBook = ({intro, preface, content}) => {
 		}
 		{ 
 			preface
-			.match(new RegExp(".{1,"+ 2*config.book.page.getMaxChar()+"}","g"))
 			.map((folioContent, k) => (
 				<ArchivesFolio 
 					key={k}
@@ -191,9 +228,8 @@ const ArchiveBook = ({intro, preface, content}) => {
 				/>
 			))				
 		}
-		{ 
+		{
 			content
-			.match(new RegExp(".{1,"+ 2*config.book.page.getMaxChar()+"}","g"))
 			.map((folioContent, k) => (
 				<ArchivesFolio 
 					key={k}
