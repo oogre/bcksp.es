@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-01-13 20:09:32
+  @Last Modified time: 2020-01-14 08:30:29
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
 import { config } from './../../startup/config.js';
-
+import { intro, preface } from './../../api/books/intro.js';
 let privateStreamedContent = "";
 
 
@@ -31,7 +31,7 @@ const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false}) => {
 			handle.stop();
 		}
 	}, []); 
-	if(raw) return ( <ArchiveBook content={archive.content}/> );
+	if(raw) return ( <ArchiveBook intro={intro} preface={preface} content={archive.content}/> );
 	
 	return (
 		<LiveFrame	
