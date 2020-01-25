@@ -2,9 +2,10 @@
   bcksp.es - blindfieldClass.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:16:39
-  @Last Modified time: 2019-12-19 20:19:41
+  @Last Modified time: 2020-01-15 19:02:05
 \*----------------------------------------*/
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import FixeWait from "./../fixe/wait.js";
 import {
 	SettingsBlindFieldAdd,
 	SettingsBlindFieldRemove
@@ -13,60 +14,80 @@ import T from './../../i18n/index.js';
 import { config } from '../../startup/config.js'
 import MyToggleButton from "./../shared/MyToggleButton.js";
 
-export default class BlindfieldClass extends Component {
-	constructor(props){
-		super(props);
-	}
-	handleToggleBlindfield(type, classFlag, toggle){
-		if(toggle){
-			SettingsBlindFieldRemove.call({type, classFlag});
-		}else{
-			SettingsBlindFieldAdd.call({type, classFlag});
-		}
+const BlindfieldClass = ({settings}) => {
+	const [loading, setLoading] = useState(false);
+
+	const handleToggleBlindfield = (type, classFlag, toggle) => {
+		if(loading)return;
+		setLoading(true);
+		let Action = toggle ? SettingsBlindFieldRemove : SettingsBlindFieldAdd;
+		Action.call({type, classFlag}, (err, res) =>{
+			setLoading(false);
+			console.log(err, res);
+		});
 		return false;
-	}
-	handleBlindfieldClassBlur(event){
+	};
+	const handleBlindfieldClassSubmit = (event) => {
 		event.preventDefault();
-		event.target.value = event.target.value.trim();
-		if(_.isEmpty(event.target.value))return false;
-		this.handleToggleBlindfield(event.target.value, true, false)
-		event.target.value = "";
+		let value;;
+		switch(event.type){
+			case "submit" :
+				value = event.target[0].value;
+				event.target[0].value = "";
+			break;
+			case "blur" : 
+				value = event.target.value;
+				event.target.value = "";
+			break;
+		}
+		value = value.trim();
+		if(_.isEmpty(value)) return false;
+		handleToggleBlindfield(value, true, false)
 		return false;
-	}
-	render(){
-		return (
-			<div>
-				<h2><T>userprofile.blindfield.class.title</T></h2>
-				<ul className="toggle-list">
+	};
+	const displayBlindfieldClass = (type, k) => (
+		<li key={k}>
+			<span className="input-wrapper--inline">
+				 <span>{type} :</span>
+			</span>
+			<span className="input-wrapper--inline">
+				<MyToggleButton
+					value={ true }
+					onToggle={ flag => handleToggleBlindfield(type, true, flag) }
+					activeLabel={i18n.__("userprofile.settings.blindfield.class.activeLabel")}
+					inactiveLabel={i18n.__("userprofile.settings.blindfield.class.inactiveLabel")}
+				/>
+			</span>
+		</li>
+	);
+	return (
+		<div>
+			<h2><T>userprofile.settings.blindfield.class.title</T></h2>
+			<ul className="toggle-list">
+				<li>
+					<span className="input-wrapper--inline">
+						<T>userprofile.settings.blindfield.class.desc</T>
+					</span>
+				</li>
+				{ 
+					loading && 
 					<li>
 						<span className="input-wrapper--inline">
-							<T>userprofile.blindfield.class.desc</T>
+							<FixeWait/>
 						</span>
 					</li>
-					{
-						this.props.settings.blindfield.class.map((c, k) => (
-							<li key={k}>
-								<span className="input-wrapper--inline">
-									 <span>{c} :</span>
-								</span>
-								<span className="input-wrapper--inline">
-									<MyToggleButton
-										value={ true }
-										onToggle={flag=>{this.handleToggleBlindfield(c, true, flag)}}
-										activeLabel={i18n.__("userprofile.whitelisted")}
-										inactiveLabel={i18n.__("userprofile.blacklisted")}
-									/>
-								</span>
-							</li>
-						))
-					}
-					<li>
-						<div className="field field--profile">
-							<input className="input--text" type="text" onBlur={this.handleBlindfieldClassBlur.bind(this)}/>
-						</div>
-					</li>
-				</ul>
-			</div>
-		);
-	}
+				}
+				{ settings.blindfield.class.map(displayBlindfieldClass) }
+				<li>
+					<div className="field field--profile">
+						<form onSubmit={handleBlindfieldClassSubmit}>
+							<input className="input--text" type="text" onBlur={ handleBlindfieldClassSubmit }/>
+						</form>
+					</div>
+				</li>
+			</ul>
+		</div>
+	);
 }
+
+export default BlindfieldClass;

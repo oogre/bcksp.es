@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-01-13 14:49:42
+  @Last Modified time: 2020-01-25 21:01:49
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -18,8 +18,9 @@
   import SouvenirItemBookDescription from '../imports/ui/souvenir/items/book/description.js';
   import SouvenirItemPosterCreation from '../imports/ui/souvenir/items/poster/creation.js';
   import SouvenirItemBookCreation from '../imports/ui/souvenir/items/book/creation.js';
-  
   import SouvenirItemPosterOrder from '../imports/ui/souvenir/items/poster/order.js';
+  import SouvenirItemBookOrder from '../imports/ui/souvenir/items/book/order.js';
+  import FormContact from '../imports/ui/form/contact';
   import OrderDetail from '../imports/ui/order/detail.js';
   
   import TemplateFull from '../imports/ui/template/full.js';
@@ -102,6 +103,19 @@ FlowRouter.route( '/souvenir', {
 		
 	}
 });
+
+FlowRouter.route( '/contact', {
+	name: 'contact',
+	action( params ) {
+		render(<TemplateFull><FormContact/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+
 /*
 FlowRouter.route( '/souvenir/:type', {
 	name: 'item',
@@ -156,6 +170,19 @@ loginRoutes.route("/profile", {
 	},
 	subscriptions( params, queryParams ) {
 		this.register('settings.private', Meteor.subscribe('settings.private'));
+	}
+});
+
+
+
+FlowRouter.route( '/souvenir/contact', {
+	name: 'contactSouvenir',
+	action( params ) {
+		render(<TemplateFull><FormContact type="souvenir"/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
 	}
 });
 
@@ -223,9 +250,21 @@ FlowRouter.route( '/souvenir/poster/order/:id', {
 		setupView();
 	},
 	subscriptions( params, queryParams ) {
-		this.register('souvenir.get', Meteor.subscribe('souvenir.get',  params.id));
+		this.register('souvenir.get.poster', Meteor.subscribe('souvenir.get.poster',  params.id));
 	}
 });
+
+FlowRouter.route( '/souvenir/book/order/:id', {
+	name: 'bookOrder',
+	action( params ) {
+		render(<TemplateFull><SouvenirItemBookOrder id={params.id}/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		this.register('souvenir.get.book', Meteor.subscribe('souvenir.get.book',  params.id));
+	}
+});
+
 
 FlowRouter.route( '/order/:id', {
 	name: 'orderDetail',

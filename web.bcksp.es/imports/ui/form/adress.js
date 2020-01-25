@@ -2,30 +2,20 @@
   bcksp.es - adress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:22:01
-  @Last Modified time: 2020-01-14 21:53:02
+  @Last Modified time: 2020-01-25 19:47:18
 \*----------------------------------------*/
 
+import React from 'react';
 import T from './../../i18n/index.js';
-import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import TextInput from './../shared/textInput.js';
-import { useForm } from 'react-hook-form'
-
+import { errorHandler } from './../../utilities/ui.js';
 
 const FormAdress = ({className, children, name, onSubmit}) => {
-	const { register, handleSubmit, errors, setError, setValue} = useForm();
-	const [success, setSuccess] = useState();
+	const { register, handleSubmit, errors, setError} = useForm();
 	const onSubmitHandler = data => {
   		onSubmit(data)
-  		.then(v=>{
-  			//setSuccess({message : v});
-  			console.log(v)
-  		})
-  		.catch(error=>{
-  			console.log(error);
-  			for(let e of error?.details){
-  				setError(e?.details?.origin || "main" , e.type, e.details.value);		
-  			}
-  		});
+  		.catch(error => errorHandler(error, setError) );
   	};
 	return (
 		<form className={className} onSubmit={handleSubmit(onSubmitHandler)}>
@@ -141,8 +131,6 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 			{
 				React.Children.map(children, (child, k) => child )
 			}
-			{success?.message}
-			{errors?.main?.message}
 		</form>
 	)
 }

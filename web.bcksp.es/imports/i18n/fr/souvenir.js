@@ -2,7 +2,7 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2019-12-21 14:20:05
+  @Last Modified time: 2020-01-25 20:58:05
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	souvenir : {
@@ -24,10 +24,13 @@ i18n.addTranslation('fr', {
 				button : {
 					create : "téléchargez votre archive"
 				},
-				button : "télécharger",
 				file : {
 					name : "archive.bcksp.es",
 					content : "Date de création de votre archive : {$createdAt}\nDate de la dernière mise à jour de votre archive : {$updatedAt}\nQuantité de text de votre archive : {$count}\nVotre archive : \n{$content}"
+				},
+				confirmation : {
+					title : "Merci!",
+					content : "Votre demande de téléchargement à été prise en compte"
 				}
 			},
 			book : {
@@ -45,19 +48,40 @@ i18n.addTranslation('fr', {
 				price : "à partir de ... €",
 				form : {
 					author : {
-						label : "nom de l'auteur à imprimer sur la couverture",
+						label : "nom de l'auteur",
 						placeholder : "anonyme"
 					},
 					finishing : {
-						label : "finition",
-						basic : "livre de poche : production de base",
-						premium : "livre d'art : relié à la main"
-					}
+						label : "finitions",
+						BASIC : {
+							label : "livre de poche",
+							description : "couverture souple - dos carré collé",
+						},
+						PREMIUM : {
+							label : "livre d'art",
+							description : "couverture rigide - relié à la main",
+						}
+					},
+					licence : {
+						label : "le second exemplaire de votre livre est ",
+						OPEN_ACCESS : {
+							label : "accès libre",
+							description : "sous licence CC-BY-NC-SA"
+						},
+						CLOSE_ACCESS : {
+							label : "contenu inaccessible",
+								description : "cellé et sous licence CC-BY-NC-SA"
+						},
+						NO_ACCESS : {
+							label : "aucun accès possible",
+							description : "détruit après fabrication"
+						},
+					},
+					
 				},
 				confirmation : {
-					result : "Merci!<br/>"+
-							 "Un email de confirmation vous a été envoyé!<br/>"+
-							 "Voici l'identifiant de votre commande : {$orderID}<br/>"
+					title : "Merci!",
+					content : "Votre commande à pour identifiant : {$orderID}"
 				}
 			},
 
@@ -90,9 +114,8 @@ i18n.addTranslation('fr', {
 						"De là, s'ouvre à nous un point de vue,<br/>"+
 						"nous accédons aux forces en présence.",
 				confirmation : {
-					result : "Merci!<br/>"+
-							 "Un email de confirmation vous a été envoyé!<br/>"+
-							 "Voici l'identifiant de votre commande : {$orderID}<br/>"
+					title : "Merci!",
+					content : "Votre commande à pour identifiant : {$orderID}"
 				}
 			},
 
@@ -100,17 +123,21 @@ i18n.addTranslation('fr', {
 				title : "Une demande particulière?",
 				img : "/images/souvenirs/contact.1.jpg",
 				description : "",
-				button : "envoyer",
+				button : "envoyer votre demande",
 				form : {
 					email : {
 						label : "Votre adresse email"
 					},
 					subject : {
-						label : "Sujet de votre message"
+						label : "Sujet de votre demande"
 					},
 					message : {
-						label : "Votre message"
+						label : "Votre demande"
 					}
+				},
+				confirmation : {
+					title : "Merci!",
+					content : "Votre demande à été envoyé"
 				}
 			},
 			

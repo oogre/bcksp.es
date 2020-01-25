@@ -2,6 +2,7 @@
   > Form Element
 \*------------------------------------*/
 
+
 // Field
 // Input and label container
 // ---------------------
@@ -45,6 +46,15 @@
   }
 }
 
+
+
+// Error Message
+// ---------------------
+.field .error-message {
+  color : $functional-error;
+}
+
+
 // Input Wrapper Inline
 // ---------------------
 .input-wrapper--inline {
@@ -76,6 +86,14 @@
     outline: 1px solid #000;
   }
 }
+
+// Error state
+.input--text.error, 
+.textarea.error {
+  border-color: $functional-error;
+}
+
+
 
 .input--text--address + .input--text--address {
   margin-top: $size-20;

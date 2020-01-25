@@ -2,21 +2,17 @@
   bcksp.es - wait.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 00:30:58
-  @Last Modified time: 2019-01-03 16:07:40
+  @Last Modified time: 2020-01-15 06:51:50
 \*----------------------------------------*/
-import React, { Component } from 'react';
+import React from 'react';
 
 // App component - represents the whole app
-export default class FixeWait extends Component {
-	constructor(props){
-		super(props);
-	}
-
-	render() {
-		return (
-			<div className="container" style={{textAlign: "center"}}>
-				<img src="/images/loader.old.gif" />
-			</div>
-		);
-	}
+const FixeWait = ()=>{
+	return (
+		<div className="container" style={{textAlign: "center"}}>
+			<img src="/images/loader.old.gif" />
+		</div>
+	);
 }
+
+export default FixeWait;

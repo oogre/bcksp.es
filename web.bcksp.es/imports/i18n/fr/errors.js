@@ -2,7 +2,7 @@
   bcksp.es - errors.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2020-01-09 20:46:35
+  @Last Modified time: 2020-01-25 14:16:40
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	errors : {
@@ -22,6 +22,9 @@ i18n.addTranslation('fr', {
 			"not-a-string" : "nous attendons que votre mot de passe soit du texte",
 			"min-string" : "nous attendons que votre mot de passe compte au minimum {$length} charactèrs",
 			"max-string" : "nous attendons que votre mot de passe compte au maximum {$length} charactèrs",
+		},
+		author : {
+			"max-string" : "nous attendons que votre nom d'auteur compte au maximum {$length} charactèrs",	
 		},
 		passwordConfirm : {
 			required : "nous souhaitons que vous confirmiez votre mot de passe",
@@ -47,6 +50,10 @@ i18n.addTranslation('fr', {
 			"not-a-string" : "nous avons besoin que cette donnée soit du texte : '{$value}'",
 			"not-a-number" : "nous avons besoin que cette donnée soit un nombre",
 			"greater-than" : "{$a} est plus petit que {$b}",
-		}
+		},
+		default : {
+			required : "nous avons besoin de cette information"
+		},
+		
 	}
 });

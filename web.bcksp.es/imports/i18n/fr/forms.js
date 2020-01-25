@@ -2,7 +2,7 @@
   bcksp.es - forms.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:33:40
-  @Last Modified time: 2019-05-04 18:59:13
+  @Last Modified time: 2020-01-25 20:57:58
 \*----------------------------------------*/
 i18n.addTranslation('fr', {
 	forms : {
@@ -33,6 +33,26 @@ i18n.addTranslation('fr', {
 			email : "votre email",
 			pwd : "votre mot de passe",
 			action : "connection",
+		},
+		contact : {
+			title : "dites nous bonjour",
+			img : "/images/souvenirs/contact.1.jpg",
+			button : "envoyer votre message",
+			form : {
+				email : {
+					label : "Votre adresse email"
+				},
+				subject : {
+					label : "Sujet de votre message"
+				},
+				message : {
+					label : "Votre message"
+				}
+			},
+			confirmation : {
+				title : "Merci!",
+				content : "Votre message à été envoyé"
+			}
 		}
 	}
 });

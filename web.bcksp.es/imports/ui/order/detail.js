@@ -2,12 +2,12 @@
   bcksp.es - detail.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-11 16:15:12
-  @Last Modified time: 2020-01-11 17:38:27
+  @Last Modified time: 2020-01-24 14:24:40
 \*----------------------------------------*/
 
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Orders , OrderState} from "./../../api/souvenirs/souvenirs.js";
+import { Orders } from "./../../api/souvenirs/souvenirs.js";
 import GeneratorPoster from './../generator/poster.js';
 
 const OrderDetail = ({orders, isReady}) => {

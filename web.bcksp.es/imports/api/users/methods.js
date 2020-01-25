@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-09 20:37:19
+  @Last Modified time: 2020-01-25 21:17:44
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import T from './../../i18n/index.js';
@@ -66,6 +66,39 @@ export const GetLoginTokenUser = new ValidatedMethod({
 
 
 
+export const HardDisconnect = new ValidatedMethod({
+	name: 'Users.methods.hard.disconnect',
+	validate() {
+		
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		Meteor.users.update({ 
+			_id : this.userId
+		}, {
+			$unset : {
+				"services.accessTokens.tokens" : null,
+				"services.resume.loginTokens" : null
+			}
+		});
+
+		return {
+			success : true,
+			message : {
+				title : i18n.__("methods.user.HardDisconnect.title"),
+				content : "",
+			}
+		};
+	}
+});
+
+
+
+
 export const ResetPassword = new ValidatedMethod({
 	name: 'Users.methods.reset.password',
 	validate({device, email}) {
@@ -86,7 +119,6 @@ export const ResetPassword = new ValidatedMethod({
 		
 		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
 		
-
 		Accounts.sendResetPasswordEmail(user._id, getMainEmail(user.emails));
 		
 		Meteor.users.update({_id : user._id}, {
@@ -106,7 +138,7 @@ export const UpdateEmail = new ValidatedMethod({
 	name: 'Users.methods.update.email',
 	validate({email}) {
 		checkUserLoggedIn();
-		checkValidEmail(email, false);
+		checkValidEmail(email, false, "email");
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -115,8 +147,8 @@ export const UpdateEmail = new ValidatedMethod({
 	},
 	run({email}) {
 		if (this.isSimulation)return;
-		Accounts.addEmail(Meteor.userId(), email)
-		Accounts.sendVerificationEmail(Meteor.userId(), email)
+		Accounts.addEmail(this.userId, email)
+		Accounts.sendVerificationEmail(this.userId, email)
 		return {
 			success : true,
 			message : i18n.__("methods.user.updateEmail.success")

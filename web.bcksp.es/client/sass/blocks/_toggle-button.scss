@@ -2,7 +2,7 @@
 * @Author: Evrard Vincent
 * @Date:   2019-04-06 22:44:17
 * @Last Modified by:   oogre
-* @Last Modified time: 2019-04-06 22:56:51
+* @Last Modified time: 2020-01-25 17:34:34
 */
 .wrapper__toggle-button {
   font-family: $font-title;
@@ -10,4 +10,12 @@
 
 .wrapper__toggle-button:focus-within{
 	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.wrapper__toggle-button>div:first-child>div:first-child{
+	border:solid 1px black;
+}
+
+.wrapper__toggle-button.input-error>div:first-child>div:first-child{
+	border-color:$functional-error;
 }

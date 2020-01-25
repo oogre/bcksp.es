@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 20:06:21
-  @Last Modified time: 2020-01-14 23:16:07
+  @Last Modified time: 2020-01-24 14:48:59
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';
@@ -133,7 +133,8 @@ const ArchivesFolio = ({content, margin, height, header, fontSize, folioCount}) 
 	);
 }
 
-const ArchiveBook = ({intro=false, preface=false, content=false, author=false}) => {
+const ArchiveBook = ({intro=false, preface=false, content=false, author=""}) => {
+
 	const [fontSize, setFontSize] = useState(10);
 	const [width, setWidth] = useState(10);
 	const archivePage = config.book.page.count - (2 + ((intro?.length||0)+(preface?.length||0))/config.book.page.getMaxChar());
@@ -179,9 +180,7 @@ const ArchiveBook = ({intro=false, preface=false, content=false, author=false}) 
 	
 	if(intro){
 		intro = intro.replace("[          NUMBER+DATE         ]",  (moment().format('MM-YYYY')+" 1/2").symetricPad(config.book.page.line.char.count));
-		if(author){
-			intro = intro.replace("[         AUTHOR NAME          ]", author.symetricPad(config.book.page.line.char.count));	
-		}
+		intro = intro.replace("[         AUTHOR NAME          ]", author.substr(0, config.book.page.line.char.count).symetricPad(config.book.page.line.char.count));	
 		// cut intro into 2 pages block
 		intro = intro.debit(2*config.book.page.getMaxChar());
 	}
@@ -195,7 +194,7 @@ const ArchiveBook = ({intro=false, preface=false, content=false, author=false}) 
 		// cut intro into 2 pages block
 		content = content.debit(2*config.book.page.getMaxChar());
 	}
-
+	
 	return (
 		<div id="book" style={{
 			fontFamily: "monospace",

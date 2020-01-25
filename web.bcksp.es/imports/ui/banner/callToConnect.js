@@ -2,35 +2,25 @@
   bcksp.es - callToConnect.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 19:41:50
-  @Last Modified time: 2019-04-18 16:56:28
+  @Last Modified time: 2020-01-19 19:15:36
 \*----------------------------------------*/
+import React from 'react';
 import T from './../../i18n/index.js';
-import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
-class CallToConnect extends Component {
-	constructor(props){
-		super(props);
-	}
+const CallToConnect = ({isConnected, extensionInstalled}) => {
 
-	hasToDisplayCallToConnect(){
-		return !this.props.isConnected && this.props.extensionInstalled;
-	}
-
-	render() {
-		if(this.hasToDisplayCallToConnect()){
-			return (
-				<div className="call-to-connect">
-					<div className="container--large">
-						<p className="call-to-connect__title"><T>extension.call.login</T></p>
-						<p className="call-to-connect__content"><T>extension.call.instruction</T></p>
-					</div>
+	if(!isConnected && extensionInstalled){
+		return (
+			<div className="call-to-connect">
+				<div className="container--large">
+					<p className="call-to-connect__title"><T>extension.call.login</T></p>
+					<p className="call-to-connect__content"><T>extension.call.instruction</T></p>
 				</div>
-			);
-		}else{
-			return " ";
-		}
+			</div>
+		);
 	}
+	return (null);
 }
 
 export default withTracker(self => {

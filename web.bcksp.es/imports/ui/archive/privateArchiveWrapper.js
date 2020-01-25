@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-01-14 21:49:38
+  @Last Modified time: 2020-01-24 14:15:07
 \*----------------------------------------*/
 
 import T from './../../i18n/index.js';

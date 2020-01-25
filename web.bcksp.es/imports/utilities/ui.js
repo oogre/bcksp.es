@@ -2,10 +2,12 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2019-05-20 13:20:18
+  @Last Modified time: 2020-01-25 19:42:37
 \*----------------------------------------*/
 import T from './../i18n/index.js';
+import { Session } from "meteor/session";
 import { config } from './../startup/config.js';
+
 
 export async function needConfirmation(context){
 	if(confirm(i18n.__("utilities.needConfirmation"))){
@@ -14,7 +16,6 @@ export async function needConfirmation(context){
 		throw new Error("The action has been canceled");
 	}
 }
-
 
 export function mobileAndTabletcheck() {
   var check = false;
@@ -39,6 +40,7 @@ export function installExtension(){
 	}
 	return false;
 }
+
 export function setupView(){
 	if(FlowRouter.current().context.hash == ""){
 		$('html, body').animate({
@@ -68,4 +70,54 @@ export function getMessageFromError(error){
 		return error.message;
 	}
 	return error.toString();
+}
+
+
+export function errorHandler(error, setErrorMessage=()=>{}){
+	if (!error){
+		return false;
+	}
+	else if(_.isArray(error.details) && !_.isEmpty(error.details)){
+		for(let e of error.details){
+			if(e?.details?.origin){
+				setErrorMessage(e?.details?.origin , e.type, e.details.value);			
+			}
+			else {
+				Session.set("error", {
+					origin : "main",
+					type : e.type, 
+					value : e.details.value
+				});
+			}
+		}
+	}
+	else if(error.errorType == "Meteor.Error"){
+		Session.set("error", {
+			origin : "main",
+			type : "Meteor.Error", 
+			value : error.reason
+		});
+	}
+	else if(error.name == "Error"){
+		Session.set("error", {
+			origin : "main",
+			type : "Error", 
+			value : error.message
+		});
+	}else {
+		Session.set("error", {
+			origin : "main",
+			type : "Unknow", 
+			value : error.toString()
+		});
+	}
+	return false;
+}
+
+export function successHandler({success, message, data}){
+	if (!success){
+		return false;
+	}
+	Session.set("success", message || data);
+	return true;
 }

@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-01-09 14:23:06
+  @Last Modified time: 2020-01-25 19:32:47
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 
@@ -93,7 +93,14 @@ export const ArchiveDownload = new ValidatedMethod({
 						count : data.count
 					})
 				];
-				return file;
+				return {
+					success : true,
+					data : file,
+					message : {
+						title : i18n.__("souvenir.item.download.confirmation.title"),
+						content : i18n.__("souvenir.item.download.confirmation.content")
+					}
+				};;
 			})
 			.catch(err=>console.log(err));
 		}

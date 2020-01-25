@@ -2,13 +2,29 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-01-10 19:26:44
+  @Last Modified time: 2020-01-25 17:19:39
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
 import { config } from './../startup/config.js';
 import T from './../i18n/index.js';
 
+export const regexp = {
+	email : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+}
+export function checkDBReference(request, Collection, origin){
+	if(!Collection.findOne(request)){
+			throw new ValidationError([{
+				name: 'type',
+				type: 'not-recognize',
+				details: {
+				  value: i18n.__("errors.type.not-recognize"),
+				  origin : "souvenir._id",
+				}
+			}]);
+		}
+
+}
 export function checkObject(value, origin){
 	if(!_.isObject(value) || _.isEmpty(value))
 			throw new ValidationError([{
@@ -134,7 +150,6 @@ export function checkValidDevice(value){
 }
 
 export function checkValidEmail(value, hasToExist = true, origin=undefined){
-	let EmailRegExp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 	if(_.isEmpty(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'required',
@@ -151,7 +166,7 @@ export function checkValidEmail(value, hasToExist = true, origin=undefined){
 				  origin : origin
 				}
 			}]);
-	if(!EmailRegExp.test(value)) throw new ValidationError([{
+	if(!regexp.email.test(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'not-an-email',
 				details: {

@@ -2,12 +2,12 @@
   bcksp.es - Stat.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 00:31:09
-  @Last Modified time: 2020-01-11 17:12:59
+  @Last Modified time: 2020-01-24 14:24:51
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from "./../api/archives/archives.js";
-import { Souvenirs, Orders , OrderState} from "./../api/souvenirs/souvenirs.js";
+import { Souvenirs, Orders } from "./../api/souvenirs/souvenirs.js";
 // App component - represents the whole app
 
 class Stat extends Component {
