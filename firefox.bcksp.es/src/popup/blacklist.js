@@ -2,15 +2,15 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2020-01-24 13:38:43
+  @Last Modified time: 2020-01-26 22:02:42
 \*----------------------------------------*/
 import FixeWait from './fixe/wait.js';
 import React, { Component } from 'react';
-import { T } from './../utilities/tools.js';
 import MessageError from './message/error.js';
 import MyToggleButton from './MyToggleButton.js';
 import { sendMessage } from './../utilities/com.js';
 import { log, info, warn, error } from './../utilities/log.js';
+import { T } from './../utilities/tools.js';
 
 export default class Blacklist extends Component {
 	constructor(props) {

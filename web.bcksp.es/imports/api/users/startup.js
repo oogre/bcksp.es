@@ -2,13 +2,10 @@
   web.bitRepublic - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:47
-  @Last Modified time: 2020-01-09 16:56:43
+  @Last Modified time: 2020-01-26 18:48:09
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
-import { 
-	log,
-	warn
-} from './../../utilities/log.js';
+import { log, warn } from './../../utilities/log.js';
 
 Meteor.startup(() => {
 	if(Meteor.isServer){

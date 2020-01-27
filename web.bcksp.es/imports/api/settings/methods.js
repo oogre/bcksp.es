@@ -2,27 +2,28 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2020-01-19 22:25:01
+  @Last Modified time: 2020-01-26 15:31:32
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
-import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-
 import { Settings } from './settings.js';
 import { config } from './../../startup/config.js';
-import { streamer } from './../streamer.js';
-
+import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { 
+	checkBlindfieldRemoveAllowed,
+	checkDBReference,
 	checkUserLoggedIn,
 	checkString,
 	checkUrl
 } from './../../utilities/validation.js';
-import SettingsUtil from './../../utilities/settings.js';
 
 export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 	name: 'Settings.Toggle.Publish.To.Public.Feed',
 	validate() {
 		checkUserLoggedIn();
+		checkDBReference({
+			owner : this.userId
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -38,31 +39,22 @@ export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 				publishToPublicFeed : 1
 			}
 		});
-		if(!mySettings){
-			let settingsId = SettingsUtil.create();
-			Settings.update({
-				_id : settingsId
-			},{
-				$set : {
-					owner : this.userId,
-					updatedAt : new Date()	
-				}
-			});
-
-		}else{
-			Settings.update({
-				_id : mySettings._id,
-			},{
-				$set : {
-					publishToPublicFeed : !mySettings.publishToPublicFeed,
-					updatedAt : new Date()
-				}
-			});
-		}
+		
+		Settings.update({
+			_id : mySettings._id,
+		},{
+			$set : {
+				publishToPublicFeed : !mySettings.publishToPublicFeed,
+				updatedAt : new Date()
+			}
+		});
 		
 		return {
 			success : true,
-			data : "Set publish To Public Feed to : "+ (!mySettings ? true : !mySettings.publishToPublicFeed)
+			message : {
+				title : i18n.__("userprofile.settings.publishToPublicFeed.confirmation."+(mySettings.publishToPublicFeed ? "disactive" : "active") +".title"),
+				content : i18n.__("userprofile.settings.publishToPublicFeed.confirmation."+(mySettings.publishToPublicFeed ? "disactive" : "active") +".content")
+			}
 		};
 	}
 });
@@ -73,6 +65,13 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 	validate({ type, classFlag=false }) {
 		checkUserLoggedIn();
 		checkString(type);
+		classFlag = "blindfield."+(classFlag?"class":"types");
+		checkDBReference({
+			owner : this.userId,
+			[classFlag] : {
+				$nin: [type]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -80,24 +79,27 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ type, classFlag=false }) {
+		classFlag = "blindfield."+(classFlag?"class":"types");
 		this.unblock();
-		let search = {
-			owner : this.userId
-		};
-		search["blindfield."+(classFlag?"class":"types")] = {
-			$nin: [type]
-		};
-		let value = {
-			$push : {},
+		Settings.update({
+			owner : this.userId,
+			[classFlag] : {
+				$nin: [type]
+			}
+		}, {
+			$push : {
+				[classFlag] : type
+			},
 			$set : {
 				updatedAt : new Date()
 			}
-		}
-		value.$push["blindfield."+(classFlag?"class":"types")] = type
-		Settings.update(search,value);
+		});
 		return {
 			success : true,
-			data : "BlindField Added"
+			message : {
+				title : i18n.__("userprofile.settings.blindfield.confirmation.add.title"),
+				content : i18n.__("userprofile.settings.blindfield.confirmation.add.content", {field : type})
+			}
 		};
 	}
 });
@@ -107,6 +109,14 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 	validate({ type, classFlag=false }) {
 		checkUserLoggedIn();
 		checkString(type);
+		checkBlindfieldRemoveAllowed(classFlag, type);
+		classFlag = "blindfield."+(classFlag?"class":"types");
+		checkDBReference({
+			owner : this.userId,
+			[classFlag] : {
+				$in: [type]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -114,32 +124,27 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ type, classFlag=false }) {
-		if(	(classFlag && config.settings.blindfield.disabled.blocked.class.includes(type)) ||
-			(!classFlag && config.settings.blindfield.disabled.blocked.type.includes(type))
-		){
-			return {
-				success : true,
-				data : "Nothing Removed"
-			}
-		}
 		this.unblock();
-		let search = {
-			owner : this.userId
-		};
-		search["blindfield."+(classFlag?"class":"types")] = {
-			$in: [type]
-		};
-		let value = {
-			$pull : {},
+		classFlag = "blindfield."+(classFlag?"class":"types");
+		Settings.update({
+			owner : this.userId,
+			[classFlag] : {
+				$in: [type]
+			}
+		}, {
+			$pull : {
+				[classFlag] : type
+			},
 			$set : {
 				updatedAt : new Date()
 			}
-		}
-		value.$pull["blindfield."+(classFlag?"class":"types")] = type;
-		Settings.update(search, value);
+		});
 		return {
 			success : true,
-			data : "BlindField Removed"
+			message : {
+				title : i18n.__("userprofile.settings.blindfield.confirmation.remove.title"),
+				content : i18n.__("userprofile.settings.blindfield.confirmation.remove.content", {field : type})
+			}
 		};
 	}
 });
@@ -149,6 +154,12 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 	validate({ url }) {
 		checkUserLoggedIn();
 		checkUrl(url);
+		checkDBReference({
+			owner : this.userId,
+			blacklist : {
+				$nin: [url]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -157,43 +168,25 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 	},
 	run({ url }) {
 		this.unblock();
-		let mySettings = Settings.findOne({
-			owner : this.userId
-		}, {
-			fields : {
-				blacklist : 1
+		Settings.update({
+			owner : this.userId,
+			blacklist : {
+				$nin: [url]
+			}
+		},{
+			$push : {
+				blacklist : url
+			},
+			$set : {
+				updatedAt : new Date()
 			}
 		});
-		if(!mySettings){
-			let settingsId = SettingsUtil.create();
-			
-			Settings.update({
-				_id : settingsId
-			},{
-				$set : {
-					owner : this.userId,
-					blacklist : [ url ],
-					updatedAt : new Date()
-				}
-			});
-		}else{
-			Settings.update({
-				_id : mySettings._id,
-				blacklist : {
-					$nin: [url]
-				}
-			},{
-				$push : {
-					blacklist : url
-				},
-				$set : {
-					updatedAt : new Date()
-				}
-			});
-		}
 		return {
 			success : true,
-			data : "Blacklist Added"
+			message : {
+				title : i18n.__("userprofile.settings.blacklist.confirmation.add.title"),
+				content : i18n.__("userprofile.settings.blacklist.confirmation.add.content", {URL : url})
+			}
 		};
 	}
 });
@@ -203,6 +196,12 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 	validate({ url }) {
 		checkUserLoggedIn();
 		checkUrl(url);
+		checkDBReference({
+			owner : this.userId,
+			blacklist : {
+				$in: [url]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -226,7 +225,10 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 		});
 		return {
 			success : true,
-			data : "Blacklist Removed"
+			message : {
+				title : i18n.__("userprofile.settings.blacklist.confirmation.remove.title"),
+				content : i18n.__("userprofile.settings.blacklist.confirmation.remove.content", {URL : url})
+			}
 		};
 	}
 });

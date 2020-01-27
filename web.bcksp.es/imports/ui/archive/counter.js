@@ -2,78 +2,83 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2019-12-21 00:13:13
+  @Last Modified time: 2020-01-27 01:50:10
 \*----------------------------------------*/
 
-import T from './../../i18n/index.js';
-import React, { Component } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import Tooltip from './../shared/tooltip.js';
 import { lerp, nf } from './../../utilities/math.js';
 import { config } from './../../startup/config.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
 
-class ArchiveCounter extends Component {
-	constructor(props){
-		super(props);
-	}
+const ArchiveCounter = ({handle, archive, isReady}) => {
+	
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+			handle && handle.stop();
+		}
+	}, []); 
 
-	componentWillUnmount(){
-		this.props.handle && this.props.handle.stop();
+	const T = i18n.createComponent("archive");
+	const T2 = i18n.createTranslator("archive");
+
+	const getCharCount = () => {
+		if(!archive || !isReady)return 0 ;
+		return archive.count;
 	}
-	getCharCount(){
-		if(!this.props.archive || !this.props.isReady)return 0 ;
-		return this.props.archive.count;
+	const getPerCent = () => {
+		if(!archive || !isReady)return 0;
+		return (getCharCount() / config.book.getMaxChar()) * 100 ;
 	}
-	getPerCent(){
-		if(!this.props.archive || !this.props.isReady)return 0;
-		return (this.getCharCount() / config.book.getMaxChar()) * 100 ;
-	}
-	getJaugeTooltipText(){
-		let jaugeTextAbailable = i18n.__("archive.jauge.tooltip.custom");
-		let r = this.getCharCount() / config.book.getMaxChar();
+	const getJaugeTooltipText = () => {
+		let jaugeTextAbailable = Object.values(T2("jauge.tooltip.custom"));
+		let r = getCharCount() / config.book.getMaxChar();
 		let id = Math.floor(lerp(0, jaugeTextAbailable.length-1, r));
 		return (
 			<span>
 				<strong>
-					<T>{"archive.jauge.tooltip.custom."+id}</T>
+					<T>{"jauge.tooltip.custom."+id}</T>
 				</strong>
 				<br/>
-				<T 	current={nf(this.getCharCount())} 
+				<T 	current={nf(getCharCount())} 
 					target={nf(config.book.getMaxChar())}
 				>
-					archive.jauge.tooltip.default
+					jauge.tooltip.default
 				</T>
 			</span>
 		);
 	}
-	render() {
-		return (
-			<div className="counter">
-				<span className="counter__total-character">
-					<T count={nf(this.getCharCount())}>archive.counter</T>
+
+	return (
+		<div className="counter">
+			<span className="counter__total-character">
+				<T count={nf(getCharCount())}>counter</T>
+			</span>
+			<span className="counter__total-percentage">
+				{
+					((getPerCent()).toFixed(2)).split(".").shift()
+				}
+				<span className="counter__total-percentage-float">
+				{
+					"."+((getPerCent()).toFixed(2)).split(".").pop()
+				}
 				</span>
-				<span className="counter__total-percentage">
-					{
-						((this.getPerCent()).toFixed(2)).split(".").shift()
-					}
-					<span className="counter__total-percentage-float">
-					{
-						"."+((this.getPerCent()).toFixed(2)).split(".").pop()
-					}
-					</span>
-					%
-				</span>
-				<svg width="100%" height="24px" data-tip data-for="counter-tooltip">
-					<rect rx="3" ry="3" x="0" y="0" width="100%" height="100%" fill={"#D8D8D8"} />
-					<rect rx="3" ry="3" x="0" y="0" width={this.getPerCent()+"%"} height="100%" fill={"#fff123"} />
-				</svg>
-				<Tooltip id="counter-tooltip">
-					{ this.getJaugeTooltipText() }
-				</Tooltip>
-			</div>
-		)
-	}
+				%
+			</span>
+			<svg width="100%" height="24px" data-tip data-for="counter-tooltip">
+				<rect rx="3" ry="3" x="0" y="0" width="100%" height="100%" fill={"#D8D8D8"} />
+				<rect rx="3" ry="3" x="0" y="0" width={getPerCent()+"%"} height="100%" fill={"#fff123"} />
+			</svg>
+			<Tooltip id="counter-tooltip">
+				{ getJaugeTooltipText() }
+			</Tooltip>
+		</div>
+	)
 }
 
 export default withTracker(self => {
@@ -81,9 +86,7 @@ export default withTracker(self => {
 	return {
 		isReady : 	handle && handle.ready() && Meteor.userId(),
 		handle : 	handle,
-		archive : 	Archives.findOne({
-						type : config.archives.private.type
-					})
+		archive : 	Archives.findOne({ type : Archives.Type.PRIVATE, owner :  Meteor.userId() })
 	};
 })(ArchiveCounter);
 

@@ -2,11 +2,12 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-01-25 19:32:47
+  @Last Modified time: 2020-01-26 18:18:54
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 
 import { 
+	checkDBReference,
 	checkString,
 	checkUserLoggedIn,
 	checkGreaterThan
@@ -17,8 +18,6 @@ import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { config } from './../../../imports/startup/config.js';
 import { Archives } from './../../../imports/api/archives/archives.js';
 import { Settings } from './../../../imports/api/settings/settings.js';
-
-
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
@@ -33,30 +32,59 @@ export const ArchiveAdd = new ValidatedMethod({
 	},
 	run({ text }) {
 		this.unblock();
-		if(Meteor.isServer){
-			text = ArchiveTools.cleanInput(text);
-			
-			let mySettings = Settings.findOne({
-				owner : this.userId
-			}, {
-				fields : {
-					publishToPublicFeed : 1
-				}
-			});
+		text = ArchiveTools.cleanInput(text);
+		
+		let mySettings = Settings.findOne({
+			owner : this.userId
+		}, {
+			fields : {
+				publishToPublicFeed : 1
+			}
+		});
 
-			ArchiveTools.publishToPrivateArchive(text)
-			.then(()=>{
-				if(mySettings.publishToPublicFeed){
-					ArchiveTools.publishToPublicArchive(text);
-				}
-				ArchiveTools.incrementPublicArchiveCounter(text.length);
-			})
-			.catch(err=>console.log(err));
-		}
+		ArchiveTools.publishToPrivateArchive(text)
+		.then(()=>{
+			if(mySettings.publishToPublicFeed){
+				ArchiveTools.publishToPublicArchive(text);
+			}
+			ArchiveTools.incrementPublicArchiveCounter(text.length);
+		})
+		.catch(err=>console.log(err));
 		return "YES";
 	}
 });
 
+export const ArchiveClear = new ValidatedMethod({
+	name: 'Archives.methods.clear',
+	validate() {
+		checkUserLoggedIn();
+		checkDBReference({
+			type : config.archives.private.type,
+			owner : this.userId
+		}, Archives);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		this.unblock();
+		return ArchiveTools.clearPrivateArchive()
+		.then(()=>{ 
+			return {
+				success : true,
+				message : {
+					title : i18n.__("userprofile.danger.deleteArchive.confirmation.title"),
+					content : i18n.__("userprofile.danger.deleteArchive.confirmation.content")
+				}
+			};
+		})
+		.catch(err => {
+			throw err;
+		});
+	}
+});
 
 export const ArchiveDownload = new ValidatedMethod({
 	name: 'Archives.methods.download',
@@ -70,43 +98,41 @@ export const ArchiveDownload = new ValidatedMethod({
 	},
 	run() {
 		this.unblock();
-		if(Meteor.isServer){
-			let myArchive = Archives.findOne({
-				type : config.archives.private.type,
-				owner : this.userId
-			});
-			return ArchiveTools.readAsync(myArchive._id)
-			.then(data => {
-				return {
-					count : myArchive.count,
-					content : data,
-					createdAt : myArchive.createdAt,
-					updatedAt : myArchive.updatedAt,
-				};
-			})
-			.then(data =>{
-				let file = [
-					i18n.__("souvenir.item.download.file.content", {
-						createdAt : moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
-						updatedAt : moment(data.updatedAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
-						content : data.content,
-						count : data.count
-					})
-				];
-				return {
-					success : true,
-					data : file,
-					message : {
-						title : i18n.__("souvenir.item.download.confirmation.title"),
-						content : i18n.__("souvenir.item.download.confirmation.content")
-					}
-				};;
-			})
-			.catch(err=>console.log(err));
-		}
+		let myArchive = Archives.findOne({
+			type : config.archives.private.type,
+			owner : this.userId
+		});
+		return ArchiveTools.readAsync(myArchive._id)
+		.then(data => {
+			return {
+				count : myArchive.count,
+				content : data,
+				createdAt : myArchive.createdAt,
+				updatedAt : myArchive.updatedAt,
+			};
+		})
+		.then(data =>{
+			let file = [
+				i18n.__("souvenir.item.download.file.content", {
+					createdAt : moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+					updatedAt : moment(data.updatedAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+					content : data.content,
+					count : data.count
+				})
+			];
+			return {
+				success : true,
+				data : file,
+				message : {
+					title : i18n.__("souvenir.item.download.confirmation.title"),
+					content : i18n.__("souvenir.item.download.confirmation.content")
+				}
+			};
+		})
+		.catch(err=>console.log(err));
+		
 	}
 });
-
 
 export const ArchiveEdit = new ValidatedMethod({
 	name: 'Archives.methods.edit',
@@ -122,9 +148,7 @@ export const ArchiveEdit = new ValidatedMethod({
 	},
 	run({ text, startAt, stopAt  }) {
 		this.unblock();
-		if(Meteor.isServer){
-			unpublishToPrivateArchive(text, startAt, stopAt)
-			.catch(err=>console.log(err));
-		}
+		unpublishToPrivateArchive(text, startAt, stopAt)
+		.catch(err=>console.log(err));
 	}
 });

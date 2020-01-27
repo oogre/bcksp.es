@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-01-25 17:19:39
+  @Last Modified time: 2020-01-26 15:06:00
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
@@ -12,20 +12,35 @@ import T from './../i18n/index.js';
 export const regexp = {
 	email : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 }
-export function checkDBReference(request, Collection, origin){
+
+export function checkBlindfieldRemoveAllowed(classFlag, type, origin="main"){
+	if(	(classFlag && config.settings.blindfield.disabled.blocked.class.includes(type)) ||
+		(!classFlag && config.settings.blindfield.disabled.blocked.type.includes(type))
+	){
+		throw new ValidationError([{
+			name: 'type',
+			type: 'not-recognize',
+			details: {
+			  value: i18n.__("errors.default.remove-disabled"),
+			  origin : origin,
+			}
+		}]);
+	}
+}
+export function checkDBReference(request, Collection, origin="main"){
 	if(!Collection.findOne(request)){
 			throw new ValidationError([{
 				name: 'type',
 				type: 'not-recognize',
 				details: {
 				  value: i18n.__("errors.type.not-recognize"),
-				  origin : "souvenir._id",
+				  origin : origin,
 				}
 			}]);
 		}
 
 }
-export function checkObject(value, origin){
+export function checkObject(value, origin="main"){
 	if(!_.isObject(value) || _.isEmpty(value))
 			throw new ValidationError([{
 				name: 'type',
@@ -38,7 +53,7 @@ export function checkObject(value, origin){
 	return value;
 }
 
-export function checkArray(value, origin){
+export function checkArray(value, origin="main"){
 	if(!_.isArray(value) || _.isEmpty(value))
 			throw new ValidationError([{
 				name: 'type',
@@ -51,7 +66,7 @@ export function checkArray(value, origin){
 	return value;
 }
 
-export function checkString(value, origin){
+export function checkString(value, origin="main"){
 	if(!_.isString(value) || _.isEmpty(value))
 			throw new ValidationError([{
 				name: 'type',
@@ -64,7 +79,7 @@ export function checkString(value, origin){
 	return value;
 }
 
-export function checkNumber(value, origin){
+export function checkNumber(value, origin="main"){
 	if(!_.isNumber(value))
 			throw new ValidationError([{
 				name: 'type',
@@ -76,7 +91,7 @@ export function checkNumber(value, origin){
 			}]);
 	return value;
 }
-export function checkGreaterThan(a, b){
+export function checkGreaterThan(a, b, origin="main"){
 	checkNumber(a);
 	checkNumber(b);
 	if(a < b)
@@ -84,72 +99,79 @@ export function checkGreaterThan(a, b){
 				name: 'type',
 				type: 'greater-than',
 				details: {
-				  value: i18n.__("errors.type.greater-than", {a, b})
+				  value: i18n.__("errors.type.greater-than", {a, b}),
+				  origin : origin,
 				}
 			}]);
 	return true;
 }
 
-export function checkUrl(value){
+export function checkUrl(value, origin="main"){
 	if(!_.isString(value) || _.isEmpty(value))
 			throw new ValidationError([{
 				name: 'url',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.url.not-a-string")
+				  value: i18n.__("errors.url.not-a-string"),
+				  origin : origin,
 				}
 			}]);
 	return value;
 }
 
-export function checkUserLoggedIn(){
+export function checkUserLoggedIn(origin="main"){
 	if (!Meteor.userId()) throw new ValidationError([{
 			name: 'login',
 			type: 'required',
 			details: {
-				value : i18n.__("errors.login.required")
+				value : i18n.__("errors.login.required"),
+				origin : origin,
 			}
 		}]);
 	return true;
 }
 
-export function checkUserRole(role){
+export function checkUserRole(role, origin="main"){
 	if(!Roles.userIsInRole(Meteor.userId(), role))throw new ValidationError([{
 			name: 'role',
 			type: 'required',
 			details: {
-				value : i18n.__("errors.role.required", {role : role})
+				value : i18n.__("errors.role.required", {role : role}),
+				origin : origin,
 			}
 		}]);
 	return true;
 }
 
-export function checkValidDevice(value){
+export function checkValidDevice(value, origin="main"){
 	if(_.isEmpty(value))throw new ValidationError([{
 			name: 'device',
 			type: 'required',
 			details: {
-			  value: i18n.__("errors.device.required")
+			  value: i18n.__("errors.device.required"),
+			  origin : origin,
 			}
 		}]);
 	if(!_.isString(value))throw new ValidationError([{
 			name: 'device',
 			type: 'not-a-string',
 			details: {
-			  value: i18n.__("errors.device.not-a-string")
+			  value: i18n.__("errors.device.not-a-string"),
+			  origin : origin,
 			}
 		}]);
 	if(!_.values(config.devices).includes(value)) throw new ValidationError([{
 				name: 'device',
 				type: 'no-match',
 				details: {
-				  value: i18n.__("errors.device.no-match", {deviceId : value})
+				  value: i18n.__("errors.device.no-match", {deviceId : value}),
+				  origin : origin,
 				}
 			}]);
 	return value;	
 }
 
-export function checkValidEmail(value, hasToExist = true, origin=undefined){
+export function checkValidEmail(value, hasToExist = true, origin="main"){
 	if(_.isEmpty(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'required',
@@ -196,47 +218,53 @@ export function checkValidEmail(value, hasToExist = true, origin=undefined){
 	return value;
 }
 
-export function checkValidPassword(value, confirm){
+export function checkValidPassword(value, confirm, origin="main"){
 	if(_.isEmpty(value)) throw new ValidationError([{
 				name: 'password',
 				type: 'required',
 				details: {
-				  value: i18n.__("errors.password.required")
+				  value: i18n.__("errors.password.required"),
+				  origin : origin
 				}
 			}]);
 	if(!_.isString(value)) throw new ValidationError([{
 				name: 'password',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.password.not-a-string")
+				  value: i18n.__("errors.password.not-a-string"),
+				  origin : origin
 				}
 			}]);
 	if(value.length < config.user.password.length.min) throw new ValidationError([{
 				name: 'password',
 				type: 'min-string',
 				details: {
-				  value: i18n.__("errors.password.min-string", {length : config.user.password.length.min}) 
+				  value: i18n.__("errors.password.min-string", {length : config.user.password.length.min}),
+				  origin : origin
 				}
 			}]);
 	if(value.length > config.user.password.length.max) throw new ValidationError([{
 				name: 'password',
 				type: 'max-string',
 				details: {
-				  value: i18n.__("errors.password.max-string", {length : config.user.password.length.max}) 
+				  value: i18n.__("errors.password.max-string", {length : config.user.password.length.max}),
+				  origin : origin
 				}
 			}]);
 	if(_.isEmpty(confirm)) throw new ValidationError([{
 				name: 'passwordConfirm',
 				type: 'required',
 				details: {
-				  value: i18n.__("errors.passwordConfirm.required")
+				  value: i18n.__("errors.passwordConfirm.required"),
+				  origin : origin
 				}
 			}]);
 	if(value !== confirm) throw new ValidationError([{
 				name: 'passwordConfirm',
 				type: 'no-match',
 				details: {
-				  value: i18n.__("errors.passwordConfirm.no-match")
+				  value: i18n.__("errors.passwordConfirm.no-match"),
+				  origin : origin
 				}
 			}]);
 	return value;

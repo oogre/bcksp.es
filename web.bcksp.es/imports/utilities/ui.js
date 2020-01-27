@@ -2,7 +2,7 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2020-01-25 19:42:37
+  @Last Modified time: 2020-01-26 15:32:01
 \*----------------------------------------*/
 import T from './../i18n/index.js';
 import { Session } from "meteor/session";
@@ -79,7 +79,7 @@ export function errorHandler(error, setErrorMessage=()=>{}){
 	}
 	else if(_.isArray(error.details) && !_.isEmpty(error.details)){
 		for(let e of error.details){
-			if(e?.details?.origin){
+			if(e?.details?.origin != "main"){
 				setErrorMessage(e?.details?.origin , e.type, e.details.value);			
 			}
 			else {
@@ -111,7 +111,7 @@ export function errorHandler(error, setErrorMessage=()=>{}){
 			value : error.toString()
 		});
 	}
-	return false;
+	return true;
 }
 
 export function successHandler({success, message, data}){

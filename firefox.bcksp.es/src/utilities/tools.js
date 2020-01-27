@@ -2,16 +2,23 @@
   bcksp.es - tools.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:38:28
-  @Last Modified time: 2019-06-07 16:58:25
+  @Last Modified time: 2020-01-26 22:24:42
 \*----------------------------------------*/
 
-import { MDText } from 'i18n-react';
+import _T from 'i18n-react';
 import { config } from './../shared/config.js';
 import { isContentEditable, isInputField, isArray, isEmpty } from "./validation.js";
+import { sendMessage } from './com.js';
+
+sendMessage("getTranslation")
+.then(data => {
+    _T.setTexts(JSON.parse(data), { MDFlavor: 1 });
+});
 
 export { filter, reduce, intersection, last, findWhere, difference, uniq, mapObject } from 'underscore';
 
-export const T = new MDText(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });
+export const T = _T;
+
 
 export function getContentEditableInParent(element){
 	if(isContentEditable(element)){

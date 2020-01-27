@@ -2,7 +2,7 @@
   bcksp.es - login.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:00:44
-  @Last Modified time: 2019-06-07 16:51:56
+  @Last Modified time: 2020-01-26 22:01:47
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -13,6 +13,7 @@ import { sendMessage } from './../../utilities/com.js';
 import { handleError, T } from './../../utilities/tools.js';
 import { isEmail, isPwd, isObject } from './../../utilities/validation.js';
 import { log, info, warn, error } from './../../utilities/log.js';
+
 
 export default class LoginForm extends Component {
 	constructor(props) {

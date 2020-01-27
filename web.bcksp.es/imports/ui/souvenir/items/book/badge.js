@@ -2,7 +2,7 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:27:09
-  @Last Modified time: 2020-01-25 18:57:30
+  @Last Modified time: 2020-01-26 23:09:38
 \*----------------------------------------*/
 
 import React, { useEffect } from 'react';
@@ -15,7 +15,6 @@ import { Archives } from './../../../../api/archives/archives.js';
 
 // App component - represents the whole app
 const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
-	
 	useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
 			handle && handle.stop();

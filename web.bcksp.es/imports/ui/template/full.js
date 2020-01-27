@@ -2,9 +2,9 @@
   bcksp.es - full.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-03 20:46:10
-  @Last Modified time: 2020-01-25 18:10:30
+  @Last Modified time: 2020-01-27 00:31:56
 \*----------------------------------------*/
-import React, { useState } from 'react';
+import React from 'react';
 import CallToConnect from './../banner/callToConnect.js';
 import ErrorMessage from './../banner/errorMessage.js';
 import SuccessMessage from './../banner/successMessage.js';

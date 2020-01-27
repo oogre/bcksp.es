@@ -2,37 +2,49 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 15:37:26
-  @Last Modified time: 2020-01-10 00:05:43
+  @Last Modified time: 2020-01-27 00:42:12
 \*----------------------------------------*/
-import React, { Component } from 'react';
-import T from './../../i18n/index.js';
-
+import React, { useEffect, useState } from 'react';
 import SelfWritten from "./../shared/selfwritten.js";
 
-export default class BannerBaseline extends Component {
-	constructor(props){
-		super(props);
-	}
+const BannerBaseline = ({isConnected}) => {
+	
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
 
-	render() {
-		return (
-			<div className="punchline">
-				<div className="container">
-					{ 	
-						!this.props.isConnected &&
-						<h1 className="punchline__title" >
-							<SelfWritten text={ Object.values(i18n.__("offline.baseline")) } />
+	//const T = i18n.createComponent();
+	const T2 = i18n.createTranslator("baseline");
+
+	return (
+		<div className="punchline">
+			<div className="container">	
+				{ 	
+					!isConnected &&
+					<h1 className="punchline__title" >
+						<SelfWritten text={ Object.values(T2("offline.baseline")) } />
+					</h1>
+					
+				}
+				{
+					isConnected &&
+						<h1 className="page__title">
+							{ _.sample(Object.values(T2("online.baseline"))) }
 						</h1>
-						
-					}
-					{
-						this.props.isConnected &&
-							<h1 className="page__title">
-								{ _.sample(Object.values(i18n.__("online.baseline"))) }
-							</h1>
-					}
-				</div>
+				}
 			</div>
-		);
-	}
+		</div>
+	);
+	
 }
+
+export default BannerBaseline;
+/*
+
+
+
+				*/

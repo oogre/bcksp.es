@@ -2,15 +2,15 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2019-06-07 15:53:31
+  @Last Modified time: 2020-01-26 22:02:20
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
 import Blacklist from './../blacklist.js';
-import { T } from './../../utilities/tools.js';
 import { config } from './../../shared/config.js';
 import { sendMessage, on } from './../../utilities/com.js';
 import { log, info, warn, error } from './../../utilities/log.js';
+import { T } from './../../utilities/tools.js';
 
 export default class MainMenu extends Component {
 	constructor(props) {

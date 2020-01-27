@@ -2,7 +2,7 @@
   bcksp.es - signup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:11:37
-  @Last Modified time: 2019-06-07 16:54:34
+  @Last Modified time: 2020-01-26 21:43:31
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -12,7 +12,6 @@ import MessageError from './../message/error.js';
 import { sendMessage } from './../../utilities/com.js';
 import { handleError, T } from './../../utilities/tools.js';
 import { isEmail, isPwd, isPwdConf } from './../../utilities/validation.js';
-
 export default class SignupForm extends Component {
 	constructor(props) {
 		super(props);

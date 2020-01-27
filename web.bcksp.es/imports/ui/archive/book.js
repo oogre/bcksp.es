@@ -2,10 +2,9 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 20:06:21
-  @Last Modified time: 2020-01-24 14:48:59
+  @Last Modified time: 2020-01-27 01:38:55
 \*----------------------------------------*/
 
-import T from './../../i18n/index.js';
 import React, { useEffect, useState } from 'react';
 import { config } from './../../startup/config.js';
 

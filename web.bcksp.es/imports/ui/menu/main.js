@@ -2,95 +2,121 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2019-01-17 08:19:10
+  @Last Modified time: 2020-01-26 23:27:18
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
 
-class MenuMain extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			mobileMenu: false
-		}
+const MenuMain = ( {extensionInstalled, isConnected} ) => {
+
+	const [mobileMenu, setMobileMenu] = useState(false);
+	const [langMenu, setLangMenu] = useState(false);
+	
+	const handleOpenMobileMenu = () => {
+		setMobileMenu(!this.state.mobileMenu);
 	}
 
-	handleOpenMobileMenu(){
-		this.setState({
-			mobileMenu: !this.state.mobileMenu
-		});
+	const hasToDisplayDownloadBtn = () => {
+		return !extensionInstalled;
 	}
 
-	hasToDisplayDownloadBtn(){
-		return !this.props.extensionInstalled;
+	const hasToDisplayProfileBtn = ()=>{
+		return isConnected && extensionInstalled;
 	}
 
-	hasToDisplayProfileBtn(){
-		return this.props.isConnected && this.props.extensionInstalled;
-	}
-
-	isActive(route){
+	const isActive = route => {
 		if(FlowRouter.current().route.name == route)return " active";
 		return "";
 	}
 
-	isMobile(){
-		if(this.state.mobileMenu)return " visible";
+	const isMobile = () => {
+		if(mobileMenu)return " visible";
 		return "";
 	}
 
-	render() {
-		return (
-			<nav className="main-navigation">
-				<button type="button" className="menu--header__mobile-trigger" onClick={this.handleOpenMobileMenu.bind(this)}>
-					<div className="bar"></div>
-					<div className="bar"></div>
-					<div className="bar"></div>
-					<span className="sr-only">
-						<T>menus.open</T>
-					</span>
-				</button>
-				<ul className={"menu menu--header" + this.isMobile()}>
-					<li className="menu__item">
-						<a 	className={"menu__item-link " + this.isActive("about")}
-							href={FlowRouter.path("about")}
-						>
-							<T>menus.about</T>
-						</a>
-					</li>
-					<li className="menu__item">
-						<a 	className={"menu__item-link" + this.isActive("souvenir")}
-							href={FlowRouter.path("souvenir")}
-						>
-							<T>menus.souvenir</T>
-						</a>
-					</li>
-					{
-						this.hasToDisplayDownloadBtn() &&
-							<li className="menu__item">
-								<a 	className={"button button--primary" + this.isActive("download")}
-									onClick={installExtension}
-								>
-									<T>menus.download</T>
-								</a>
-							</li>
-					}
-					{
-						this.hasToDisplayProfileBtn() &&
-							<li className="menu__item">
-								<a 	className={"menu__item-link" + this.isActive("userProfile")}
-									href={ FlowRouter.path("userProfile") }
-								>
-									<T>menus.profile</T>
-								</a>
-							</li>
-					}
-				</ul>
-			</nav>
-		);
+	const toggleLangMenu = () =>{
+		setLangMenu(!langMenu);
 	}
+
+	const setLang = lang => {
+		i18n.setLocale(lang);
+		Session.set("locale", lang);
+		toggleLangMenu();
+	}
+
+	return (
+		<nav className="main-navigation">
+			<button type="button" className="menu--header__mobile-trigger" onClick={handleOpenMobileMenu}>
+				<div className="bar"></div>
+				<div className="bar"></div>
+				<div className="bar"></div>
+				<span className="sr-only">
+					<T>menus.open</T>
+				</span>
+			</button>
+			<ul className={"menu menu--header" + isMobile()}>
+				<li className="menu__item">
+					<a 	className={"menu__item-link " + isActive("about")}
+						href={FlowRouter.path("about")}
+					>
+						<T>menus.about</T>
+					</a>
+				</li>
+				<li className="menu__item">
+					<a 	className={"menu__item-link" + isActive("souvenir")}
+						href={FlowRouter.path("souvenir")}
+					>
+						<T>menus.souvenir</T>
+					</a>
+				</li>
+				{
+					hasToDisplayDownloadBtn() &&
+						<li className="menu__item">
+							<a 	className={"button button--primary" + isActive("download")}
+								onClick={installExtension}
+							>
+								<T>menus.download</T>
+							</a>
+						</li>
+				}
+				{
+					hasToDisplayProfileBtn() &&
+						<li className="menu__item">
+							<a 	className={"menu__item-link" + isActive("userProfile")}
+								href={ FlowRouter.path("userProfile") }
+							>
+								<T>menus.profile</T>
+							</a>
+						</li>
+				}
+				<li className="menu__item">
+					<a 	className={"menu__item-link" + isActive("souvenir")}
+						href="#"
+						onClick={toggleLangMenu}
+					>
+						<T>menus.langue</T>
+					</a>
+					{ 
+						langMenu && 
+							<ul style={{position:"absolute"}}>
+								<li>
+									<a 	className={"menu__item-link" + isActive("souvenir")} href="#" onClick={()=>setLang("fr")}>
+										français
+									</a>
+								</li>
+								<li>
+									<a 	className={"menu__item-link" + isActive("souvenir")} href="#" onClick={()=>setLang("en")}>
+											english
+									</a>
+								</li>
+							</ul>
+					}
+				</li>
+			</ul>
+		</nav>
+	);
 }
 export default withTracker(self => {
 	return {

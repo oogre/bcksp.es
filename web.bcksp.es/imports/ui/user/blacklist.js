@@ -2,12 +2,13 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:12:11
-  @Last Modified time: 2020-01-15 20:09:21
+  @Last Modified time: 2020-01-26 14:55:39
 \*----------------------------------------*/
 import T from './../../i18n/index.js';
 import React, { useState } from 'react';
 import FixeWait from "./../fixe/wait.js";
 import MyToggleButton from "./../shared/MyToggleButton.js";
+import { successHandler, errorHandler } from '../../utilities/ui.js';
 import { SettingsBlacklistRemove } from '../../api/settings/methods.js';
 
 
@@ -16,27 +17,14 @@ const Blacklist = ({settings}) => {
 	const handleToggleBlacklist = (url) => {
 		if(loading)return;
 		setLoading(true);
-		SettingsBlacklistRemove.call({url}, (err, res) =>{
+		SettingsBlacklistRemove.call({url}, (error, res) =>{
 			setLoading(false);
-			console.log(err, res);
+			if(errorHandler(error))return;
+			successHandler(res);
 		});
 		return false;
 	};
-	const displayBlacklistElement = (url, k) => (
-		<li key={k}>
-			<span className="input-wrapper--inline">
-				{url}
-			</span>
-			<span className="input-wrapper--inline">
-				<MyToggleButton
-					value={ true }
-					onToggle={flag=>handleToggleBlacklist(url, flag)}
-					activeLabel={i18n.__("userprofile.settings.blacklist.activeLabel")}
-					inactiveLabel={i18n.__("userprofile.settings.blacklist.inactiveLabel")}
-				/>
-			</span>
-		</li>
-	);
+	
 	return (
 		<div>
 			<h2>
@@ -58,7 +46,23 @@ const Blacklist = ({settings}) => {
 						</span>
 					</li>
 				}
-				{ settings.blacklist.map(displayBlacklistElement) }
+				{ 
+					settings.blacklist.map((url, k) => (
+						<li key={k}>
+							<span className="input-wrapper--inline">
+								{url}
+							</span>
+							<span className="input-wrapper--inline">
+								<MyToggleButton
+									value={ true }
+									onToggle={flag=>handleToggleBlacklist(url, flag)}
+									activeLabel={i18n.__("userprofile.settings.blacklist.activeLabel")}
+									inactiveLabel={i18n.__("userprofile.settings.blacklist.inactiveLabel")}
+								/>
+							</span>
+						</li>
+					))
+				}
 			</ul>
 		</div>
 	);

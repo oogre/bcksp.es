@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-01-25 18:55:44
+  @Last Modified time: 2020-01-26 19:42:24
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
@@ -14,9 +14,19 @@ import { checkUserLoggedIn, checkUserRole } from './../../../imports/utilities/v
 
 Meteor.publish("archive.public", function(){
 	let archive = Archives.findOne({ 
-		_id : __Public_Archive_ID__
+		type : Archives.Type.PUBLIC,
+		owner : {
+			$exists: false
+		}
+	}, {
+		fields : {
+			_id : true
+		}
 	});
-	ArchiveTools.readAsync(__Public_Archive_ID__)
+
+	__Public_Archive_ID__ = archive._id;
+
+	ArchiveTools.readAsync(archive._id)
 	.then(content=>{
 		archive.content = content;
 		this.added('archives', archive._id, archive);
@@ -31,7 +41,7 @@ Meteor.publish('archive.private.2', function(){
 	if(!this.userId)return this.ready();
 	let initializing = true;
 	let archiveCursor = Archives.find({ 
-		type : config.archives.private.type,
+		type : Archives.Type.PRIVATE,
 		owner : this.userId
 	});
 
@@ -74,10 +84,10 @@ Meteor.publish("archive.private", function(){
 	let handle;
 	if(this.userId){
 		let archiveCursor = Archives.find({ 
-			type : config.archives.private.type,
+			type : Archives.Type.PRIVATE,
 			owner : this.userId 
 		});
-
+		
 		let archive = archiveCursor.fetch()[0];
 
 		ArchiveTools.readAsync(archive._id)
@@ -109,7 +119,7 @@ Meteor.publish("archive.private", function(){
 Meteor.publish("archive.private.counter", function(){
 	checkUserLoggedIn();
 	return Archives.find({ 
-			type : config.archives.private.type,
+			type : Archives.Type.PRIVATE,
 			owner : this.userId
 		}, {
 			fields : {
@@ -124,7 +134,10 @@ Meteor.publish("archive.public.counter", function(){
 	checkUserLoggedIn();
 	checkUserRole("admin");
 	return Archives.find({ 
-		_id : __Public_Archive_ID__
+		type : Archives.Type.PUBLIC,
+		owner : {
+			$exists: false
+		}
 	}, {
 		fields : {
 			count : 1

@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-25 21:17:44
+  @Last Modified time: 2020-01-26 18:40:00
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import T from './../../i18n/index.js';
@@ -115,21 +115,29 @@ export const ResetPassword = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({email}) {
-		if (this.isSimulation)return;
+		this.unblock();
 		
-		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
+		if (this.isSimulation)return;
+
+		let user = this.user || Meteor.users.findOne({"emails.address" : email});
 		
 		Accounts.sendResetPasswordEmail(user._id, getMainEmail(user.emails));
 		
-		Meteor.users.update({_id : user._id}, {
+		Meteor.users.update({
+			_id : user._id
+		}, {
 			$unset : {
 				"services.accessTokens.tokens" : null,
 				"services.resume.loginTokens" : null
 			}
 		});
+		
 		return {
 			success : true,
-			message : i18n.__("methods.user.resetPassword.success")
+			message : {
+				title : i18n.__("userprofile.identification.password.confirmation.title"),
+				content : i18n.__("userprofile.identification.password.confirmation.content")
+			}
 		};
 	}
 });
@@ -151,7 +159,10 @@ export const UpdateEmail = new ValidatedMethod({
 		Accounts.sendVerificationEmail(this.userId, email)
 		return {
 			success : true,
-			message : i18n.__("methods.user.updateEmail.success")
+			message : {
+				title : i18n.__("userprofile.identification.email.confirmation.title"),
+				content : i18n.__("userprofile.identification.email.confirmation.content")
+			}
 		};
 	}
 });
@@ -174,6 +185,31 @@ export const CreateUser = new ValidatedMethod({
 			email, 
 			password
 		});
+	}
+});
+
+export const DestroyUser = new ValidatedMethod({
+	name: 'Users.methods.delete.user',
+	validate() {
+		checkUserLoggedIn();
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		if (this.isSimulation)return;
+
+		Meteor.users.remove(this.userId);
+		
+		return {
+			success : true,
+			message : {
+				title : i18n.__("userprofile.danger.deleteAccount.confirmation.title"),
+				content : i18n.__("userprofile.danger.deleteAccount.confirmation.content")
+			}
+		};
 	}
 });
 
