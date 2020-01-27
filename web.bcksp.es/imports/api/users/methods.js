@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-26 18:40:00
+  @Last Modified time: 2020-01-27 10:36:05
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import T from './../../i18n/index.js';
@@ -11,7 +11,8 @@ import {
 	checkUserLoggedIn,
 	checkValidEmail,
 	checkValidPassword,
-	checkString
+	checkString,
+	checkValidLanguage
 } from './../../utilities/validation.js';
 import { config } from './../../startup/config.js';
 import {getMainEmail} from './../../utilities/meteor.js';
@@ -239,5 +240,38 @@ export const Login = new ValidatedMethod({
       			resolve(stampedLoginToken.token);
       		}
 		});
+	}
+});
+
+
+
+export const SetUserLang = new ValidatedMethod({
+	name: 'Users.methods.user.Language.Setter',
+	validate({ lang }) {
+		checkUserLoggedIn();
+		checkValidLanguage(lang);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run({ lang }) {
+		this.unblock();
+		Meteor.users.update({
+			_id : this.userId,
+		}, {
+			$set : {
+				lang : lang,
+				updatedAt : new Date()
+			}
+		});
+		return {
+			success : true,
+			message : {
+				title : i18n.__("userprofile.settings.language.confirmation.title"),
+				content : i18n.__("userprofile.settings.language.confirmation.content")
+			}
+		};
 	}
 });

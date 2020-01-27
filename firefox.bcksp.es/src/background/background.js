@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2020-01-26 22:23:02
+  @Last Modified time: 2020-01-27 10:58:13
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -226,7 +226,6 @@ on("getArchiveRatio", (data, resolve, reject) => {
 });
 
 on("getTranslation", (data, resolve, reject) => {
-	console.log("getTranslation");
 	resolve(localStorage.getItem("translation"));
 });
 

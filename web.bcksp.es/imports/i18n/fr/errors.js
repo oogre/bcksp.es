@@ -2,7 +2,7 @@
   bcksp.es - errors.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2020-01-26 21:12:23
+  @Last Modified time: 2020-01-27 10:37:04
 \*----------------------------------------*/
 i18n.addTranslation('fr', "errors", {
 	server : {
@@ -42,6 +42,9 @@ i18n.addTranslation('fr', "errors", {
 		required : "nous avons besoin de l'identifiant de votre extension pour procéder à cette opération",
 		"not-a-string" : "nous attendons que l'identifiant de votre extension soit du texte",
 		"no-match" : "nous avons besoin que l'identifiant de votre extension soit reconnu (votre id : {$deviceId})",
+	},
+	lang : {
+		"not-recognize": "nous ne connaissons pas la langue requise, il semble y avoir un problème",
 	},
 	type : {
 		"not-a-function" : "nous avons besoin que cette donnée soit une fonction : '{$value}'",

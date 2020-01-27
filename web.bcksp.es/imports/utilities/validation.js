@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-01-26 15:06:00
+  @Last Modified time: 2020-01-27 10:37:14
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
@@ -60,6 +60,20 @@ export function checkArray(value, origin="main"){
 				type: 'not-recognize',
 				details: {
 				  value: i18n.__("errors.type.not-recognize"),
+				  origin : origin,
+				}
+			}]);
+	return value;
+}
+
+
+export function checkValidLanguage(value, origin="main"){
+	if(! i18n.getLanguages().includes(value) )
+			throw new ValidationError([{
+				name: 'type',
+				type: 'not-recognize',
+				details: {
+				  value: i18n.__("errors.lang.not-recognize"),
 				  origin : origin,
 				}
 			}]);

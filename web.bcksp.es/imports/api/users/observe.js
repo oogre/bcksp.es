@@ -2,7 +2,7 @@
   bcksp.es - observe.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-26 18:46:15
-  @Last Modified time: 2020-01-26 19:11:20
+  @Last Modified time: 2020-01-27 10:58:30
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -53,8 +53,6 @@ if(Meteor.isServer){
 			}
 
 
-
-
 			let first = _.chain(user.emails).filter(email=>!email.verified).first().value();
 			if((!user.services.email) || (user.services.email.verificationTokens.length == 0 && first)){
 				Accounts.sendVerificationEmail(id);
@@ -74,6 +72,7 @@ if(Meteor.isServer){
 				owner : id,
 			});
 			log(">>> PRIVATE ARCHIVE DESTROY");
-		}
+		},
+
 	});
 }

@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2020-01-26 22:24:51
+  @Last Modified time: 2020-01-27 10:57:30
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import { onLogin } from "asteroid/lib/common/login-method";
@@ -26,14 +26,19 @@ class AsteroidHelper{
 			"devices.config",
 			"archive.config",
 			"settings.private",
-			"archive.private.counter"
+			"archive.private.counter",
+			"devices.i18n.logged"
 		];
 
+		this.subscribtionListNoLogged = [];
 		this.subscribtionAddressListNoLogged = [
 			"devices.i18n"
 		];		
 		
-		this.asteroid.on("connected", () => Data.setState({ connected : true }));
+		this.asteroid.on("connected", () => {
+			Data.setState({ connected : true })
+			this.startSubsribtionNoLogged();
+		});
 		this.asteroid.on("disconnected", () => Data.setState({ connected : false }));
 		this.asteroid.on("loggedOut", () => {
 			Data.setState({
@@ -41,22 +46,17 @@ class AsteroidHelper{
 				currentURLBlacklisted : false
 			});
 			this.stopSubsribtion();
+			this.startSubsribtionNoLogged();
 		});
+
 		this.asteroid.on("loggedIn", data => {
 			Data.setState({ "loggedStatus": true });
+			this.stopSubsribtionNoLogged();
 			this.startSubsribtion();
 		});
 
-		this.subscribtionAddressListNoLogged.map(address => {
-			let sub = this.asteroid.subscribe(address);
-			sub.on("ready", () => info("Subsribtion : " + address + " is ready"));
-			return sub;
-		});
 		this.on("changed", {
-			deviceI18n : i18n => {
-				console.log("deviceI18n changed");
-				localStorage.setItem("translation", JSON.stringify(i18n));
-			} ,
+			deviceI18n : i18n => localStorage.setItem("translation", JSON.stringify(i18n)),
 			deviceConfig : conf => Data.setState({ pingInterval : conf.pingInterval }),
 			config : ({maxCharPerBook}) => Data.setState({ maxCharPerBook : maxCharPerBook }),
 			archives : ({count}) => Data.setState({ archiveSize : count }),
@@ -70,10 +70,7 @@ class AsteroidHelper{
 			}
 		});
 		this.on("added", {
-			deviceI18n : i18n => {
-				console.log("deviceI18n added");
-				localStorage.setItem("translation", JSON.stringify(i18n));
-			},
+			deviceI18n : i18n => localStorage.setItem("translation", JSON.stringify(i18n)),
 			deviceConfig : conf => Data.setState({ pingInterval : conf.pingInterval }),
 			config : ({maxCharPerBook}) => Data.setState({maxCharPerBook : maxCharPerBook}),
 			archives : ({count}) => Data.setState({archiveSize : count}),
@@ -99,6 +96,22 @@ class AsteroidHelper{
 
 	startSubsribtion (){
 		this.subscribtionList = this.subscribtionAddressList.map(address => {
+			let sub = this.asteroid.subscribe(address);
+			sub.on("ready", () => info("Subsribtion : " + address + " is ready"));
+			return sub;
+		});
+	}
+
+	stopSubsribtionNoLogged(){
+		this.subscribtionListNoLogged.map(subscribtion => {
+			this.asteroid.unsubscribe(subscribtion.id);
+			this.asteroid.subscriptions.cache.del(subscribtion.id);
+			info("Subsribtion : " + subscribtion.name + " is closed")
+		});
+		this.subscribtionListNoLogged = [];
+	}
+	startSubsribtionNoLogged(){
+		this.subscribtionListNoLogged = this.subscribtionAddressListNoLogged.map(address => {
 			let sub = this.asteroid.subscribe(address);
 			sub.on("ready", () => info("Subsribtion : " + address + " is ready"));
 			return sub;

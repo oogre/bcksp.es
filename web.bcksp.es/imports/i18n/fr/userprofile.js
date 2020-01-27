@@ -2,7 +2,7 @@
   bcksp.es - userprofile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:32:25
-  @Last Modified time: 2020-01-26 21:16:20
+  @Last Modified time: 2020-01-27 10:17:01
 \*----------------------------------------*/
 i18n.addTranslation('fr', "userprofile", {
 	title: "mon profile",
@@ -23,6 +23,12 @@ i18n.addTranslation('fr', "userprofile", {
 					title : "Publication dans l'archive publique désactivée",
 					content : "la publication dans l'archive publique n'est pas autorisée"	
 				}
+			}
+		},
+		language : {
+			confirmation : {
+				title : "Mise à jour de votre langue.",
+				content : "La langue de l'interface du site est liée à l'interface de vos extension"	
 			}
 		},
 		blacklist : {
