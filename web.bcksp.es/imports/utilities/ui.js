@@ -2,15 +2,15 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2020-01-26 15:32:01
+  @Last Modified time: 2020-01-28 23:34:18
 \*----------------------------------------*/
-import T from './../i18n/index.js';
 import { Session } from "meteor/session";
 import { config } from './../startup/config.js';
 
 
 export async function needConfirmation(context){
-	if(confirm(i18n.__("utilities.needConfirmation"))){
+
+	if(confirm(i18n.createTranslator("utilities")("needConfirmation"))){
 		return true;
 	}else{
 		throw new Error("The action has been canceled");

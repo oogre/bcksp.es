@@ -2,18 +2,28 @@
   bcksp.es - resetPassword.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:33:10
-  @Last Modified time: 2020-01-26 16:24:22
+  @Last Modified time: 2020-01-28 23:09:35
 \*----------------------------------------*/
 
-import T from './../../i18n/index.js';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FixeWait from "./../fixe/wait.js";
 import { ResetPassword } from '../../api/users/methods.js';
 import { successHandler, errorHandler } from './../../utilities/ui.js';
 
 const ResetPasswordUI = () => {
 	const [loading, setLoading] = useState(false);
+	const [ locale, setLocale ] = useState(i18n.getLocale());
 	
+	const T = i18n.createComponent("userprofile.identification.password");
+  	const T2 = i18n.createTranslator("userprofile.identification.password");
+  	
+  	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
+
 	const handleResetPassword = event => {
 		event.preventDefault();
 		if(loading)return;
@@ -28,13 +38,13 @@ const ResetPasswordUI = () => {
 
 	return (
 		<form  onSubmit={handleResetPassword}>
-			<h2><T>userprofile.identification.password.label</T></h2>
+			<h2><T>label</T></h2>
 			<ul className="toggle-list">
 				<li>
 					<span className="input-wrapper--inline">
 						{ loading && <FixeWait/> }
 						{ !loading && 
-							<input className="button button--primary" type="submit" value={i18n.__("userprofile.identification.password.submit")}/>
+							<input className="button button--primary" type="submit" value={T2("submit")}/>
 						}
 					</span>
 				</li>

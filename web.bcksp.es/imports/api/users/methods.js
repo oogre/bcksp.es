@@ -2,10 +2,9 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-27 10:36:05
+  @Last Modified time: 2020-01-28 23:27:29
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
-import T from './../../i18n/index.js';
 import { 
 	checkValidDevice,
 	checkUserLoggedIn,
@@ -86,11 +85,11 @@ export const HardDisconnect = new ValidatedMethod({
 				"services.resume.loginTokens" : null
 			}
 		});
-
+		const T2 = i18n.createTranslator("methods.user.HardDisconnect");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("methods.user.HardDisconnect.title"),
+				title : T2("title"),
 				content : "",
 			}
 		};
@@ -132,12 +131,12 @@ export const ResetPassword = new ValidatedMethod({
 				"services.resume.loginTokens" : null
 			}
 		});
-		
+		const T2 = i18n.createTranslator("userprofile.identification.password.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.identification.password.confirmation.title"),
-				content : i18n.__("userprofile.identification.password.confirmation.content")
+				title : T2("title"),
+				content : T2("content")
 			}
 		};
 	}
@@ -156,13 +155,15 @@ export const UpdateEmail = new ValidatedMethod({
 	},
 	run({email}) {
 		if (this.isSimulation)return;
-		Accounts.addEmail(this.userId, email)
-		Accounts.sendVerificationEmail(this.userId, email)
+		Accounts.addEmail(this.userId, email);
+		Accounts.sendVerificationEmail(this.userId, email);
+
+		const T2 = i18n.createTranslator("userprofile.identification.email.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.identification.email.confirmation.title"),
-				content : i18n.__("userprofile.identification.email.confirmation.content")
+				title : T2("title"),
+				content : T2("content")
 			}
 		};
 	}
@@ -204,11 +205,12 @@ export const DestroyUser = new ValidatedMethod({
 
 		Meteor.users.remove(this.userId);
 		
+		const T2 = i18n.createTranslator("userprofile.danger.deleteAccount.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.danger.deleteAccount.confirmation.title"),
-				content : i18n.__("userprofile.danger.deleteAccount.confirmation.content")
+				title : T2("title"),
+				content : T2("content")
 			}
 		};
 	}
@@ -266,11 +268,12 @@ export const SetUserLang = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		const T2 = i18n.createTranslator("userprofile.settings.language.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.settings.language.confirmation.title"),
-				content : i18n.__("userprofile.settings.language.confirmation.content")
+				title : T2("title"),
+				content : T2("content")
 			}
 		};
 	}

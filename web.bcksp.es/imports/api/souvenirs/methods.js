@@ -2,10 +2,9 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-01-25 21:10:35
+  @Last Modified time: 2020-01-28 23:24:28
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
-import T from './../../i18n/index.js';
 import { Meteor } from 'meteor/meteor';
 import {
 	checkDBReference, 
@@ -61,7 +60,8 @@ export const CreateBook = new ValidatedMethod({
 		try{
 			checkString(data.author, 'author');	
 		}catch(e){
-			data.author = i18n.__("souvenir.item.book.form.author.placeholder");
+			const T2 = i18n.createTranslator("souvenir.item.book.form.author");
+			data.author = T2("placeholder");
 		}
 		Souvenirs.Finishing.checkValid(data.finishing, 'finishing');
 		Souvenirs.Licence.checkValid(data.licence, 'licence');
@@ -139,19 +139,19 @@ export const OrderPoster = new ValidatedMethod({
 				subject : "[" + orderID + "] : Commande de poster", 
 				text : "", 
 			});
-
 			Email.send({
 				from : process.env.MAIL_ADDRESS,
 				to : souvenir.email,
-				subject : i18n.__("email.posterConfirm.subject"), 
+				subject : i18n.createTranslator("email.posterConfirm")("subject"), 
 				html : getMail("posterConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
 			});
 		}
+		const T2 = i18n.createTranslator("souvenir.item.poster.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("souvenir.item.poster.confirmation.title"),
-				content : i18n.__("souvenir.item.poster.confirmation.content", {orderID : orderID})
+				title : T2("title"),
+				content : T2("content", {orderID : orderID})
 			}
 		};
 	}
@@ -211,16 +211,16 @@ export const OrderBook = new ValidatedMethod({
 			Email.send({
 				from : process.env.MAIL_ADDRESS,
 				to : souvenir.email,
-				subject : i18n.__("email.bookConfirm.subject"), 
+				subject : i18n.createTranslator("email.bookConfirm")("subject"),
 				html : getMail("bookConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
 			});
 		}
-		
+		const T2 = i18n.createTranslator("souvenir.item.book.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("souvenir.item.book.confirmation.title"),
-				content : i18n.__("souvenir.item.book.confirmation.content", {orderID : orderID})
+				title : T2("title"),
+				content : T2("content", {orderID : orderID})
 			}
 		};
 	}
@@ -252,12 +252,12 @@ export const Contact = new ValidatedMethod({
 			subject : "NOUVEAU MESSAGE : " + email + " : " + subject, 
 			text : message, 
 		});
-
+		const T2 = i18n.createTranslator("souvenir.item.contact.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("souvenir.item.contact.confirmation.title"),
-				content : i18n.__("souvenir.item.contact.confirmation.content")
+				title : T2("title"),
+				content : T2("content")
 			}
 		};
 	}

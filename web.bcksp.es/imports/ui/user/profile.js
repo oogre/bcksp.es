@@ -2,10 +2,9 @@
   web.bitRepublic - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2020-01-15 07:13:52
+  @Last Modified time: 2020-01-28 23:06:11
 \*----------------------------------------*/
 import React from 'react';
-import T from './../../i18n/index.js';
 import Blacklist from "./blacklist.js";
 import FixeWait from "./../fixe/wait.js";
 import DeleteArchive from "./deleteArchive.js";
@@ -19,6 +18,8 @@ import PublishToPublicFeed from "./publishToPublicFeed.js";
 import { Settings } from './../../api/settings/settings.js';
 
 const UserProfile = ({isSettingsReady, settings})=>{
+	const T = i18n.createComponent("userprofile");
+
 	const displaySetting = ()=>(
 		<div>
 			<PublishToPublicFeed settings={settings}/>
@@ -36,16 +37,16 @@ const UserProfile = ({isSettingsReady, settings})=>{
 		<div className="page__content">
 			<div className="container">
 				<div className="page__header">
-					<h1 className="page__title"><T>userprofile.title</T></h1>
+					<h1 className="page__title"><T>title</T></h1>
 				</div>
-				<h2 className="page__subtitle"><T>userprofile.settings.title</T></h2>
+				<h2 className="page__subtitle"><T>settings.title</T></h2>
 				{ isSettingsReady ? displaySetting() : <FixeWait/> }
-				<h2 className="page__subtitle"><T>userprofile.identification.title</T></h2>
+				<h2 className="page__subtitle"><T>identification.title</T></h2>
 				<Identification/>
 				<hr className="field-separator" />
 				<ResetPasswordUI/>
 				<hr className="field-separator" />
-				<h2 className="page__subtitle"><T>userprofile.danger.title</T></h2>
+				<h2 className="page__subtitle"><T>danger.title</T></h2>
 				<DeleteArchive/>
 				<hr className="field-separator" />
 				<DeleteAccount/>

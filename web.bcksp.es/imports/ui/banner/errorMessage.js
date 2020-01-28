@@ -2,10 +2,9 @@
   bcksp.es - errorMessage.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-19 19:16:33
-  @Last Modified time: 2020-01-25 19:33:26
+  @Last Modified time: 2020-01-28 23:33:39
 \*----------------------------------------*/
 import React, {useEffect} from 'react';
-import T from './../../i18n/index.js';
 import { withTracker } from 'meteor/react-meteor-data';
 
 let timeout;

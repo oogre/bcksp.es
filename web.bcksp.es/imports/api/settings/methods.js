@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2020-01-27 10:35:17
+  @Last Modified time: 2020-01-28 23:20:07
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -48,12 +48,12 @@ export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		
+		const T2 = i18n.createTranslator("userprofile.settings.publishToPublicFeed.confirmation");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.settings.publishToPublicFeed.confirmation."+(mySettings.publishToPublicFeed ? "disactive" : "active") +".title"),
-				content : i18n.__("userprofile.settings.publishToPublicFeed.confirmation."+(mySettings.publishToPublicFeed ? "disactive" : "active") +".content")
+				title : T2((mySettings.publishToPublicFeed ? "disactive" : "active") +".title"),
+				content : T2((mySettings.publishToPublicFeed ? "disactive" : "active") +".content")
 			}
 		};
 	}
@@ -94,11 +94,12 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		const T2 = i18n.createTranslator("userprofile.settings.blindfield.confirmation.add");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.settings.blindfield.confirmation.add.title"),
-				content : i18n.__("userprofile.settings.blindfield.confirmation.add.content", {field : type})
+				title : T2("title"),
+				content : T2("content", {field : type})
 			}
 		};
 	}
@@ -139,11 +140,12 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		const T2 = i18n.createTranslator("userprofile.settings.blindfield.confirmation.remove");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.settings.blindfield.confirmation.remove.title"),
-				content : i18n.__("userprofile.settings.blindfield.confirmation.remove.content", {field : type})
+				title : T2("title"),
+				content : T2("content", {field : type})
 			}
 		};
 	}
@@ -181,11 +183,12 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		const T2 = i18n.createTranslator("userprofile.settings.blacklist.confirmation.add");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.settings.blacklist.confirmation.add.title"),
-				content : i18n.__("userprofile.settings.blacklist.confirmation.add.content", {URL : url})
+				title : T2("title"),
+				content : T2("content", {URL : url})
 			}
 		};
 	}
@@ -223,11 +226,12 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		const T2 = i18n.createTranslator("userprofile.settings.blacklist.confirmation.remove");
 		return {
 			success : true,
 			message : {
-				title : i18n.__("userprofile.settings.blacklist.confirmation.remove.title"),
-				content : i18n.__("userprofile.settings.blacklist.confirmation.remove.content", {URL : url})
+				title : T2("title"),
+				content : T2("content", {URL : url})
 			}
 		};
 	}

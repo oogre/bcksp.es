@@ -2,7 +2,7 @@
   bcksp.es - dbConstTools.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-25 15:23:53
-  @Last Modified time: 2020-01-25 15:58:19
+  @Last Modified time: 2020-01-28 23:17:15
 \*----------------------------------------*/
 
 
@@ -18,11 +18,12 @@ const tools = {
 	},
 	checkValid : function(value, origin){
 		if(!this.hasValue(value)){
+			const T2 = i18n.createTranslator("errors");
 			throw new ValidationError([{
 				name: 'type',
 				type: 'not-recognize',
 				details: {
-				  value: i18n.__("errors.type.not-recognize"),
+				  value: T2("type.not-recognize"),
 				  origin : origin,
 				}
 			}]);	

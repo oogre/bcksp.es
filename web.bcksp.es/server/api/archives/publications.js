@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-01-27 10:49:59
+  @Last Modified time: 2020-01-27 17:58:44
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
@@ -20,7 +20,8 @@ Meteor.publish("archive.public", function(){
 		}
 	}, {
 		fields : {
-			_id : true
+			_id : true, 
+			type : true
 		}
 	});
 

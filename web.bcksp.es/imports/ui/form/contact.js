@@ -2,10 +2,9 @@
   bcksp.es - contact.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-27 13:15:16
-  @Last Modified time: 2020-01-25 20:59:56
+  @Last Modified time: 2020-01-28 23:33:48
 \*----------------------------------------*/
-import T from './../../i18n/index.js';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import FixeWait from './../fixe/wait.js';
 import { useForm } from 'react-hook-form';
 import FixeError from './../fixe/error.js';
@@ -14,10 +13,21 @@ import { Contact } from "./../../api/souvenirs/methods.js";
 import { errorHandler, successHandler } from './../../utilities/ui.js';
 
 const FormContact = ({type}) => {
+	const [ locale, setLocale ] = useState(i18n.getLocale());
 	const [loading, setLoading] = useState(false);
 	const { register, handleSubmit, errors, setError} = useForm();
-	const currentItem = i18n.createTranslator((type == "souvenir") ? "souvenir.item.contact" : "forms.contact");
-	const T2 = i18n.createComponent(currentItem);
+
+  	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
+
+	const contactType = (type == "souvenir") ? "souvenir.item.contact" : "forms.contact";
+	const T2errors = i18n.createTranslator("errors");
+	const T = i18n.createComponent(contactType);
+	const T2 = i18n.createTranslator(contactType);
 
 	const onSubmitHandler = data => {
 		if(loading)return;
@@ -36,7 +46,7 @@ const FormContact = ({type}) => {
 			<div className="container">
 				<div className="page__header">
 					<h1 className="page__title">
-						<T2>title</T2>
+						<T>title</T>
 					</h1>
 				</div>
 				<div className="shop">
@@ -50,14 +60,14 @@ const FormContact = ({type}) => {
 											name="email"
 											validator={register({
 													required: {
-														message: i18n.__("errors.email.required")
+														message: T2errors("email.required")
 													},
 													pattern: {
 														value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-														message: i18n.__("errors.email.not-an-email")
+														message: T2errors("email.not-an-email")
 													}
 											})}
-											label={currentItem("form.email.label")}
+											label={T2("form.email.label")}
 											error={errors?.email?.message}
 											defaultValue="vincent@ogre.be"
 										/>
@@ -68,10 +78,10 @@ const FormContact = ({type}) => {
 										name="subject"
 										validator={register({
 											required: {
-												message: i18n.__("errors.default.required")
+												message: T2errors("default.required")
 											}
 										})}
-										label={currentItem("form.subject.label")}
+										label={T2("form.subject.label")}
 										error={errors?.subject?.message}
 									/>
 								</div>
@@ -81,7 +91,7 @@ const FormContact = ({type}) => {
 											htmlFor="message"
 											className="field__label"
 										>
-											<T2>form.message.label</T2>
+											<T>form.message.label</T>
 										</label>
 										<textarea 
 											id="message" 
@@ -90,7 +100,7 @@ const FormContact = ({type}) => {
 											name="message"
 											ref={register({
 												required: {
-													message: i18n.__("errors.default.required")
+													message: T2errors("default.required")
 												}
 											})}
 										/>
@@ -105,7 +115,7 @@ const FormContact = ({type}) => {
 							</div>
 						</div>
 						<div className="shop-creation__validation">
-							{ !loading && <input className="button button--primary" type="submit" value={currentItem("button")}/> }
+							{ !loading && <input className="button button--primary" type="submit" value={T2("button")}/> }
 							{ loading && <FixeWait/> }
 						</div>
 					</form>

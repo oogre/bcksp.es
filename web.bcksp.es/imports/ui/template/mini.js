@@ -2,29 +2,22 @@
   bcksp.es - full.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-03 20:46:10
-  @Last Modified time: 2019-04-06 13:30:48
+  @Last Modified time: 2020-01-28 22:55:53
 \*----------------------------------------*/
-import React, { Component } from 'react';
-
-
-import CallToConnect from './../banner/callToConnect.js';
-import HeaderMenu from './../menu/header.js';
+import React from 'react';
 import MenuFooter from './../menu/footer.js';
-import MutationObserver from 'mutation-observer';
+import CallToConnect from './../banner/callToConnect.js';
 
-export default class TemplateMini extends Component {
-	constructor(props){
-		super(props);
-	}
-	render() {
-		return (
-			<div className="page page--home">
-				<CallToConnect /> 
-				{
-					React.Children.map(this.props.children, child => child)
-				}
-				<MenuFooter/>
-			</div>
-		);
-	}
+
+const TemplateMini = ({children}) => {
+	return (
+		<div className="page page--home">
+			<CallToConnect /> 
+			{
+				React.Children.map(children, child => child)
+			}
+			<MenuFooter/>
+		</div>
+	);
 }
+export default TemplateMini;

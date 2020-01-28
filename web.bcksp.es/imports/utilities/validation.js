@@ -2,12 +2,11 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-01-27 10:37:14
+  @Last Modified time: 2020-01-28 23:32:06
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
 import { config } from './../startup/config.js';
-import T from './../i18n/index.js';
 
 export const regexp = {
 	email : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -21,7 +20,7 @@ export function checkBlindfieldRemoveAllowed(classFlag, type, origin="main"){
 			name: 'type',
 			type: 'not-recognize',
 			details: {
-			  value: i18n.__("errors.default.remove-disabled"),
+			  value: i18n.createTranslator("errors")("default.remove-disabled"),
 			  origin : origin,
 			}
 		}]);
@@ -33,7 +32,7 @@ export function checkDBReference(request, Collection, origin="main"){
 				name: 'type',
 				type: 'not-recognize',
 				details: {
-				  value: i18n.__("errors.type.not-recognize"),
+				  value: i18n.createTranslator("errors")("type.not-recognize"),
 				  origin : origin,
 				}
 			}]);
@@ -46,7 +45,7 @@ export function checkObject(value, origin="main"){
 				name: 'type',
 				type: 'not-recognize',
 				details: {
-				  value: i18n.__("errors.type.not-recognize"),
+				  value: i18n.createTranslator("errors")("type.not-recognize"),
 				  origin : origin,
 				}
 			}]);
@@ -59,7 +58,7 @@ export function checkArray(value, origin="main"){
 				name: 'type',
 				type: 'not-recognize',
 				details: {
-				  value: i18n.__("errors.type.not-recognize"),
+				  value: i18n.createTranslator("errors")("type.not-recognize"),
 				  origin : origin,
 				}
 			}]);
@@ -73,7 +72,7 @@ export function checkValidLanguage(value, origin="main"){
 				name: 'type',
 				type: 'not-recognize',
 				details: {
-				  value: i18n.__("errors.lang.not-recognize"),
+				  value: i18n.createTranslator("errors")("lang.not-recognize"),
 				  origin : origin,
 				}
 			}]);
@@ -86,7 +85,7 @@ export function checkString(value, origin="main"){
 				name: 'type',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.type.not-a-string", {value : value}),
+				  value: i18n.createTranslator("errors")("type.not-a-string", {value : value}),
 				  origin : origin,
 				}
 			}]);
@@ -99,7 +98,7 @@ export function checkNumber(value, origin="main"){
 				name: 'type',
 				type: 'not-a-number',
 				details: {
-				  value: i18n.__("errors.type.not-a-number"),
+				  value: i18n.createTranslator("errors")("type.not-a-number"),
 				  origin : origin,
 				}
 			}]);
@@ -113,7 +112,7 @@ export function checkGreaterThan(a, b, origin="main"){
 				name: 'type',
 				type: 'greater-than',
 				details: {
-				  value: i18n.__("errors.type.greater-than", {a, b}),
+				  value: i18n.createTranslator("errors")("type.greater-than", {a, b}),
 				  origin : origin,
 				}
 			}]);
@@ -126,7 +125,7 @@ export function checkUrl(value, origin="main"){
 				name: 'url',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.url.not-a-string"),
+				  value: i18n.createTranslator("errors")("url.not-a-string"),
 				  origin : origin,
 				}
 			}]);
@@ -138,7 +137,7 @@ export function checkUserLoggedIn(origin="main"){
 			name: 'login',
 			type: 'required',
 			details: {
-				value : i18n.__("errors.login.required"),
+				value : i18n.createTranslator("errors")("login.required"),
 				origin : origin,
 			}
 		}]);
@@ -150,7 +149,7 @@ export function checkUserRole(role, origin="main"){
 			name: 'role',
 			type: 'required',
 			details: {
-				value : i18n.__("errors.role.required", {role : role}),
+				value : i18n.createTranslator("errors")("role.required", {role : role}),
 				origin : origin,
 			}
 		}]);
@@ -162,7 +161,7 @@ export function checkValidDevice(value, origin="main"){
 			name: 'device',
 			type: 'required',
 			details: {
-			  value: i18n.__("errors.device.required"),
+			  value: i18n.createTranslator("errors")("device.required"),
 			  origin : origin,
 			}
 		}]);
@@ -170,7 +169,7 @@ export function checkValidDevice(value, origin="main"){
 			name: 'device',
 			type: 'not-a-string',
 			details: {
-			  value: i18n.__("errors.device.not-a-string"),
+			  value: i18n.createTranslator("errors")("device.not-a-string"),
 			  origin : origin,
 			}
 		}]);
@@ -178,7 +177,7 @@ export function checkValidDevice(value, origin="main"){
 				name: 'device',
 				type: 'no-match',
 				details: {
-				  value: i18n.__("errors.device.no-match", {deviceId : value}),
+				  value: i18n.createTranslator("errors")("device.no-match", {deviceId : value}),
 				  origin : origin,
 				}
 			}]);
@@ -190,7 +189,7 @@ export function checkValidEmail(value, hasToExist = true, origin="main"){
 				name: 'email',
 				type: 'required',
 				details: {
-				  value: i18n.__("errors.email.required"),
+				  value: i18n.createTranslator("errors")("email.required"),
 				  origin : origin
 				}
 			}]);
@@ -198,7 +197,7 @@ export function checkValidEmail(value, hasToExist = true, origin="main"){
 				name: 'email',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.email.not-a-string"),
+				  value: i18n.createTranslator("errors")("email.not-a-string"),
 				  origin : origin
 				}
 			}]);
@@ -206,7 +205,7 @@ export function checkValidEmail(value, hasToExist = true, origin="main"){
 				name: 'email',
 				type: 'not-an-email',
 				details: {
-				  value: i18n.__("errors.email.not-an-email"),
+				  value: i18n.createTranslator("errors")("email.not-an-email"),
 				  origin : origin
 				}
 			}]);
@@ -217,7 +216,7 @@ export function checkValidEmail(value, hasToExist = true, origin="main"){
 				name: 'email',
 				type: 'no-match',
 				details: {
-				  value: i18n.__("errors.email.no-match"),
+				  value: i18n.createTranslator("errors")("email.no-match"),
 				  origin : origin
 				}
 			}]);
@@ -225,7 +224,7 @@ export function checkValidEmail(value, hasToExist = true, origin="main"){
 			name: 'email',
 			type: 'already-exists',
 			details: {
-			  	value: i18n.__("errors.email.already-exists"),
+			  	value: i18n.createTranslator("errors")("email.already-exists"),
 				origin : origin
 			}
 		}]);
@@ -237,7 +236,7 @@ export function checkValidPassword(value, confirm, origin="main"){
 				name: 'password',
 				type: 'required',
 				details: {
-				  value: i18n.__("errors.password.required"),
+				  value: i18n.createTranslator("errors")("password.required"),
 				  origin : origin
 				}
 			}]);
@@ -245,7 +244,7 @@ export function checkValidPassword(value, confirm, origin="main"){
 				name: 'password',
 				type: 'not-a-string',
 				details: {
-				  value: i18n.__("errors.password.not-a-string"),
+				  value: i18n.createTranslator("errors")("password.not-a-string"),
 				  origin : origin
 				}
 			}]);
@@ -253,7 +252,7 @@ export function checkValidPassword(value, confirm, origin="main"){
 				name: 'password',
 				type: 'min-string',
 				details: {
-				  value: i18n.__("errors.password.min-string", {length : config.user.password.length.min}),
+				  value: i18n.createTranslator("errors")("password.min-string", {length : config.user.password.length.min}),
 				  origin : origin
 				}
 			}]);
@@ -261,7 +260,7 @@ export function checkValidPassword(value, confirm, origin="main"){
 				name: 'password',
 				type: 'max-string',
 				details: {
-				  value: i18n.__("errors.password.max-string", {length : config.user.password.length.max}),
+				  value: i18n.createTranslator("errors")("password.max-string", {length : config.user.password.length.max}),
 				  origin : origin
 				}
 			}]);
@@ -269,7 +268,7 @@ export function checkValidPassword(value, confirm, origin="main"){
 				name: 'passwordConfirm',
 				type: 'required',
 				details: {
-				  value: i18n.__("errors.passwordConfirm.required"),
+				  value: i18n.createTranslator("errors")("passwordConfirm.required"),
 				  origin : origin
 				}
 			}]);
@@ -277,7 +276,7 @@ export function checkValidPassword(value, confirm, origin="main"){
 				name: 'passwordConfirm',
 				type: 'no-match',
 				details: {
-				  value: i18n.__("errors.passwordConfirm.no-match"),
+				  value: i18n.createTranslator("errors")("passwordConfirm.no-match"),
 				  origin : origin
 				}
 			}]);

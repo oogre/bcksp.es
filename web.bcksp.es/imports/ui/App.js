@@ -2,11 +2,11 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-01-27 11:01:47
+  @Last Modified time: 2020-01-27 17:51:06
 \*----------------------------------------*/
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import LiveStream from './archive/LiveStream.js';
+import ArchiveWrapper from './archive/wrapper.js';
 import ArchiveCounter from './archive/counter.js';
 import BannerBaseline from './banner/baseline.js';
 import AboutShort from './about/short.js';
@@ -32,7 +32,7 @@ const App = ({isConnected}) => {
 						</div>
 					</div>
 			}
-			<LiveStream type="home" onShare={onShare}/>
+			<ArchiveWrapper type="home" onShare={onShare}/>
 			{
 				!isConnected &&
 				<div className="about-parallax">

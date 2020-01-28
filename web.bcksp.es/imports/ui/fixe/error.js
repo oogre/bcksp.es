@@ -2,9 +2,9 @@
   bcksp.es - error.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 16:20:01
-  @Last Modified time: 2020-01-24 14:52:28
+  @Last Modified time: 2020-01-28 21:22:09
 \*----------------------------------------*/
-import React, { Component } from 'react';
+import React from 'react';
 
 const FixeError = ({children}) => {
 	return (

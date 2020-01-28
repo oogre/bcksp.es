@@ -2,10 +2,9 @@
   bitRepublic - account-config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-01-30 01:13:47
-  @Last Modified time: 2019-12-20 20:20:27
+  @Last Modified time: 2020-01-28 23:29:20
 \*----------------------------------------*/
 import React from 'react';
-import T from './../i18n/index.js';
 import { render } from 'react-dom';
 import { config } from './config.js';
 import { Accounts } from 'meteor/accounts-base';
@@ -20,7 +19,8 @@ if(Meteor.isServer){
 	Accounts.emailTemplates.from = process.env.MAIL_ADDRESS;
 	Accounts.emailTemplates.resetPassword = {
 		subject(user) {
-			return i18n.__("email.resetPassword.subject");
+			
+			return i18n.createTranslator("email.resetPassword")("subject");
 		},
 		html(user, url) {
 			return getMail("resetPassword", {"url" : url});
@@ -28,7 +28,7 @@ if(Meteor.isServer){
 	};
 	Accounts.emailTemplates.verifyEmail = {
 		subject(user) {
-			return i18n.__("email.verifyEmail.subject");
+			return i18n.createTranslator("email.verifyEmail")("subject");
 		},
 		html(user, url) {
 			return getMail("verifyEmail", {"url" : url});

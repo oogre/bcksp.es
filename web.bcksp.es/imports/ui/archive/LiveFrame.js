@@ -1,91 +1,60 @@
 import { Caret } from 'caret-pos';
-import T from './../../i18n/index.js';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tooltip from './../shared/tooltip.js';
 import { log } from './../../utilities/log.js';
 import ButtonShare from './../button/share.js';
-import { mobileAndTabletcheck } from './../../utilities/ui.js';;
+import { mobileAndTabletcheck, successHandler, errorHandler } from './../../utilities/ui.js';;
 
-// LiveStream component
-export default class LiveFrame extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			selectContent:"",
-			position : [-1000, -1000],
-			fullscreen : FlowRouter.getRouteName() == "livefeed"
-		};
-		this.handleKey = this.handleKey.bind(this);
-	}
-	isContentEditable(){
-		return !mobileAndTabletcheck();
-	}
-	hideShareButton(){
-		//return false;
-		if(this.cancelHideShareButton === true)return;
-		this.hideShareButtonTimer = Meteor.setTimeout(()=>{
-			this.setState({
-				selectContent : "",
-				position : [-1000, -1000],
-			});
-		}, 333)
-	}
-	componentWillUnmount(){
-		Meteor.clearTimeout(this.hideShareButtonTimer);
-		this.cancelHideShareButton = true;
-		document.removeEventListener("keydown", this.handleKey, true);
-		document.removeEventListener("keyup", this.handleKey, true);
-		
-	}
-	componentDidMount(){
-		document.addEventListener("keydown", this.handleKey, true);
-		document.addEventListener("keyup", this.handleKey, true);
-		let stream = document.querySelector(".stream");
-		this.caret = new Caret(stream);
-		this.caret.onCaretOff(event=>{
-			this.hideShareButton()
+let hideShareButtonTimer;
+let caret;
+
+const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, content}) =>  {
+	const [ loading, setLoading ] = useState(false);
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	const [ selectContent , setSelectContent ] = useState("")
+	const [ position , setPosition ] = useState([-1000, -1000]);
+	const fullscreen = FlowRouter.getRouteName() == "livefeed";
+	const fullscreenLink = FlowRouter.path(fullscreen ? "home" : "livefeed");
+
+	const handleArchiveEdit = data => {
+		if(loading)return;
+		setLoading(true);
+		Meteor.call("Archives.methods.edit", data, (error, res)=> {
+			setLoading(false);
+			if(errorHandler(error))return;
+			successHandler(res)
 		});
-		this.caret.onCaretChange(event=>{
-			let content = event.selectedText || "";
-			if(_.isFunction(this.props.onSelect)){
-				this.props.onSelect(content);
-			}
-			this.setState({
-				selectContent : content,
-			});
-			if(content != ""){
-				Meteor.clearTimeout(this.hideShareButtonTimer);
-				let offset = event.caret.getOffset();
-				offset.top -= document.querySelector(".livestream-container").offsetTop;
-				offset.left -= document.querySelector(".livestream").offsetLeft
-				this.setState({
-					position : [offset.left, offset.top]
-				});
-			}else{
-				this.hideShareButton();
-			}
-		});
-		
-		//document.querySelector(".stream");
-		//console.log(stream.firstChild);
-		//console.log(this.props.content);
-		/*let range = new Range();
-		console.log(range.setStart);
-		range.setStart(stream.firstChild, 0);
-		range.setEnd(stream.firstChild, 40);
-
-		// toString of a range returns its content as text (without tags)
-		//alert(range); // Example: italic
-
-		// apply this range for document selection (explained later)
-		document.getSelection().addRange(range);
-		*/
 	}
 	
-	handleKey(event){
+	const caretChangeHandler = event => {
+		let content = event.selectedText || "";
+		if(_.isFunction(onSelect)){
+			onSelect(content);
+		}
+		setSelectContent(content);
 
+		if(content != ""){
+			Meteor.clearTimeout(hideShareButtonTimer);
+			let offset = event.caret.getOffset();
+			offset.top -= document.querySelector(".livestream-container").offsetTop;
+			offset.left -= document.querySelector(".livestream").offsetLeft
+			setPosition([offset.left, offset.top]);
+		}else{
+			hideShareButton();
+		}
+	}
+
+	const hideShareButton = () => {
+		hideShareButtonTimer = Meteor.setTimeout(()=>{
+			setSelectContent("");
+			setPosition([-1000, -1000]);
+		}, 333)
+	}
+
+
+	const handleKey = event => {
 		if(	   event.keyCode == 27 // ESC
-			&& this.state.fullscreen
+			&& fullscreen
 		){
 			FlowRouter.go("home");
 			event.preventDefault();
@@ -99,7 +68,7 @@ export default class LiveFrame extends Component {
 			return true;
 		}
 		
-		if(this.props.public){
+		if(public){
 			event.preventDefault();
 			return false;
 		}else{
@@ -109,15 +78,13 @@ export default class LiveFrame extends Component {
 				&& !event.altKey
 				&& !event.ctrlKey
 			){ 
-				let text = this.caret.getSelectedText()
+				let text = caret.getSelectedText()
 				if(text){
 					event.preventDefault();
-					Meteor.call("Archives.methods.edit", {
+					handleArchiveEdit({
 						text : text,
-						startAt : this.caret.startAt,
-						stopAt : this.caret.stopAt
-					}, error => {
-						if(error) log(error)
+						startAt : caret.startAt,
+						stopAt : caret.stopAt
 					});
 					return true;
 				}
@@ -136,45 +103,69 @@ export default class LiveFrame extends Component {
 		}
 	}
 
-	render(){
-		return (
-			<div className="liveframe">
+	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		
+		document.addEventListener("keydown", handleKey, true);
+		document.addEventListener("keyup", handleKey, true);
+		caret = new Caret(document.querySelector(".stream"));
+		caret.onCaretOff( hideShareButton );
+		caret.onCaretChange( caretChangeHandler );
+
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+			
+			Meteor.clearTimeout(hideShareButtonTimer);
+			document.removeEventListener("keydown", handleKey, true);
+			document.removeEventListener("keyup", handleKey, true);
+		}
+	}, []);
+
+	const T = i18n.createComponent("archive");
+	const T2 = i18n.createTranslator("archive");
+
+	return (
+		<div className="liveframe">
+			{
+				fullscreenAvailable &&
+					<a 	href={fullscreenLink} 
+						className="liveframe__fullscreen button--unstyled" 
+						title={T2("fullscreen.tooltip")}
+					>
+						<span className="sr-only">
+							<T>fullscreen.button</T>
+						</span>
+						<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg">
+							<g fill="#000" fillRule="nonzero">
+								<path d="M2 0h11.724a2 2 0 0 1 1.364 3.462L3.365 14.404A2 2 0 0 1 0 12.942V2a2 2 0 0 1 2-2zM2 39.942h11.724a2 2 0 0 0 1.364-3.462L3.365 25.538A2 2 0 0 0 0 27v10.942a2 2 0 0 0 2 2zM38.024 0H26.3a2 2 0 0 0-1.365 3.462L36.66 14.404a2 2 0 0 0 3.365-1.462V2a2 2 0 0 0-2-2zM38.024 39.942H26.3a2 2 0 0 1-1.365-3.462L36.66 25.538A2 2 0 0 1 40.024 27v10.942a2 2 0 0 1-2 2z"/><path d="M9.04 6.419L33.08 30.46l-2.12 2.121L6.918 8.54z"/>
+								<path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/>
+							</g>
+						</svg>
+						
+					</a>
+			}
+			
+			{
+				_.isFunction(onShare) &&
+					<ButtonShare 	
+						left={position[0]}
+						top={position[1]}
+						content={selectContent}
+						onShare={onShare}
+					/>
+			}
+			
+			<div className="liveframe__stream stream bcksp-es-disabled"
+				contentEditable={ !mobileAndTabletcheck() }
+				suppressContentEditableWarning={true}
+				spellCheck={false}
+			>
 				{
-					this.props.fullscreenAvailable!==false &&
-						<a 	href={FlowRouter.path(this.state.fullscreen ? "home" : "livefeed")} 
-							className="liveframe__fullscreen button--unstyled" 
-							title={i18n.__("archive.fullscreen.tooltip")}
-						>
-							<span className="sr-only">
-								<T>archive.fullscreen.button</T>
-							</span>
-							<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg">
-								<g fill="#000" fillRule="nonzero">
-									<path d="M2 0h11.724a2 2 0 0 1 1.364 3.462L3.365 14.404A2 2 0 0 1 0 12.942V2a2 2 0 0 1 2-2zM2 39.942h11.724a2 2 0 0 0 1.364-3.462L3.365 25.538A2 2 0 0 0 0 27v10.942a2 2 0 0 0 2 2zM38.024 0H26.3a2 2 0 0 0-1.365 3.462L36.66 14.404a2 2 0 0 0 3.365-1.462V2a2 2 0 0 0-2-2zM38.024 39.942H26.3a2 2 0 0 1-1.365-3.462L36.66 25.538A2 2 0 0 1 40.024 27v10.942a2 2 0 0 1-2 2z"/><path d="M9.04 6.419L33.08 30.46l-2.12 2.121L6.918 8.54z"/>
-									<path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/>
-								</g>
-							</svg>
-							
-						</a>
+					content
 				}
-				{
-					this.props.shareAvailable!==false &&
-						<ButtonShare 	left={this.state.position[0]}
-										top={this.state.position[1]}
-										content={this.state.selectContent}
-										onShare={this.props.onShare && this.props.onShare.bind(this)}
-						/>
-				}
-				<div className="liveframe__stream stream bcksp-es-disabled"
-					contentEditable={ this.isContentEditable() }
-					suppressContentEditableWarning={true}
-					spellCheck={false}
-				>
-					{
-						this.props.content
-					}
-				</div>
 			</div>
-		);
-	}
+		</div>
+	);
 }
+
+export default LiveFrame;

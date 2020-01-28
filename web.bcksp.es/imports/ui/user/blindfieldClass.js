@@ -2,11 +2,11 @@
   bcksp.es - blindfieldClass.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:16:39
-  @Last Modified time: 2020-01-26 15:36:55
+  @Last Modified time: 2020-01-28 23:42:53
 \*----------------------------------------*/
-import T from './../../i18n/index.js';
-import React, { useState } from 'react';
+
 import FixeWait from "./../fixe/wait.js";
+import React, { useState, useEffect } from 'react';
 import MyToggleButton from "./../shared/MyToggleButton.js";
 import { successHandler, errorHandler } from '../../utilities/ui.js';
 import {
@@ -15,7 +15,18 @@ import {
 } from '../../api/settings/methods.js';
 
 const BlindfieldClass = ({settings}) => {
-	const [loading, setLoading] = useState(false);
+	const [ loading, setLoading ] = useState(false);
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	
+	const T = i18n.createComponent("userprofile.settings.blindfield.class");
+  	const T2 = i18n.createTranslator("userprofile.settings.blindfield.class");
+  	
+  	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
 
 	const handleToggleBlindfield = (type, classFlag, toggle) => {
 		if(loading)return;
@@ -50,15 +61,15 @@ const BlindfieldClass = ({settings}) => {
 	
 	return (
 		<div>
-			<h2><T>userprofile.settings.blindfield.class.title</T></h2>
+			<h2><T>title</T></h2>
 			<ul className="toggle-list">
 				<li>
 					<span className="input-wrapper--inline">
-						<T>userprofile.settings.blindfield.class.desc</T>
+						<T>desc</T>
 					</span>
 				</li>
 				{ 
-					settings.blindfield.class.map((type, k) => (
+					settings.blindfield.types.map((type, k) => (
 						<li key={k}>
 							<span className="input-wrapper--inline">
 								 <span>{type} :</span>
@@ -69,8 +80,8 @@ const BlindfieldClass = ({settings}) => {
 									<MyToggleButton
 										value={ true }
 										onToggle={ flag => handleToggleBlindfield(type, true, flag) }
-										activeLabel={i18n.__("userprofile.settings.blindfield.class.activeLabel")}
-										inactiveLabel={i18n.__("userprofile.settings.blindfield.class.inactiveLabel")}
+										activeLabel={T2("activeLabel")}
+										inactiveLabel={T2("inactiveLabel")}
 									/>
 								}
 							</span>

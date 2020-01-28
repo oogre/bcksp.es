@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-01-26 18:18:54
+  @Last Modified time: 2020-01-28 23:37:45
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 
@@ -72,11 +72,12 @@ export const ArchiveClear = new ValidatedMethod({
 		this.unblock();
 		return ArchiveTools.clearPrivateArchive()
 		.then(()=>{ 
+			const T2 = i18n.createTranslator("userprofile.danger.deleteArchive.confirmation");
 			return {
 				success : true,
 				message : {
-					title : i18n.__("userprofile.danger.deleteArchive.confirmation.title"),
-					content : i18n.__("userprofile.danger.deleteArchive.confirmation.content")
+					title : T2("title"),
+					content : T2("content")
 				}
 			};
 		})
@@ -113,19 +114,20 @@ export const ArchiveDownload = new ValidatedMethod({
 		})
 		.then(data =>{
 			let file = [
-				i18n.__("souvenir.item.download.file.content", {
+				i18n.createTranslator("souvenir.item.download.file")("content", {
 					createdAt : moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
 					updatedAt : moment(data.updatedAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
 					content : data.content,
 					count : data.count
 				})
 			];
+			const T2 = i18n.createTranslator("souvenir.item.download.confirmation");
 			return {
 				success : true,
 				data : file,
 				message : {
-					title : i18n.__("souvenir.item.download.confirmation.title"),
-					content : i18n.__("souvenir.item.download.confirmation.content")
+					title : T2("title"),
+					content : T2("content")
 				}
 			};
 		})
@@ -148,7 +150,17 @@ export const ArchiveEdit = new ValidatedMethod({
 	},
 	run({ text, startAt, stopAt  }) {
 		this.unblock();
-		unpublishToPrivateArchive(text, startAt, stopAt)
+		return ArchiveTools.unpublishToPrivateArchive(text, startAt, stopAt)
+		.then(() => {
+			const T2 = i18n.createTranslator("archive.edit.confirmation");
+			return {
+				success : true,
+				message : {
+					title : T2("title"),
+					content : T2("content")
+				}
+			};
+		})
 		.catch(err=>console.log(err));
 	}
 });

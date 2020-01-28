@@ -2,10 +2,9 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-01-25 21:20:31
+  @Last Modified time: 2020-01-28 23:33:54
 \*----------------------------------------*/
 
-import T from './../../i18n/index.js';
 import React, { useState } from 'react';
 import FixeWait from './../fixe/wait.js'
 import { withTracker } from 'meteor/react-meteor-data';
@@ -16,6 +15,10 @@ import { errorHandler, successHandler } from './../../utilities/ui.js';
 const MenuFooter = ({isConnected, extensionInstalled}) => {
 	const [loading, setLoading] = useState(false);
 	
+	const T = i18n.createComponent("menus");
+	const T2 = i18n.createComponent("forms");
+	
+
 	const handleLogout = () => {
 		if(loading)return;
 		setLoading(true);
@@ -38,24 +41,24 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 							<ul className="menu menu--footer">
 								<li className="menu__item">
 									<a className="menu__item-link" href={FlowRouter.path("about")}>
-										<T>menus.about</T>
+										<T>about</T>
 									</a>
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link" href={FlowRouter.path("contact")}>
-										<T>menus.contact</T>
+										<T>contact</T>
 									</a>
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link" href={FlowRouter.path("about")+"#auteurs"}>
-										<T>menus.authors</T>
+										<T>authors</T>
 									</a>
 								</li>
 								{
 									!extensionInstalled &&
 										<li className="menu__item">
 											<a className="menu__item-link" href="#" onClick={installExtension}>
-												<T>menus.download</T>
+												<T>download</T>
 											</a>
 										</li>
 								}
@@ -65,7 +68,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 											<a 	className="menu__item-link"
 												href={ FlowRouter.path("userProfile") }
 											>
-												profile
+												<T>profile</T>
 											</a>
 										</li>
 								}
@@ -75,7 +78,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 											{ loading && <FixeWait/> }
 											{ !loading && 
 												<a className="menu__item-link" href="#" onClick={handleLogout}>
-													<T>forms.logout.action</T>
+													<T2>logout.action</T2>
 												</a>
 											}
 										</li>
@@ -101,7 +104,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 					<div className="column">
 						<div className="column__content">
 							<p className="menu--footer__title">
-								<T>menus.supportedBy</T>
+								<T>supportedBy</T>
 							</p>
 							<ul className="menu menu--footer">
 								<li className="menu__item ">
@@ -111,7 +114,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link " target="_blank" href="http://www.vgc.be/ondersteuning/subsidies/cultuur/subsidies-kunsten">
-										<T>menus.helpUs</T>
+										<T>helpUs</T>
 									</a>
 								</li>
 							</ul>

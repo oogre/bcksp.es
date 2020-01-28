@@ -2,11 +2,10 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:27:09
-  @Last Modified time: 2020-01-26 23:09:38
+  @Last Modified time: 2020-01-28 22:37:30
 \*----------------------------------------*/
 
 import React, { useEffect } from 'react';
-import T from './../../../../i18n/index.js';
 import Progress from "./../../../shared/progress.js";
 import { withTracker } from 'meteor/react-meteor-data';
 import { config } from './../../../../startup/config.js';
@@ -15,6 +14,8 @@ import { Archives } from './../../../../api/archives/archives.js';
 
 // App component - represents the whole app
 const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
+	const T = i18n.createComponent("souvenir.item.book");
+
 	useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
 			handle && handle.stop();
@@ -36,8 +37,8 @@ const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
 				>
 					<img src="/images/souvenirs/book.png"/>
 				</Progress>
-				<span className="souvenir__link-title"><T>souvenir.item.book.title</T></span>
-				<span className="souvenir__link-badge"><T>souvenir.item.book.price</T></span>
+				<span className="souvenir__link-title"><T>title</T></span>
+				<span className="souvenir__link-badge"><T>price</T></span>
 			</a>
 		</li>
 

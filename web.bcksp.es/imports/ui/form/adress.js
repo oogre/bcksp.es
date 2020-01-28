@@ -2,21 +2,34 @@
   bcksp.es - adress.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-27 22:22:01
-  @Last Modified time: 2020-01-25 19:47:18
+  @Last Modified time: 2020-01-28 21:25:46
 \*----------------------------------------*/
 
-import React from 'react';
-import T from './../../i18n/index.js';
+import React, { useState, useEffect } from 'react';
+
 import { useForm } from 'react-hook-form';
 import TextInput from './../shared/textInput.js';
 import { errorHandler } from './../../utilities/ui.js';
 
 const FormAdress = ({className, children, name, onSubmit}) => {
+	const [ locale, setLocale ] = useState(i18n.getLocale());
 	const { register, handleSubmit, errors, setError} = useForm();
 	const onSubmitHandler = data => {
   		onSubmit(data)
   		.catch(error => errorHandler(error, setError) );
   	};
+
+  	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
+
+	
+	const T2errors = i18n.createTranslator("errors");
+	const T2 = i18n.createTranslator("souvenir.delivery.form");
+
 	return (
 		<form className={className} onSubmit={handleSubmit(onSubmitHandler)}>
 			<div className="shop-creation__order">
@@ -30,14 +43,14 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 									name={name + ".email"} 
 									validator={register({
 											required: {
-												message: i18n.__("errors.email.required")
+												message: T2errors("email.required")
 											},
 											pattern: {
 												value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-												message: i18n.__("errors.email.not-an-email")
+												message: T2errors("email.not-an-email")
 											}
 									})}
-									label={i18n.__("souvenir.delivery.form.email.label")}
+									label={T2("email.label")}
 									error={errors[name]?.email?.message}
 									defaultValue="vincent@ogre.be"
 								/>
@@ -52,10 +65,10 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 									name={ name + ".fullname" }
 									validator={register({
 										required: {
-											message: i18n.__("errors.fullname.required")
+											message: T2errors("fullname.required")
 										}
 									})}
-									label={ i18n.__("souvenir.delivery.form.adress.fullname.label") }
+									label={ T2("adress.fullname.label") }
 									error={errors[name]?.fullname?.message}
 									defaultValue="vincent"
 								/>
@@ -67,10 +80,10 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 									name={ name + ".address" }
 									validator={register({
 										required: {
-											message: i18n.__("errors.address.required")
+											message: T2errors("address.required")
 										}
 									})}
-									label={ i18n.__("souvenir.delivery.form.adress.fulladdress.label") }
+									label={ T2("adress.fulladdress.label") }
 									error={errors[name]?.address?.message}
 									defaultValue="av v. rousseau 98/3"
 								/>
@@ -84,10 +97,10 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 									name={ name + ".city" }
 									validator={register({
 										required: {
-											message: i18n.__("errors.city.required")
+											message: T2errors("city.required")
 										}
 									})}
-									label={ i18n.__("souvenir.delivery.form.adress.city.label") }
+									label={ T2("adress.city.label") }
 									error={errors[name]?.city?.message}
 									defaultValue="forest"
 								/>
@@ -99,10 +112,10 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 									name={ name + ".zip" }
 									validator={register({
 										required: {
-											message: i18n.__("errors.zip.required")
+											message: T2errors("zip.required")
 										}
 									})}
-									label={ i18n.__("souvenir.delivery.form.adress.zip.label") }
+									label={ T2("adress.zip.label") }
 									error={errors[name]?.zip?.message}
 									defaultValue="1190"
 								/>
@@ -116,10 +129,10 @@ const FormAdress = ({className, children, name, onSubmit}) => {
 									name={ name + ".country" }
 									validator={register({
 										required: {
-											message: i18n.__("errors.country.required")
+											message: T2errors("country.required")
 										}
 									})}
-									label={ i18n.__("souvenir.delivery.form.adress.country.label") }
+									label={ T2("adress.country.label") }
 									error={errors[name]?.country?.message}
 									defaultValue="belgique"
 								/>

@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-01-27 01:27:23
+  @Last Modified time: 2020-01-28 23:14:07
 \*----------------------------------------*/
 
 import React, { useEffect, useState } from 'react';
@@ -23,8 +23,6 @@ const About = () => {
 	}, []); 
 	const T = i18n.createComponent("about");
 	const T2 = i18n.createTranslator("about");
-
-	console.log(T2("long"));
 
 	return (
 		<div className="page__content">

@@ -2,7 +2,7 @@
   bcksp.es - successMessage.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-25 18:07:51
-  @Last Modified time: 2020-01-25 18:23:22
+  @Last Modified time: 2020-01-28 21:17:49
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - errorMessage.js
@@ -11,7 +11,6 @@
   @Last Modified time: 2020-01-19 21:56:55
 \*----------------------------------------*/
 import React, {useEffect} from 'react';
-import T from './../../i18n/index.js';
 import { withTracker } from 'meteor/react-meteor-data';
 
 let timeout;

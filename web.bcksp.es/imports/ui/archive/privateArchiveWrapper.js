@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-01-27 01:51:02
+  @Last Modified time: 2020-01-28 21:13:55
 \*----------------------------------------*/
 
 import LiveFrame from './LiveFrame.js';
@@ -15,14 +15,10 @@ import { intro, preface } from './../../api/books/intro.js';
 let privateStreamedContent = "";
 
 
-const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false, author}) => {
+const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false, author, ...other}) => {
 	if(!isReady)return (null);
-	if(archive.stream){
-		privateStreamedContent = archive.stream + privateStreamedContent;
-	}else{
-		privateStreamedContent = "";
-	}
-
+	
+	privateStreamedContent = archive.stream ? (archive.stream + privateStreamedContent) : "";
 	archive.content = privateStreamedContent + archive.content;
 
 	useEffect(() => {//componentDidMount
@@ -30,16 +26,23 @@ const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false, author}) 
 			handle.stop();
 		}
 	}, []); 
-	if(raw) return ( <ArchiveBook intro={intro} preface={preface} content={archive.content} author={author}/> );
+
+	if(raw) {
+		return ( 
+			<ArchiveBook 
+				intro={intro} 
+				preface={preface} 
+				content={archive.content} 
+				author={author}
+			/>
+		);
+	}
 	
 	return (
 		<LiveFrame	
 			public={ false }
 			content={ archive.content }
-			onSelect={ null }
-			onShare={ null }
-			fullscreenAvailable={ false }
-			shareAvailable={ false }
+			{ ...other }
 		/>
 	);
 };

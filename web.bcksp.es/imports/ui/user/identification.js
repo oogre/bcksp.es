@@ -2,10 +2,9 @@
   bcksp.es - indentification.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:25:59
-  @Last Modified time: 2020-01-26 16:13:40
+  @Last Modified time: 2020-01-28 23:10:16
 \*----------------------------------------*/
 
-import T from './../../i18n/index.js';
 import FixeWait from "./../fixe/wait.js";
 import { useForm } from 'react-hook-form';
 import FixeError from './../fixe/error.js';
@@ -19,12 +18,20 @@ let defaultEmail;
 
 const Identification = () => {
 	const [ loading, setLoading ] = useState(false);
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	
+	const T = i18n.createComponent("userprofile.identification.email");
+  	const T2 = i18n.createTranslator("userprofile.identification.email");
+  	const Terror = i18n.createTranslator("errors");
+  	
 	const { register, watch, handleSubmit, errors, setError, triggerValidation} = useForm();
   	const email = watch("email", getEmailOfCurrentUser());
   	
   	useEffect(() => {//componentDidMount
+  		i18n.onChangeLocale(setLocale);
   		defaultEmail = getEmailOfCurrentUser();
 		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
   	
@@ -46,7 +53,7 @@ const Identification = () => {
 		<form  onSubmit={handleSubmit(updateEmailHandler)}>
 			<div className="field field--profile">
 				<label className="field__label" htmlFor="email">
-					<T>userprofile.identification.email.label</T>
+					<T>label</T>
 				</label>
 				
 				<div>
@@ -61,11 +68,11 @@ const Identification = () => {
 							onChange={async () => triggerValidation("email") }
 							ref={register({
 								required: {
-									message: i18n.__("errors.email.required")
+									message: Terror("email.required")
 								},
 								pattern: {
 									value: regexp.email,
-									message: i18n.__("errors.email.not-an-email")
+									message: Terror("email.not-an-email")
 								}
 							})}
 						/>
@@ -81,7 +88,7 @@ const Identification = () => {
 							<span className="input-wrapper--inline">
 								{ loading && <FixeWait/> }
 								{ !loading && 
-									<input className="button button--primary" type="submit" value={i18n.__("userprofile.identification.email.submit")}/>
+									<input className="button button--primary" type="submit" value={T2("submit")}/>
 								}
 							</span>
 					}

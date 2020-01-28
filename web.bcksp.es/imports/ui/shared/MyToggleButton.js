@@ -2,9 +2,9 @@
   bcksp.es - MyToggleButton.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-26 13:38:23
-  @Last Modified time: 2020-01-19 22:16:16
+  @Last Modified time: 2020-01-28 22:19:43
 \*----------------------------------------*/
-import React, { Component } from 'react';
+import React from 'react';
 import ToggleButton from 'react-toggle-button'
 
 // App component - represents the whole app

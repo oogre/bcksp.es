@@ -2,22 +2,21 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:34:12
-  @Last Modified time: 2020-01-25 19:59:29
+  @Last Modified time: 2020-01-28 22:45:30
 \*----------------------------------------*/
 
-import T from './../../../../i18n/index.js';
-import React, { Component } from 'react';
+import React from 'react';
 
 // App component - represents the whole app
 const SouvenirItemContactBadge = () => {
-	
+	const T = i18n.createComponent("souvenir.item.contact");
 	return (
 		<li className="souvenir__item">
 			<a className="souvenir__link" href={FlowRouter.path("contactSouvenir")}>
 				<div className="wrapper">
 					<img className="souvenir__link-image" src="/images/souvenirs/contact.1.jpg" alt=""/>
 				</div>
-				<span className="souvenir__link-title"><T>souvenir.item.contact.title</T></span>
+				<span className="souvenir__link-title"><T>title</T></span>
 			</a>
 		</li>
 	);
