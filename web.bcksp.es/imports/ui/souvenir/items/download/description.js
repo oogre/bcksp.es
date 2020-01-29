@@ -2,7 +2,7 @@
   bcksp.es - description.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:40:21
-  @Last Modified time: 2020-01-28 23:45:14
+  @Last Modified time: 2020-01-28 23:49:04
 \*----------------------------------------*/
 
 import saveAs from 'file-saver';
@@ -62,8 +62,6 @@ const SouvenirItemDownLoadDescription = () => {
 						}
 					</div>
 				</div>
-				
-				
 			</div>
 		</div>
 	);

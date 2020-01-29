@@ -2,7 +2,7 @@
   bcksp.es - errorMessage.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-19 19:16:33
-  @Last Modified time: 2020-01-28 23:33:39
+  @Last Modified time: 2020-01-29 00:50:55
 \*----------------------------------------*/
 import React, {useEffect} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -22,7 +22,7 @@ const ErrorMessage = ({error}) => {
 			<div className="call-to-connect" style={{
 				position: "fixed",
 				width: "100%",
-				zIndex: '1',
+				zIndex: '10000',
 				background: "#ff0440"
 			}}>
 				<div className="container--large">

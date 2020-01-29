@@ -2,7 +2,7 @@
   bcksp.es - successMessage.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-25 18:07:51
-  @Last Modified time: 2020-01-28 21:17:49
+  @Last Modified time: 2020-01-29 01:01:29
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - errorMessage.js
@@ -27,7 +27,7 @@ const SuccessMessage = ({message}) => {
 			<div className="call-to-connect" style={{
 				position: "fixed",
 				width: "100%",
-				zIndex: '1',
+				zIndex: '10000',
 				background: "#6bc97d"
 			}}>
 				<div className="container--large">

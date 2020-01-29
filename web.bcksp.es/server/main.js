@@ -10,3 +10,4 @@ import '../imports/api/devices/devices.js';
 import './api/archives/archives.js';
 
 import '../imports/api/books/generator.js';
+import './../imports/i18n/index.js';

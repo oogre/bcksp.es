@@ -9,7 +9,3 @@ i18n.setOptions({
     //defaultLocale : config.languages.available[0]
 });
 
-
-//console.log(i18n.createTranslator()("extension"));
-export default i18n.createComponent();
-

@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-01-27 17:51:06
+  @Last Modified time: 2020-01-29 01:01:54
 \*----------------------------------------*/
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -32,7 +32,9 @@ const App = ({isConnected}) => {
 						</div>
 					</div>
 			}
-			<ArchiveWrapper type="home" onShare={onShare}/>
+			{
+				<ArchiveWrapper type="home" onShare={onShare}/>
+			}
 			{
 				!isConnected &&
 				<div className="about-parallax">

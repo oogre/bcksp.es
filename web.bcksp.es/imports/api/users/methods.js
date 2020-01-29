@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-28 23:27:29
+  @Last Modified time: 2020-01-29 01:37:23
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -116,13 +116,9 @@ export const ResetPassword = new ValidatedMethod({
 	},
 	run({email}) {
 		this.unblock();
-		
 		if (this.isSimulation)return;
-
-		let user = this.user || Meteor.users.findOne({"emails.address" : email});
-		
+		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
 		Accounts.sendResetPasswordEmail(user._id, getMainEmail(user.emails));
-		
 		Meteor.users.update({
 			_id : user._id
 		}, {

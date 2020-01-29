@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import './../imports/i18n/index.js';
 import '../imports/startup/account-config.js';
 import { isExtensionInstalled } from './../imports/utilities/ui.js';
 import './router.js';
