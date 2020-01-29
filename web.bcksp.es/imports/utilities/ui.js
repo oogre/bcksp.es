@@ -2,7 +2,7 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2020-01-29 12:50:57
+  @Last Modified time: 2020-01-29 16:49:25
 \*----------------------------------------*/
 import { Session } from "meteor/session";
 import { config } from './../startup/config.js';
@@ -34,7 +34,6 @@ export function installExtension(){
 		break;
 		case "Firefox" : 
 			window.open("https://addons.mozilla.org/en-US/firefox/addon/bckspes/", '_blank');
-			//window.open("/extensions/firefox/bcksp.es-2.0.0.1-fx.xpi", '_blank');
 		break;
 	}
 	return false;

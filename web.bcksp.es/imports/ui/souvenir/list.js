@@ -2,7 +2,7 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-17 08:17:22
-  @Last Modified time: 2020-01-28 22:34:26
+  @Last Modified time: 2020-01-29 17:00:44
 \*----------------------------------------*/
 
 import React from 'react';
@@ -25,8 +25,8 @@ const Souvenir = ({isConnected}) => {
 				</div>
 				<ul className="souvenir">
 					{ isConnected && <SouvenirItemDownloadBadge/> }
-					{ isConnected && <SouvenirItemBookBadge/> }
-					<SouvenirItemPosterBadge/>
+					{ false && isConnected && <SouvenirItemBookBadge/> }
+					{ false && <SouvenirItemPosterBadge/>}
 					<SouvenirItemContactBadge/>
 					{ config.souvenir.almanach && <SouvenirItemAlmanachBadge/> }
 				</ul>
