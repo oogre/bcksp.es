@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-01-28 23:24:28
+  @Last Modified time: 2020-01-29 18:58:46
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import { Meteor } from 'meteor/meteor';
@@ -79,7 +79,7 @@ export const CreateBook = new ValidatedMethod({
 			author : author,
 			licence : licence,
 			finishing : finishing,
-			owner : this.userId,
+			owner : Meteor.userId(),
 			createdAt : new Date(),
 			updatedAt : new Date()
 		});

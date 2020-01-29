@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-29 01:37:23
+  @Last Modified time: 2020-01-29 18:58:59
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -31,7 +31,7 @@ export const UsersPing = new ValidatedMethod({
 	},
 	run({device}) {
 		Meteor.users.update({
-			_id : this.userId
+			_id : Meteor.userId()
 		}, {
 			$set : {
 				"pingAt" : new Date()
@@ -56,7 +56,7 @@ export const GetLoginTokenUser = new ValidatedMethod({
 		if (!this.isSimulation) {
 			return {
 				success : true,
-				data : LoginLinks.generateAccessToken({_id : this.userId })
+				data : LoginLinks.generateAccessToken({_id : Meteor.userId() })
 			};
 		}
 	}
@@ -78,7 +78,7 @@ export const HardDisconnect = new ValidatedMethod({
 	},
 	run() {
 		Meteor.users.update({ 
-			_id : this.userId
+			_id : Meteor.userId()
 		}, {
 			$unset : {
 				"services.accessTokens.tokens" : null,
@@ -151,8 +151,8 @@ export const UpdateEmail = new ValidatedMethod({
 	},
 	run({email}) {
 		if (this.isSimulation)return;
-		Accounts.addEmail(this.userId, email);
-		Accounts.sendVerificationEmail(this.userId, email);
+		Accounts.addEmail(Meteor.userId(), email);
+		Accounts.sendVerificationEmail(Meteor.userId(), email);
 
 		const T2 = i18n.createTranslator("userprofile.identification.email.confirmation");
 		return {
@@ -199,7 +199,7 @@ export const DestroyUser = new ValidatedMethod({
 	run() {
 		if (this.isSimulation)return;
 
-		Meteor.users.remove(this.userId);
+		Meteor.users.remove(Meteor.userId());
 		
 		const T2 = i18n.createTranslator("userprofile.danger.deleteAccount.confirmation");
 		return {
@@ -257,7 +257,7 @@ export const SetUserLang = new ValidatedMethod({
 	run({ lang }) {
 		this.unblock();
 		Meteor.users.update({
-			_id : this.userId,
+			_id : Meteor.userId(),
 		}, {
 			$set : {
 				lang : lang,

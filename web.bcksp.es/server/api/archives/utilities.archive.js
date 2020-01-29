@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-01-26 19:20:44
+  @Last Modified time: 2020-01-29 19:03:41
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -61,7 +61,7 @@ export function cleanInput(text){
 export async function clearPrivateArchive(){
 	let archive = Archives.findOne({
 		type : Archives.Type.PRIVATE,
-		owner : this.userId
+		owner : Meteor.userId()
 	}, {
 		fields : {
 			_id : true
@@ -82,7 +82,7 @@ export async function clearPrivateArchive(){
 export async function unpublishToPrivateArchive(token, startAt, stopAt){
 	let myArchive = Archives.findOne({
 		type : Archives.Type.PRIVATE,
-		owner : this.userId
+		owner : Meteor.userId()
 	}, {
 		fields : {
 			_id : 1
@@ -111,12 +111,13 @@ export async function unpublishToPrivateArchive(token, startAt, stopAt){
 export async function publishToPrivateArchive(content){
 	let myArchive = Archives.findOne({
 		type : Archives.Type.PRIVATE,
-		owner : this.userId
+		owner : Meteor.userId()
 	}, {
 		fields : {
 			_id : 1
 		}
 	});
+
 	let data = await readAsync(myArchive._id);
 	data = content + data;
 	await writeAsync(myArchive._id, data);

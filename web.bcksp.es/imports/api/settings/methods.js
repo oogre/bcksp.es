@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2020-01-29 13:27:26
+  @Last Modified time: 2020-01-29 18:58:39
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -22,7 +22,7 @@ export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 	validate() {
 		checkUserLoggedIn();
 		checkDBReference({
-			owner : this.userId
+			owner : Meteor.userId()
 		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
@@ -33,7 +33,7 @@ export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 	run() {
 		this.unblock();
 		let mySettings = Settings.findOne({
-			owner : this.userId
+			owner : Meteor.userId()
 		}, {
 			fields : {
 				publishToPublicFeed : 1
@@ -67,7 +67,7 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 		checkString(type);
 		classFlag = "blindfield."+(classFlag?"class":"types");
 		checkDBReference({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			[classFlag] : {
 				$nin: [type]
 			}
@@ -82,7 +82,7 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 		classFlag = "blindfield."+(classFlag?"class":"types");
 		this.unblock();
 		Settings.update({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			[classFlag] : {
 				$nin: [type]
 			}
@@ -113,7 +113,7 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 		checkBlindfieldRemoveAllowed(classFlag, type);
 		classFlag = "blindfield."+(classFlag?"class":"types");
 		checkDBReference({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			[classFlag] : {
 				$in: [type]
 			}
@@ -128,7 +128,7 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 		this.unblock();
 		classFlag = "blindfield."+(classFlag?"class":"types");
 		Settings.update({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			[classFlag] : {
 				$in: [type]
 			}
@@ -157,7 +157,7 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkUrl(url);
 		checkDBReference({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			blacklist : {
 				$nin: [url]
 			}
@@ -171,7 +171,7 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 	run({ url }) {
 		this.unblock();
 		Settings.update({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			blacklist : {
 				$nin: [url]
 			}
@@ -200,7 +200,7 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkUrl(url);
 		checkDBReference({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			blacklist : {
 				$in: [url]
 			}
@@ -214,7 +214,7 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 	run({ url }) {
 		this.unblock();
 		Settings.update({
-			owner : this.userId,
+			owner : Meteor.userId(),
 			blacklist : {
 				$in: [url]
 			}

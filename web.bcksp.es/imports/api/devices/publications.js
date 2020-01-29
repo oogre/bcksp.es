@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-09 16:23:58
-  @Last Modified time: 2020-01-29 13:02:26
+  @Last Modified time: 2020-01-29 18:58:22
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -35,7 +35,7 @@ if(Meteor.isServer){
 	Meteor.publish("devices.i18n.logged", function(){
 		checkUserLoggedIn();
 		let self = this;
-		let handle = Meteor.users.find({_id : this.userId}).observeChanges({
+		let handle = Meteor.users.find({_id : Meteor.userId()}).observeChanges({
 			added(id, user){
 				self.added('deviceI18n', 0, {
 					extension : i18n.getTranslations("extension", user.lang || "fr") ,
