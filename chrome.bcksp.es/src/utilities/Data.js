@@ -2,7 +2,7 @@
   bcksp.es - reactive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 17:14:14
-  @Last Modified time: 2020-01-09 20:32:50
+  @Last Modified time: 2020-01-09 17:07:55
 \*----------------------------------------*/
 import { isObject, isFunction, isArray } from './validation.js';
 import { mapObject } from './tools.js';

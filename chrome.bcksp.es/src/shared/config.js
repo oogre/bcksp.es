@@ -1,9 +1,6 @@
 import { extend } from 'underscore';
 
 const conf = {
-	languages : {
-		available : ["fr"]
-	},
 	pingInterval : 0,
 	senderTimeout : 6000,
 	standard_url : "*://*.bcksp.es/*",
@@ -16,7 +13,6 @@ const conf = {
 	logout : "/logout",
 	profile : "/profile",
 	websocket : "/websocket",
-	translation : "/universe/locale/",//fr-FR
 	user : {
 		password : {
 			length : {
@@ -60,18 +56,3 @@ config.getAboutUrl = function(){
 config.getWebSocketUrl = function(){
 	return config.ws_protocol+config.address+config.websocket;
 };
-
-function getLang () {
-    let userLang = (navigator.languages && navigator.languages[0] ||
-					navigator.language ||
-					navigator.browserLanguage ||
-					navigator.userLanguage ||
-					'fr');
-	userLang = userLang.toLowerCase().replace('_', '-').split("-").shift();
-	return config.languages.available.includes(userLang) ? userLang : config.languages.available[0];
-}
-
-config.getTranslationUrl = function(){
-	return config.protocol+config.address+config.translation+getLang()+"?ts="+Math.floor(Math.random()*100);
-};
-

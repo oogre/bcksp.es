@@ -2,7 +2,7 @@
   bcksp.es - forgotPwd.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-12-26 12:47:44
-  @Last Modified time: 2019-06-07 16:51:40
+  @Last Modified time: 2020-01-26 21:43:40
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';

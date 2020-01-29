@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2020-01-28 23:20:07
+  @Last Modified time: 2020-01-29 13:27:26
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';

@@ -2,7 +2,7 @@
   bcksp.es - observe.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-26 18:56:46
-  @Last Modified time: 2020-01-26 19:22:51
+  @Last Modified time: 2020-01-29 12:52:15
 \*----------------------------------------*/
 
 
@@ -26,12 +26,14 @@ Archives.find({}).observeChanges({
 		}
 	},
 	removed(id){
-		ArchiveTools.fileDelete(id)
-		.then(()=>{ 
-			log(">>> PRIVATE ARCHIVE FILE HAS BEEN DELETED");
-		})
-		.catch(err => {
-			warn(err)
-		});
+		if(ArchiveTools.fileExists(id)){
+			ArchiveTools.fileDelete(id)
+			.then(()=>{ 
+				log(">>> PRIVATE ARCHIVE FILE HAS BEEN DELETED");
+			})
+			.catch(err => {
+				warn(err)
+			});
+		}
 	}
 });

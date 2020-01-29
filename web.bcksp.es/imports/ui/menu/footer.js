@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-01-28 23:33:54
+  @Last Modified time: 2020-01-29 12:18:40
 \*----------------------------------------*/
 
 import React, { useState } from 'react';
@@ -45,7 +45,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 									</a>
 								</li>
 								<li className="menu__item">
-									<a className="menu__item-link" href={FlowRouter.path("contact")}>
+									<a className="menu__item-link" href={FlowRouter.path("contact", {type : "salut"})}>
 										<T>contact</T>
 									</a>
 								</li>
@@ -96,7 +96,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 									<a className="menu__item-link" href={FlowRouter.path("about")}>facebook</a>
 								</li>
 								<li className="menu__item">
-									<a className="menu__item-link" href={FlowRouter.path("contact")}>twitter</a>
+									<a className="menu__item-link" href={FlowRouter.path("contact", {type : "hey"})}>twitter</a>
 								</li>
 							</ul>
 						</div>

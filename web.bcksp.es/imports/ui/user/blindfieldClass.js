@@ -2,7 +2,7 @@
   bcksp.es - blindfieldClass.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:16:39
-  @Last Modified time: 2020-01-28 23:42:53
+  @Last Modified time: 2020-01-29 13:30:00
 \*----------------------------------------*/
 
 import FixeWait from "./../fixe/wait.js";
@@ -69,7 +69,7 @@ const BlindfieldClass = ({settings}) => {
 					</span>
 				</li>
 				{ 
-					settings.blindfield.types.map((type, k) => (
+					settings.blindfield.class.map((type, k) => (
 						<li key={k}>
 							<span className="input-wrapper--inline">
 								 <span>{type} :</span>

@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 20:06:21
-  @Last Modified time: 2020-01-27 01:38:55
+  @Last Modified time: 2020-01-29 13:14:34
 \*----------------------------------------*/
 
 import React, { useEffect, useState } from 'react';
@@ -187,7 +187,9 @@ const ArchiveBook = ({intro=false, preface=false, content=false, author=""}) => 
 		// cut intro into 2 pages block
 		preface = preface.debit(2*config.book.page.getMaxChar());
 	}
-	if(content){
+
+	if(content!==false){
+		console.log(content);
 		// pad content to fit the book
 		content = whitePage(1) + content + whitePage(archivePage);
 		// cut intro into 2 pages block

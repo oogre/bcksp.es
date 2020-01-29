@@ -2,7 +2,7 @@
   bcksp.es - souvenirs.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:35
-  @Last Modified time: 2020-01-25 15:47:15
+  @Last Modified time: 2020-01-29 12:36:38
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -12,22 +12,22 @@ export const Souvenirs = new Mongo.Collection('souvenir');
 export const Orders = new Mongo.Collection('order');
 
 Orders.helpers({
-  populate: function () {
-  	this.souvenir = Souvenirs.findOne(this.souvenir);
-  	this.status = Orders.State.getName(this.status);
-  	return this;
-  }
+	populate: function () {
+		this.souvenir = Souvenirs.findOne(this.souvenir);
+		this.status = Orders.State.getName(this.status);
+		return this;
+	}
 });
 
 Souvenirs.helpers({
-  populate: function () {
-  	if(this.type == Souvenirs.Type.BOOK){
-  		this.finishing = Souvenirs.Finishing.getName(this.finishing);
-  		this.licence = Souvenirs.Licence.getName(this.licence);
-  	}
-  	this.type = Souvenirs.Type.getName(this.type);
-  	return this;
-  }
+	populate: function () {
+		if(this.type == Souvenirs.Type.BOOK){
+			this.finishing = Souvenirs.Finishing.getName(this.finishing);
+			this.licence = Souvenirs.Licence.getName(this.licence);
+		}
+		this.type = Souvenirs.Type.getName(this.type);
+		return this;
+	}
 });
 
 Souvenirs.Type = EasyEnum({
@@ -54,8 +54,4 @@ Orders.State = EasyEnum({
 	PRODUCED : 3,
 	ON_IT_S_WAY : 4,
 	DELIVERED : 5,
-})
-
-if(Meteor.isServer){
-	
-}
+});

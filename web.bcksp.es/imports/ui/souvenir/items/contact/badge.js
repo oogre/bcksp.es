@@ -2,7 +2,7 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:34:12
-  @Last Modified time: 2020-01-28 22:45:30
+  @Last Modified time: 2020-01-29 12:10:20
 \*----------------------------------------*/
 
 import React from 'react';
@@ -12,7 +12,7 @@ const SouvenirItemContactBadge = () => {
 	const T = i18n.createComponent("souvenir.item.contact");
 	return (
 		<li className="souvenir__item">
-			<a className="souvenir__link" href={FlowRouter.path("contactSouvenir")}>
+			<a className="souvenir__link" href={FlowRouter.path("contact", {type:"souvenir"})}>
 				<div className="wrapper">
 					<img className="souvenir__link-image" src="/images/souvenirs/contact.1.jpg" alt=""/>
 				</div>

@@ -2,17 +2,23 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-09 16:23:58
-  @Last Modified time: 2020-01-27 10:59:50
+  @Last Modified time: 2020-01-29 13:02:26
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
 import { config } from './../../startup/config.js';
+import { checkUserLoggedIn } from './../../utilities/validation.js';
+
 if(Meteor.isServer){
 	Meteor.publish("devices.config", function(){
-		this.added('deviceConfig', +new Date(), config.devices.config );
+		this.added('config', +new Date(), {
+			pingInterval : config.devices.pingInterval,
+			maxCharPerBook : config.book.getMaxChar()
+		});
 		this.ready();
 		this.onStop(() => { } );
 	});
+
 
 	Meteor.publish("devices.i18n", function(){
 		this.added('deviceI18n', 0, {
@@ -25,8 +31,9 @@ if(Meteor.isServer){
 		this.onStop(() => {});
 	});
 
+
 	Meteor.publish("devices.i18n.logged", function(){
-		if(!this.userId)return this.ready();
+		checkUserLoggedIn();
 		let self = this;
 		let handle = Meteor.users.find({_id : this.userId}).observeChanges({
 			added(id, user){

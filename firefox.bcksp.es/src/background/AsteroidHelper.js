@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2020-01-27 10:57:30
+  @Last Modified time: 2020-01-29 11:57:07
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import { onLogin } from "asteroid/lib/common/login-method";
@@ -24,9 +24,8 @@ class AsteroidHelper{
 
 		this.subscribtionAddressList = [
 			"devices.config",
-			"archive.config",
-			"settings.private",
 			"archive.private.counter",
+			"settings.private",
 			"devices.i18n.logged"
 		];
 
@@ -57,8 +56,10 @@ class AsteroidHelper{
 
 		this.on("changed", {
 			deviceI18n : i18n => localStorage.setItem("translation", JSON.stringify(i18n)),
-			deviceConfig : conf => Data.setState({ pingInterval : conf.pingInterval }),
-			config : ({maxCharPerBook}) => Data.setState({ maxCharPerBook : maxCharPerBook }),
+			config : ({maxCharPerBook, pingInterval}) => {
+				Data.setState({ maxCharPerBook : maxCharPerBook })
+				Data.setState({ pingInterval : pingInterval })
+			},
 			archives : ({count}) => Data.setState({ archiveSize : count }),
 			settings : settings => {
 				if(isObject(settings.blindfield)){
@@ -71,8 +72,10 @@ class AsteroidHelper{
 		});
 		this.on("added", {
 			deviceI18n : i18n => localStorage.setItem("translation", JSON.stringify(i18n)),
-			deviceConfig : conf => Data.setState({ pingInterval : conf.pingInterval }),
-			config : ({maxCharPerBook}) => Data.setState({maxCharPerBook : maxCharPerBook}),
+			config : ({maxCharPerBook, pingInterval}) => {
+				Data.setState({ maxCharPerBook : maxCharPerBook })
+				Data.setState({ pingInterval : pingInterval })
+			},
 			archives : ({count}) => Data.setState({archiveSize : count}),
 			settings : settings => {
 				if(isObject(settings.blindfield)){

@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-01-28 21:13:55
+  @Last Modified time: 2020-01-29 11:50:50
 \*----------------------------------------*/
 
 import LiveFrame from './LiveFrame.js';
@@ -48,7 +48,7 @@ const PrivateArchiveWrapper = ({handle, isReady, archive, raw = false, author, .
 };
 
 export default withTracker(self => {
-	let handle = Meteor.subscribe('archive.private.2');
+	let handle = Meteor.subscribe('archive.private');
 	return {
 		handle : handle,
 		isReady : handle.ready(),

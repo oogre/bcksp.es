@@ -2,7 +2,7 @@
   bcksp.es - blindfieldType.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:20:35
-  @Last Modified time: 2020-01-28 23:12:36
+  @Last Modified time: 2020-01-29 13:31:26
 \*----------------------------------------*/
 
 
@@ -45,31 +45,6 @@ const BlindfieldType = ({settings})=>{
 		return false;
 	};
 	
-
-	const displayBlindfieldType = (type, k) => (
-		<span key={k}>
-			<li className="field" >
-				<label className="field__label" htmlFor="">
-					{type.value}
-				</label>
-				<span className="input-wrapper--inline">
-					<input className="input--text" type={type.value} defaultValue={type.placeholder} disabled/>
-				</span>
-				<span className="input-wrapper--inline">
-					{ loading[k] && <FixeWait/> }
-					{ !loading[k] && 
-						<MyToggleButton
-							value={ settings.blindfield.types.includes(type.value) }
-							onToggle={ flag => handleToggleBlindfield(type.value, false, flag, k) }
-							activeLabel={ T2("activeLabel") }
-							inactiveLabel={ T2("inactiveLabel") }
-						/>
-					}
-				</span>
-			</li>
-		</span>
-	);
-
 	return (
 		<div>
 			<h2><T>title</T></h2>
@@ -79,7 +54,31 @@ const BlindfieldType = ({settings})=>{
 						<T>desc</T>
 					</span>
 				</li>
-				{ config.settings.blindfield.available.types.map(displayBlindfieldType) }
+				{ 
+					config.settings.blindfield.available.types.map((type, k) => (
+						<span key={k}>
+							<li className="field" >
+								<label className="field__label" htmlFor="">
+									{type.value}
+								</label>
+								<span className="input-wrapper--inline">
+									<input className="input--text" type={type.value} defaultValue={type.placeholder} disabled/>
+								</span>
+								<span className="input-wrapper--inline">
+									{ loading[k] && <FixeWait/> }
+									{ !loading[k] && 
+										<MyToggleButton
+											value={ settings.blindfield.types.includes(type.value) }
+											onToggle={ flag => handleToggleBlindfield(type.value, false, flag, k) }
+											activeLabel={ T2("activeLabel") }
+											inactiveLabel={ T2("inactiveLabel") }
+										/>
+									}
+								</span>
+							</li>
+						</span>
+					))
+				}
 			</ul>
 		</div>
 	);

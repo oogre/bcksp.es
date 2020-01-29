@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-01-28 23:37:45
+  @Last Modified time: 2020-01-29 13:10:04
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 
@@ -59,7 +59,7 @@ export const ArchiveClear = new ValidatedMethod({
 	validate() {
 		checkUserLoggedIn();
 		checkDBReference({
-			type : config.archives.private.type,
+			type : Archives.Type.PRIVATE,
 			owner : this.userId
 		}, Archives);
 	},
@@ -100,7 +100,7 @@ export const ArchiveDownload = new ValidatedMethod({
 	run() {
 		this.unblock();
 		let myArchive = Archives.findOne({
-			type : config.archives.private.type,
+			type : Archives.Type.PRIVATE,
 			owner : this.userId
 		});
 		return ArchiveTools.readAsync(myArchive._id)

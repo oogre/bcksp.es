@@ -2,11 +2,10 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2020-01-28 23:34:18
+  @Last Modified time: 2020-01-29 12:50:57
 \*----------------------------------------*/
 import { Session } from "meteor/session";
 import { config } from './../startup/config.js';
-
 
 export async function needConfirmation(context){
 
@@ -50,6 +49,7 @@ export function setupView(){
 		scrollTo(FlowRouter.current().context.hash);
 	}
 }
+
 export function scrollTo(hash, offset = 0){
 	let h = $("#"+hash);
 	if(!!h.length){
@@ -59,19 +59,6 @@ export function scrollTo(hash, offset = 0){
 	}
 }
 
-export function getMessageFromError(error){
-	if(_.isArray(error.details) && !_.isEmpty(error.details)){
-		return error.details.map(e=>e.details.value).join(", ");
-	}
-	if(error.errorType == "Meteor.Error"){
-		return error.reason;
-	}
-	if(error.name == "Error"){
-		return error.message;
-	}
-	return error.toString();
-}
-
 
 export function errorHandler(error, setErrorMessage=()=>{}){
 	if (!error){
@@ -79,26 +66,25 @@ export function errorHandler(error, setErrorMessage=()=>{}){
 	}
 	else if(_.isArray(error.details) && !_.isEmpty(error.details)){
 		for(let e of error.details){
-			if(e?.details?.origin != "main"){
-				setErrorMessage(e?.details?.origin , e.type, e.details.value);			
-			}
-			else {
+			if(e?.details?.origin == "main"){
 				Session.set("error", {
 					origin : "main",
 					type : e.type, 
 					value : e.details.value
 				});
+			}else{
+				setErrorMessage(e?.details?.origin , e?.type, e?.details?.value);	
 			}
 		}
 	}
-	else if(error.errorType == "Meteor.Error"){
+	else if(error?.errorType == "Meteor.Error"){
 		Session.set("error", {
 			origin : "main",
 			type : "Meteor.Error", 
 			value : error.reason
 		});
 	}
-	else if(error.name == "Error"){
+	else if(error?.name == "Error"){
 		Session.set("error", {
 			origin : "main",
 			type : "Error", 

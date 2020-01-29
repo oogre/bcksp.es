@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-01-13 20:17:52
+  @Last Modified time: 2020-01-29 12:44:15
 \*----------------------------------------*/
 export const config = {
 	souvenir : {
@@ -25,31 +25,16 @@ export const config = {
 			return config.book.page.count * config.book.page.line.count * config.book.page.line.char.count;
 		}
 	},
-	languages : {
-		available : ["fr", "en"],
-		get : ()=>{
-			let userLang = (navigator.languages && navigator.languages[0] ||
-							navigator.language ||
-							navigator.browserLanguage ||
-							navigator.userLanguage ||
-							'fr');
-			userLang = userLang.toLowerCase().replace('_', '-').split("-").shift();
-			return config.languages.available.includes(userLang) ? userLang : config.languages.available[0];
-		}
-	},
 	devices : {
 		firefox : "jid1-P1oHEt4FsKJNoA@jetpack",
 		firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
 		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
 		"acr-chrome" : "fnkkmpbdnhbapbmbcpdfenolnbkbplob",
 		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb",
-		config : {
-			pingInterval : 10 * 60 * 1000
-		}
+		pingInterval : 10 * 60 * 1000
 	},
 	archives : {
 		public : {
-			type : 0,
 			shortBuffer : {
 				maxLen : 140
 			},
@@ -57,9 +42,6 @@ export const config = {
 				maxLen : 1000,
 				maxMaxLen : 2000
 			}
-		},
-		private : {
-			type : 1,
 		}
 	},
 	methods : {
@@ -124,5 +106,4 @@ export const config = {
 			}
 		}
 	}
-
-}
+};

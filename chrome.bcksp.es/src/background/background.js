@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2020-01-09 20:34:52
+  @Last Modified time: 2020-01-29 11:25:07
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -23,13 +23,6 @@ Data.on("*", (value, name) => info("---on---", name, value));
 Data.on("connected", connectionStatus => {
 	setDefaultIcon(AsteroidHelper.asteroid.loggedIn);
 	if(!connectionStatus) return;
-	getTranslation()
-	.then(data => {
-		if(Data.state.translation) return;
-		localStorage.setItem("translation", JSON.stringify(data));
-		Data.setState({ "translation" : true });	
-	})
-	.catch(e => warn(e));
 });
 
 Data.on("loggedStatus", loggedIn => {
@@ -221,6 +214,10 @@ on("getArchiveSize", (data, resolve, reject) => {
 
 on("getArchiveRatio", (data, resolve, reject) => {
 	resolve(Data.state.archiveSize/Data.state.maxCharPerBook);
+});
+
+on("getTranslation", (data, resolve, reject) => {
+	resolve(localStorage.getItem("translation"));
 });
 
 on("archive, backspace", (data, resolve, reject) => {

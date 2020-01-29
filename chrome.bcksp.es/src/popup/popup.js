@@ -2,7 +2,7 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2019-06-07 15:55:19
+  @Last Modified time: 2020-01-26 21:55:58
 \*----------------------------------------*/
 
 import ReactDOM from 'react-dom';
@@ -10,11 +10,13 @@ import MainMenu from "./menu/main.js";
 import LoginMenu from "./menu/login.js";
 import React, { Component } from 'react';
 import OfflineMenu from "./menu/offline.js";
-import { T } from './../utilities/tools.js';
 import { config } from './../shared/config.js';
 import { sendMessage } from './../utilities/com.js';
 import { isBoolean } from './../utilities/validation.js';
 import { log, info, warn, error } from './../utilities/log.js';
+import { T } from './../utilities/tools.js';
+
+//T.setTexts(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });
 
 class Popup extends Component {
 	constructor(props) {
