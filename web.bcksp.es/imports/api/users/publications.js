@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:29
-  @Last Modified time: 2020-01-27 11:07:00
+  @Last Modified time: 2020-01-29 18:25:23
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random'
@@ -18,7 +18,7 @@ if(Meteor.isServer){
 	Meteor.publish("users.counter", function(){
 		checkUserLoggedIn();
 		checkUserRole("admin");
-		let date = new Date(new Date() - (1.5 * config.devices.config.pingInterval));
+		let date = new Date(new Date() - (1.5 * config.devices.pingInterval));
 		Counts.publish(this, 'users.counter', Meteor.users.find());
 		Counts.publish(this, 'users.connected.counter', Meteor.users.find({pingAt : { $gt : date }}));
 	});	
