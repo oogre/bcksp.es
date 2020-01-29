@@ -2,7 +2,7 @@
   bcksp.es - com.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:50:31
-  @Last Modified time: 2019-01-04 23:04:06
+  @Last Modified time: 2019-05-07 16:45:52
 \*----------------------------------------*/
 
 import { 
@@ -62,11 +62,11 @@ export async function off(actions){
 	});
 }
 
-export async function sendMessageToAllTab(action, data){
-	return tabsQuery({})
+export async function sendMessageToTab(action, data, tabQuery={ 'active': true, 'currentWindow': true }){
+	return 	tabsQuery(tabQuery)
 			.then(tabs => {
-				tabs.map(tab =>{
-					tabsSendMessage(tab.id, {action, data});
-				});
+				return Promise.all(tabs.map(tab => {
+					return tabsSendMessage(tab.id, {action, data});
+				}));
 			});
 }

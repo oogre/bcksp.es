@@ -1,0 +1,180 @@
+/*------------------------------------*\
+  Livestream
+\*------------------------------------*/
+
+.livestream-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.livestream-container {
+  // margin: 0 $size-20;
+}
+
+.livestream {
+  position: relative;
+}
+
+.livestream__content {
+  position: relative;
+  z-index: z("card");
+  background: #fff;
+  border: 1px solid #000;
+  padding: $size-15 $size-30;
+ /* padding: $size-44 0 0 0;*/
+}
+
+
+.livestream__content .liveframe{
+    max-height: 1100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.livestream__content .liveframe::-webkit-scrollbar {
+    width: 1em;
+}
+
+.livestream__content .liveframe::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-left: 1px solid $grey-50;
+    margin-left: 20px;
+}
+
+.livestream__content .liveframe::-webkit-scrollbar-thumb {
+  background-color: black;
+  outline: none;
+}
+
+.liveframe{
+    word-break: break-all;
+    white-space: pre-wrap;
+    padding: $size-34 0;
+}
+
+// Liveframe Stream
+// ---------------------
+.liveframe__stream {
+  font-size: $size-26;
+  line-height: 1.38;
+}
+
+// Dropdown Livestream
+// ---------------------
+.dropdown--livestream {
+  margin-left: -$size-12;
+}
+
+// Liveframe Fullscreen Button
+// ---------------------
+.liveframe__fullscreen:hover {
+  outline-color: transparent;
+  background-color: transparent;
+}
+.liveframe__fullscreen {
+  position: absolute;
+  top: $size-54;
+  right: $size-32;
+}
+
+.liveframe__fullscreen-icon {
+  display: none;
+
+  @include media-query("medium") {
+    display: block;
+  }
+}
+
+// Livestream Home Variation
+// ---------------------
+.livestream--home {
+  margin: 0 auto $size-60;
+  max-width: 942px;
+  z-index: z("livestream") + 1;
+  transform: translateX($size-12);
+
+  @include media-query("medium") {
+    margin-bottom: $size-155;
+  }
+}
+
+.livestream--home .livestream__content {
+  padding: $size-20;
+
+  @include media-query("medium") {
+    padding: $size-44 $size-65;
+  }
+}
+
+.livestream--home .livestream__border-decoration,
+.livestream--home .livestream__content {
+  max-width: calc(100% - #{$size-12});
+}
+
+.livestream--home .livestream__border-decoration {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  background: #fff;
+  z-index: z("card") - 1;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(1) {
+  top: 12px;
+  left: -12px;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(2) {
+  top: 9px;
+  left: -9px;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(3) {
+  top: 6px;
+  left: -6px;
+}
+
+.livestream--home .livestream__border-decoration:nth-child(4) {
+  top: 3px;
+  left: -3px;
+}
+
+// Livestream connected variation
+// ---------------------
+
+.livestream-container--connected {
+  margin-bottom: $size-118;
+
+  &::after {
+    z-index: z("livestream");
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 214px;
+    background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
+  }
+}
+
+// Fullscreen
+// ---------------------
+.livestream-container.fullscreen{
+    margin-bottom: 0;
+}
+.livestream-container.fullscreen .livestream{
+  height:99%;
+}
+.livestream-container.fullscreen .livestream__content{
+  height:100%;
+}
+.livestream-container.fullscreen .livestream__content{
+  height:100%;
+}
+.livestream-container.fullscreen .liveframe{
+  height: calc(99% - 3px);
+}
+

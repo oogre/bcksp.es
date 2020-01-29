@@ -8,11 +8,19 @@
   font-family: $font-title;
   font-size: $size-14;
   line-height: 2;
+  position: relative;
+
+  background-image: linear-gradient(to right, black 33%, rgba(255,255,255,0) 0%);
+  background-position: top;
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
 }
 
 .main-footer .container {
-  display: flex;
-  justify-content: flex-end;
+  @include media-query("medium") {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .main-footer__logo {
@@ -22,29 +30,44 @@
 // Menu Nav & menu
 // ---------------------
 .main-footer__nav {
+  margin-top: $size-20;
   display: flex;
+  flex-wrap: wrap;
+
+  @include media-query("medium") {
+    margin-top: 0;
+    flex-wrap: nowrap;
+  }
 }
 
 .main-footer .column {
-  // border-left: 1px dashed #000;
-  padding: $size-10 $size-18;
-  width: 240px;
-  position: relative;
+  width: 50%;
 
-  // Dashed border
-  &:before {
-    content: "";
-    position: absolute;
-    display: block;
-    left: 0;
-    height: 100%;
-    width: 1px;
-    padding: 0;
-    background-image: linear-gradient(to right, #000 50%, transparent 50%), linear-gradient(to right, #000 50%, transparent 50%), linear-gradient(to bottom, #000 50%, transparent 50%), linear-gradient(to bottom, #000 50%, transparent 50%);
-    background-position: left top, left bottom, left top, right top;
-    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-    background-size: 0 4px, 0 4px, 4px 9px, 4px 9px;
+  @include media-query("medium") {
+    // border-left: 1px dashed #000;
+    padding: $size-10 $size-18;
+    width: 240px;
+    position: relative;
+
+    // Dashed border
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      left: 0;
+      height: 100%;
+      width: 1px;
+      padding: 0;
+      background-image: linear-gradient(to right, #000 50%, transparent 50%), linear-gradient(to right, #000 50%, transparent 50%), linear-gradient(to bottom, #000 50%, transparent 50%), linear-gradient(to bottom, #000 50%, transparent 50%);
+      background-position: left top, left bottom, left top, right top;
+      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+      background-size: 0 4px, 0 4px, 4px 9px, 4px 9px;
+    }
   }
+}
+
+.main-footer .column:nth-child(3n) {
+  margin-top: $size-20;
 }
 
 // Menu Footer
@@ -58,4 +81,9 @@
 .menu--footer .menu__item-link {
   text-decoration: underline;
   text-transform: capitalize;
+
+  &:hover,
+  &:hover {
+    text-decoration: none;
+  }
 }

@@ -1,0 +1,75 @@
+/*------------------------------------*\
+  > Souvenir
+\*------------------------------------*/
+
+.souvenir {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 940px;
+}
+
+.souvenir__item {
+  max-width: 274px;
+  margin-bottom: $size-60;
+  margin-left: $size-60;
+}
+
+.souvenir__item:nth-child(3n+1) {
+  margin-left: 0;
+}
+
+// Souvenir Link
+// ---------------------
+.souvenir__link {
+  font-family: $font-title;
+  display: block;
+  max-width: 100%;
+  text-align: center;
+  text-transform: capitalize;
+  position: relative;
+  text-decoration: none;
+
+  &:hover {
+    background: transparent;
+  }
+}
+
+.souvenir__link-image {
+  display: block;
+  max-width: 100%;
+}
+
+.souvenir__link-title {
+  display: block;
+  width: 100%;
+  font-size: $size-32;
+  margin-top: $size-22;
+}
+
+.souvenir__link-badge {
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: $size-22;
+  line-height: 2.54;
+  text-align: center;
+}
+
+.souvenir__link-badge--free {
+  color: $red;
+}
+
+// Souvenir counter label
+// ---------------------
+.souvenir__counter-label {
+  background: $primary;
+  font-size: $size-26;
+  position: absolute;
+  top: 80px;
+  left: 60px;
+  padding: 0 $size-18;
+  z-index: z("souvenir") + 1;
+}

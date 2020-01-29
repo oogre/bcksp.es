@@ -2,7 +2,7 @@
   bcksp.es - setting.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:59:50
-  @Last Modified time: 2019-01-09 17:53:28
+  @Last Modified time: 2019-01-09 15:37:27
 \*----------------------------------------*/
 
 import Encoder from "htmlencode";
@@ -25,7 +25,7 @@ export function getArchiveBuffer(){
 export function clearArchiveBuffer(){
 	localStorage.removeItem("archive");
 }
-
+ 
 export function getIntoBlackList(url){
 	let blackList = JSON.parse(localStorage.getItem("blackList") || "[]");
 	for(let i = 0 ; i < blackList.length ; i++){

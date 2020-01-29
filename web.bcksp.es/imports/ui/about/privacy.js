@@ -2,33 +2,30 @@
   bcksp.es - privacy.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:14:26
-  @Last Modified time: 2019-02-12 18:02:30
+  @Last Modified time: 2020-01-27 01:38:21
 \*----------------------------------------*/
-import React, { Component } from 'react';
+import React from 'react';
 
-import T from './../../i18n/index.js';
 
 // App component - represents the whole app
-export default class AboutPrivacy extends Component {
-	constructor(props){
-		super(props);
-	}
+const AboutPrivacy = () =>  {
+	const T = i18n.createComponent("privacy");
 
-	render() {
-		return (
-			<div className="about">
-				<div className="container about__container">
-					<h2 className="about__title"><T>privacy.title</T></h2>
-					<div className="about__content">
-						<T>privacy.short</T>
-						<span>
-							<a href={FlowRouter.path("about")+"#privacy"}>
-								<T>about.link</T>
-							</a>
-						</span>
-					</div>
+	return (
+		<div id="aboutPrivacy" className="about">
+			<div className="container about__container">
+				<h2 className="about__title"><T>title</T></h2>
+				<div className="about__content">
+					<T about={FlowRouter.path("about")} privacy={FlowRouter.path("about")+"#privacy"}>short</T>
+					<span>
+						<a href={FlowRouter.path("about")}>
+							<T>link</T>
+						</a>
+					</span>
 				</div>
 			</div>
-		);
-	}
+		</div>
+	);
+
 }
+export default AboutPrivacy;

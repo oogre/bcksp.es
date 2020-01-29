@@ -2,6 +2,14 @@
   Menu
 \*------------------------------------*/
 
+.main-navigation {
+  display: none;
+
+  @include media-query("medium") {
+    display: block;
+  }
+}
+
 // Menu Header
 // ---------------------
 .menu--header {
@@ -15,7 +23,6 @@
 
 .menu--header .menu__item {
   display: block;
-  margin-left: $size-35;
 
   &:first-child {
     margin: 0;
@@ -23,10 +30,22 @@
 }
 
 .menu__item-link {
+  display: inline-block;
+  line-height: 1.0625;
+  padding: 0;
   text-decoration: underline;
   text-transform: uppercase;
   font-family: $font-title;
   color: $grey-thunder;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-link-background-hover;;
+  }
+}
+
+.menu--header .menu__item-link {
+  padding: $size-8 $size-18 $size-6;
 }
 
 // Menu Header Mobile

@@ -2,98 +2,148 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2019-01-17 08:19:10
+  @Last Modified time: 2020-01-27 11:16:52
 \*----------------------------------------*/
-import T from './../../i18n/index.js';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
+import { SetUserLang } from "./../../api/users/methods.js";
+import { successHandler, errorHandler } from './../../utilities/ui.js';
 
-class MenuMain extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			mobileMenu: false
+const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
+	const [loading, setLoading] = useState(false);
+	const [mobileMenu, setMobileMenu] = useState(false);
+	const [langMenu, setLangMenu] = useState(false);
+	const T = i18n.createComponent("menus");
+
+	useEffect(() => {//componentDidMount
+		return () => {//componentWillUnmount
+			handle.stop();
 		}
+	}, []); 
+
+	const handleOpenMobileMenu = () => {
+		setMobileMenu(!this.state.mobileMenu);
 	}
 
-	handleOpenMobileMenu(){
-		this.setState({
-			mobileMenu: !this.state.mobileMenu
-		});
+	const hasToDisplayDownloadBtn = () => {
+		return !extensionInstalled;
 	}
 
-	hasToDisplayDownloadBtn(){
-		return !this.props.extensionInstalled;
+	const hasToDisplayProfileBtn = ()=>{
+		return isConnected && extensionInstalled;
 	}
 
-	hasToDisplayProfileBtn(){
-		return this.props.isConnected && this.props.extensionInstalled;
-	}
-
-	isActive(route){
+	const isActive = route => {
 		if(FlowRouter.current().route.name == route)return " active";
 		return "";
 	}
 
-	isMobile(){
-		if(this.state.mobileMenu)return " visible";
+	const isMobile = () => {
+		if(mobileMenu)return " visible";
 		return "";
 	}
 
-	render() {
-		return (
-			<nav>
-				<button type="button" className="menu--header__mobile-trigger" onClick={this.handleOpenMobileMenu.bind(this)}>
-					<div className="bar"></div>
-					<div className="bar"></div>
-					<div className="bar"></div>
-					<span className="sr-only">
-						<T>menus.open</T>
-					</span>
-				</button>
-				<ul className={"menu menu--header" + this.isMobile()}>
-					<li className="menu__item">
-						<a 	className={"menu__item-link " + this.isActive("about")}
-							href={FlowRouter.path("about")}
-						>
-							<T>menus.about</T>
-						</a>
-					</li>
-					<li className="menu__item">
-						<a 	className={"menu__item-link" + this.isActive("souvenir")}
-							href={FlowRouter.path("souvenir")}
-						>
-							<T>menus.souvenir</T>
-						</a>
-					</li>
-					{
-						this.hasToDisplayDownloadBtn() &&
-							<li className="menu__item">
-								<a 	className={"button button--primary" + this.isActive("download")}
-									onClick={installExtension}
-								>
-									<T>menus.download</T>
-								</a>
-							</li>
-					}
-					{
-						this.hasToDisplayProfileBtn() &&
-							<li className="menu__item">
-								<a 	className={"menu__item-link" + this.isActive("userProfile")}
-									href={ FlowRouter.path("userProfile") }
-								>
-									<T>menus.profile</T>
-								</a>
-							</li>
-					}
-				</ul>
-			</nav>
-		);
+	const toggleLangMenu = () => {
+		setLangMenu(!langMenu);
 	}
+
+	const closeLangMenu = () =>{
+		setLangMenu(false);
+	}
+
+	const setLangHandler = lang => {
+		i18n.setLocale(lang);
+		closeLangMenu();
+		if(Meteor.userId()){
+			SetUserLang.call({lang}, (error, res) =>{
+				if(errorHandler(error))return;
+				successHandler(res);
+			});
+		}
+	}
+
+	return (
+		<nav className="main-navigation">
+			<button type="button" className="menu--header__mobile-trigger" onClick={handleOpenMobileMenu}>
+				<div className="bar"></div>
+				<div className="bar"></div>
+				<div className="bar"></div>
+				<span className="sr-only">
+					<T>open</T>
+				</span>
+			</button>
+			<ul className={"menu menu--header" + isMobile()}>
+				<li className="menu__item">
+					<a 	className={"menu__item-link " + isActive("about")}
+						href={FlowRouter.path("about")}
+					>
+						<T>about</T>
+					</a>
+				</li>
+				<li className="menu__item">
+					<a 	className={"menu__item-link" + isActive("souvenir")}
+						href={FlowRouter.path("souvenir")}
+					>
+						<T>souvenir</T>
+					</a>
+				</li>
+				{
+					hasToDisplayDownloadBtn() &&
+						<li className="menu__item">
+							<a 	className={"button button--primary" + isActive("download")}
+								onClick={installExtension}
+							>
+								<T>download</T>
+							</a>
+						</li>
+				}
+				{
+					hasToDisplayProfileBtn() &&
+						<li className="menu__item">
+							<a 	className={"menu__item-link" + isActive("userProfile")}
+								href={ FlowRouter.path("userProfile") }
+							>
+								<T>profile</T>
+							</a>
+						</li>
+				}
+				<li className="menu__item" onMouseLeave={closeLangMenu}>
+					<a 	className="menu__item-link"
+						href="#"
+						onClick={toggleLangMenu}
+					>
+						<T>language</T>
+					</a>
+					{ 
+						langMenu && 
+							<ul style={{
+								position:"absolute",
+								listStyleType: "none",
+								margin: "0",
+								padding: "0",
+							}}>
+								{
+									i18n.getLanguages().map((code, k) => (
+										<li key={k}>
+											<a 	className="menu__item-link" href="#" onClick={()=>setLangHandler(code)}>
+												{i18n.getLanguageNativeName(code)}
+											</a>
+										</li>
+									))
+								}
+							</ul>
+					}
+				</li>
+			</ul>
+		</nav>
+	);
 }
 export default withTracker(self => {
+	let handle = Meteor.subscribe('user.language');
+	if(handle.ready()) i18n.setLocale(Meteor.user().lang);
 	return {
+		handle : handle,
 		isConnected : !!Meteor.userId(),
 		extensionInstalled : Session.get("extensionInstalled")
 	};

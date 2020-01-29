@@ -15,9 +15,9 @@ export default class MessageError extends Component {
 	}
 	render() {
 		return (
-			<div className="message error-message">
+			<p className="message error-message">
 				{ this.props.messages }
-			</div>
+			</p>
 		);
 	}
 }

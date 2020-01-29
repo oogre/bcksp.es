@@ -2,19 +2,23 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2019-02-28 18:36:02
+  @Last Modified time: 2020-01-29 12:44:15
 \*----------------------------------------*/
-
-
 export const config = {
+	souvenir : {
+		almanach : false
+	},
 	book : {
 		page : {
-			count : 100,
+			count : 128,
 			line : {
-				count : 25,
+				count : 32,
 				char : {
-					count : 30
-				}
+					count : 32
+				},
+			},
+			getMaxChar : ()=>{
+				return config.book.page.line.count * config.book.page.line.char.count;
 			}
 		},
 		getMaxChar : ()=>{
@@ -25,20 +29,19 @@ export const config = {
 		firefox : "jid1-P1oHEt4FsKJNoA@jetpack",
 		firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
 		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
-		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb"
+		"acr-chrome" : "fnkkmpbdnhbapbmbcpdfenolnbkbplob",
+		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb",
+		pingInterval : 10 * 60 * 1000
 	},
 	archives : {
 		public : {
-			type : 0,
 			shortBuffer : {
 				maxLen : 140
 			},
 			longBuffer : {
-				maxLen : 1000
+				maxLen : 1000,
+				maxMaxLen : 2000
 			}
-		},
-		private : {
-			type : 1,
 		}
 	},
 	methods : {
@@ -67,30 +70,40 @@ export const config = {
 	},
 	settings : {
 		blindfield : {
-			types : [{
-				value : "email",
-				placeholder : "demo@gmail.com"
-			},{
-				value : "password",
-				placeholder : "password"
-			},{
-				value : "text",
-				placeholder : "text"
-			},{
-				value : "search",
-				placeholder : "search"
-			},{
-				value : "tel",
-				placeholder : "+32.495.876.315"
-			},{
-				value : "number",
-				placeholder : 123
-			},{
-				value : "url",
-				placeholder : "https://bcksp.es"
-			}],
-			class : []
+			available : {
+				types : [{
+					value : "email",
+					placeholder : "demo@gmail.com"
+				},{
+					value : "password",
+					placeholder : "••••••••••"
+				},{
+					value : "text",
+					placeholder : "bonjour"
+				},{
+					value : "search",
+					placeholder : "image chatton érotique"
+				},{
+					value : "tel",
+					placeholder : "+32.495.876.315"
+				},{
+					value : "number",
+					placeholder : 123
+				},{
+					value : "url",
+					placeholder : "https://bcksp.es"
+				}]
+			},
+			disabled : {
+				default : {
+					class : ["bcksp-es-disabled"],
+					type : ["password"]
+				},
+				blocked : {
+					class : ["bcksp-es-disabled"],
+					type : []
+				}
+			}
 		}
 	}
-
-}
+};

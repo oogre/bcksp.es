@@ -1,0 +1,30 @@
+/*------------------------------------*\
+  > Share button display on livefeed when selecting a text
+\*------------------------------------*/
+
+.livefeed-share {
+  position: absolute;
+  transform: translate(-50%, 100%);
+}
+
+.livefeed-share__button {
+  @include button-unstyled();
+
+  background: #000;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: $font-title;
+  padding: $size-6 $size-10 $size-5;
+  position: relative;
+}
+
+.livefeed-share__button-decoration {
+  position: absolute;
+  bottom: -2px;
+  left: 2px;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  background: #fff;
+}

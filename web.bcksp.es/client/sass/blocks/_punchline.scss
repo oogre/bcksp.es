@@ -1,0 +1,22 @@
+/*------------------------------------*\
+  Punchline
+\*------------------------------------*/
+
+.punchline__title {
+  text-align: center;
+  font-weight: $font-weight-body;
+  margin-bottom: $size-80;
+  font-size: $size-30;
+  height: 4*$size-30;
+
+  @include media-query("medium") {
+    font-size: $size-70;
+    height: 4*$size-70;
+  }
+}
+
+.caret {
+    width: 1px;
+    position: absolute;
+    transform: translate(-21.5px, 0);
+}

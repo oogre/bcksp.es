@@ -2,7 +2,7 @@
   bcksp.es - forgotPwd.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-12-26 12:47:44
-  @Last Modified time: 2019-01-04 17:32:02
+  @Last Modified time: 2020-01-26 21:43:40
 \*----------------------------------------*/
 
 import ReactDom from 'react-dom';
@@ -11,9 +11,7 @@ import FixeWait from './../fixe/wait.js';
 import MessageError from './../message/error.js';
 import { sendMessage } from './../../utilities/com.js';
 import { isEmail } from './../../utilities/validation.js';
-import { getMessageFromError } from './../../utilities/tools.js';
-
-
+import { handleError, T } from './../../utilities/tools.js';
 
 export default class ForgotPwdForm extends Component {
 	constructor(props) {
@@ -33,35 +31,27 @@ export default class ForgotPwdForm extends Component {
 		});
 		isEmail(ReactDom.findDOMNode(this.refs.email).value)
 		.then(data => sendMessage("forgotPwd", data))
-		.then(data => {
-			this.setState({
-				'has-success' : data.message,
-			});
-		})
-		.catch(e => {
-			this.setState({ 
-				error : getMessageFromError(e),
-				'has-success' : false,
-			});
-		})
-		.finally(()=>{
-			this.setState({ 
-				'is-loading' : false,
-			});
-		});
+		.then(data => this.setState({'has-success' : data.message}))
+		.catch(e => this.setState({ error : handleError(e), 'has-success' : false }))
+		.finally(()=> this.setState({ 'is-loading' : false}));
 	}
 
 	render() {
 		return (
 	    	<form className="login-user" onSubmit={this.handleForgotPwd.bind(this)}>
-				<div className="fields-row">
-					<div className="fields-column">
-						<label htmlFor="email">email</label>
-						<input id="email" type = "email" ref="email"name="email"/>
+				<div>
+					<div className="field">
+						<label className="field__label" htmlFor="email">
+							<T.span text={{ key : "forms.resetPassword.email" }}/>
+						</label>
+						<input className="input--text" id="email" type = "email" ref="email" name="email"/>
 					</div>
 				</div>
-				<div className="fields-row text-right">
-					<input className="button--secondary" type="submit" value="reset password"/>
+				<div className="field">
+					<input 	className="button button--secondary"
+						type="submit"
+						value={T.translate("forms.resetPassword.action")}
+					/>
 				</div>
 				{
 					this.state.error &&
@@ -80,7 +70,6 @@ export default class ForgotPwdForm extends Component {
 					<FixeWait/>
 				}
 			</form>
-
 		);
 	}
 }

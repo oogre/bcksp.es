@@ -2,17 +2,45 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-01-04 22:46:21
+  @Last Modified time: 2019-06-07 16:57:16
 \*----------------------------------------*/
-import Data from "./../utilities/Data.js";
-import Protocol from "./../utilities/Protocol.js";
+import { jQuery } from './../utilities/jQuery.js';
+import BackspaceListener from './BackspaceListener.js';
 import { on, sendMessage } from './../utilities/com.js';
-import { getContent, jQuery } from './../utilities/tools.js';
+import { togglePopup, closePopup } from './popupManager.js';
 import { log, info, warn, error } from './../utilities/log.js';
-import { diff, getHighlightText, getCharBeforeCaret, specialCase } from './../utilities/backspace.js';
-import { checkString, checkTarget, isAcceptable, isInputField, isEmpty } from './../utilities/validation.js';
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
+
+on("askReload", (data, resolve) => {
+	if(window != window.top)return;
+	BackspaceListener.toggle();
+	resolve(true);
+});
+
+on("login", (data, resolve) => {
+	//if(window != window.top)return;
+	BackspaceListener.start();
+	resolve(true);
+});
+
+on("logout", (data, resolve) => {
+	//if(window != window.top)return;
+	BackspaceListener.stop();
+	resolve(true);
+});
+
+on("closePopup", (data, resolve) =>{
+	if(window != window.top)return;
+	closePopup();
+	resolve(true);
+});
+
+on("openPopup", (data, resolve) =>{
+	if(window != window.top)return;
+	togglePopup();
+	resolve(true);
+});
 
 on("blindfield", (data, resolve) =>{
 	Data.setState({
@@ -21,212 +49,4 @@ on("blindfield", (data, resolve) =>{
 	resolve(true);
 });
 
-jQuery.fn.ready(() => {
-	sendMessage("isLogin")
-	.then(async (isLoggedIn) => {
-		if(!isLoggedIn) throw new Error('You are not logged in, so bcksp.es in not available');
-		return true;
-	})
-	.then(() => sendMessage("getUrlStatus"))
-	.then(async ({blackListed}) => {
-		if(blackListed) throw new Error('This web site is blacklisted, so here bcksp.es in not available');
-		return true;
-	})
-	.then(() => new BackspaceListener())
-	.catch(e => error(e.message));
-
-	window.addEventListener("message", function(event) {
-	    // We only accept messages from ourselves
-	    if (event.source != window)
-	        return;
-
-	    if (event.data.type && (event.data.type == "login")) {
-	        sendMessage("login", event.data)
-			.then(data => info(data))
-			.catch(e => info(e.message));;
-	    }
-	    if (event.data.type && (event.data.type == "logout")) {
-	    	sendMessage("logout")
-			.then(data => info(data))
-			.catch(e => info(e.message));;
-	    }
-	});
-});
-
-class BackspaceListener{
-	constructor(){
-		sendMessage("getBlindfields")
-		.then(blindfields=>{
-			Data.setState({
-				blindfields : blindfields
-			});
-		});
-		log("BackspaceListener initializer");
-		this.setupListener(document);
-		Protocol.add("Highlight", target => {
-			try{
-				let content = getHighlightText(target);
-				log("Highlight", content.split("").reverse().join(""));
-				
-				sendMessage("archive", content)
-				.then(data => info(data))
-				.catch(e => info(e.message));
-				
-				return true;
-			}catch(e){
-				return false;
-			}
-		});
-		Protocol.add("CharBeforeCaret", target => {
-			try{
-				let content = getCharBeforeCaret(target);
-				log("CharBeforeCaret", content);
-				
-				sendMessage("archive", content)
-				.then(data => info(data))
-				.catch(e => info(e.message));
-				
-				return true;
-			}catch(e){
-				return false;
-			}
-		});
-		Protocol.add("Diff", ({before, after}) =>{
-			let	content = isEmpty(after) ? before : diff(before, after);
-			try{
-				checkString(content)
-				log("Diff", content);
-
-				sendMessage("archive", content.split("").reverse().join(""))
-				.then(data => info(data))
-				.catch(e => info(e.message));
-				
-				return true;
-			}catch(e){
-				return false;
-			}
-		});
-	}
-	
-	keyDownListener(event){
-		if(8 !== event.keyCode)return true;
-		let target;
-		
-		if(false === (target = checkTarget(this.activeElement))){
-			warn("Error with : " + this.activeElement);
-		}
-
-		if(!isAcceptable(target)){
-			log("This field is not acceptable");
-			return true;
-		}
-
-		sendMessage("backspace")
-		.then(data => info(data))
-		.catch(e => info(e.message));
-
-		specialCase({
-			"googleDocument" : () => {
-				if(!Data.state.downFlag){
-					Data.setState({
-						innerText : getContent(document.querySelector(".kix-appview-editor"))
-					});
-				}
-			},
-			"googleSpreadsheets" : () => {
-				if(!Data.state.downFlag){
-					Data.setState({
-						innerText : getContent(document.querySelector(".cell-input"))
-					});
-				}
-			},
-			"googlePresentation" : () => {
-				if(!Data.state.downFlag){
-					Data.setState({
-						innerText : getContent(document.querySelectorAll(".panel-right text"))
-					});
-				}
-			},
-			"googleDrawings" : () => {
-				if(!Data.state.downFlag){
-					Data.setState({
-						innerText : getContent(document.querySelectorAll("text"))
-					});
-				}
-			},
-			"default" : () => {
-				if(isInputField(target)){
-					if(!Protocol.exec("Highlight", target)){
-						if(!Protocol.exec("CharBeforeCaret", target)){
-							if(!Data.state.downFlag){
-								Data.setState({
-									innerText : getContent(target)
-								});
-							}
-						}
-					}	
-				}else{
-					if(!Data.state.downFlag){
-						Data.setState({
-							innerText : getContent(target)
-						});
-					}					
-				}
-			}
-		});
-		Data.setState({
-			downFlag : true
-		});
-	}
-	keyUpListener(event){
-		if(8 !== event.keyCode)return true;
-		if(isEmpty(Data.state.innerText))return true;
-		
-		let target;
-		if(false === (target = checkTarget(this.activeElement))){
-			warn("Error with : "+this.activeElement);
-		}
-		if(!isAcceptable(target)){
-			log("This field is not acceptable");
-			return true;
-		}
-
-		sendMessage("backspace")
-		.then(data => info(data))
-		.catch(e => info(e.message));
-
-		specialCase({
-			"googleDocument" : () => Protocol.exec("Diff", {
-				before : Data.state.innerText,
-				after : getContent(document.querySelector(".kix-appview-editor"))
-			}),
-			"googleSpreadsheets" : () => Protocol.exec("Diff", {
-				before : Data.state.innerText,
-				after : getContent(document.querySelector(".cell-input"))
-			}),
-			"googlePresentation" : () => Protocol.exec("Diff", {
-				before : Data.state.innerText,
-				after : getContent(document.querySelectorAll(".panel-right text"))
-			}),
-			"googleDrawings" : () => Protocol.exec("Diff", {
-				before : Data.state.innerText,
-				after : getContent(document.querySelectorAll("text"))
-			}),
-			"default" : () => Protocol.exec("Diff", {
-				before : Data.state.innerText,
-				after : getContent(target)
-			})
-		});
-		Data.setState({
-			downFlag : false,
-			innerText : "" 
-		});
-	}
-	setupListener(target){
-		this.addListeners(document);
-	}
-	addListeners (element){
-		element.addEventListener("keydown", this.keyDownListener, true);
-		element.addEventListener("keyup", this.keyUpListener, true);	
-	}
-}
+jQuery.fn.ready(BackspaceListener.start);

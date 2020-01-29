@@ -2,15 +2,15 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2019-01-04 23:25:32
+  @Last Modified time: 2020-01-26 22:02:42
 \*----------------------------------------*/
-
-import React, { Component } from 'react';
 import FixeWait from './fixe/wait.js';
-import ToggleButton from 'react-toggle-button';
+import React, { Component } from 'react';
 import MessageError from './message/error.js';
+import MyToggleButton from './MyToggleButton.js';
 import { sendMessage } from './../utilities/com.js';
-import { getMessageFromError } from './../utilities/tools.js';
+import { log, info, warn, error } from './../utilities/log.js';
+import { T } from './../utilities/tools.js';
 
 export default class Blacklist extends Component {
 	constructor(props) {
@@ -27,13 +27,8 @@ export default class Blacklist extends Component {
 
 	componentDidMount() {
 		sendMessage("getUrlStatus")
-		.then(({url, blackListed}) =>{
-			this.setState({
-				currentURL: url,
-				isBlacklisted : !!blackListed
-			});
-		})
-		.catch(e => info(e.message));;
+		.then(({url, blackListed}) => this.setState({ currentURL : url, isBlacklisted : !!blackListed }))
+		.catch(e => error(e));
 	}
 
 	handleBlacklistChange(wasBlacklisted){
@@ -49,57 +44,24 @@ export default class Blacklist extends Component {
 			methodName = "blacklistRemove";
 		}
 		sendMessage(methodName, this.state.currentURL)
-		.then(data => {
-			this.setState({
-				isBlacklisted : !wasBlacklisted,
-				'has-success' : data.message,
-			});
-		})
-		.catch(e => {
-			this.setState({ 
-				error : getMessageFromError(e),
-				'has-success' : false,
-			});
-		})
-		.finally(()=>{
-			this.setState({ 
-				'is-loading' : false,
-			});
-		});
+		.then(data => this.setState({ isBlacklisted : !wasBlacklisted, 'has-success' : data.message }))
+		.catch(e => this.setState({ error : handleError(e), 'has-success' : false }))
+		.finally(() => this.setState({ 'is-loading' : false }));
 	}
 
 	render() {
 		let self = this;
 		return (
-			<div class="security">
-				<span>
-					{ this.state.currentURL } is 
-				</span>
-				<span>
-					<ToggleButton
-						  colors={{
-						  	inactive: {
-						      base: 'rgb(128, 128, 128)',
-						      hover: 'rgb(150,150,150)',
-						    },
-						    active: {
-						      base: 'rgb(0, 0, 0)',
-						      hover: 'rgb(50,50,50)',
-						    }
-						  }}
-						  activeLabel="black"
-	  					  inactiveLabel="white"
-						  value={ self.state.isBlacklisted }
-						  thumbStyle={{ borderRadius: 2 }}
-						  trackStyle={{ borderRadius: 2 }}
-						  onToggle={self.handleBlacklistChange.bind(self)} 
+			<div className="security">
+				<div className="field">
+					<span className="field__label">
+						{ this.state.currentURL } is
+					</span>
+					<MyToggleButton
+						value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)}
+						activeLabel={ T.translate("userprofile.settings.blacklist.activeLabel") }
+						inactiveLabel={ T.translate("userprofile.settings.blacklist.inactiveLabel") }
 					/>
-				</span>
-				<span>
-					listed
-				</span>
-				<div>
-					<small>any change will reload the website</small>
 				</div>
 				{
 					this.state["error"] &&

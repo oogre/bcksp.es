@@ -13,8 +13,10 @@ $line-height-body: 1.5 !default;
 
 // Colors
 // ---------------------
+$red: #CC0000;
 $yellow-broom: #fff123;
 $grey-thunder: #231F20;
+$grey-cod: #151212;
 
 $primary: $yellow-broom !default;
 $secondary: cyan !default;
@@ -22,18 +24,24 @@ $secondary: cyan !default;
 $grey-thunder: #231f20;
 
 // Grey shader
+$grey-94: #efefef !default;
+$grey-91: #e8e8e8 !default;
+$grey-78: #c7c7c7 !default;
+$grey-74: #bdbdbd !default;
 $grey-50: #808080 !default;
+$grey-27: #383838 !default;
+
 
 // Link & other
 $color-link: #000 !default;
-$color-link-hover: #ff0066 !default;
+$color-link-background-hover: $primary !default;
 
 $color-body: $grey-thunder !default;
 $color-background: #fff !default;
 
 // Functional
 $functional-success: #6bc97d !default;
-$functional-error: #91273f !default;
+$functional-error: #ff0440 !default;
 $functional-warning: #eccb6d !default;
 
 // Form & buttons
@@ -79,5 +87,9 @@ $z-layers: (
     "modal": 2000,
     "dropdown": 1400,
     "sticky-footer": 1200,
+    "slider": 1100,
     "card": 1000,
+    "souvenir": 500,
+    "livestream": 250,
+    "about-intro": 200
 ) !default;

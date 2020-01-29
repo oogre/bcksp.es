@@ -18,17 +18,20 @@
 @import "bases/reset";
 @import "bases/fonts";
 @import "bases/typography";
+@import "bases/animation";
 
 //====== Layout ======
 // Specific style for global block use for layout purpose.
 // ex: Layout, grid, etc
 @import "layout/layout";
 @import "layout/grid";
+@import "layout/page";
 
 //====== Blocks ======
 // Reusable stand alone blocks which can be use everywhere on the project
 // ex: Card, Button, Searchbox
 @import "blocks/main-header";
+@import "blocks/form";
 @import "blocks/menu";
 @import "blocks/button";
 @import "blocks/button-list";
@@ -36,6 +39,26 @@
 @import "blocks/card";
 @import "blocks/about";
 @import "blocks/main-footer";
+@import "blocks/punchline";
+@import "blocks/livestream";
+@import "blocks/dropdown";
+@import "blocks/souvenir";
+@import "blocks/shop";
+@import "blocks/generator";
+@import "blocks/text-block";
+@import "blocks/slider";
+@import "blocks/artists";
+@import "blocks/press";
+@import "blocks/counter";
+@import "blocks/tooltip";
+@import "blocks/toggle-button";
+@import "blocks/livefeed-share";
+@import "blocks/call-to-connect";
+
+//====== Pages ======
+// Specific style for page
+// ex: Homepage, Store
+@import "pages/homepage";
 
 // Visibility Utils
 // Need to be imported in last, to make sure these styles overwrite the older one

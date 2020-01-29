@@ -2,96 +2,104 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2019-01-03 16:56:59
+  @Last Modified time: 2020-01-29 12:58:35
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
-import { Archives } from '../../../imports/api/archives/archives.js';
+import * as ArchiveTools from './utilities.archive.js';
 import { config } from '../../../imports/startup/config.js';
-import * as ArchiveTools from '../../utilities.archive.js';
-import { 
-	checkUserLoggedIn
-} from './../../../imports/utilities/validation.js';
+import { Archives, PrivateArchive } from '../../../imports/api/archives/archives.js';
+import { checkUserLoggedIn, checkUserRole } from './../../../imports/utilities/validation.js';
+
+Meteor.publish("archive.public", function () {
+	let archive = Archives.findOne({ 
+		type : Archives.Type.PUBLIC,
+		owner : {
+			$exists: false
+		}
+	}, {
+		fields : {
+			_id : true, 
+			type : true
+		}
+	});
+
+	__Public_Archive_ID__ = archive._id;
+
+	ArchiveTools.readAsync(archive._id)
+	.then(content => {
+		archive.content = content;
+		this.added('archives', archive._id, archive);
+		this.ready();
+	})
+	this.onStop(() => { } );
+});
 
 
-if(Meteor.isServer){
-	Meteor.publish("archive.public", function(){
-		let publicArchive = Archives.findOne({
-			type : config.archives.public.type
+
+Meteor.publish('archive.private', function () {
+	checkUserLoggedIn();
+	let archiveCursor = Archives.find({ 
+		type : Archives.Type.PRIVATE,
+		owner : Meteor.userId()
+	});
+	let archive = archiveCursor.fetch()[0];
+	ArchiveTools.readAsync(archive._id)
+	.then(content=>{
+		archive.content = content;
+		this.added('archives', archive._id, archive);
+		this.ready();
+	});
+	let handle = archiveCursor.observe({
+		changed: (oldData, newData) => {
+			let newCharLength = oldData.count - newData.count;
+			ArchiveTools.readAsync(archive._id)
+			.then(content=>{
+				if(newCharLength > 0){
+					this.changed('archives', archive._id, {
+						stream : content.substr(0, newCharLength)
+					});		
+				}else{
+					this.changed('archives', archive._id, { 
+						stream : false,
+						content : content
+					});		
+				}
+			});	
+		}
+	});
+
+	this.onStop(() => handle && handle.stop() );
+});
+
+
+
+Meteor.publish("archive.private.counter", function () {
+	checkUserLoggedIn();
+	return Archives.find({ 
+			type : Archives.Type.PRIVATE,
+			owner : Meteor.userId()
 		}, {
-			field : {
-				_id : 1
+			fields : {
+				count : 1,
+				type : 1,
+				owner : 1
 			}
 		});
-		ArchiveTools.readAsync(publicArchive._id)
-		.then(content=>{
-			this.added('publicArchive', publicArchive._id, {content : content});
-			this.ready();
-		})
-		this.onStop(() => { } );
-	});
-	Meteor.publish("archive.public.counter", function(){
-		return Archives.find({ 
-				type : config.archives.public.type,
-			}, {
-				fields : {
-					count : 1,
-					type : 1
-				}
-			});
-	});
+});
 
 
-	Meteor.publish("archive.private", function(){
-		let initializing = true;
-		let handle;
-		if(this.userId){
-			let user = Meteor.users.findOne({
-				_id : Meteor.userId()
-			}, { 
-				fields : {
-					archive : 1,
-				}
-			});
 
-			ArchiveTools.readAsync(user.archive)
-			.then(content=>{
-				this.added('privateArchive', +new Date(), {content : content});	
-			});
-			
-			handle = Archives.find({ 
-				type : config.archives.private.type,
-				owner : Meteor.userId() 
-			}).observe({
-				changed: (oldData, newData) => {
-					if (!initializing) {
-						let newCharLength = oldData.count-newData.count;
-						let content = ArchiveTools.readAsync(user.archive)
-						.then(content=>{
-							if(newCharLength > 0){
-								this.added('privateArchive', +new Date(), {content : content.substr(0, newCharLength)});
-							}else{
-								this.added('privateArchive', +new Date(), {content : content, invalidateOlder : true});
-							}
-						});	
-					}
-				}
-			});
-			this.ready();
+Meteor.publish("archive.public.counter", function () {
+	checkUserLoggedIn();
+	checkUserRole("admin");
+	return Archives.find({ 
+		type : Archives.Type.PUBLIC,
+		owner : {
+			$exists: false
 		}
-		initializing = false;
-		this.onStop(() => { handle && handle.stop() });
+	}, {
+		fields : {
+			count : 1
+		}
 	});
-	Meteor.publish("archive.private.counter", () => {
-		checkUserLoggedIn();
-		return Archives.find({ 
-				type : config.archives.private.type,
-				owner : Meteor.userId() 
-			}, {
-				fields : {
-					count : 1,
-					type : 1
-				}
-			});
-	});
-	
-}
+});

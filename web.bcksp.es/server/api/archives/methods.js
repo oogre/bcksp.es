@@ -2,19 +2,22 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2019-02-27 13:09:17
+  @Last Modified time: 2020-01-29 13:10:04
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
-import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { Archives } from './../../../imports/api/archives/archives.js';
-import { config } from './../../../imports/startup/config.js';
-import { streamer } from './../../../imports/api/streamer.js';
-import { 
-	checkString,
-	checkUserLoggedIn
-} from './../../../imports/utilities/validation.js';
 
-import * as ArchiveTools from '../../utilities.archive.js';
+import { 
+	checkDBReference,
+	checkString,
+	checkUserLoggedIn,
+	checkGreaterThan
+} from './../../../imports/utilities/validation.js';
+import * as ArchiveTools from './utilities.archive.js';
+import { log } from './../../../imports/utilities/log.js';
+import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
+import { config } from './../../../imports/startup/config.js';
+import { Archives } from './../../../imports/api/archives/archives.js';
+import { Settings } from './../../../imports/api/settings/settings.js';
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
@@ -29,61 +32,58 @@ export const ArchiveAdd = new ValidatedMethod({
 	},
 	run({ text }) {
 		this.unblock();
-		if(Meteor.isServer){
-			text = text.replace(/&nbsp;/g, " ");
-			text = text.replace(/\n/g, " ");
-			text = text.replace(/\t/g, " ");
-			let myArchive = Archives.findOne({
-				type : config.archives.private.type,
-				owner : this.userId
-			}, {
-				field : {
-					_id : 1
-				}
-			});
-			let publicArchive = Archives.findOne({
-				type : config.archives.public.type
-			}, {
-				field : {
-					_id : 1
-				}
-			});
-			text = text+" ";
-			ArchiveTools.append(myArchive._id, text)
-			.then(()=>{
-				Archives.update({
-					_id : myArchive._id
-				},{
-					$inc : {
-						count : text.length
-					},
-					$set : {
-						updatedAt : new Date()
-					}
-				});
-			})
-			.then(()=>ArchiveTools.readAsync(publicArchive._id))
-			.then(longBuffer=>{
-				longBuffer = text + longBuffer;
-				longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxLen);
-				return ArchiveTools.writeAsync(publicArchive._id, longBuffer)
-			})
-			.then(()=>{
-				Archives.update({
-					_id : publicArchive._id
-				}, {
-					$inc : {
-						count : text.length
-					},
-					$set : {
-						updatedAt : new Date()
-					}
-				});
-				streamer.emit('publicBackspaces', {content : text});
-			})
-			.catch(err=>console.log(err));
-		}
+		text = ArchiveTools.cleanInput(text);
+		
+		let mySettings = Settings.findOne({
+			owner : this.userId
+		}, {
+			fields : {
+				publishToPublicFeed : 1
+			}
+		});
+
+		ArchiveTools.publishToPrivateArchive(text)
+		.then(()=>{
+			if(mySettings.publishToPublicFeed){
+				ArchiveTools.publishToPublicArchive(text);
+			}
+			ArchiveTools.incrementPublicArchiveCounter(text.length);
+		})
+		.catch(err=>console.log(err));
 		return "YES";
+	}
+});
+
+export const ArchiveClear = new ValidatedMethod({
+	name: 'Archives.methods.clear',
+	validate() {
+		checkUserLoggedIn();
+		checkDBReference({
+			type : Archives.Type.PRIVATE,
+			owner : this.userId
+		}, Archives);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		this.unblock();
+		return ArchiveTools.clearPrivateArchive()
+		.then(()=>{ 
+			const T2 = i18n.createTranslator("userprofile.danger.deleteArchive.confirmation");
+			return {
+				success : true,
+				message : {
+					title : T2("title"),
+					content : T2("content")
+				}
+			};
+		})
+		.catch(err => {
+			throw err;
+		});
 	}
 });
 
@@ -99,36 +99,42 @@ export const ArchiveDownload = new ValidatedMethod({
 	},
 	run() {
 		this.unblock();
-		if(Meteor.isServer){
-			let myArchive = Archives.findOne({
-				type : config.archives.private.type,
-				owner : this.userId
-			});
-			return ArchiveTools.readAsync(myArchive._id)
-			.then(data => {
-				return {
-					count : myArchive.count,
-					content : data,
-					createdAt : myArchive.createdAt,
-					updatedAt : myArchive.updatedAt,
-				};
-			})
-			.then(data =>{
-				let file = [
-					i18n.__("souvenir.item.download.file.content", {
-						createdAt : moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
-						updatedAt : moment(data.updatedAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
-						content : data.content,
-						count : data.count
-					})
-				];
-				return file;
-			})
-			.catch(err=>console.log(err));
-		}
+		let myArchive = Archives.findOne({
+			type : Archives.Type.PRIVATE,
+			owner : this.userId
+		});
+		return ArchiveTools.readAsync(myArchive._id)
+		.then(data => {
+			return {
+				count : myArchive.count,
+				content : data,
+				createdAt : myArchive.createdAt,
+				updatedAt : myArchive.updatedAt,
+			};
+		})
+		.then(data =>{
+			let file = [
+				i18n.createTranslator("souvenir.item.download.file")("content", {
+					createdAt : moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+					updatedAt : moment(data.updatedAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+					content : data.content,
+					count : data.count
+				})
+			];
+			const T2 = i18n.createTranslator("souvenir.item.download.confirmation");
+			return {
+				success : true,
+				data : file,
+				message : {
+					title : T2("title"),
+					content : T2("content")
+				}
+			};
+		})
+		.catch(err=>console.log(err));
+		
 	}
 });
-
 
 export const ArchiveEdit = new ValidatedMethod({
 	name: 'Archives.methods.edit',
@@ -144,29 +150,17 @@ export const ArchiveEdit = new ValidatedMethod({
 	},
 	run({ text, startAt, stopAt  }) {
 		this.unblock();
-		if(Meteor.isServer){
-			let myArchive = Archives.findOne({
-				type : config.archives.private.type,
-				owner : this.userId
-			}, {
-				field : {
-					_id : 1
+		return ArchiveTools.unpublishToPrivateArchive(text, startAt, stopAt)
+		.then(() => {
+			const T2 = i18n.createTranslator("archive.edit.confirmation");
+			return {
+				success : true,
+				message : {
+					title : T2("title"),
+					content : T2("content")
 				}
-			});
-			ArchiveTools.splice(myArchive._id, text, startAt, stopAt)
-			.then(data=>{
-				Archives.update({
-					_id : myArchive._id
-				}, {
-					$inc : {
-						count : -(stopAt - startAt), 
-					},
-					$set : {
-						updatedAt : new Date()
-					}
-				});
-			})
-			.catch(err=>console.log(err));
-		}
+			};
+		})
+		.catch(err=>console.log(err));
 	}
 });

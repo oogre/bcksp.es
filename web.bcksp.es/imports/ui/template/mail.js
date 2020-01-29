@@ -2,42 +2,48 @@
   bcksp.es - posterConfirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-27 23:40:25
-  @Last Modified time: 2019-03-02 16:51:38
+  @Last Modified time: 2020-01-28 22:56:29
 \*----------------------------------------*/
-import T from './../../i18n/index.js';
-import React, { Component } from 'react';
-import { SignatureMailTemplate } from './signature.js';
+
+import React, { useState, useEffect } from 'react';
+import SignatureMailTemplate from './signature.js';
 import { Email, Item, Span, renderEmail } from 'react-html-email';
 
 
 
-class MailTemplate extends Component {
-	constructor(props){
-		super(props);
-	}
-	render(){
-		const textDefaults = {
-			fontFamily: 'monospace',
-			fontSize: 15,
-			color: 'black'
-		};
-		return (
-			<Email title={i18n.__("email."+this.props.type+".subject", this.props)} align="left">
-				<Item>
-					<Span  {...textDefaults} >
-						<p dangerouslySetInnerHTML={
-							{
-								__html: i18n.__("email."+this.props.type+".content", this.props) 
-							}
-						}></p>
-					</Span>
-				</Item>
-				<Item>
-					<SignatureMailTemplate/>
-				</Item>
-			</Email>
-		);
-	}
+const MailTemplate = (props) => {
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	
+	const T2 = i18n.createTranslator("email");
+  	
+  	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
+
+	const textDefaults = {
+		fontFamily: 'monospace',
+		fontSize: 15,
+		color: 'black'
+	};
+	return (
+		<Email title={T2(props.type+".subject", props)} align="left">
+			<Item>
+				<Span  {...textDefaults} >
+					<p dangerouslySetInnerHTML={
+						{
+							__html: T2(props.type+".content", props) 
+						}
+					}></p>
+				</Span>
+			</Item>
+			<Item>
+				<SignatureMailTemplate/>
+			</Item>
+		</Email>
+	);
 }
 
 export const getMail = function(type, data){

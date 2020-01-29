@@ -1,0 +1,38 @@
+/*------------------------------------*\
+  Page
+\*------------------------------------*/
+
+// Page Content
+// ---------------------
+.page__content {
+  margin-bottom: $size-40;
+}
+
+// Page Header
+// Contain page title and subtitle (optional)
+// ---------------------
+.page__header {
+  margin-bottom: $size-40;
+}
+
+// Page Title
+// ---------------------
+.page__title,
+.page__subtitle {
+  text-transform: uppercase;
+}
+
+.page__title {
+  font-size: $size-70;
+  line-height: .95;
+  margin-bottom: 0;
+
+  // Small "underline" decoration
+  @include titleDecoration();
+}
+
+.page__subtitle {
+  font-size: $size-24;
+  line-height: 2.33;
+}
+

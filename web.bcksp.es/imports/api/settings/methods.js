@@ -2,28 +2,76 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2019-01-04 23:24:20
+  @Last Modified time: 2020-01-29 13:27:26
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
-import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-
 import { Settings } from './settings.js';
 import { config } from './../../startup/config.js';
-import { streamer } from './../streamer.js';
-
+import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { 
+	checkBlindfieldRemoveAllowed,
+	checkDBReference,
 	checkUserLoggedIn,
-	chackString,
+	checkString,
 	checkUrl
 } from './../../utilities/validation.js';
+
+export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
+	name: 'Settings.Toggle.Publish.To.Public.Feed',
+	validate() {
+		checkUserLoggedIn();
+		checkDBReference({
+			owner : this.userId
+		}, Settings);
+	},
+	//mixins: [RateLimiterMixin],
+	//rateLimit: config.methods.rateLimit.superFast,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		this.unblock();
+		let mySettings = Settings.findOne({
+			owner : this.userId
+		}, {
+			fields : {
+				publishToPublicFeed : 1
+			}
+		});
+		
+		Settings.update({
+			_id : mySettings._id,
+		},{
+			$set : {
+				publishToPublicFeed : !mySettings.publishToPublicFeed,
+				updatedAt : new Date()
+			}
+		});
+		const T2 = i18n.createTranslator("userprofile.settings.publishToPublicFeed.confirmation");
+		return {
+			success : true,
+			message : {
+				title : T2((mySettings.publishToPublicFeed ? "disactive" : "active") +".title"),
+				content : T2((mySettings.publishToPublicFeed ? "disactive" : "active") +".content")
+			}
+		};
+	}
+});
 
 
 export const SettingsBlindFieldAdd = new ValidatedMethod({
 	name: 'Settings.Blind.Field.Add',
 	validate({ type, classFlag=false }) {
 		checkUserLoggedIn();
-		chackString(type);
+		checkString(type);
+		classFlag = "blindfield."+(classFlag?"class":"types");
+		checkDBReference({
+			owner : this.userId,
+			[classFlag] : {
+				$nin: [type]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -31,24 +79,28 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({ type, classFlag=false }) {
+		classFlag = "blindfield."+(classFlag?"class":"types");
 		this.unblock();
-		let search = {
-			owner : this.userId
-		};
-		search["blindfield."+(classFlag?"class":"types")] = {
-			$nin: [type]
-		};
-		let value = {
-			$push : {},
+		Settings.update({
+			owner : this.userId,
+			[classFlag] : {
+				$nin: [type]
+			}
+		}, {
+			$push : {
+				[classFlag] : type
+			},
 			$set : {
 				updatedAt : new Date()
 			}
-		}
-		value.$push["blindfield."+(classFlag?"class":"types")] = type
-		Settings.update(search,value);
+		});
+		const T2 = i18n.createTranslator("userprofile.settings.blindfield.confirmation.add");
 		return {
 			success : true,
-			data : "BlindField Added"
+			message : {
+				title : T2("title"),
+				content : T2("content", {field : type})
+			}
 		};
 	}
 });
@@ -57,7 +109,15 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 	name: 'Settings.Blind.Field.Remove',
 	validate({ type, classFlag=false }) {
 		checkUserLoggedIn();
-		chackString(type);
+		checkString(type);
+		checkBlindfieldRemoveAllowed(classFlag, type);
+		classFlag = "blindfield."+(classFlag?"class":"types");
+		checkDBReference({
+			owner : this.userId,
+			[classFlag] : {
+				$in: [type]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -66,23 +126,27 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 	},
 	run({ type, classFlag=false }) {
 		this.unblock();
-		let search = {
-			owner : this.userId
-		};
-		search["blindfield."+(classFlag?"class":"types")] = {
-			$in: [type]
-		};
-		let value = {
-			$pull : {},
+		classFlag = "blindfield."+(classFlag?"class":"types");
+		Settings.update({
+			owner : this.userId,
+			[classFlag] : {
+				$in: [type]
+			}
+		}, {
+			$pull : {
+				[classFlag] : type
+			},
 			$set : {
 				updatedAt : new Date()
 			}
-		}
-		value.$pull["blindfield."+(classFlag?"class":"types")] = type
-		Settings.update(search, value);
+		});
+		const T2 = i18n.createTranslator("userprofile.settings.blindfield.confirmation.remove");
 		return {
 			success : true,
-			data : "BlindField Removed"
+			message : {
+				title : T2("title"),
+				content : T2("content", {field : type})
+			}
 		};
 	}
 });
@@ -92,6 +156,12 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 	validate({ url }) {
 		checkUserLoggedIn();
 		checkUrl(url);
+		checkDBReference({
+			owner : this.userId,
+			blacklist : {
+				$nin: [url]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -100,38 +170,26 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 	},
 	run({ url }) {
 		this.unblock();
-		let mySettings = Settings.findOne({
-			owner : this.userId
-		}, {
-			fields : {
-				blacklist : 1
+		Settings.update({
+			owner : this.userId,
+			blacklist : {
+				$nin: [url]
+			}
+		},{
+			$push : {
+				blacklist : url
+			},
+			$set : {
+				updatedAt : new Date()
 			}
 		});
-		if(!mySettings){
-			Settings.insert({
-				owner : this.userId,
-				blacklist : [ url ],
-				createdAt : new Date(),
-				updatedAt : new Date()
-			});
-		}else{
-			Settings.update({
-				_id : mySettings._id,
-				blacklist : {
-					$nin: [url]
-				}
-			},{
-				$push : {
-					blacklist : url
-				},
-				$set : {
-					updatedAt : new Date()
-				}
-			});
-		}
+		const T2 = i18n.createTranslator("userprofile.settings.blacklist.confirmation.add");
 		return {
 			success : true,
-			data : "Blacklist Added"
+			message : {
+				title : T2("title"),
+				content : T2("content", {URL : url})
+			}
 		};
 	}
 });
@@ -141,6 +199,12 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 	validate({ url }) {
 		checkUserLoggedIn();
 		checkUrl(url);
+		checkDBReference({
+			owner : this.userId,
+			blacklist : {
+				$in: [url]
+			}
+		}, Settings);
 	},
 	//mixins: [RateLimiterMixin],
 	//rateLimit: config.methods.rateLimit.superFast,
@@ -162,9 +226,13 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
+		const T2 = i18n.createTranslator("userprofile.settings.blacklist.confirmation.remove");
 		return {
 			success : true,
-			data : "Blacklist Removed"
+			message : {
+				title : T2("title"),
+				content : T2("content", {URL : url})
+			}
 		};
 	}
 });

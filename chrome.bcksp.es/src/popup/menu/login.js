@@ -2,15 +2,17 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2019-01-05 18:29:59
+  @Last Modified time: 2020-01-26 22:02:04
 \*----------------------------------------*/
+
 import React, { Component } from 'react';
 import LoginForm from './../form/login.js';
 import SignupForm from './../form/signup.js';
 import { config } from './../../shared/config.js';
 import ForgotPwdForm from './../form/forgotPwd.js';
 import { sendMessage } from './../../utilities/com.js';
-
+import { log, info, warn, error } from './../../utilities/log.js';
+import { T } from './../../utilities/tools.js';
 
 export default class LoginMenu extends Component {
 	constructor(props) {
@@ -25,92 +27,99 @@ export default class LoginMenu extends Component {
 		if(!this.state.availableProcess.includes(data)){
 			throw new Error("Unknow process to switch to : "+data);
 		}
-		this.setState({currentProcess: data});
+		this.setState({ currentProcess : data });
 		return false;
 	}
+
 	handleGoBcksp(event){
 		sendMessage("openTab", config.getHomeUrl())
 		.then(data => info(data))
-		.catch(e => info(e.message));;
+		.catch(e => error(e));;
 	}
+
 	renderLoginBtn(){
 		return(
 			<li>
-				<p>
-					Already have an account?
-					<button onClick={this.handleProcessSwitchTo.bind(this, "login")}>
-						log in now
+				<div className="bcksp-popup__body-footer">
+					<T.p text={{ key : "forms.login.title" }}/>
+					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "login")}>
+						<T.span text={{ key : "forms.login.button" }}/>
 					</button>
-				</p>	
+				</div>
 			</li>
 		);
 	}
-	
+
 	renderSignupBtn(){
 		return(
 			<li>
-				<p>
-					Don't have an account?
-					<button onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
-						sign up now
+				<div className="bcksp-popup__body-footer">
+					{/*<T.p text={{ key : "forms.signup.title" }}/>*/}
+					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
+						<T.span text={{ key : "forms.signup.button" }}/>
 					</button>
-				</p>	
+				</div>
 			</li>
 		);
 	}
-	
+
 	renderForgotPwdBtn(){
 		return(
 			<li>
-				<p>
-					Have you forgot your password?
-					<button onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
-						If so click here
+				<div className="bcksp-popup__body-footer">
+					{/*<T.p text={{ key : "forms.resetPassword.title" }}/>*/}
+					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
+						<T.span text={{ key : "forms.resetPassword.button" }}/>
 					</button>
-				</p>
+				</div>
 			</li>
 		);
 	}
 
 	render() {
 		return (
-			<ul>
-				<li>
-					{ 
+			<div>
+				<div className="bcksp-popup__body">
+					{
 						this.state.currentProcess == "signup" &&
 							<SignupForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
 					}
-					{ 
-						this.state.currentProcess == "login" && 
+					{
+						this.state.currentProcess == "login" &&
 							<LoginForm onSuccess={ this.props.onLoginStatusChange.bind(this) }/>
 					}
-					{ 
+					{
 						this.state.currentProcess == "forgotPwd" &&
 							<ForgotPwdForm/>
 					}
-				</li>
-				{
-					(	this.state.currentProcess == "signup" 
-					||  this.state.currentProcess == "forgotPwd")
-					&&	this.renderLoginBtn()
-				}
-				{
-					this.state.currentProcess == "login" && 
-						this.renderForgotPwdBtn()
-				}
-				{	(	this.state.currentProcess == "login" 
-					||  this.state.currentProcess == "forgotPwd")
-					&&	this.renderSignupBtn()
-				}
-				<li>
-					<button 
-						className="" 
-						onClick={this.handleGoBcksp.bind(this)}
-					>
-							visit {config.bcksp_url}
+				</div>
+				<div className="bcksp-popup__footer">
+					<ul>
+						{
+							(	this.state.currentProcess == "signup"
+							||  this.state.currentProcess == "forgotPwd")
+							&&	this.renderLoginBtn()
+						}
+						{
+							this.state.currentProcess == "login" &&
+								this.renderForgotPwdBtn()
+						}
+						{	(	this.state.currentProcess == "login"
+							||  this.state.currentProcess == "forgotPwd")
+							&&	this.renderSignupBtn()
+						}
+					</ul>
+				</div>
+				<div className="bcksp-popup__extension-link">
+					<button
+							className="button button--secondary button--extension-link"
+							onClick={this.handleGoBcksp.bind(this)}
+						>
+							<T.span text={{ key : "extension.links.visit" }}/>
 					</button>
-				</li>
-			</ul>
+				</div>
+			</div>
+
 		);
 	}
 }

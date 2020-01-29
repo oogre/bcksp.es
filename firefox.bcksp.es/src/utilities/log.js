@@ -2,19 +2,19 @@
   bcksp.es - log.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:29:40
-  @Last Modified time: 2019-01-05 00:19:50
+  @Last Modified time: 2019-05-07 16:56:12
 \*----------------------------------------*/
 
 let LOG_LVLS = {
 	OFF : -1,
 	ERROR : 0,
-	WARN : 1,
-	TRACE : 2,
-	INFO : 3,
-	LOG : 4
+	LOG : 1,
+	INFO : 2,
+	WARN : 3,
+	TRACE : 4
 };
 
-let LOG_LVL = LOG_LVLS.LOG;
+let LOG_LVL = LOG_LVLS.WARN;
 
 export function log(...data){
 	if(LOG_LVL >= LOG_LVLS.LOG){

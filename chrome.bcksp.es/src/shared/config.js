@@ -1,50 +1,40 @@
+import { extend } from 'underscore';
+
 const conf = {
+	pingInterval : 0,
+	senderTimeout : 6000,
+	standard_url : "*://*.bcksp.es/*",
+	protocol : "https://",
+	ws_protocol : "wss://",
+	address : "bcksp.es",
+	home : "/dev",
+	about : "/about",
+	login : "/login",
+	logout : "/logout",
+	profile : "/profile",
+	websocket : "/websocket",
+	user : {
+		password : {
+			length : {
+				min : 6,
+				max : 127
+			}
+		}
+	},
 	DEV : {
-		// localStorage.setItem("DEV", true)
-		senderTimeout : 6000,
-		standard_url : "*://*.bcksp.es/*",
 		protocol : "http://",
 		ws_protocol : "ws://",
 		address : "local.bcksp.es:8888",
-		home : "/",
-		login : "/login",
-		logout : "/logout",
-		profile : "/profile",
-		websocket : "/websocket",
-		user : {
-			password : {
-				length : {
-					min : 6,
-					max : 127
-				}
-			}
-		}	
-	},
-	PROD : {
-		senderTimeout : 6000,
-		standard_url : "*://*.bcksp.es/*",
-		protocol : "https://",
-		ws_protocol : "wss://",
-		address : "bcksp.es",
-		home : "/dev",
-		login : "/login",
-		logout : "/logout",
-		profile : "/profile",
-		websocket : "/websocket",
-		user : {
-			password : {
-				length : {
-					min : 6,
-					max : 127
-				}
-			}
-		}
+		home : "/"
 	}
 };
+
 function isDevMode(){
 	return localStorage.getItem("DEV") === "true";
 }
-export const config = isDevMode() ? conf.DEV : conf.PROD;
+
+export const config = isDevMode() ? extend(conf, conf.DEV) : conf;
+
 config.getLogoutUrl = function(){
 	return config.protocol+config.address+config.logout;
 };
@@ -59,6 +49,9 @@ config.getHomeUrl = function(){
 };
 config.getProfileUrl = function(){
 	return config.protocol+config.address+config.profile;
+};
+config.getAboutUrl = function(){
+	return config.protocol+config.address+config.about;
 };
 config.getWebSocketUrl = function(){
 	return config.ws_protocol+config.address+config.websocket;

@@ -1,4 +1,5 @@
 /* CSS declarations go here */
+/*
 .fullscreen{
 	position: fixed;
     background: rgba(250, 250, 250, 0.9);
@@ -8,20 +9,10 @@
     height: 100%;
     font-size: 4em;
 }
-.stream{
-    word-break: break-all;
-    white-space: pre-wrap;
-}
+*/
+
 [contenteditable]:focus{
     outline: none;
-}
-.buttonShare{
-    position: absolute;
-    background: red;
-    width: 50px;
-    height: 20px;
-    transform: translate(-50%, -100%);
-    z-index: 100;
 }
 html, body, #render-target{
 	margin : 0;
@@ -30,29 +21,35 @@ html, body, #render-target{
     height: 100%;
 }
 
-.hide : {
-    display:none;
+.hide{
+    display:none !important;
 }
 
-/* SELF WRITTEN TEMPLATE */
-.caret {
-    background-color: black;
-    width: 1px;
+
+/* START OF SOUVENIR LIST */
+li.souvenir__item {
+    position: relative;
+    width: 250px;
+    display: inline-block;
+    text-align: center;
+}
+li.souvenir__item .border{
+    border: solid 7.5px black;
+}
+li.souvenir__item .wrapper{
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+li.souvenir__item .wrapper img{
+    top: 0;
+    left: 0;
+    z-index: -1;
     position: absolute;
-    height: 39px;
-    transform: translate(-1.5px, 0);
+    max-width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
-.blink {
-  animation: blink-animation 1s steps(2, start) infinite;
-  -webkit-animation: blink-animation 1s steps(2, start) infinite;
-}
-@keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
-@-webkit-keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
+/* END OF PROGRESS TEMPLATE */

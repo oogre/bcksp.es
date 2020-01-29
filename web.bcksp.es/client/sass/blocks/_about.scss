@@ -3,17 +3,17 @@
 \*------------------------------------*/
 
 .about {
-  padding: $size-112 0 $size-205;
-  background: $grey-thunder;
+  padding: 0;
+
+  @include media-query("medium") {
+    padding: $size-112 0 $size-205;
+  }
 }
 
 .about__container {
-  display: flex;
-}
-
-.about,
-.about__title {
-  color: #fff;
+  @include media-query("medium") {
+    display: flex;
+  }
 }
 
 .about__title {
@@ -27,4 +27,100 @@
 .about__content {
   font-size: $size-23;
   line-height: 1.39;
+}
+
+.about__content a {
+  text-decoration: underline;
+
+  &:hover {
+    color: $color-body;
+  }
+}
+
+// About intro variation
+// ---------------------
+.about--intro {
+  position: relative;
+  padding: $size-40 0;
+
+  @include media-query("medium") {
+    padding: 0 0 $size-205;
+    margin-top: -$size-500;
+  }
+}
+
+.about--intro__container {
+  position: relative;
+  z-index: z("about-intro");
+}
+
+.about-parallax {
+  position: relative;
+
+  @include media-query("medium") {
+    margin-top: -$size-500;
+  }
+}
+
+.about-parallax__background {
+  // position: absolute;
+  display: none;
+
+  @include media-query("medium") {
+    display: block;
+    position: sticky;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: z("about-intro") - 1;
+    background: $grey-thunder no-repeat right center;
+    background-position: top right;
+    padding-left: $size-230;
+    background-image: url("/images/backgrounds/eraser-background.png");
+  }
+
+}
+
+.about-parallax__background.fixed {
+  position: fixed;
+}
+
+.about--intro,
+.about--intro .about__title {
+  color: #fff;
+}
+
+.about--intro a {
+  color: #fff;
+}
+
+.about--intro .about__container {
+  max-width: 680px;
+  display: block;
+}
+
+.about--intro .about__title {
+  font-family: $font-title;
+  margin-bottom: $size-60;
+  max-width: none;
+}
+
+.about--intro .about__content {
+  margin-bottom: $size-126;
+}
+
+.about--intro {
+  background: $grey-thunder;
+
+  @include media-query("medium") {
+    background: transparent;
+  }
+}
+
+// About Long variation
+// ---------------------
+.about--long {
+  margin-top: $size-35;
 }

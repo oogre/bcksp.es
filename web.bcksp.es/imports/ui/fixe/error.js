@@ -2,24 +2,18 @@
   bcksp.es - error.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 16:20:01
-  @Last Modified time: 2019-02-23 17:46:10
+  @Last Modified time: 2020-01-28 21:22:09
 \*----------------------------------------*/
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class FixeError extends Component {
-	constructor(props){
-		super(props);
-	}
-	renderError(message){
-
-	}
-	render() {
-		return (
-			<div className="message error-message">
-				{
-					React.Children.map(this.props.children, child => child)
-				}
-			</div>
-		);
-	}
+const FixeError = ({children}) => {
+	return (
+		<div className="message error-message">
+			{
+				React.Children.map(children, child => child)
+			}
+		</div>
+	);
 }
+
+export default FixeError;

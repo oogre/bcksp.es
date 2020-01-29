@@ -2,9 +2,10 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2019-01-09 17:34:08
+  @Last Modified time: 2020-01-29 11:57:07
 \*----------------------------------------*/
 import { createClass } from "asteroid";
+import { onLogin } from "asteroid/lib/common/login-method";
 import Data from "./../utilities/Data.js";
 import { config } from './../shared/config.js';
 import { runtimeId } from './../utilities/browser.js';
@@ -19,102 +20,105 @@ class AsteroidHelper{
     		endpoint: config.getWebSocketUrl()
 		});
 
-		this.subscribtionAddressList = [
-			"archive.private.counter",
-			"settings.private"
-		];
-		
 		this.subscribtionList = [];
 
-		this.asteroid.on("connected", () =>{
-			log("connected");
-			Data.setState({
-				connected : true,
-			});
-		});
+		this.subscribtionAddressList = [
+			"devices.config",
+			"archive.private.counter",
+			"settings.private",
+			"devices.i18n.logged"
+		];
 
-		this.asteroid.on("disconnected", () =>{
-			log("disconnected");
-			Data.setState({
-				connected : false,
-			});
+		this.subscribtionListNoLogged = [];
+		this.subscribtionAddressListNoLogged = [
+			"devices.i18n"
+		];		
+		
+		this.asteroid.on("connected", () => {
+			Data.setState({ connected : true })
+			this.startSubsribtionNoLogged();
 		});
-
-		this.asteroid.on("loggedOut", () =>{
-			log("loggedOut");
+		this.asteroid.on("disconnected", () => Data.setState({ connected : false }));
+		this.asteroid.on("loggedOut", () => {
 			Data.setState({
 				loggedStatus : false,
 				currentURLBlacklisted : false
 			});
 			this.stopSubsribtion();
+			this.startSubsribtionNoLogged();
 		});
 
-		this.asteroid.on("loggedIn", data =>{
-			log("loggedIn");
-			Data.setState({
-				"loggedStatus": true
-			});
+		this.asteroid.on("loggedIn", data => {
+			Data.setState({ "loggedStatus": true });
+			this.stopSubsribtionNoLogged();
 			this.startSubsribtion();
+		});
+
+		this.on("changed", {
+			deviceI18n : i18n => localStorage.setItem("translation", JSON.stringify(i18n)),
+			config : ({maxCharPerBook, pingInterval}) => {
+				Data.setState({ maxCharPerBook : maxCharPerBook })
+				Data.setState({ pingInterval : pingInterval })
+			},
+			archives : ({count}) => Data.setState({ archiveSize : count }),
+			settings : settings => {
+				if(isObject(settings.blindfield)){
+					Data.setState({ blindfields : settings.blindfield });
+				}
+				if(isArray(settings.blacklist)){
+					Data.setState({ blacklist : settings.blacklist });
+				}
+			}
+		});
+		this.on("added", {
+			deviceI18n : i18n => localStorage.setItem("translation", JSON.stringify(i18n)),
+			config : ({maxCharPerBook, pingInterval}) => {
+				Data.setState({ maxCharPerBook : maxCharPerBook })
+				Data.setState({ pingInterval : pingInterval })
+			},
+			archives : ({count}) => Data.setState({archiveSize : count}),
+			settings : settings => {
+				if(isObject(settings.blindfield)){
+					Data.setState({ blindfields : settings.blindfield });
+				}
+				if(isArray(settings.blacklist)){
+					Data.setState({ blacklist : settings.blacklist });
+				}
+			}
 		});
 	}
 
 	stopSubsribtion(){
-		info("stopSubsribtion");
 		this.subscribtionList.map(subscribtion => {
 			this.asteroid.unsubscribe(subscribtion.id);
 			this.asteroid.subscriptions.cache.del(subscribtion.id);
+			info("Subsribtion : " + subscribtion.name + " is closed")
 		});
 		this.subscribtionList = [];
 	}
 
 	startSubsribtion (){
-		info("startSubsribtion");
-		this.subscribtionList = this.subscribtionAddressList.map(address =>{
-			info("subscribtion to : " + address);
+		this.subscribtionList = this.subscribtionAddressList.map(address => {
 			let sub = this.asteroid.subscribe(address);
-			sub.on("ready", () => {
-				info(address + " : ready");
-			});
+			sub.on("ready", () => info("Subsribtion : " + address + " is ready"));
 			return sub;
 		});
-		//if(Data.state.init)return;
-		//Data.setState({
-		//	"init": true
-		//});
-		
-		this.on("changed", {
-			archives : ({count}) => {
-				Data.setState({
-					archiveSize : count
-				});
-			},
-			settings : settings=>{
-				if(isObject(settings.blindfield)){
-					Data.setState({
-						blindfields : settings.blindfield
-					});
-				}
-				if(isArray(settings.blacklist)){
-					Data.setState({
-						blacklist : settings.blacklist
-					});
-				}
-			}
+	}
+
+	stopSubsribtionNoLogged(){
+		this.subscribtionListNoLogged.map(subscribtion => {
+			this.asteroid.unsubscribe(subscribtion.id);
+			this.asteroid.subscriptions.cache.del(subscribtion.id);
+			info("Subsribtion : " + subscribtion.name + " is closed")
 		});
-		this.on("added", {
-			archives : ({count}) => {
-				Data.setState({archiveSize : count});
-			},
-			settings : settings=>{
-				if(isObject(settings.blindfield)){
-					Data.setState({blindfields : settings.blindfield});
-				}
-				if(isArray(settings.blacklist)){
-					Data.setState({blacklist : settings.blacklist});
-				}
-			}
+		this.subscribtionListNoLogged = [];
+	}
+	startSubsribtionNoLogged(){
+		this.subscribtionListNoLogged = this.subscribtionAddressListNoLogged.map(address => {
+			let sub = this.asteroid.subscribe(address);
+			sub.on("ready", () => info("Subsribtion : " + address + " is ready"));
+			return sub;
 		});
-		
 	}
 
 	on(eventName, options){
@@ -123,17 +127,27 @@ class AsteroidHelper{
 		});
 	}
 
+	async createUser(data){
+		data.device =  runtimeId();
+		return this.asteroid.createUser(data);
+	}
+	
+	async loginWithPassword(data){
+		data.device =  runtimeId();
+		return this.asteroid.loginWithPassword(data);		
+	}
+
 	async call(methode, data={}){
 		setIcon("sending");
 		data.device =  runtimeId();
 		return this.asteroid.call(methode, data)
 			.then(res => {
-				//info(res);
 				return res;
-			}).catch(error => {
+			})
+			.catch(error => {
 				error(error);
 				throw error;
-			}).finally(()=>{
+			}).finally(() => {
 				setDefaultIcon(this.asteroid.loggedIn);
 			});
 	}

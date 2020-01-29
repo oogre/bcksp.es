@@ -2,8 +2,10 @@
   bcksp.es - browser.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:29:49
-  @Last Modified time: 2019-01-05 18:16:56
+  @Last Modified time: 2019-05-07 16:58:50
 \*----------------------------------------*/
+import { isNull, isUndefined } from 'underscore';
+
 export async function tabsQuery(req){
 	return new Promise(resolve => chrome.tabs.query(req, tabs=>resolve(tabs)));
 }
@@ -29,19 +31,50 @@ export function tabsOnActivatedAddListener(req){
 }
 
 export async function tabsSendMessage(id, req){
-	return new Promise(resolve => chrome.tabs.sendMessage(id, req, ()=>resolve()));	
+	return new Promise((resolve, reject) => {
+		chrome.tabs.sendMessage(id, req, data => {
+			if(isNull(data) || isUndefined(data))return reject({
+				origin : "tabsSendMessage",
+				tabId : id,
+				request : req,
+				error : runtimeLastError()
+			});
+			return resolve();
+		});
+	});	
 }
 
 export async function browserActionSetIcon(req){
 	return new Promise(resolve => chrome.browserAction.setIcon(req, ()=>resolve()));	
 }
 
+export function browserActionOnClickAddListener(req){
+	return chrome.browserAction.onClicked.addListener(req);
+}
+
 export function runtimeId(){
 	return chrome.runtime.id;
 }
 
+export function runtimeLastError(){
+	return chrome.runtime.lastError;
+}
+
+export function runtimeGetURL(file){
+	return chrome.runtime.getURL(file)
+}
+
 export async function runtimeSendMessage(req){
-	return new Promise(resolve => chrome.runtime.sendMessage(req, data => resolve(data)));	
+	return new Promise((resolve, reject) => {
+		chrome.runtime.sendMessage(req, data => {
+			if(isNull(data) || isUndefined(data))return reject({
+				origin : "runtimeSendMessage",
+				request : req,
+				error : runtimeLastError()
+			});
+			return resolve(data);
+		});
+	});	
 }
 
 export function runtimeSetUninstallURL(url){

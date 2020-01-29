@@ -1,0 +1,281 @@
+/*------------------------------------*\
+  Bcksp.es - Extension
+  @authors Crucifix Arnaud (hello@crucifixarnaud.com)
+\*------------------------------------*/
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+body {
+  font-size: 16px;
+  color: #231f20;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/*------------------------------------*\
+  > Popup
+\*------------------------------------*/
+
+.bcksp-popup {
+  position: relative;
+  margin-right: 4px;
+  font-family: "GT Pressura Mono Trial", monospace;
+}
+
+.bcksp-popup__container {
+  background: #fff;
+  border: 1px solid #000;
+  position: relative;
+  z-index: 1000;
+  position: relative;
+  z-index: 1001;
+}
+
+.bcksp-popup__header,
+.bcksp-popup__body {
+  margin: 1.25rem;
+}
+
+.bcksp-popup__header {
+  border-bottom: 3px solid #000;
+  padding-bottom: 1.0625rem;
+}
+
+.bcksp-popup__content {
+  margin-top: 13px;
+}
+
+.bcksp-popup__footer {
+  margin: 1.125rem 1.25rem;
+}
+
+.bcksp-popup__container,
+.bcksp-popup__border-decoration {
+  max-width: calc(100% - 2px);
+  max-height: calc(100% - 2px);
+}
+
+.bcksp-popup__border-decoration {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  background: #fff;
+  z-index: 999;
+}
+
+.bcksp-popup .bcksp-popup__border-decoration:nth-child(1) {
+  top: 4px;
+  left: 4px;
+}
+
+.bcksp-popup .bcksp-popup__border-decoration:nth-child(2) {
+  top: 2px;
+  left: 2px;
+}
+
+/*------------------------------------*\
+  > Forms
+\*------------------------------------*/
+
+.field {
+  margin-bottom: 10px;
+}
+
+.field__label {
+  display: block;
+  text-align: left;
+  font-size: .8125rem;
+  color: #231f20;
+  margin-bottom: 6px;
+}
+
+.field__label::first-letter {
+  text-transform: uppercase;
+}
+
+.input--text {
+  border-radius: 2px;
+  border: 1px solid #bdbdbd;
+  width: 100%;
+  line-height: 2.5;
+  padding: 0 3px;
+}
+
+.input--text:focus {
+  border-color: #000;
+  outline: 1px solid #000;
+}
+
+.error-message {
+  color: #FF0040;
+}
+
+/*------------------------------------*\
+  > Typography
+\*------------------------------------*/
+
+.bcksp-popup p {
+  font-size: .8125rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.bcksp-popup a {
+    color: #000;
+    font-size: .8125rem;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.bcksp-popup a:hover,
+.bcksp-popup a:focus {
+  text-decoration: none;
+  background-color: #fff123;
+}
+
+.bcksp-popup a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: none;
+
+    @include hover-focus {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+/*------------------------------------*\
+  > Buttons
+\*------------------------------------*/
+
+.button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  appearance: none;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button--secondary {
+  display: inline-block;
+  background-color: #000;
+  border-radius: 2px;
+  color: #fff;
+  padding: .5rem 1.125rem .375rem;
+  text-transform: uppercase;
+  font-family: "GT Pressura Mono Trial", monospace;
+  font-size: 1rem;
+  transition: background .2s cubic-bezier(.645, .045, .355, 1);
+  text-decoration: none;
+}
+
+.button--secondary:hover:not([disabled]),
+.button--secondary:focus:not([disabled]) {
+  color: #fff;
+  text-decoration: none;
+  background: #333;
+}
+
+.button--secondary:active:not([disabled]) {
+  background: #000;
+}
+
+.button--text {
+  line-height: 1.5;
+  padding: 0;
+  color: #000;
+  font-size: .8125rem;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.button--text:hover,
+.button--text:focus {
+  text-decoration: none;
+  background-color: #fff123;
+}
+
+/*------------------------------------*\
+  > User Menu
+\*------------------------------------*/
+
+.bcksp-popup__user-menu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.bcksp-popup__user-menu-button {
+  word-break: break-word;
+  border-radius: 0;
+  height: 100%;
+}
+
+.bcksp-popup__user-menu-item + .bcksp-popup__user-menu-item {
+  border-left: 1px solid #fff;
+}
+
+/*------------------------------------*\
+  > Goal
+\*------------------------------------*/
+
+.bcksp-popup__goal {
+  margin-bottom: 10px;
+}
+
+/*------------------------------------*\
+  > Counter
+\*------------------------------------*/
+
+.bcksp-popup__counter {
+  height: 9px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.bcksp-popup__counter-foreground {
+  background: #fff123;
+  height: 100%;
+}
+
+/*------------------------------------*\
+  > Extension-link
+\*------------------------------------*/
+
+.bcksp-popup__extension-link {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.button--extension-link {
+  border-radius: 0;
+  width: 100%;
+  text-align: center;
+}

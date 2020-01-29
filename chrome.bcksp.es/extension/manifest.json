@@ -1,33 +1,40 @@
 {
   "manifest_version": 2,
   "name": "bcksp.es",
-  "version": "2.0.0.2",
+  "version": "2.0.1.0",
   "description": "We archive the text you erase.",
   "author" : "Vincent Evrard",
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["dist/content.js"]
+      "js": ["dist/content.js"],
+      "all_frames": true
     }
   ],
+  "icons": { 
+    "48": "images/48.ExtIcon_Loggedin_Whitelisted.png",
+    "128": "images/128.ExtIcon_Loggedin_Whitelisted.png"
+  },
   "browser_action": {
     "browser_style": true,
     "default_icon": {
-      "19": "images/19.standby.png",
-      "38": "images/38.standby.png",
-      "48": "images/48.standby.png",
-      "128": "images/128.standby.png"
+      "19": "images/19.ExtIcon_Loggedin_Whitelisted.png",
+      "38": "images/38.ExtIcon_Loggedin_Whitelisted.png",
+      "48": "images/48.ExtIcon_Loggedin_Whitelisted.png",
+      "128": "images/128.ExtIcon_Loggedin_Whitelisted.png"
     },
-    "default_title": "bcksp.es",
-    "default_popup": "popup.html"
+    "default_title": "bcksp.es"
   },
   "background": {
     "scripts": ["dist/background.js"]
   },
+  "web_accessible_resources": [
+    "popup.html",
+    "theme/*"
+  ],
   "permissions": [
     "tabs",
     "activeTab",
-    "webRequest",
     "http://*/*",
     "https://*/*",
     "storage"

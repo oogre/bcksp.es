@@ -2,33 +2,49 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 15:37:26
-  @Last Modified time: 2019-03-03 14:23:33
+  @Last Modified time: 2020-01-27 00:42:12
 \*----------------------------------------*/
-import React, { Component } from 'react';
-import T from './../../i18n/index.js';
+import React, { useEffect, useState } from 'react';
+import SelfWritten from "./../shared/selfwritten.js";
 
-import SelfWrittenTemplate from "./../template/selfwritten.js";
-
-export default class BannerBaseline extends Component {
-	constructor(props){
-		super(props);
-	}
+const BannerBaseline = ({isConnected}) => {
 	
-	render() {
-		return (
-			<div className="punchline">
-				<div className="container">
-					<h1>
-						{ 	!this.props.isConnected &&
-								<SelfWrittenTemplate text={i18n.__("offline.baseline")}/>
-						}
-						{
-							this.props.isConnected &&
-								_.sample(i18n.__("online.baseline"))
-						}
+	const [ locale, setLocale ] = useState(i18n.getLocale());
+	useEffect(() => {//componentDidMount
+		i18n.onChangeLocale(setLocale);
+		return () => {//componentWillUnmount
+			i18n.offChangeLocale(setLocale);
+		}
+	}, []); 
+
+	//const T = i18n.createComponent();
+	const T2 = i18n.createTranslator("baseline");
+
+	return (
+		<div className="punchline">
+			<div className="container">	
+				{ 	
+					!isConnected &&
+					<h1 className="punchline__title" >
+						<SelfWritten text={ Object.values(T2("offline.baseline")) } />
 					</h1>
-				</div>
+					
+				}
+				{
+					isConnected &&
+						<h1 className="page__title">
+							{ _.sample(Object.values(T2("online.baseline"))) }
+						</h1>
+				}
 			</div>
-		);
-	}
+		</div>
+	);
+	
 }
+
+export default BannerBaseline;
+/*
+
+
+
+				*/

@@ -6,26 +6,29 @@
 // ---------------------
 
 // Button Default
-@mixin button-default($color) {
+@mixin button-default($color-background, $text-color) {
   display: inline-block;
-  background-color: $color;
-  color: $color-body;
+  background-color: $color-background;
+  color: $text-color;
   padding: $size-8 $size-18 $size-6;
   text-transform: uppercase;
   font-family: $font-title;
   font-size: $size-16;
   transition: background .2s $easeInOutCubic;
+  text-decoration: none;
+  line-height: 1.0625;
 
   // Hover, focus, active interactions
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
-    color: inherit;
+    color: $text-color;
+    outline: none;
     text-decoration: none;
-    background: darken($color, 10%);
+    background: lighten($color-background, 20%);
   }
 
   &:active:not([disabled]) {
-    background: darken($color, 15%);
+    background: lighten($color-background, 25%);
   }
 }
 
@@ -38,7 +41,7 @@
   // Hover, focus, active interactions
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
-    outline-color: $color-primary;
+    outline-color: $primary;
   }
 }
 
@@ -53,5 +56,13 @@
 }
 
 .button--primary {
-  @include button-default($primary);
+  @include button-default($primary, $color-body);
+}
+
+.button--secondary {
+  @include button-default(#000, #fff);
+}
+
+.button--unstyled {
+  @include button-unstyled();
 }
