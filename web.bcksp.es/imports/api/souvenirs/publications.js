@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-22 15:42:36
-  @Last Modified time: 2020-01-29 12:05:14
+  @Last Modified time: 2020-01-29 19:14:27
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Souvenirs, Orders } from './souvenirs.js';
@@ -10,7 +10,7 @@ import { checkUserLoggedIn, checkUserRole } from './../../utilities/validation.j
 
 if(Meteor.isServer){
 
-	Meteor.publish("souvenir.get.poster", (id) => {
+	Meteor.publish("souvenir.get.poster", function(id) {
 		checkUserLoggedIn();
 		return Souvenirs.find({ 
 				_id : id,
@@ -22,12 +22,12 @@ if(Meteor.isServer){
 			});
 	});
 
-	Meteor.publish("souvenir.get.book", (id) => {
+	Meteor.publish("souvenir.get.book", function(id) {
 		checkUserLoggedIn();
 		return Souvenirs.find({ 
 				_id : id,
 				type : Souvenirs.Type.BOOK,
-				owner : Meteor.userId()
+				owner : this.userId
 			}, {
 				fields : {
 					
@@ -35,7 +35,7 @@ if(Meteor.isServer){
 			});
 	});
 
-	Meteor.publishComposite('order.get', (id)=> {
+	Meteor.publishComposite('order.get', function(id) {
 		checkUserLoggedIn();
 		return {
 			find: function () {
@@ -51,7 +51,7 @@ if(Meteor.isServer){
 		}
 	});
 
-	Meteor.publishComposite('order.all', ()=> {
+	Meteor.publishComposite('order.all', function() {
 		checkUserLoggedIn();
 		checkUserRole("admin");
 		return {

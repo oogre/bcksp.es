@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-01-29 12:58:35
+  @Last Modified time: 2020-01-29 19:12:26
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
@@ -40,7 +40,7 @@ Meteor.publish('archive.private', function () {
 	checkUserLoggedIn();
 	let archiveCursor = Archives.find({ 
 		type : Archives.Type.PRIVATE,
-		owner : Meteor.userId()
+		owner : this.userId
 	});
 	let archive = archiveCursor.fetch()[0];
 	ArchiveTools.readAsync(archive._id)
@@ -77,7 +77,7 @@ Meteor.publish("archive.private.counter", function () {
 	checkUserLoggedIn();
 	return Archives.find({ 
 			type : Archives.Type.PRIVATE,
-			owner : Meteor.userId()
+			owner : this.userId
 		}, {
 			fields : {
 				count : 1,

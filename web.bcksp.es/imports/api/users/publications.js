@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:29
-  @Last Modified time: 2020-01-29 18:59:09
+  @Last Modified time: 2020-01-29 19:12:02
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random'
@@ -25,7 +25,7 @@ if(Meteor.isServer){
 
 	Meteor.publish('user.language', function() {
 		checkUserLoggedIn();
-		return Meteor.users.find(Meteor.userId(), {
+		return Meteor.users.find(this.userId, {
 			fields : {
 				lang : true
 			}
