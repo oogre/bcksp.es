@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-01-26 21:12:42
+  @Last Modified time: 2020-01-30 12:41:36
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -227,7 +227,7 @@ i18n.addTranslation('fr', "about", {
 						"de votre archive en objet d'art, nous sommes donc financé par invitation payante "+
 						"à exposer ces œuvres et par la ventes de celle-ci en tant qu'objet d'art."
 			},{
-				subtitle:"subsides et donnations",
+				subtitle:"subsides et donations",
 				text :  "De plus bcksp.es peut-être financé également au travers de dont ou de subsides. "+
 						"Nous avons d'ores et déjà bénéficié d'un subside de 3.000€ via la Commision "+
 						"des Arts Numériques de la Fédération Wallonie-Bruxelles."

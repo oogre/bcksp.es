@@ -2,46 +2,46 @@
   bcksp.es - emails.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2020-01-29 01:28:54
+  @Last Modified time: 2020-01-30 13:01:04
 \*----------------------------------------*/
 
 i18n.addTranslation('en', "email", {
 	posterConfirm : {
-		subject : "votre commande d'un poster bcksp.es",
+		subject : "your order for a bcksp.es poster",
 		content : 
-			"Bonjour et merci.<br/>"+
-			"Voici l'identifiant de votre commande : {$orderID}<br/>"+
-			"Nous metons tout en œuvre pour que celle-ci soit<br/>"+
-			"produite dans les meilleurs délais.<br/>"
+			"Hello and thank you.<br/>"+
+			"Here is the identifier of your order : {$orderID}<br/>"+
+			"We make every effort to ensure<br/>"+
+			"that it is produced as soon as possible.<br/>"
 	},
 	bookConfirm : {
-		subject : "votre commande d'un livre bcksp.es",
+		subject : "your order for a bcksp.es book",
 		content : 
-			"Bonjour et merci.<br/>"+
-			"Voici l'identifiant de votre commande : {$orderID}<br/>"+
-			"Nous metons tout en œuvre pour que celle-ci soit<br/>"+
-			"produite dans les meilleurs délais.<br/>"
+			"Hello and thank you.<br/>"+
+			"Here is the identifier of your order : {$orderID}<br/>"+
+			"We make every effort to ensure<br/>"+
+			"that it is produced as soon as possible.<br/>"
 	},
 	contactConfirm : {
-		subject : "votre demande à bien été envoyée à bcksp.es",
+		subject : "your request has been sent to bcksp.es",
 		content : 
-			"Bonjour et merci.<br/>"+
-			"Voici l'identifiant de votre demande : {$orderID}<br/>"+
-			"Nous metons tout en œuvre pour que celle-ci soit<br/>"+
-			"traitée dans les meilleurs délais.<br/>"
+			"Hello and thank you.<br/>"+
+			"Here is the identifier of your request : {$orderID}<br/>"+
+			"We make every effort to ensure<br/>"+
+			"that it is produced as soon as possible.<br/>"
 	},
 	resetPassword : {
-		subject : "Redéfinnez votre mot de passe bcksp.es",
+		subject : "Reset your bcksp.es password",
 		content : 
-			"Bonjour.<br/>"+
-			"Voici un lien pour redéfinir votre mot de passe bcksp.es : <br/>"+
+			"Hello.<br/>"+
+			"Here is a link to reset your bcksp.es password : <br/>"+
 			"{$url}<br/>"
 	},
 	verifyEmail : {
-		subject : "bcksp.es demande une confirmation de votre email",
+		subject : "bcksp.es requests confirmation of your email",
 		content : 
-			"Bonjour.<br/>"+
-			"Voici un lien pour confirmer votre adresse email : <br/>"+
+			"Hello.<br/>"+
+			"Here is a link to confirm your email address : <br/>"+
 			"{$url}<br/>"
 	}
 });

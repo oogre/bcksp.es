@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-09 16:23:58
-  @Last Modified time: 2020-01-29 19:10:47
+  @Last Modified time: 2020-01-30 13:13:32
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -22,10 +22,10 @@ if(Meteor.isServer){
 
 	Meteor.publish("devices.i18n", function(){
 		this.added('deviceI18n', 0, {
-			extension : i18n.getTranslations("extension", i18n.getLocale()) ,
-			errors : i18n.getTranslations("errors", i18n.getLocale()),
-			userprofile : i18n.getTranslations("userprofile", i18n.getLocale()),
-			forms : i18n.getTranslations("forms", i18n.getLocale()),
+			extension : i18n.getTranslations("extension", "en") ,
+			errors : i18n.getTranslations("errors", "en"),
+			userprofile : i18n.getTranslations("userprofile", "en"),
+			forms : i18n.getTranslations("forms", "en"),
 		});
 		this.ready();
 		this.onStop(() => {});
@@ -38,10 +38,10 @@ if(Meteor.isServer){
 		let handle = Meteor.users.find({ _id : this.userId }).observeChanges({
 			added(id, user){
 				self.added('deviceI18n', 0, {
-					extension : i18n.getTranslations("extension", user.lang || "fr") ,
-					errors : i18n.getTranslations("errors", user.lang || "fr"),
-					userprofile : i18n.getTranslations("userprofile", user.lang || "fr"),
-					forms : i18n.getTranslations("forms", user.lang || "fr"),
+					extension : i18n.getTranslations("extension", user.lang || "en") ,
+					errors : i18n.getTranslations("errors", user.lang || "en"),
+					userprofile : i18n.getTranslations("userprofile", user.lang || "en"),
+					forms : i18n.getTranslations("forms", user.lang || "en"),
 				});	
 				self.ready();
 			},

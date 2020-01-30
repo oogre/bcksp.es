@@ -2,7 +2,7 @@
   bcksp.es - forms.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:33:40
-  @Last Modified time: 2020-01-26 21:14:37
+  @Last Modified time: 2020-01-30 13:06:36
 \*----------------------------------------*/
 i18n.addTranslation('fr', "forms", {
 	logout : {
@@ -50,7 +50,7 @@ i18n.addTranslation('fr', "forms", {
 		},
 		confirmation : {
 			title : "Merci!",
-			content : "Votre message à été envoyé"
+			content : "Votre message a été envoyé"
 		}
 	}
 });

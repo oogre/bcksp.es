@@ -2,7 +2,7 @@
   bcksp.es - userprofile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:32:25
-  @Last Modified time: 2020-01-27 10:17:01
+  @Last Modified time: 2020-01-30 13:06:38
 \*----------------------------------------*/
 i18n.addTranslation('fr', "userprofile", {
 	title: "mon profile",
@@ -12,7 +12,7 @@ i18n.addTranslation('fr', "userprofile", {
 			title : "publier vos suppressions dans l'archive publique",
 			inactiveLabel : "non",
 			activeLabel : "oui",
-			desc : "L'archive publique est annonyme, seul vous n'igniorez pas ce que vous y avez publié.</br>"+
+			desc : "L'archive publique est anonyme, seul vous n'ignorez pas ce que vous y avez publié.</br>"+
 					"Cette archive ne contient qu'au maximum les {$maxCounter} derniers caractères archivés.",
 			confirmation : {
 				active : {
@@ -51,7 +51,7 @@ i18n.addTranslation('fr', "userprofile", {
 			title : "aucun site web privé",
 			desc :  "Cliquez sur l'icone <img rel=\"icon\" src=\"/images/favicons/favicon-16x16.png\"> dans votre browser toolbar </br>"+
 					"pour signaler à «bcksp.es» de ne pas archiver </br>"+
-					"de vos ratrues sur le site affiché."
+					"vos ratrues sur le site affiché."
 		},
 		blindfield : {
 			type : {
@@ -72,8 +72,8 @@ i18n.addTranslation('fr', "userprofile", {
 					content : "le champ : ({$field}) a été ajouté aux champs inaccessible par bcksp.es"	
 				},
 				remove : {
-					title : "Ajout d'un champ accessible",
-					content : "le champ : ({$field}) a été ajouté aux champs accessible par bcksp.es"	
+					title : "Retrait d'un champ accessible",
+					content : "le champ : ({$field}) a été retiré des champs accessible par bcksp.es"	
 				}
 			}
 		},

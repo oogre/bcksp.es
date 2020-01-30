@@ -2,7 +2,7 @@
   bcksp.es - emails.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2020-01-26 21:14:06
+  @Last Modified time: 2020-01-30 13:06:39
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "email", {
@@ -12,7 +12,7 @@ i18n.addTranslation('fr', "email", {
 		content : 
 			"Bonjour et merci.<br/>"+
 			"Voici l'identifiant de votre commande : {$orderID}<br/>"+
-			"Nous metons tout en œuvre pour que celle-ci soit<br/>"+
+			"Nous mettons tout en œuvre pour que celle-ci soit<br/>"+
 			"produite dans les meilleurs délais.<br/>"
 	},
 	bookConfirm : {

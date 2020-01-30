@@ -2,7 +2,7 @@
   bcksp.es - logout.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:30:14
-  @Last Modified time: 2020-01-26 22:02:04
+  @Last Modified time: 2020-01-30 13:15:20
 \*----------------------------------------*/
 
 import React, { Component } from 'react';
@@ -54,7 +54,7 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<div className="bcksp-popup__body-footer">
-					{/*<T.p text={{ key : "forms.signup.title" }}/>*/}
+					{<T.p text={{ key : "forms.signup.title" }}/>}
 					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "signup")}>
 						<T.span text={{ key : "forms.signup.button" }}/>
 					</button>
@@ -67,7 +67,7 @@ export default class LoginMenu extends Component {
 		return(
 			<li>
 				<div className="bcksp-popup__body-footer">
-					{/*<T.p text={{ key : "forms.resetPassword.title" }}/>*/}
+					{<T.p text={{ key : "forms.resetPassword.title" }}/>}
 					<button className="button button--text" onClick={this.handleProcessSwitchTo.bind(this, "forgotPwd")}>
 						<T.span text={{ key : "forms.resetPassword.button" }}/>
 					</button>
