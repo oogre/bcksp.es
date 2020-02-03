@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-01-29 19:03:41
+  @Last Modified time: 2020-01-30 16:06:46
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -152,4 +152,48 @@ export async function incrementPublicArchiveCounter(length){
 			updatedAt : new Date()
 		}
 	});
+}
+
+export async function publishSampleToPublicArchive({lang="en"}){
+	return new Promise((resolve, reject) => { // GET RANDOM TEXT FROM WIKI 
+		HTTP.call(
+			"GET",
+			"https://"+lang+".wikipedia.org/w/api.php", 
+			{
+				params : {
+					action:"query",
+					generator:"random",
+					prop:"extracts",
+					exchars:"500",
+					format:"json"
+				}
+			},
+			(error, {data}) => {
+				if(error)return reject(error);
+				return resolve(data);
+			}
+		)
+	})
+	.then(data => { // EXTRACT THE TEXT FROM DATA 
+		const pages = data?.query?.pages;
+		if(!pages)throw false;
+		return pages[Object.keys(pages)]?.extract;
+	})
+	.then(content => { // CLEAN THE TEXT 
+		content = content.replace(/\.\.\./ig, '');
+		content = content.replace(/(<([^>]+)>)/ig, '');
+		content = content.replace(/\n/ig, ' ');
+		if(_.isEmpty(content.trim()))throw false;
+		return content;
+	})
+	.then(content => { // SELECT THE TEXT 
+		const length = Math.floor(Math.random() * Math.min(content.length, 1 + Math.random() * 20));
+		const startAt = Math.floor(Math.random() * (content.length-length));
+		content = content.substr(startAt, length);
+		if(_.isEmpty(content.trim()))throw false;
+		content += " ";
+		return content;
+	})
+	.then(publishToPublicArchive) // PUBLISH THE TEXT 
+	.catch(error => error && console.log(error));
 }

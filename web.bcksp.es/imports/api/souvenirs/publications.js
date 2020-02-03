@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-22 15:42:36
-  @Last Modified time: 2020-01-29 19:14:27
+  @Last Modified time: 2020-01-31 12:53:45
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Souvenirs, Orders } from './souvenirs.js';
@@ -11,7 +11,7 @@ import { checkUserLoggedIn, checkUserRole } from './../../utilities/validation.j
 if(Meteor.isServer){
 
 	Meteor.publish("souvenir.get.poster", function(id) {
-		checkUserLoggedIn();
+		//checkUserLoggedIn();
 		return Souvenirs.find({ 
 				_id : id,
 				type : Souvenirs.Type.POSTER
