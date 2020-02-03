@@ -2,7 +2,7 @@
   bcksp.es - youtubeEmbed.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-27 15:38:20
-  @Last Modified time: 2020-01-28 22:33:27
+  @Last Modified time: 2020-02-02 23:06:14
 \*----------------------------------------*/
 import React from 'react';
 

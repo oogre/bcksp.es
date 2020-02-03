@@ -2,23 +2,14 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2020-01-28 23:29:54
+  @Last Modified time: 2020-01-31 12:26:08
 \*----------------------------------------*/
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // App component - represents the whole app
 const AboutArtists = () => {
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	useEffect(() => {//componentDidMount
-		i18n.onChangeLocale(setLocale);
-		return () => {//componentWillUnmount
-			i18n.offChangeLocale(setLocale);
-		}
-	}, []); 
-
-	const T = i18n.createComponent("artists");
 	const T2 = i18n.createTranslator("artists");
-
+	const T = i18n.createComponent(T2);
 	return (
 		<div className="artists">
 			<div className="container">
@@ -37,16 +28,20 @@ const AboutArtists = () => {
 							Object.values(T2("list")).map((artist, k) =>(
 								<li className="artist" key={k} >
 									<h3 className="artist__name">{artist.name}</h3>
-									<p className="artist__description" dangerouslySetInnerHTML={{__html: artist.bio}} ></p>
+									<p className="artist__description">
+										<T>
+											{"list."+k+".bio"}
+										</T>
+									</p>
 									<ul className="artist__social-list">
 										{
 											artist.links && 
-												Object.values(artist.links).map((link, k) =>(
-													<li className="artist__social-list-item" key={k} >
+												Object.values(artist.links).map((link, k2) =>(
+													<li className="artist__social-list-item" key={k2} >
 														<a className="artist__social-link" href={link}>
 															<img alt="" src="/images/icons/icon-globe.svg"/>
 															<div className="sr-only">
-																{link}
+																<T>{"list."+k+".links."+k2}</T>
 															</div>
 														</a>
 													</li>

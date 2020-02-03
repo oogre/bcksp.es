@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 15:37:26
-  @Last Modified time: 2020-01-27 00:42:12
+  @Last Modified time: 2020-02-02 20:15:38
 \*----------------------------------------*/
 import React, { useEffect, useState } from 'react';
 import SelfWritten from "./../shared/selfwritten.js";
@@ -17,18 +17,18 @@ const BannerBaseline = ({isConnected}) => {
 		}
 	}, []); 
 
-	//const T = i18n.createComponent();
+	
 	const T2 = i18n.createTranslator("baseline");
-
+	const T = i18n.createComponent(T2);
+	
 	return (
 		<div className="punchline">
 			<div className="container">	
 				{ 	
 					!isConnected &&
 					<h1 className="punchline__title" >
-						<SelfWritten text={ Object.values(T2("offline.baseline")) } />
+						<SelfWritten textArray={ Object.values(T2("offline.baseline")) } />
 					</h1>
-					
 				}
 				{
 					isConnected &&

@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2020-01-27 11:16:52
+  @Last Modified time: 2020-02-02 23:20:24
 \*----------------------------------------*/
 import React, { useState, useEffect } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -44,15 +44,19 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 		return "";
 	}
 
-	const toggleLangMenu = () => {
+	const toggleLangMenu = event => {
+		event.preventDefault();
 		setLangMenu(!langMenu);
+		return false;
 	}
 
 	const closeLangMenu = () =>{
 		setLangMenu(false);
 	}
 
-	const setLangHandler = lang => {
+	const setLangHandler = event => {
+		event.preventDefault();
+		const lang = event.target.getAttribute("data-lang");
 		i18n.setLocale(lang);
 		closeLangMenu();
 		if(Meteor.userId()){
@@ -61,6 +65,7 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 				successHandler(res);
 			});
 		}
+		return false;
 	}
 
 	return (
@@ -126,7 +131,7 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 								{
 									i18n.getLanguages().map((code, k) => (
 										<li key={k}>
-											<a 	className="menu__item-link" href="#" onClick={()=>setLangHandler(code)}>
+											<a 	className="menu__item-link" href="#" data-lang={code} onClick={setLangHandler}>
 												{i18n.getLanguageNativeName(code)}
 											</a>
 										</li>

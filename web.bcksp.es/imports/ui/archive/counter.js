@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2020-01-27 01:50:10
+  @Last Modified time: 2020-01-31 12:33:43
 \*----------------------------------------*/
 
 
@@ -24,8 +24,9 @@ const ArchiveCounter = ({handle, archive, isReady}) => {
 		}
 	}, []); 
 
-	const T = i18n.createComponent("archive");
 	const T2 = i18n.createTranslator("archive");
+	const T = i18n.createComponent(T2);
+	
 
 	const getCharCount = () => {
 		if(!archive || !isReady)return 0 ;

@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-01-29 13:21:49
+  @Last Modified time: 2020-01-31 12:59:19
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -25,8 +25,9 @@ const SouvenirItemBookCreation = () => {
 	const [ locale, setLocale ] = useState(i18n.getLocale());
 	const [ loading, setLoading ] = useState(false);
 	const { register, watch, handleSubmit, errors, setError} = useForm();
-  	const T = i18n.createComponent("souvenir.item.book");
   	const T2 = i18n.createTranslator("souvenir.item.book");
+  	const T = i18n.createComponent(T2);
+  	
   	const Terror = i18n.createTranslator("errors");
   	const author = watch("author", T2("form.author.placeholder"));
   	

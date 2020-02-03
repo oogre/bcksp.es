@@ -2,16 +2,15 @@
   bcksp.es - callToConnect.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 19:41:50
-  @Last Modified time: 2020-01-28 21:18:17
+  @Last Modified time: 2020-01-31 12:48:48
 \*----------------------------------------*/
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
 const CallToConnect = ({isConnected, extensionInstalled}) => {
 	if(isConnected || !extensionInstalled) return (null);
 	
 	const T = i18n.createComponent("extension.call");
-	//const T2 = i18n.createTranslator("baseline");
 	
 	return (
 		<div className="call-to-connect">

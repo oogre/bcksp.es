@@ -10,7 +10,6 @@ let caret;
 
 const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, content}) =>  {
 	const [ loading, setLoading ] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
 	const [ selectContent , setSelectContent ] = useState("")
 	const [ position , setPosition ] = useState([-1000, -1000]);
 	const fullscreen = FlowRouter.getRouteName() == "livefeed";
@@ -104,8 +103,6 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 	}
 
 	useEffect(() => {//componentDidMount
-		i18n.onChangeLocale(setLocale);
-		
 		document.addEventListener("keydown", handleKey, true);
 		document.addEventListener("keyup", handleKey, true);
 		caret = new Caret(document.querySelector(".stream"));
@@ -113,8 +110,6 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 		caret.onCaretChange( caretChangeHandler );
 
 		return () => {//componentWillUnmount
-			i18n.offChangeLocale(setLocale);
-			
 			Meteor.clearTimeout(hideShareButtonTimer);
 			document.removeEventListener("keydown", handleKey, true);
 			document.removeEventListener("keyup", handleKey, true);
@@ -122,7 +117,6 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 	}, []);
 
 	const T = i18n.createComponent("archive");
-	const T2 = i18n.createTranslator("archive");
 
 	return (
 		<div className="liveframe">
@@ -130,7 +124,6 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 				fullscreenAvailable &&
 					<a 	href={fullscreenLink} 
 						className="liveframe__fullscreen button--unstyled" 
-						title={T2("fullscreen.tooltip")}
 					>
 						<span className="sr-only">
 							<T>fullscreen.button</T>

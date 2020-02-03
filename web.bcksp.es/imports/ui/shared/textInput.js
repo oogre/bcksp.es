@@ -2,7 +2,7 @@
   bcksp.es - textInput.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-05-19 14:49:06
-  @Last Modified time: 2020-01-25 17:49:55
+  @Last Modified time: 2020-01-31 12:57:37
 \*----------------------------------------*/
 import React from 'react';
 import FixeError from './../fixe/error.js'

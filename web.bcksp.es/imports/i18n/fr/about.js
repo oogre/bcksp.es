@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-01-30 12:41:36
+  @Last Modified time: 2020-02-02 23:14:30
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -39,6 +39,10 @@ i18n.addTranslation('fr', "about", {
 				"<a href=\"/about\">pour en savoir plus</a>",
 	long : [
 		{
+			title:{
+				value : "",
+				id : "intro"
+			},
 			content : [{
 				text:	"<p>Jusque l'invention des caratères typographiques mobiles "+
 						"et du clavier, l'écriture était exclusivement une activité de dessin. "+
@@ -146,7 +150,7 @@ i18n.addTranslation('fr', "about", {
 						"de notre sérieux. Si une faille devait être signalée, "+
 						"soyez certains qu'elle sera corrigée dans les plus brefs délais."
 			},{
-				subtitle:"chiffrement sur <br/> toute la ligne",
+				subtitle:"chiffrement sur toute la ligne",
 				text :  "Toutes les données gérée par bcksp.es sont transférées de façon chiffré "+
 						"via les protocols HTTPS et WSS. Sur nos serveurs, les archives "+
 						"sont chiffrées par l'implémentation de l'algorithme <a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES</a>, "+

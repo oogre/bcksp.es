@@ -5,6 +5,20 @@
 
 .text-block {
   margin-bottom: $size-120;
+  .masked {
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    &:before{
+      content: " ";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      background: white;
+      background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      display: block;
+    }
+  }
 }
 
 .text-block__title {
@@ -41,3 +55,4 @@
     opacity: 1;
   }
 }
+

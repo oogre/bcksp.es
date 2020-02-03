@@ -2,7 +2,7 @@
   bcksp.es - description.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:06:17
-  @Last Modified time: 2020-01-28 22:42:56
+  @Last Modified time: 2020-01-31 12:59:36
 \*----------------------------------------*/
 
 import React, {useState, useEffect} from 'react';
@@ -11,8 +11,9 @@ import React, {useState, useEffect} from 'react';
 const SouvenirItemBookDescription = () => {
 	const [ locale, setLocale ] = useState(i18n.getLocale());
 	
-	const T = i18n.createComponent("souvenir.item.book");
-  	const T2 = i18n.createTranslator("souvenir.item.book");
+	const T2 = i18n.createTranslator("souvenir.item.book");
+	const T = i18n.createComponent(T2);
+  	
   	
   	useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);

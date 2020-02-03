@@ -2,7 +2,7 @@
   bcksp.es - wrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-12 21:36:19
-  @Last Modified time: 2020-01-28 21:16:37
+  @Last Modified time: 2020-01-31 12:38:18
 \*----------------------------------------*/
 
 
@@ -37,9 +37,9 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-
-	const T = i18n.createComponent("archive");
 	const T2 = i18n.createTranslator("archive");
+	const T = i18n.createComponent(T2);
+	
 
 	return (
 		<div className={ `livestream-container ${(type ? " livestream-container--" + type : "")} ${(fullScreen ? " fullscreen" : "")} ${(isConnected ? " livestream-container--connected" : "")}` }>
