@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-01-29 12:18:40
+  @Last Modified time: 2020-02-04 12:00:12
 \*----------------------------------------*/
 
 import React, { useState } from 'react';
@@ -54,16 +54,13 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 										<T>authors</T>
 									</a>
 								</li>
+								<li className="menu__item">
+									<a className="menu__item-link" href="#" onClick={installExtension}>
+										<T>download</T>
+									</a>
+								</li>
 								{
-									!extensionInstalled &&
-										<li className="menu__item">
-											<a className="menu__item-link" href="#" onClick={installExtension}>
-												<T>download</T>
-											</a>
-										</li>
-								}
-								{
-									isConnected && extensionInstalled &&
+									isConnected &&
 										<li className="menu__item">
 											<a 	className="menu__item-link"
 												href={ FlowRouter.path("userProfile") }
@@ -73,7 +70,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 										</li>
 								}
 								{
-									isConnected && extensionInstalled &&
+									isConnected &&
 										<li className="menu__item">
 											{ loading && <FixeWait/> }
 											{ !loading && 

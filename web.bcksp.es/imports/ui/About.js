@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-02-02 23:57:41
+  @Last Modified time: 2020-02-03 21:40:47
 \*----------------------------------------*/
 
 import React, { useEffect, useState } from 'react';
@@ -78,6 +78,7 @@ const About = () => {
 										))
 									}
 									</div>
+									<hr className="field-separator" />
 								</div>
 							))
 						}

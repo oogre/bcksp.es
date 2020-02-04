@@ -7,7 +7,18 @@
   padding: $size-40 0;
   background: $primary;
   display: none;
-
+  &.success {
+    background: $functional-success;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+  }
+  &.error {
+    background: $functional-error;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+  }
   @include media-query("medium") {
     display: block;
   }

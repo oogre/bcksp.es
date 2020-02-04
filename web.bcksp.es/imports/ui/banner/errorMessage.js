@@ -2,7 +2,7 @@
   bcksp.es - errorMessage.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-19 19:16:33
-  @Last Modified time: 2020-01-29 00:50:55
+  @Last Modified time: 2020-02-03 15:59:38
 \*----------------------------------------*/
 import React, {useEffect} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -19,12 +19,7 @@ const ErrorMessage = ({error}) => {
 		Meteor.clearTimeout(timeout);
 		timeout = Meteor.setTimeout(()=>Session.set("error", false), 3000);
 		return (
-			<div className="call-to-connect" style={{
-				position: "fixed",
-				width: "100%",
-				zIndex: '10000',
-				background: "#ff0440"
-			}}>
+			<div className="call-to-connect error">
 				<div className="container--large">
 					<p className="call-to-connect__title">{error?.type}</p>
 					<p className="call-to-connect__content">{error?.value}</p>

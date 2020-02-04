@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 15:37:26
-  @Last Modified time: 2020-02-02 20:15:38
+  @Last Modified time: 2020-02-03 15:26:18
 \*----------------------------------------*/
 import React, { useEffect, useState } from 'react';
 import SelfWritten from "./../shared/selfwritten.js";
@@ -32,9 +32,10 @@ const BannerBaseline = ({isConnected}) => {
 				}
 				{
 					isConnected &&
-						<h1 className="page__title">
-							{ _.sample(Object.values(T2("online.baseline"))) }
+						<h1 className="punchline__title" >
+							<SelfWritten textArray={ Object.values(T2("online.baseline")) } />
 						</h1>
+						
 				}
 			</div>
 		</div>
