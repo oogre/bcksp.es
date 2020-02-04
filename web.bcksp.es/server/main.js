@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { setMinimumBrowserVersions } from "meteor/modern-browsers";
+//import { setMinimumBrowserVersions } from "meteor/modern-browsers";
 // CLIENT & SERVER
 import '../imports/startup/account-config.js';
 import '../imports/api/archives/archives.js';
@@ -13,18 +13,20 @@ import './api/archives/archives.js';
 import '../imports/api/books/generator.js';
 import './../imports/i18n/index.js';
 
-setMinimumBrowserVersions({
-  chrome: 45,
-  firefox: 44,
-  edge: 17,
-  ie: Infinity,
-  mobileSafari: [10, 3],
-  opera: 32,
-  safari: [11, 1],
-  electron: [0, 36],
-}, "service workers");
-
 /*
+Meteor.startup(() => {
+	setMinimumBrowserVersions({
+		chrome: 45,
+		firefox: 44,
+		edge: 17,
+		ie: Infinity,
+		mobileSafari: [10, 3],
+		opera: 32,
+		safari: [11, 1],
+		electron: [0, 36],
+	}, "service workers");
+})
+
 
 setMinimumBrowserVersions({
   chrome: 49,
