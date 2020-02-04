@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-04 12:10:11
+  @Last Modified time: 2020-02-04 23:54:15
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -26,10 +26,8 @@
   import SouvenirItemDownLoadDescription from './../imports/ui/souvenir/items/download/description.js';
   
 
-const DEVELOPPMENT = false;
 
 FlowRouter.wait();
-
 Tracker.autorun(() => {
     const subscribtion = Meteor.subscribe('getRoles');    
     const shouldInitializeRouter = subscribtion.ready() && Roles.subscription.ready() && !FlowRouter._initialized; // eslint-disable-line no-underscore-dangle
@@ -69,37 +67,29 @@ const adminRoutes = FlowRouter.group({
 
 ///////////// START BASIC ROUTES /////////////
 
-if(DEVELOPPMENT){
-	FlowRouter.route( '/', {
-		name: 'home',
-		action( params ) {
-			render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
-			setupView();
-		},
-		subscriptions( params, queryParams ) {
-		}
-	});
-}else{
-	FlowRouter.route( '/', {
-		name: 'temp',
-		action( params ) {
-			FlowRouter.go("home");
-		}
-	});
+FlowRouter.notFound = {
+    action() {
+    	FlowRouter.go("home");
+    }
+};
 
-	FlowRouter.route( '/dev', {
-		name: 'home',
-		action( params ) {
-			render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
-			setupView();
-		},
-		subscriptions( params, queryParams ) {
-			
-		}
-	});	
-}
+FlowRouter.route( '/', {
+	name: 'temp',
+	action( params ) {
+		FlowRouter.go("home");
+	}
+});
 
-
+FlowRouter.route( '/dev', {
+	name: 'home',
+	action( params ) {
+		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});	
 
 FlowRouter.route( '/livefeed', {
 	name: 'livefeed',
