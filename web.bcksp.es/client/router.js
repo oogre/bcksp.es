@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-04 23:54:15
+  @Last Modified time: 2020-02-04 23:58:05
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -34,16 +34,6 @@ Tracker.autorun(() => {
     if (shouldInitializeRouter) {
         FlowRouter.initialize();
     }
-});
-
-Tracker.autorun(()=>{
-	const current = FlowRouter.current();
-	if(	   (!Meteor.userId() && (current?.route?.group?.name == "loginRoutes" || current?.route?.group?.name == "adminRoutes") ) 
-		|| (Meteor.userId() && current?.route?.name == "login") 
-		|| (!Meteor.userId() && current?.route?.name == "logout")
-	){
-		FlowRouter.go("home");
-	}
 });
 
 const loginRoutes = FlowRouter.group({
@@ -200,6 +190,7 @@ loginRoutes.route( '/logout', {
 	name: 'logout',
 	action( params ) {
 		Meteor.logout();
+		FlowRouter.go("home");
 	}
 });
 
