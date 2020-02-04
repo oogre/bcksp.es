@@ -24,8 +24,7 @@ const conf = {
 	DEV : {
 		protocol : "http://",
 		ws_protocol : "ws://",
-		address : "local.bcksp.es:8888",
-		home : "/"
+		address : "local.bcksp.es:8888"
 	}
 };
 

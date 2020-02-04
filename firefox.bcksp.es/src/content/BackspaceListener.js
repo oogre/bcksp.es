@@ -1,11 +1,11 @@
 import Data from "./../utilities/Data.js";
 import Protocol from "./../utilities/Protocol.js";
 import { sendMessage } from './../utilities/com.js';
-import { getContent } from './../utilities/tools.js';
+import { getContent, mobileAndTabletcheck } from './../utilities/tools.js';
 import { log, info, warn, error } from './../utilities/log.js';
 import { diff, getHighlightText, getCharBeforeCaret, specialCase } from './../utilities/backspace.js';
 import { checkString, checkTarget, isAcceptable, isInputField, isEmpty } from './../utilities/validation.js';
-
+import { isString } from 'underscore';
 let bcksp;
 
 export default class BackspaceListener{
@@ -37,6 +37,7 @@ export default class BackspaceListener{
 	}
 	
 	constructor(){
+		this.oldContent = "";
 		this.elements = [];
 		log("BackspaceListener initializer");
 		
@@ -89,7 +90,44 @@ export default class BackspaceListener{
 			}
 		});
 	}
-	
+	clearOldContent(){
+		this.oldContent = undefined;
+	}
+	setupOldContent(event){
+		let target;
+		
+		if(false === (target = checkTarget(this.activeElement))){
+			warn("Error with : " + this.activeElement);
+		}
+
+		if(!isAcceptable(target)){
+			log("This field is not acceptable");
+			return true;
+		}
+
+		this.oldContent = getContent(target);
+	}
+	inputEventListener(event){
+		let target;
+		
+		if(false === (target = checkTarget(this.activeElement))){
+			warn("Error with : " + this.activeElement);
+		}
+
+		if(!isAcceptable(target)){
+			log("This field is not acceptable");
+			return true;
+		}
+
+		let content = getContent(target);
+		if(isString(content) && isString(this.oldContent)){
+			Protocol.exec("Diff", {
+				before : this.oldContent,
+				after : content
+			});
+		}
+		this.oldContent = content;		
+	}
 	keyDownListener(event){
 		if(8 !== event.keyCode)return true;
 		let target;
@@ -233,14 +271,26 @@ export default class BackspaceListener{
 	}
 	addListeners (element){
 		this.elements.push(element);
-		element.addEventListener("keydown", this.keyDownListener, true);
-		element.addEventListener("keyup", this.keyUpListener, true);	
+		if(mobileAndTabletcheck()){
+			element.addEventListener("input", this.inputEventListener, true);
+			element.addEventListener("focus", this.setupOldContent, true);
+			element.addEventListener("blur", this.clearOldContent, true);
+		}else{
+			element.addEventListener("keydown", this.keyDownListener, true);
+			element.addEventListener("keyup", this.keyUpListener, true);	
+		}
 	}
 	kill(){
 		log("BackspaceListener killer");
 		this.elements.map(element => {
-			element.removeEventListener("keydown", this.keyDownListener, true);
-			element.removeEventListener("keyup", this.keyUpListener, true);	
+			if(mobileAndTabletcheck()){
+				element.removeEventListener("change", this.inputEventListener, true);
+				element.removeEventListener("focus", this.setupOldContent, true);
+				element.removeEventListener("blur", this.clearOldContent, true);
+			}else{
+				element.removeEventListener("keydown", this.keyDownListener, true);
+				element.removeEventListener("keyup", this.keyUpListener, true);	
+			}
 		});
 	}
 }

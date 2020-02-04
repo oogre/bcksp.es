@@ -2,13 +2,14 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2019-06-07 16:57:16
+  @Last Modified time: 2020-02-04 15:59:40
 \*----------------------------------------*/
 import { jQuery } from './../utilities/jQuery.js';
 import BackspaceListener from './BackspaceListener.js';
 import { on, sendMessage } from './../utilities/com.js';
-import { togglePopup, closePopup } from './popupManager.js';
+import { runtimeGetURL } from './../utilities/browser.js';
 import { log, info, warn, error } from './../utilities/log.js';
+import { togglePopup, closePopup, createIcon, setIcon, closeIcon } from './popupManager.js';
 
 document.documentElement.setAttribute('bcksp-es-extension-installed', true);
 
@@ -49,4 +50,19 @@ on("blindfield", (data, resolve) =>{
 	resolve(true);
 });
 
-jQuery.fn.ready(BackspaceListener.start);
+on("displayIcon", ({path}, resolve) =>{
+	if(window != window.top)return;
+	setIcon(runtimeGetURL(path));
+	resolve(true);
+});
+
+on("hideIcon", (data, resolve) =>{
+	if(window != window.top)return;
+	closeIcon();
+	resolve(true);
+});
+
+jQuery.fn.ready(()=>{
+	BackspaceListener.start();
+	createIcon();
+});

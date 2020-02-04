@@ -2,13 +2,13 @@
   bcksp.es - icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:32:08
-  @Last Modified time: 2019-06-10 20:26:41
+  @Last Modified time: 2020-02-04 15:06:58
 \*----------------------------------------*/
 
 import Data from "./Data.js";
 import { isString, isObject } from './validation.js';
 import { browserActionSetIcon } from './browser.js';
-
+import { sendMessageToTab } from './com.js';
 
 export function setDefaultIcon(loggedIn){
 	if(Data.state.connected){
@@ -52,15 +52,16 @@ export function setIcon(name){
 	if(isString(icons[name])){
 		clearInterval(timers.icons);
 		timers.icons = undefined;
-		browserActionSetIcon({
-			path: icons[name]
-		});
-	}else if(isObject(icons[name])){
+		browserActionSetIcon({ path: icons[name] })
+		.catch(req => sendMessageToTab("hideIcon") );
+	}
+	else if(isObject(icons[name])){
 		clearInterval(timers.icons);
 		timers.icons = setInterval(() => {
-			browserActionSetIcon({
-				path: icons[name].anim[0]
-			});
+			
+			browserActionSetIcon({ path: icons[name].anim[0] })
+			.catch(req => sendMessageToTab("displayIcon", req) );
+
 			icons[name].anim.push(icons[name].anim.shift());
 		}, icons[name].time);
 	}

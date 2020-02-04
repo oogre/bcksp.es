@@ -2,9 +2,9 @@
   bcksp.es - browser.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:29:49
-  @Last Modified time: 2019-06-08 17:37:55
+  @Last Modified time: 2020-02-04 15:05:43
 \*----------------------------------------*/
-import { isNull, isUndefined } from 'underscore';
+import { isNull, isUndefined, isFunction } from 'underscore';
 
 export async function tabsQuery(req){
 	return browser.tabs.query(req);
@@ -45,7 +45,13 @@ export async function tabsSendMessage(id, req){
 }
 
 export async function browserActionSetIcon(req){
-	return browser.browserAction.setIcon(req);
+	if(isFunction(browser.browserAction.setIcon)){
+		return browser.browserAction.setIcon(req);	
+	}
+	return new Promise((resolve, reject) => {
+		console.log("YOUR BROWSER NOT SUPPORT browser.browserAction.setIcon");
+		return reject(req);
+	});
 }
 
 export function browserActionOnClickAddListener(req){
