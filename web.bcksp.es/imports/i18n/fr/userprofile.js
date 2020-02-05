@@ -2,7 +2,7 @@
   bcksp.es - userprofile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:32:25
-  @Last Modified time: 2020-01-30 13:06:38
+  @Last Modified time: 2020-02-05 16:13:42
 \*----------------------------------------*/
 i18n.addTranslation('fr', "userprofile", {
 	title: "mon profile",
@@ -36,6 +36,10 @@ i18n.addTranslation('fr', "userprofile", {
 			desc : "",
 			activeLabel : "whitelisted",
 			inactiveLabel : "blacklisted",
+			label : {
+				activeLabel : "Archive sur ce site : activée",
+				inactiveLabel : "Archive sur ce site : désactivée"
+			},
 			confirmation : {
 				add : {
 					title : "Ajout d'un site à la blacklist",

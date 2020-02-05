@@ -2,7 +2,7 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 01:02:18
-  @Last Modified time: 2020-01-26 22:02:42
+  @Last Modified time: 2020-02-05 16:05:54
 \*----------------------------------------*/
 import FixeWait from './fixe/wait.js';
 import React, { Component } from 'react';
@@ -54,9 +54,15 @@ export default class Blacklist extends Component {
 		return (
 			<div className="security">
 				<div className="field">
-					<span className="field__label">
-						{ this.state.currentURL } is
-					</span>
+					{
+						self.state.isBlacklisted && 
+							<T.span  className="field__label" text={{ key: "userprofile.settings.blacklist.label.inactiveLabel", url :  this.state.currentURL}}/>
+					}
+
+					{
+						!self.state.isBlacklisted && 
+							<T.span  className="field__label" text={{ key: "userprofile.settings.blacklist.label.activeLabel", url :  this.state.currentURL}}/>
+					}
 					<MyToggleButton
 						value={ self.state.isBlacklisted } onToggle={self.handleBlacklistChange.bind(self)}
 						activeLabel={ T.translate("userprofile.settings.blacklist.activeLabel") }

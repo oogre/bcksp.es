@@ -2,7 +2,7 @@
   bcksp.es - sharePopup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-05 13:57:46
-  @Last Modified time: 2020-02-05 15:21:48
+  @Last Modified time: 2020-02-05 15:44:20
 \*----------------------------------------*/
 import React from 'react';
 import ReactModal from 'react-modal';// https://reactcommunity.org/react-modal/
@@ -10,7 +10,7 @@ import {
   FacebookShareButton, FacebookIcon,
   RedditShareButton, RedditIcon,
   TwitterShareButton, TwitterIcon,
-} from "react-share";
+} from "react-share";//https://github.com/nygardk/react-share
 
 ReactModal.setAppElement('body');
 
@@ -51,28 +51,29 @@ const SharePopup = ({open, setOpen, quote}) => {
 	}
 	
 	return (
-		<div className="container">
-			<ReactModal
-				isOpen={open}
-				style={modalStyle}
-				onRequestClose={ () => setOpen(false) }
-				className="modal--tiny"
-			>
-				<div className="modal__wrapper">
-					<div className="modal__container">
-						<FacebookShareButton url="https://bcksp.es" quote={quote}>
-							<FacebookIcon size={32} round={true}/>
-						</FacebookShareButton>
-						<RedditShareButton url="https://bcksp.es"  title={quote}>
-							<RedditIcon size={32} round={true}/>
-						</RedditShareButton>
-						<TwitterShareButton url="https://bcksp.es" title={quote}>
-							<TwitterIcon size={32} round={true}/>
-						</TwitterShareButton>
-					</div>
-				</div>
-			</ReactModal>
-		</div>
+		<ReactModal
+			isOpen={open}
+			style={modalStyle}
+			onRequestClose={ () => setOpen(false) }
+		>
+			<ul>
+				<li>
+					<FacebookShareButton url="https://bcksp.es" quote={quote}>
+						<FacebookIcon size={32} round={true}/>
+					</FacebookShareButton>
+				</li>
+				<li>
+					<RedditShareButton url="https://bcksp.es"  title={quote}>
+						<RedditIcon size={32} round={true}/>
+					</RedditShareButton>
+				</li>
+				<li>
+					<TwitterShareButton url="https://bcksp.es" title={quote}>
+						<TwitterIcon size={32} round={true}/>
+					</TwitterShareButton>
+				</li>
+			</ul>
+		</ReactModal>
 	);
 }
 

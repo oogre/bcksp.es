@@ -2,7 +2,7 @@ import { Caret } from 'caret-pos';
 import React, { useState, useEffect } from 'react';
 import Tooltip from './../shared/tooltip.js';
 import { log } from './../../utilities/log.js';
-import ButtonShare from './../button/share.js';
+import ButtonShare from './../shared/shareButton.js';
 import { mobileAndTabletcheck, successHandler, errorHandler } from './../../utilities/ui.js';;
 
 let hideShareButtonTimer;
