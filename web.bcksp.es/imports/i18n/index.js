@@ -6,6 +6,6 @@ import './en.js';
 i18n.setOptions({
 	//hostUrl : process.env.ROOT_URL,
     purify: string => string,
-    //defaultLocale : config.languages.available[0]
+    defaultLocale : "fr"
 });
 
