@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-02-04 12:00:12
+  @Last Modified time: 2020-02-05 13:14:31
 \*----------------------------------------*/
 
 import React, { useState } from 'react';
@@ -87,13 +87,13 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 						<div className="column__content">
 							<ul className="menu menu--footer">
 								<li className="menu__item">
-									<a className="menu__item-link" href={FlowRouter.path("about")}>github</a>
+									<a className="menu__item-link" target="_blank" href="https://github.com/oogre/bcksp.es">github</a>
 								</li>
 								<li className="menu__item">
-									<a className="menu__item-link" href={FlowRouter.path("about")}>facebook</a>
+									<a className="menu__item-link" target="_blank" href="https://www.facebook.com/bcksp.es/">facebook</a>
 								</li>
 								<li className="menu__item">
-									<a className="menu__item-link" href={FlowRouter.path("contact", {type : "hey"})}>twitter</a>
+									<a className="menu__item-link" target="_blank" href="https://twitter.com/bckspes">twitter</a>
 								</li>
 							</ul>
 						</div>

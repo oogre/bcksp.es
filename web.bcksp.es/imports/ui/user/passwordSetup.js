@@ -2,7 +2,7 @@
   dev - enrollment.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-20 13:29:36
-  @Last Modified time: 2020-01-29 01:32:31
+  @Last Modified time: 2020-02-05 13:57:13
 \*----------------------------------------*/
 
 import ReactModal from 'react-modal';// https://reactcommunity.org/react-modal/

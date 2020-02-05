@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-04 23:58:05
+  @Last Modified time: 2020-02-05 00:05:43
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -25,8 +25,6 @@
   import SouvenirItemPosterDescription from './../imports/ui/souvenir/items/poster/description.js';
   import SouvenirItemDownLoadDescription from './../imports/ui/souvenir/items/download/description.js';
   
-
-
 FlowRouter.wait();
 Tracker.autorun(() => {
     const subscribtion = Meteor.subscribe('getRoles');    
@@ -44,7 +42,6 @@ const loginRoutes = FlowRouter.group({
 		}
 	}]
 });
-
 
 const adminRoutes = FlowRouter.group({
 	name : 'adminRoutes',
@@ -84,7 +81,7 @@ FlowRouter.route( '/dev', {
 FlowRouter.route( '/livefeed', {
 	name: 'livefeed',
 	action( params ) {
-
+		
 		render(<TemplateMini><ArchiveWrapper fullscreen={true}/></TemplateMini>, document.getElementById('render-target'));
 		setupView();
 	},

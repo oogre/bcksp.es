@@ -26,6 +26,7 @@
     "react-hook-form": "^4.4.8",
     "react-html-email": "^3.0.0",
     "react-modal": "^3.11.1",
+    "react-share": "^4.0.1",
     "react-slick": "^0.25.2",
     "react-toggle-button": "^2.2.0",
     "react-tooltip": "^3.11.2",

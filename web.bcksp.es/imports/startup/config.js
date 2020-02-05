@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-01-29 12:44:15
+  @Last Modified time: 2020-02-05 13:57:20
 \*----------------------------------------*/
 export const config = {
 	souvenir : {

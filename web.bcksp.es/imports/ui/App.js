@@ -2,9 +2,9 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-01-29 01:01:54
+  @Last Modified time: 2020-02-05 14:21:43
 \*----------------------------------------*/
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import ArchiveWrapper from './archive/wrapper.js';
 import ArchiveCounter from './archive/counter.js';
@@ -13,12 +13,16 @@ import AboutShort from './about/short.js';
 import HowtoList from './howto/list.js';
 import AboutPrivacy from './about/privacy.js';
 import SouvenirPannel from './souvenir/pannel.js';
+import SharePopup from './shared/sharePopup.js';
 // App component - represents the whole app
 
 const App = ({isConnected}) => {
-	
+	const [sharePopupOpen, setSharePopupOpen] = useState(false);
+	const quoteRef = useRef("");
+
 	const onShare = data => {
-		console.log(data);
+		setSharePopupOpen(true);
+		quoteRef.current = data;
 	}
 
 	return (
@@ -52,6 +56,7 @@ const App = ({isConnected}) => {
 				isConnected &&
 					<SouvenirPannel/>
 			}
+			<SharePopup quote={quoteRef.current} open={sharePopupOpen} setOpen={setSharePopupOpen}/>
 		</div>
 	);
 }
