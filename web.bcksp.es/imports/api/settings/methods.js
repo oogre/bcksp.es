@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2020-01-29 18:58:39
+  @Last Modified time: 2020-02-07 21:08:21
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -25,8 +25,8 @@ export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 			owner : Meteor.userId()
 		}, Settings);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.high,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -73,8 +73,8 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 			}
 		}, Settings);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.high,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -119,8 +119,8 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 			}
 		}, Settings);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.high,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -163,8 +163,8 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 			}
 		}, Settings);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.high,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -206,8 +206,8 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 			}
 		}, Settings);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.high,
 	applyOptions: {
 		noRetry: true,
 	},

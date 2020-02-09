@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-01-29 18:58:46
+  @Last Modified time: 2020-02-07 21:09:49
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import { Meteor } from 'meteor/meteor';
@@ -32,8 +32,8 @@ export const CreatePoster  = new ValidatedMethod({
 		checkNumber(data.fontSize, 'fontSize');
 		checkNumber(data.lineHeight, 'lineHeight');
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -66,8 +66,8 @@ export const CreateBook = new ValidatedMethod({
 		Souvenirs.Finishing.checkValid(data.finishing, 'finishing');
 		Souvenirs.Licence.checkValid(data.licence, 'licence');
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -111,8 +111,8 @@ export const OrderPoster = new ValidatedMethod({
 		checkString(souvenir.zip, 'souvenir.zip');
 		checkString(souvenir.country, 'souvenir.country');
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -179,8 +179,8 @@ export const OrderBook = new ValidatedMethod({
 		checkString(souvenir.zip, 'souvenir.zip');
 		checkString(souvenir.country, 'souvenir.country');
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -238,8 +238,8 @@ export const Contact = new ValidatedMethod({
 		checkString(data.subject, 'subject');
 		checkString(data.message, 'message');
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},

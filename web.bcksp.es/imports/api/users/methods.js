@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-01-29 18:58:59
+  @Last Modified time: 2020-02-07 21:11:18
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -24,8 +24,8 @@ export const UsersPing = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkValidDevice(device);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -46,8 +46,8 @@ export const GetLoginTokenUser = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkValidDevice(device);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -71,8 +71,8 @@ export const HardDisconnect = new ValidatedMethod({
 	validate() {
 		
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -109,8 +109,8 @@ export const ResetPassword = new ValidatedMethod({
 			checkValidEmail(email, true);
 		}
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -144,8 +144,8 @@ export const UpdateEmail = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkValidEmail(email, false, "email");
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -172,8 +172,8 @@ export const CreateUser = new ValidatedMethod({
 		checkValidEmail(email, false);
 		checkValidPassword(password, password);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -191,8 +191,8 @@ export const DestroyUser = new ValidatedMethod({
 	validate() {
 		checkUserLoggedIn();
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -219,8 +219,8 @@ export const Login = new ValidatedMethod({
 		checkValidEmail(email, true);
 		checkValidPassword(password);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.mid,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -249,8 +249,8 @@ export const SetUserLang = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkValidLanguage(lang);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.high,
 	applyOptions: {
 		noRetry: true,
 	},
