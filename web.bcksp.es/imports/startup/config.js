@@ -2,7 +2,7 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-02-05 13:57:20
+  @Last Modified time: 2020-02-07 21:08:52
 \*----------------------------------------*/
 export const config = {
 	souvenir : {
@@ -46,17 +46,17 @@ export const config = {
 	},
 	methods : {
 		rateLimit : {
-			slow : {
+			low : {
 				numRequests: 1,
-				timeInterval: 60000,
+				timeInterval: 10000,
 			},
-			fast : {
-				numRequests: 1,
+			mid : {
+				numRequests: 2,
 				timeInterval: 5000,
 			},
-			superFast : {
-				numRequests: 5,
-				timeInterval: 5000,
+			high : {
+				numRequests: 3,
+				timeInterval: 1000,
 			}
 		}
 	},

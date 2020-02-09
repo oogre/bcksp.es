@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-01-29 19:12:26
+  @Last Modified time: 2020-02-07 22:26:04
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
@@ -11,7 +11,7 @@ import { Archives, PrivateArchive } from '../../../imports/api/archives/archives
 import { checkUserLoggedIn, checkUserRole } from './../../../imports/utilities/validation.js';
 
 Meteor.publish("archive.public", function () {
-	let archive = Archives.findOne({ 
+	return Archives.find({ 
 		type : Archives.Type.PUBLIC,
 		owner : {
 			$exists: false
@@ -19,19 +19,10 @@ Meteor.publish("archive.public", function () {
 	}, {
 		fields : {
 			_id : true, 
-			type : true
+			type : true,
+			longBuffer : true
 		}
 	});
-
-	__Public_Archive_ID__ = archive._id;
-
-	ArchiveTools.readAsync(archive._id)
-	.then(content => {
-		archive.content = content;
-		this.added('archives', archive._id, archive);
-		this.ready();
-	})
-	this.onStop(() => { } );
 });
 
 

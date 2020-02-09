@@ -2,7 +2,7 @@
   bcksp.es - publicArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:24:29
-  @Last Modified time: 2020-01-28 21:13:28
+  @Last Modified time: 2020-02-07 22:25:54
 \*----------------------------------------*/
 
 import LiveFrame from './LiveFrame.js';
@@ -13,21 +13,10 @@ import { Archives } from './../../api/archives/archives.js';
 
 const PublicArchiveWrapper = ({handle, isReady, archive, ...other}) => {
 	if(!isReady)return (null);
-	const [publicStreamedContent, setPublicStreamedContent] = useState("");
-	archive.content = publicStreamedContent + archive.content;
-	useEffect(() => {//componentDidMount
-		streamer.on('publicBackspaces', message => {
-			setPublicStreamedContent(message.content + publicStreamedContent);
-		});
-		return () => {//componentWillUnmount
-			streamer.stop("publicBackspaces");
-			handle.stop();
-		}
-	}, []); 
 	return (
 		<LiveFrame	
 			public={ true }
-			content={ archive.content }
+			content={ archive.longBuffer }
 			{ ...other }
 		/>
 	)

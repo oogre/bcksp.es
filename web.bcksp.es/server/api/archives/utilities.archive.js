@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-01-30 16:06:46
+  @Last Modified time: 2020-02-07 22:40:09
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -11,6 +11,7 @@ import { streamer } from './../../../imports/api/streamer.js';
 import { config } from './../../../imports/startup/config.js';
 import { Archives } from './../../../imports/api/archives/archives.js';
 
+//https://code.google.com/archive/p/crypto-js/
 let fsExtra = Npm.require('fs-extra');
 const fs = require('fs');
 
@@ -134,66 +135,39 @@ export async function publishToPrivateArchive(content){
 }
 
 export async function publishToPublicArchive(content){
-	streamer.emit('publicBackspaces', {content : content});
-	let longBuffer = await readAsync(__Public_Archive_ID__);
+	let publicArchive = Archives.findOne({
+		type : Archives.Type.PUBLIC,
+		owner : {
+			$exists: false
+		}
+	}, {
+		fields : {
+			longBuffer : true
+		}
+	});
+	let longBuffer = ""
+	if(!publicArchive.longBuffer){
+		longBuffer = await readAsync(publicArchive._id);
+		longBuffer = content + longBuffer;
+		longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxMaxLen);
+	}else{
+		longBuffer = publicArchive.longBuffer;
+	}
 	longBuffer = content + longBuffer;
 	longBuffer = longBuffer.substr(0, config.archives.public.longBuffer.maxMaxLen);
-	return writeAsync(__Public_Archive_ID__, longBuffer)
-}
-
-export async function incrementPublicArchiveCounter(length){
-	return Archives.update({ 
-		_id : __Public_Archive_ID__
+	
+	Archives.update({
+		type : Archives.Type.PUBLIC,
+		owner : {
+			$exists: false
+		}
 	}, {
 		$inc : {
-			count : length
+			count : content.length
 		},
-		$set : {
+		$set:{
+			longBuffer : longBuffer,
 			updatedAt : new Date()
 		}
 	});
-}
-
-export async function publishSampleToPublicArchive({lang="en"}){
-	return new Promise((resolve, reject) => { // GET RANDOM TEXT FROM WIKI 
-		HTTP.call(
-			"GET",
-			"https://"+lang+".wikipedia.org/w/api.php", 
-			{
-				params : {
-					action:"query",
-					generator:"random",
-					prop:"extracts",
-					exchars:"500",
-					format:"json"
-				}
-			},
-			(error, {data}) => {
-				if(error)return reject(error);
-				return resolve(data);
-			}
-		)
-	})
-	.then(data => { // EXTRACT THE TEXT FROM DATA 
-		const pages = data?.query?.pages;
-		if(!pages)throw false;
-		return pages[Object.keys(pages)]?.extract;
-	})
-	.then(content => { // CLEAN THE TEXT 
-		content = content.replace(/\.\.\./ig, '');
-		content = content.replace(/(<([^>]+)>)/ig, '');
-		content = content.replace(/\n/ig, ' ');
-		if(_.isEmpty(content.trim()))throw false;
-		return content;
-	})
-	.then(content => { // SELECT THE TEXT 
-		const length = Math.floor(Math.random() * Math.min(content.length, 1 + Math.random() * 20));
-		const startAt = Math.floor(Math.random() * (content.length-length));
-		content = content.substr(startAt, length);
-		if(_.isEmpty(content.trim()))throw false;
-		content += " ";
-		return content;
-	})
-	.then(publishToPublicArchive) // PUBLISH THE TEXT 
-	.catch(error => error && console.log(error));
 }

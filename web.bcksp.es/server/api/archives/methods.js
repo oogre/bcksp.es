@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-01-29 19:02:28
+  @Last Modified time: 2020-02-07 22:17:56
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 
@@ -25,8 +25,8 @@ export const ArchiveAdd = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkString(text);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.mid,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -41,14 +41,11 @@ export const ArchiveAdd = new ValidatedMethod({
 				publishToPublicFeed : 1
 			}
 		});
+		if(mySettings.publishToPublicFeed){
+			ArchiveTools.publishToPublicArchive(text);
+		}
 
 		ArchiveTools.publishToPrivateArchive(text)
-		.then(()=>{
-			if(mySettings.publishToPublicFeed){
-				ArchiveTools.publishToPublicArchive(text);
-			}
-			ArchiveTools.incrementPublicArchiveCounter(text.length);
-		})
 		.catch(err=>console.log(err));
 		return "YES";
 	}
@@ -63,8 +60,8 @@ export const ArchiveClear = new ValidatedMethod({
 			owner : Meteor.userId()
 		}, Archives);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -92,8 +89,8 @@ export const ArchiveDownload = new ValidatedMethod({
 	validate() {
 		checkUserLoggedIn();
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
@@ -144,8 +141,8 @@ export const ArchiveEdit = new ValidatedMethod({
 		checkString(text);
 		checkGreaterThan(stopAt, startAt);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.superFast,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.mid,
 	applyOptions: {
 		noRetry: true,
 	},
