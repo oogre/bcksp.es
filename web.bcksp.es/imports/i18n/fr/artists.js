@@ -2,7 +2,7 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:35:25
-  @Last Modified time: 2020-02-03 14:23:55
+  @Last Modified time: 2020-02-10 14:38:53
 \*----------------------------------------*/
 i18n.addTranslation('fr', "artists", {
 	title : "auteurs",
@@ -37,15 +37,30 @@ i18n.addTranslation('fr', "artists", {
 				"/images/photos/arnaud.A.1.jpg",
 				"/images/photos/arnaud.B.1.jpg",
 		],
-		bio : 	"",
-		links : ["http://crucifixarnaud.com/"]
+		bio : 	"<p>Arnaud rêve d'une cabane dans les bois. "+
+				"En attendant, il transforme (presque toutes) "+
+				"ses obsessions en sites web : "+
+				"TAWCT (<a href='http://tawct.eu' target='_blank'>tawct.eu</a>) | "+
+				"Rap World Map (<a href='https://rapworldmap.com' target='_blank'>rapworldmap.com</a>)</p>"+
+				"<p>Le jour, il est frontend web developer, ce qui revient à construire de jolies "+
+				"carrosseries sur les mécaniques internautiques.</p>",
+		links : ["http://crucifixarnaud.com/", "http://tawct.eu", "https://rapworldmap.com"]
 	}, {
 		name : "Angélique Vecray",
 		pic : [
 				"/images/photos/angelique.A.1.jpg",
 				"/images/photos/angelique.C.1.jpg",
 		],
-		bio : 	"",
-		links : ["http://lumin.be/"]
+		bio : 	"<p>La photographe belge Angélique Vecray photographie sa vie, ses temps forts et ses voyages en argentique et en numérique. "+
+				"L’identité singulière de ses images, aux flous subtils et au contraste présent aborde souvent des réflexions en amont. "+
+				"Des perceptions altérées de la réalité à la plasticité du langage, elle donne à voir mais ne montre pas.</p>"+
+				"<p>Angélique Vecray vit et travaille à Bruxelles. "+
+				"Sa profession est axée sur la photographie et la communication. "+
+				"Elle est titulaire d’un Baccalauréat en arts plastiques, visuels et de l’espace orientation photographie délivré par l’ESA Saint Luc (Liège) en 2010. "+
+				"Elle navigue entre projets personnels, collaborations et projets professionnels.</p>",
+		links : [
+				"http://lumin.be/",
+				"http://www.instagram.com/angeliquevecray", 
+				"http://www.instagram.com/lescadavresexquis"]
 	}]
 });
