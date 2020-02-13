@@ -2,7 +2,7 @@
   web.bitRepublic - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:39
-  @Last Modified time: 2020-02-07 22:28:19
+  @Last Modified time: 2020-02-11 18:43:23
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';
@@ -22,7 +22,8 @@ Meteor.startup(() => {
 	if(!publicArchive) {
 		Archives.insert({
 			type : Archives.Type.PUBLIC,
-			count : 0
+			count : -1,
+			longBuffer : ""
 		});
 		log(">>> INSERT PUBLIC ARCHIVE");
 	}

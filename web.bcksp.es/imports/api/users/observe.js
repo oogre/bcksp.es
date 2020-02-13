@@ -2,7 +2,7 @@
   bcksp.es - observe.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-26 18:46:15
-  @Last Modified time: 2020-02-07 22:25:26
+  @Last Modified time: 2020-02-11 18:53:22
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -21,7 +21,8 @@ if(Meteor.isServer){
 					updatedAt : new Date(),
 					type : Archives.Type.PRIVATE,
 					owner : id,
-					count : 0
+					blocks : [],
+					count : -1
 				});
 				log(">>> USER PRIVATE ARCHIVE CREATED");
 
@@ -29,7 +30,6 @@ if(Meteor.isServer){
 					_id : id
 				}, {
 					$set : {
-						archive : archiveId,
 						updatedAt : new Date(),
 					}
 				});

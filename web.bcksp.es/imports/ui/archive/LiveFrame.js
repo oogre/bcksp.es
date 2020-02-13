@@ -1,19 +1,24 @@
 import { Caret } from 'caret-pos';
-import React, { useState, useEffect } from 'react';
-import Tooltip from './../shared/tooltip.js';
+import React, { useState, useEffect, useRef } from 'react';
 import { log } from './../../utilities/log.js';
 import ButtonShare from './../shared/shareButton.js';
 import { mobileAndTabletcheck, successHandler, errorHandler } from './../../utilities/ui.js';;
 
-let hideShareButtonTimer;
-let caret;
-
-const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, content}) =>  {
+const LiveFrame = ({reset=()=>{}, onSelect, onShare, public, fullscreenAvailable = true, content, blocks}) =>  {
 	const [ loading, setLoading ] = useState(false);
 	const [ selectContent , setSelectContent ] = useState("")
 	const [ position , setPosition ] = useState([-1000, -1000]);
 	const fullscreen = FlowRouter.getRouteName() == "livefeed";
 	const fullscreenLink = FlowRouter.path(fullscreen ? "home" : "livefeed");
+	const hideShareButtonTimerRef = useRef();
+	const blocksRef = useRef(blocks);
+	const caretRef = useRef();
+	
+	blocksRef.current = blocks;
+
+	if(_.isArray(blocks)){
+		content = _.pluck(blocks, 'content').join(" ")	
+	}
 
 	const handleArchiveEdit = data => {
 		if(loading)return;
@@ -21,10 +26,42 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 		Meteor.call("Archives.methods.edit", data, (error, res)=> {
 			setLoading(false);
 			if(errorHandler(error))return;
-			successHandler(res)
+			successHandler(res);
+			reset();
 		});
 	}
-	
+	const getBlockRepresentation = ({text, startAt, stopAt}) => {
+		let selectedBlocks = [];
+		let charCounter = 0;
+		for(let block of blocksRef.current){
+			let charCounterInBlock = 0
+			while(charCounterInBlock < block.content.length && charCounter < stopAt){
+				if(charCounter >= startAt && charCounter < stopAt ){
+					let currentBlock = _.findWhere(selectedBlocks, {_id : block._id});
+					if(!currentBlock){
+						selectedBlocks.push({
+							_id : block._id,
+							startAt : charCounterInBlock,
+							count : 1,
+							text : block.content.charAt(charCounterInBlock),
+							expend : function(){
+								this.text+=block.content.charAt(this.startAt+this.count);
+								this.count++;
+							}
+						});
+					}else{
+						currentBlock.expend();
+					}
+				}
+				charCounterInBlock ++;
+				charCounter++
+			}
+			charCounter++;//inc for th space inserted between blocks
+			if(charCounter > stopAt) break;
+		}
+		selectedBlocks = selectedBlocks.map(selectedBlock => _.omit(selectedBlock, "expend"));
+		return selectedBlocks;
+	}
 	const caretChangeHandler = event => {
 		let content = event.selectedText || "";
 		if(_.isFunction(onSelect)){
@@ -33,7 +70,7 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 		setSelectContent(content);
 
 		if(content != ""){
-			Meteor.clearTimeout(hideShareButtonTimer);
+			Meteor.clearTimeout(hideShareButtonTimerRef.current);
 			let offset = event.caret.getOffset();
 			offset.top -= document.querySelector(".livestream-container").offsetTop;
 			offset.left -= document.querySelector(".livestream").offsetLeft
@@ -42,15 +79,12 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 			hideShareButton();
 		}
 	}
-
 	const hideShareButton = () => {
-		hideShareButtonTimer = Meteor.setTimeout(()=>{
+		hideShareButtonTimerRef.current = Meteor.setTimeout(()=>{
 			setSelectContent("");
 			setPosition([-1000, -1000]);
 		}, 333)
 	}
-
-
 	const handleKey = event => {
 		if(	   event.keyCode == 27 // ESC
 			&& fullscreen
@@ -77,16 +111,18 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 				&& !event.altKey
 				&& !event.ctrlKey
 			){ 
-				let text = caret.getSelectedText()
+				event.preventDefault();
+				let text = caretRef.current.getSelectedText();
 				if(text){
-					event.preventDefault();
-					handleArchiveEdit({
-						text : text,
-						startAt : caret.startAt,
-						stopAt : caret.stopAt
-					});
-					return true;
+					handleArchiveEdit(
+						getBlockRepresentation({
+							text : text,
+							startAt : caretRef.current.startAt,
+							stopAt : caretRef.current.stopAt
+						})
+					);
 				}
+				return false;
 			}
 			switch(event.keyCode){
 				case 37 : // LEFT
@@ -105,12 +141,12 @@ const LiveFrame = ({onSelect, onShare, public, fullscreenAvailable = true, conte
 	useEffect(() => {//componentDidMount
 		document.addEventListener("keydown", handleKey, true);
 		document.addEventListener("keyup", handleKey, true);
-		caret = new Caret(document.querySelector(".stream"));
-		caret.onCaretOff( hideShareButton );
-		caret.onCaretChange( caretChangeHandler );
+		caretRef.current = new Caret(document.querySelector(".stream"));
+		caretRef.current.onCaretOff( hideShareButton );
+		caretRef.current.onCaretChange( caretChangeHandler );
 
 		return () => {//componentWillUnmount
-			Meteor.clearTimeout(hideShareButtonTimer);
+			Meteor.clearTimeout(hideShareButtonTimerRef.current);
 			document.removeEventListener("keydown", handleKey, true);
 			document.removeEventListener("keyup", handleKey, true);
 		}
