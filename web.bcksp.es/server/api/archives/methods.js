@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-02-15 22:35:54
+  @Last Modified time: 2020-02-16 00:35:04
 \*----------------------------------------*/
 import { Blocks } from './archives.js';
 import { Meteor } from 'meteor/meteor';
@@ -15,7 +15,7 @@ import {
 } from './../../../imports/utilities/validation.js';
 import { log } from './../../../imports/utilities/log.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { genSecurizedBlock, cleanInput, oldies } from './utilities.archive.js';
+import { genSecurizedBlock, cleanInput } from './utilities.archive.js';
 import { config } from './../../../imports/startup/config.js';
 import { Archives } from './../../../imports/api/archives/archives.js';
 import { Settings } from './../../../imports/api/settings/settings.js';
@@ -30,8 +30,8 @@ export const ArchiveAdd = new ValidatedMethod({
 		checkUserLoggedIn();
 		checkString(text);
 	},
-	//mixins: [RateLimiterMixin],
-	//rateLimit: config.methods.rateLimit.mid,
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.mid,
 	applyOptions: {
 		noRetry: true,
 	},
