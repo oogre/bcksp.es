@@ -2,9 +2,11 @@
   bcksp.es - wrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-12 21:36:19
-  @Last Modified time: 2020-02-11 17:53:13
+  @Last Modified time: 2020-02-14 11:23:21
 \*----------------------------------------*/
 
+
+import LiveFrame from './LiveFrame.js';
 
 import React, { useEffect, useState } from 'react';
 import Tooltip from './../shared/tooltip.js';
@@ -58,11 +60,11 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 					</Dropdown>
 					{
 						flux == Archives.Type.PUBLIC && 
-							<PublicArchiveWrapper {...other} /> 
+							<PublicArchiveWrapper {...other} Renderer={LiveFrame}/> 
 					}
 					{
 						flux == Archives.Type.PRIVATE && isConnected && 
-							<PrivateArchiveWrapper {...other} /> 
+							<PrivateArchiveWrapper {...other} Renderer={LiveFrame}/> 
 					}
 				</div>
 

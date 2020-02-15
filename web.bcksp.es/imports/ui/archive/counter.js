@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2020-01-31 12:33:43
+  @Last Modified time: 2020-02-14 11:17:29
 \*----------------------------------------*/
 
 
@@ -29,11 +29,11 @@ const ArchiveCounter = ({handle, archive, isReady}) => {
 	
 
 	const getCharCount = () => {
-		if(!archive || !isReady)return 0 ;
+		if(!archive || !isReady || archive.count < 0)return 0 ;
 		return archive.count;
 	}
 	const getPerCent = () => {
-		if(!archive || !isReady)return 0;
+		if(!archive || !isReady || archive.count < 0)return 0;
 		return (getCharCount() / config.book.getMaxChar()) * 100 ;
 	}
 	const getJaugeTooltipText = () => {

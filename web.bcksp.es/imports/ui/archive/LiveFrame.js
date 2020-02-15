@@ -1,198 +1,49 @@
 import { Caret } from 'caret-pos';
 import React, { useState, useEffect, useRef } from 'react';
 import { log } from './../../utilities/log.js';
-import ButtonShare from './../shared/shareButton.js';
-import { mobileAndTabletcheck, successHandler, errorHandler } from './../../utilities/ui.js';;
+import { isVisible } from './../../utilities/ui.js';
 
-const LiveFrame = ({reset=()=>{}, onSelect, onShare, public, fullscreenAvailable = true, content, blocks}) =>  {
-	const [ loading, setLoading ] = useState(false);
-	const [ selectContent , setSelectContent ] = useState("")
-	const [ position , setPosition ] = useState([-1000, -1000]);
-	const fullscreen = FlowRouter.getRouteName() == "livefeed";
-	const fullscreenLink = FlowRouter.path(fullscreen ? "home" : "livefeed");
-	const hideShareButtonTimerRef = useRef();
+import { mobileAndTabletcheck, successHandler, errorHandler } from './../../utilities/ui.js';;
+import ArchiveEditor from "./LiveFramePlugins/editor.js";
+import ArchiveShare from "./LiveFramePlugins/share.js";
+import ArchiveLoadMore from "./LiveFramePlugins/loadMore.js";
+import ArchiveFullscreen from "./LiveFramePlugins/fullscreen.js";
+
+const LiveFrame = ({reload, seeMore, onSelect, onShare, fullscreenAvailable = true, content, blocks, blockMaxLength=1}) =>  {
+	
 	const blocksRef = useRef(blocks);
 	const caretRef = useRef();
-	
+
+	const getCarret = () => caretRef.current ;
+	const getBlocks = () => blocksRef.current ;
+
 	blocksRef.current = blocks;
-
-	if(_.isArray(blocks)){
-		content = _.pluck(blocks, 'content').join(" ")	
-	}
-
-	const handleArchiveEdit = data => {
-		if(loading)return;
-		setLoading(true);
-		Meteor.call("Archives.methods.edit", data, (error, res)=> {
-			setLoading(false);
-			if(errorHandler(error))return;
-			successHandler(res);
-			reset();
-		});
-	}
-	const getBlockRepresentation = ({text, startAt, stopAt}) => {
-		let selectedBlocks = [];
-		let charCounter = 0;
-		for(let block of blocksRef.current){
-			let charCounterInBlock = 0
-			while(charCounterInBlock < block.content.length && charCounter < stopAt){
-				if(charCounter >= startAt && charCounter < stopAt ){
-					let currentBlock = _.findWhere(selectedBlocks, {_id : block._id});
-					if(!currentBlock){
-						selectedBlocks.push({
-							_id : block._id,
-							startAt : charCounterInBlock,
-							count : 1,
-							text : block.content.charAt(charCounterInBlock),
-							expend : function(){
-								this.text+=block.content.charAt(this.startAt+this.count);
-								this.count++;
-							}
-						});
-					}else{
-						currentBlock.expend();
-					}
-				}
-				charCounterInBlock ++;
-				charCounter++
-			}
-			charCounter++;//inc for th space inserted between blocks
-			if(charCounter > stopAt) break;
-		}
-		selectedBlocks = selectedBlocks.map(selectedBlock => _.omit(selectedBlock, "expend"));
-		return selectedBlocks;
-	}
-	const caretChangeHandler = event => {
-		let content = event.selectedText || "";
-		if(_.isFunction(onSelect)){
-			onSelect(content);
-		}
-		setSelectContent(content);
-
-		if(content != ""){
-			Meteor.clearTimeout(hideShareButtonTimerRef.current);
-			let offset = event.caret.getOffset();
-			offset.top -= document.querySelector(".livestream-container").offsetTop;
-			offset.left -= document.querySelector(".livestream").offsetLeft
-			setPosition([offset.left, offset.top]);
-		}else{
-			hideShareButton();
-		}
-	}
-	const hideShareButton = () => {
-		hideShareButtonTimerRef.current = Meteor.setTimeout(()=>{
-			setSelectContent("");
-			setPosition([-1000, -1000]);
-		}, 333)
-	}
-	const handleKey = event => {
-		if(	   event.keyCode == 27 // ESC
-			&& fullscreen
-		){
-			FlowRouter.go("home");
-			event.preventDefault();
-			return false;
-		}
-		if(		event.metaKey 
-			 || event.ctrlKey
-			 || event.key == "F5" // F5
-			 || event.keyCode == 9 // TAB
-		){
-			return true;
-		}
-		
-		if(public){
-			event.preventDefault();
-			return false;
-		}else{
-			if(		event.type == "keydown" 
-				&&	event.keyCode == 8 // BACKSPACE
-				&& !event.metaKey
-				&& !event.altKey
-				&& !event.ctrlKey
-			){ 
-				event.preventDefault();
-				let text = caretRef.current.getSelectedText();
-				if(text){
-					handleArchiveEdit(
-						getBlockRepresentation({
-							text : text,
-							startAt : caretRef.current.startAt,
-							stopAt : caretRef.current.stopAt
-						})
-					);
-				}
-				return false;
-			}
-			switch(event.keyCode){
-				case 37 : // LEFT
-				case 38 : // UP
-				case 39 : // RIGHT
-				case 40 : // DOWN
-					return true;
-				break;
-				default :
-					event.preventDefault();
-					return false;
-			}
-		}
-	}
-
+	
 	useEffect(() => {//componentDidMount
-		document.addEventListener("keydown", handleKey, true);
-		document.addEventListener("keyup", handleKey, true);
 		caretRef.current = new Caret(document.querySelector(".stream"));
-		caretRef.current.onCaretOff( hideShareButton );
-		caretRef.current.onCaretChange( caretChangeHandler );
-
 		return () => {//componentWillUnmount
-			Meteor.clearTimeout(hideShareButtonTimerRef.current);
-			document.removeEventListener("keydown", handleKey, true);
-			document.removeEventListener("keyup", handleKey, true);
 		}
 	}, []);
-
-	const T = i18n.createComponent("archive");
-
+	
 	return (
 		<div className="liveframe">
-			{
-				fullscreenAvailable &&
-					<a 	href={fullscreenLink} 
-						className="liveframe__fullscreen button--unstyled" 
-					>
-						<span className="sr-only">
-							<T>fullscreen.button</T>
-						</span>
-						<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg">
-							<g fill="#000" fillRule="nonzero">
-								<path d="M2 0h11.724a2 2 0 0 1 1.364 3.462L3.365 14.404A2 2 0 0 1 0 12.942V2a2 2 0 0 1 2-2zM2 39.942h11.724a2 2 0 0 0 1.364-3.462L3.365 25.538A2 2 0 0 0 0 27v10.942a2 2 0 0 0 2 2zM38.024 0H26.3a2 2 0 0 0-1.365 3.462L36.66 14.404a2 2 0 0 0 3.365-1.462V2a2 2 0 0 0-2-2zM38.024 39.942H26.3a2 2 0 0 1-1.365-3.462L36.66 25.538A2 2 0 0 1 40.024 27v10.942a2 2 0 0 1-2 2z"/><path d="M9.04 6.419L33.08 30.46l-2.12 2.121L6.918 8.54z"/>
-								<path d="M9.04 32.581L33.08 8.54l-2.12-2.121L6.918 30.46z"/>
-							</g>
-						</svg>
-						
-					</a>
-			}
-			
-			{
-				_.isFunction(onShare) &&
-					<ButtonShare 	
-						left={position[0]}
-						top={position[1]}
-						content={selectContent}
-						onShare={onShare}
-					/>
-			}
-			
-			<div className="liveframe__stream stream bcksp-es-disabled"
-				contentEditable={ !mobileAndTabletcheck() }
-				suppressContentEditableWarning={true}
-				spellCheck={false}
-			>
-				{
-					content
-				}
-			</div>
+			<ArchiveFullscreen available={fullscreenAvailable}>
+				<ArchiveShare available={_.isFunction(onShare)} caret={getCarret} onShare={onShare} onSelect={onSelect}>
+					<ArchiveEditor available={_.isFunction(reload)} caret={getCarret} blocks={getBlocks} reload={reload}>
+						<ArchiveLoadMore available={_.isFunction(seeMore) && blocksRef.current && blocksRef.current.length < blockMaxLength} seeMore={seeMore} >
+							<div className="liveframe__stream stream bcksp-es-disabled"
+								contentEditable={ (!mobileAndTabletcheck()) && _.isFunction(reload) }
+								suppressContentEditableWarning={true}
+								spellCheck={false}
+							>
+								{
+									_.isArray(blocks) ? _.pluck(blocks, 'content').join(" ") : content
+								}
+							</div>
+						</ArchiveLoadMore>
+					</ArchiveEditor>
+				</ArchiveShare>
+			</ArchiveFullscreen>
 		</div>
 	);
 }

@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-01-31 12:59:19
+  @Last Modified time: 2020-02-14 11:28:10
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -20,6 +20,10 @@ import { errorHandler } from './../../../../utilities/ui.js';
 import { CreateBook } from "./../../../../api/souvenirs/methods.js";
 import { Souvenirs } from "./../../../../api/souvenirs/souvenirs.js";
 import PrivateArchiveWrapper from './../../../archive/privateArchiveWrapper.js';
+import { intro, preface } from './../../../../api/books/intro.js';
+import ArchiveBook from './../../../archive/book.js';
+
+
 
 const SouvenirItemBookCreation = () => {
 	const [ locale, setLocale ] = useState(i18n.getLocale());
@@ -59,7 +63,7 @@ const SouvenirItemBookCreation = () => {
 				<div className="shop">
 					<form className="shop-creation" onSubmit={handleSubmit(onSubmitHandler)}>
 						<div className="shop-creation__order">
-							<PrivateArchiveWrapper raw={true} author={author}/>
+							<PrivateArchiveWrapper {...other} Renderer={ArchiveBook} author={author} intro={intro} preface={preface}/> 
 						</div>
 						<ul className="toggle-list">
 							<li>

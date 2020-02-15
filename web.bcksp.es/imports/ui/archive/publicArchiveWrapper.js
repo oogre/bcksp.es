@@ -2,20 +2,19 @@
   bcksp.es - publicArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:24:29
-  @Last Modified time: 2020-02-07 22:25:54
+  @Last Modified time: 2020-02-14 11:36:54
 \*----------------------------------------*/
 
-import LiveFrame from './LiveFrame.js';
 import React, { useState, useEffect } from 'react';
 import { streamer } from './../../api/streamer.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
 
-const PublicArchiveWrapper = ({handle, isReady, archive, ...other}) => {
+const PublicArchiveWrapper = ({ Renderer, handle, isReady, archive, ...other}) => {
 	if(!isReady)return (null);
 	return (
-		<LiveFrame	
-			public={ true }
+		<Renderer	
+			editionAvailable={false}
 			content={ archive.longBuffer }
 			{ ...other }
 		/>

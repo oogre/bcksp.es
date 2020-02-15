@@ -2,7 +2,7 @@
   web.bitRepublic - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-02-13 23:41:17
+  @Last Modified time: 2020-02-15 21:27:12
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
@@ -29,8 +29,8 @@ Meteor.publish("archive.public", function () {
 
 Meteor.publish('archive.private', function ({startAt, count, live}) {
 	checkUserLoggedIn();
+	let handle;
 	let initializing = true;
-
 	const archiveCursor = Archives.find({ 
 		type : Archives.Type.PRIVATE,
 		owner : this.userId
@@ -41,15 +41,15 @@ Meteor.publish('archive.private', function ({startAt, count, live}) {
 			owner : true,
 		}
 	});
-
 	let archive = archiveCursor.fetch().pop();
+	
 	if(!archive){
 		console.log("!archive");
 		return;
 	};
 
 	this.added('archives', archive._id, archive.populateBlocks(startAt, count));
-	let handle;
+	
 	if(live){
 		handle = archiveCursor.observeChanges({
 			changed: (id, archive) => {
@@ -62,7 +62,7 @@ Meteor.publish('archive.private', function ({startAt, count, live}) {
 						iv : true,
 					}
 				});
-				archive.blockLength = archive.blocks.length;
+				archive.blockIds = archive.blocks.map(id=>id);
 				archive.stream = [firstBlock.decrypt()];
 				archive = _.omit(archive, "blocks");
 				this.changed('archives', id, archive);
