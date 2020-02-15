@@ -2,7 +2,7 @@
   web.bitRepublic - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:39
-  @Last Modified time: 2020-02-15 23:33:52
+  @Last Modified time: 2020-02-16 00:02:02
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';
@@ -49,7 +49,7 @@ Meteor.startup(() => {
 			}
 		});
 */
-/*
+
 		let count = 0;
 		let sData = data.split(" ");
 		let blocks = sData.map(text => {
@@ -57,7 +57,7 @@ Meteor.startup(() => {
 			count+=text.length;
 			//return genSecurizedBlock(text);
 		});
-		*/
+		
 		/*
 		Archives.update({
 			_id : archive._id
