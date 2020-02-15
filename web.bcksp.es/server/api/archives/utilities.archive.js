@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-02-15 23:33:47
+  @Last Modified time: 2020-02-15 23:43:01
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -56,24 +56,18 @@ export const oldies = {
 	decrypt : (txt, name) => {
 		return CryptoJS.AES.decrypt(txt, Secrete.getKey(name)).toString(CryptoJS.enc.Utf8);
 	},
-	getArchivePath : (name) => {
-		return process.env.ARCHIVE_PATH+"/"+name+".txt";
-	},
-	fileExists : (name) => {
-		return fs.existsSync(getArchivePath(name));
-	},
 	fileDelete : async (name) =>{
-		return fsExtra.remove(getArchivePath(name));
+		return fsExtra.remove(process.env.ARCHIVE_PATH+"/"+name+".txt");
 	},
 	readAsync : async (name) => {
-		return fsExtra.readFile(getArchivePath(name), "utf8")
+		return fsExtra.readFile(process.env.ARCHIVE_PATH+"/"+name+".txt", "utf8")
 			.then( data =>{
 				return htmlDecode(decrypt(data, name))
 			});
 	},
 	readSync : (name) => {
 		try {
-			const data = fs.readFileSync(getArchivePath(name), "utf8")
+			const data = fs.readFileSync(process.env.ARCHIVE_PATH+"/"+name+".txt", "utf8")
 			return htmlDecode(decrypt(data, name))
 		} catch (err) {
 			console.error(err)
