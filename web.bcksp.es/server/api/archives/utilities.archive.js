@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-02-15 22:15:51
+  @Last Modified time: 2020-02-15 23:33:47
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -71,7 +71,7 @@ export const oldies = {
 				return htmlDecode(decrypt(data, name))
 			});
 	},
-	readSync : async (name) => {
+	readSync : (name) => {
 		try {
 			const data = fs.readFileSync(getArchivePath(name), "utf8")
 			return htmlDecode(decrypt(data, name))
