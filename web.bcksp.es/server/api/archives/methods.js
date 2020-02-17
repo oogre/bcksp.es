@@ -2,11 +2,12 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-02-16 00:35:04
+  @Last Modified time: 2020-02-16 21:11:24
 \*----------------------------------------*/
 import { Blocks } from './archives.js';
 import { Meteor } from 'meteor/meteor';
 import { 
+	checkValidDevice,
 	checkArray,
 	checkString,
 	checkGreaterThan,
@@ -26,7 +27,8 @@ String.prototype.remove = function (startIndex, count){ // remove text has to be
 
 export const ArchiveAdd = new ValidatedMethod({
 	name: 'Archives.methods.add',
-	validate({ text }) {
+	validate({ text, device }) {
+		checkValidDevice(device);
 		checkUserLoggedIn();
 		checkString(text);
 	},

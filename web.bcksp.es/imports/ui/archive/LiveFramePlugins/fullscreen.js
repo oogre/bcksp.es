@@ -2,22 +2,29 @@
   bcksp.es - fullscreen.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 18:08:36
-  @Last Modified time: 2020-02-15 19:01:23
+  @Last Modified time: 2020-02-16 15:28:21
 \*----------------------------------------*/
-import React, { useEffect } from 'react';
-import { isVisible } from './../../../utilities/ui.js';;
-
-
+import React from 'react';
 
 export default ArchiveFullscreen = ({children, available}) => {
-	if(!available) return children;
+
+	React.useEffect(() => {//componentDidMount
+		document.addEventListener("keydown", closeFullScreenHandler, true);
+		document.addEventListener("keyup", closeFullScreenHandler, true);
+		return () => {//componentWillUnmount
+			document.removeEventListener("keydown", closeFullScreenHandler, true);
+			document.removeEventListener("keyup", closeFullScreenHandler, true);
+		}
+	}, []);
 
 	const T = i18n.createComponent("archive");
-	const fullscreen = FlowRouter.getRouteName() == "livefeed";
-	
-	const handleKey = event => {
-		if(	   event.keyCode == 27 // ESC
-			&& fullscreen
+	const isFullscreenActivated = FlowRouter.getRouteName() == "livefeed";
+	const path = FlowRouter.path(isFullscreenActivated ? "home" : "livefeed");
+
+	const closeFullScreenHandler = event => {
+		if(		available
+			&& 	isFullscreenActivated
+			&&  event.keyCode == 27 // ESC
 		){
 			event.preventDefault();
 			FlowRouter.go("home");
@@ -25,19 +32,10 @@ export default ArchiveFullscreen = ({children, available}) => {
 		}
 	}
 
-	useEffect(() => {//componentDidMount
-		if(!available) return () => {}
-		document.querySelector(".bckspes-archive-fullscreen").addEventListener("keydown", handleKey, true);
-		document.querySelector(".bckspes-archive-fullscreen").addEventListener("keyup", handleKey, true);
-		return () => {//componentWillUnmount
-			document.querySelector(".bckspes-archive-fullscreen").removeEventListener("keydown", handleKey, true);
-			document.querySelector(".bckspes-archive-fullscreen").removeEventListener("keyup", handleKey, true);
-		}
-	}, []);
-
+	if(!available) return children;
 	return (
 		<div className="bckspes-archive-fullscreen">
-			<a 	href={ FlowRouter.path(fullscreen ? "home" : "livefeed") } 
+			<a 	href={ path } 
 				className="liveframe__fullscreen button--unstyled" 
 			>
 				<span className="sr-only">

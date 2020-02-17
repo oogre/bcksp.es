@@ -2,7 +2,7 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2020-02-03 14:57:16
+  @Last Modified time: 2020-02-17 13:11:52
 \*----------------------------------------*/
 import React from 'react';
 
@@ -18,7 +18,7 @@ const AboutArtists = () => {
 
 				</div>
 				<div className="artists__column">
-					<a id={T2("artists.title")} href={"#"+T2("title")} className="text-block__link--title">
+					<a id={T2("title")} href={"#"+T2("title")} className="text-block__link--title">
 						<h3 className="text-block__title artists__title">
 							<T>title</T>
 						</h3>

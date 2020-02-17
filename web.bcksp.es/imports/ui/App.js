@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-05 14:21:43
+  @Last Modified time: 2020-02-17 12:01:50
 \*----------------------------------------*/
 import React, {useState, useRef} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -39,15 +39,13 @@ const App = ({isConnected}) => {
 			{
 				<ArchiveWrapper type="home" onShare={onShare}/>
 			}
-			{
-				!isConnected &&
-				<div className="about-parallax">
-					<div id="aboutParallaxContainer" className="about-parallax__background"></div>
-						<AboutShort/>
-						<HowtoList/>
-				</div>
-			}
-
+			<div className="about-parallax">
+				<div id="aboutParallaxContainer" className="about-parallax__background"></div>
+					<AboutShort/>
+					{
+						!isConnected && <HowtoList/>
+					}
+			</div>
 			{
 				!isConnected &&
 					<AboutPrivacy/>

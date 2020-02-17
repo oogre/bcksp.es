@@ -119,6 +119,16 @@
   }
 }
 
+.about--intro .about__content ul, 
+.about__content ul {
+    list-style-type: lower-alpha;
+    padding : 0 0 0 $size-16;
+    li {
+      padding : 0 0 $size-16 $size-16;
+    }
+}
+
+
 // About Long variation
 // ---------------------
 .about--long {

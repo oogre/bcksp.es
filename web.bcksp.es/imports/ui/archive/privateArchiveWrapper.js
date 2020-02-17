@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-02-15 21:51:23
+  @Last Modified time: 2020-02-16 13:30:49
 \*----------------------------------------*/
 
 import ArchiveBook from './book.js';
@@ -49,6 +49,7 @@ const PrivateArchiveWrapper = ({Renderer, resetSubscription, seeMore, handle, ar
 	
 	return (
 		<Renderer	
+			loading={!handle.ready()}
 			blockMaxLength={ archive.blockIds.length }
 			blocks={ blocks }
 			reload={ reload }
@@ -67,11 +68,11 @@ const startAt = new ReactiveVar(0);
 export default withTracker(self => {
 	const handle = Meteor.subscribe('archive.private', { 
 		startAt : startAt.get(), 
-		count : 10, 
-		live : false
+		count : 1, 
+		live : true
 	});
 	const seeMore = () => {
-		startAt.set(startAt.get() + 10);
+		startAt.set(startAt.get() + 1);
 	};
 	const resetSubscription = () => {
 		handle.stop();

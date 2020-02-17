@@ -2,17 +2,22 @@
   bcksp.es - editor.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 16:35:54
-  @Last Modified time: 2020-02-15 21:52:17
+  @Last Modified time: 2020-02-16 15:16:54
 \*----------------------------------------*/
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { successHandler, errorHandler } from './../../../utilities/ui.js';;
 
 export default ArchiveEditor = ({reload, children, caret, blocks, available, debug=false}) => {
-	if(!available) return children;
-
-	const [ loading, setLoading ] = useState(false);
+	const [ loading, setLoading ] = React.useState(false);
 	
+	React.useEffect(() => {//componentDidMount
+		document.querySelector(".bckspes-archive-editor").addEventListener("keydown", bckspEditHandler, true);
+		return () => {//componentWillUnmount
+			document.querySelector(".bckspes-archive-editor").removeEventListener("keydown", bckspEditHandler, true);
+		}
+	}, []);
+
 	const handleArchiveEdit = data => {
 		if(loading)return;
 		setLoading(true);
@@ -60,20 +65,22 @@ export default ArchiveEditor = ({reload, children, caret, blocks, available, deb
 		return selectedBlocks;
 	}
 
-	const handleKey = event => {
-		if(		event.type == "keydown" 
+	const bckspEditHandler = event => {
+		if(		available
 			&&	event.keyCode == 8 // BACKSPACE
 			&& !event.metaKey
 			&& !event.altKey
 			&& !event.ctrlKey
 		){ 
-			event.preventDefault();
 			let text = caret().getSelectedText();
-			_.isString(text) && !_.isEmpty(text) && handleArchiveEdit({
-				text : text, 
-				startAt : caret().startAt, 
-				stopAt : caret().stopAt
-			});
+			if(_.isString(text) && !_.isEmpty(text)){
+				handleArchiveEdit({
+					text : text, 
+					startAt : caret().startAt, 
+					stopAt : caret().stopAt
+				});
+			}
+			event.preventDefault();
 			return false;
 		}
 
@@ -81,32 +88,16 @@ export default ArchiveEditor = ({reload, children, caret, blocks, available, deb
 			 || event.ctrlKey
 			 || event.key == "F5" // F5
 			 || event.keyCode == 9 // TAB
+			 || event.keyCode == 37 // LEFT
+			 || event.keyCode == 38 // UP
+			 || event.keyCode == 39 // RIGHT
+			 || event.keyCode == 40 // DOWN
 		){
 			return true;
 		}
-
-		switch(event.keyCode){
-			case 37 : // LEFT
-			case 38 : // UP
-			case 39 : // RIGHT
-			case 40 : // DOWN
-				return true;
-			break;
-			default :
-				event.preventDefault();
-				return false;
-		}
+		event.preventDefault();
+		return false;
 	}
-
-	useEffect(() => {//componentDidMount
-		document.querySelector(".bckspes-archive-editor").addEventListener("keydown", handleKey, true);
-		document.querySelector(".bckspes-archive-editor").addEventListener("keyup", handleKey, true);
-		
-		return () => {//componentWillUnmount
-			document.querySelector(".bckspes-archive-editor").removeEventListener("keydown", handleKey, true);
-			document.querySelector(".bckspes-archive-editor").removeEventListener("keyup", handleKey, true);
-		}
-	}, []);
 
 	return (
 		<div className="bckspes-archive-editor">

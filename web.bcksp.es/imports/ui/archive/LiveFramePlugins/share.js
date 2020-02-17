@@ -2,17 +2,31 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 17:16:05
-  @Last Modified time: 2020-02-15 19:04:16
+  @Last Modified time: 2020-02-16 15:21:19
 \*----------------------------------------*/
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import ButtonShare from './../../shared/shareButton.js';
 
-export default ArchiveShare = ({caret, onSelect, onShare, children, available}) => {
-	if(!available) return children;
+export default ArchiveShare = React.forwardRef( ({caret, onSelect, onShare, children, available}, ref) => {
+	
+	const hideShareButtonTimerRef = React.useRef();
+	const [ selectContent , setSelectContent ] = React.useState("")
+	const [ position , setPosition ] = React.useState([-1000, -1000]);
 
-	const hideShareButtonTimerRef = useRef();
-	const [ selectContent , setSelectContent ] = useState("")
-	const [ position , setPosition ] = useState([-1000, -1000]);
+	React.useImperativeHandle(ref, () => ({
+		setCaret: caret => {
+			if(!available) return;
+			caret.onCaretOff( hideShareButton );
+			caret.onCaretChange( caretChangeHandler );
+		}
+	}));
+
+	React.useEffect(() => {//componentDidMount
+		if(!available) return () => {}
+		return () => {//componentWillUnmount
+			Meteor.clearTimeout(hideShareButtonTimerRef.current);
+		}
+	}, []);
 
 	const caretChangeHandler = event => {
 		let content = event.selectedText || "";
@@ -39,18 +53,8 @@ export default ArchiveShare = ({caret, onSelect, onShare, children, available}) 
 		}, 333)
 	}
 
-	useEffect(() => {//componentDidMount
-		if(!available) return () => {}
-		setTimeout(()=>{
-			caret().onCaretOff( hideShareButton );
-			caret().onCaretChange( caretChangeHandler );
-		}, 100);
-		
-		return () => {//componentWillUnmount
-			Meteor.clearTimeout(hideShareButtonTimerRef.current);
-		}
-	}, []);
-
+	if(!available) return children;
+	
 	return (
 		<div className="bckspes-archive-share">
 			{
@@ -66,4 +70,4 @@ export default ArchiveShare = ({caret, onSelect, onShare, children, available}) 
 			}
 		</div>
 	);
-};
+});

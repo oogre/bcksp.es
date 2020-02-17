@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-02-05 13:14:31
+  @Last Modified time: 2020-02-17 13:54:17
 \*----------------------------------------*/
 
 import React, { useState } from 'react';
@@ -105,12 +105,12 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 							</p>
 							<ul className="menu menu--footer">
 								<li className="menu__item ">
-									<a className="menu__item-link" target="_blank" href="http://www.kunstenenerfgoed.be/">
+									<a className="menu__item-link" target="_blank" href="http://www.arts-numeriques.culture.be/">
 										fwb
 									</a>
 								</li>
 								<li className="menu__item">
-									<a className="menu__item-link " target="_blank" href="http://www.vgc.be/ondersteuning/subsidies/cultuur/subsidies-kunsten">
+									<a className="menu__item-link " target="_blank" href="https://www.patreon.com/bckspes">
 										<T>helpUs</T>
 									</a>
 								</li>

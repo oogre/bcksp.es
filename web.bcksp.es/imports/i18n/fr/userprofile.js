@@ -2,7 +2,7 @@
   bcksp.es - userprofile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:32:25
-  @Last Modified time: 2020-02-05 16:13:42
+  @Last Modified time: 2020-02-16 22:55:53
 \*----------------------------------------*/
 i18n.addTranslation('fr', "userprofile", {
 	title: "mon profile",
@@ -54,8 +54,8 @@ i18n.addTranslation('fr', "userprofile", {
 		noBlacklist : {
 			title : "aucun site web privé",
 			desc :  "Cliquez sur l'icone <img rel=\"icon\" src=\"/images/favicons/favicon-16x16.png\"> dans votre browser toolbar </br>"+
-					"pour signaler à «bcksp.es» de ne pas archiver </br>"+
-					"vos ratrues sur le site affiché."
+					"selectionnez «Blacklisted» pour signaler à «bcksp.es» de ne pas archiver </br>"+
+					"vos ratrues sur le site web courrant."
 		},
 		blindfield : {
 			type : {

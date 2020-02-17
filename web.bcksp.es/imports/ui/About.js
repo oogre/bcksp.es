@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-02-03 21:40:47
+  @Last Modified time: 2020-02-17 13:31:08
 \*----------------------------------------*/
 
 import React, { useEffect, useState } from 'react';
@@ -24,11 +24,6 @@ const About = () => {
 		}
 	}, []); 
 
-	const open = id => {
-		location.hash="#"+id;
-		Meteor.setTimeout(()=>scrollTo(id, 100), 20);
-	}
-
 	const T2 = i18n.createTranslator("about");
 	const T = i18n.createComponent(T2);
 	return (
@@ -43,7 +38,7 @@ const About = () => {
 						<YoutubeEmbed youtubeID="hGB58ybRoJU" className="container"/>
 						{
 							Object.values(T2("long")).map((article, k) => (
-								<div key={k} className="text-block" onClick={ () => open(article?.title?.id) }>
+								<div key={k} className="text-block">
 									{
 										article?.title &&
 										<a id={ article.title.id } href={"#"+article.title.id} className="text-block__link--title">
@@ -52,7 +47,6 @@ const About = () => {
 											</h3>
 										</a>
 									}
-									<div className={ k == 0 || (article?.title && ("#"+article?.title?.id) == location.hash) ? "" : " masked"}>
 									{	
 										article?.content && 
 										Object.values(article.content).map((subarticle, k2) => (
@@ -69,6 +63,9 @@ const About = () => {
 														<T 	bookMaxChar={config.book.getMaxChar()} 
 															bookMaxPage={config.book.page.count} 
 															download={FlowRouter.path("downloadArchive")}
+															money={FlowRouter.path("about")+"#money"}
+															deletion={FlowRouter.path("about")+"#deletion"}
+															souvenir={FlowRouter.path("souvenir")}
 														>
 															{"long."+k+".content."+k2+".text"}
 														</T>
@@ -77,21 +74,14 @@ const About = () => {
 											</div>
 										))
 									}
-									</div>
 									<hr className="field-separator" />
 								</div>
 							))
 						}
-						<GalleryKenBurns samplePath="/images/j.vache/j.vache.[ID].jpg" idmax={73}/>
 					</div>
 				</div>
 			</div>
-
 			<AboutArtists/>
-
-			<div className="container">
-				<AboutPress/>
-			</div>
 		</div>
 	);
 }
