@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack -w --display-error-details --progress --colors",
     "start": "web-ext run",
-    "mobile" : "web-ext run --target=firefox-android --android-device=5MG7N18928004443"
+    "mobile": "web-ext run --target=firefox-android --android-device=5MG7N18928004443"
   },
   "author": "",
   "license": "MPL-2.0",
@@ -16,8 +16,9 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
-    "react": "16.3.2",
-    "react-dom": "16.3.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hook-form": "^4.4.8",
     "web-ext": "3.2.1",
     "webpack": "3.10.0"
   },

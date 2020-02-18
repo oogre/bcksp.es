@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2020-01-29 11:57:07
+  @Last Modified time: 2020-02-15 20:55:47
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import { onLogin } from "asteroid/lib/common/login-method";
@@ -144,9 +144,9 @@ class AsteroidHelper{
 			.then(res => {
 				return res;
 			})
-			.catch(error => {
-				error(error);
-				throw error;
+			.catch(e => {
+				error(e);
+				throw e;
 			}).finally(() => {
 				setDefaultIcon(this.asteroid.loggedIn);
 			});

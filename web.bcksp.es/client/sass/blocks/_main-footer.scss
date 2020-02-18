@@ -42,7 +42,9 @@
 
 .main-footer .column {
   width: 50%;
-
+  &:nth-child(3n) {
+    margin-top: $size-20;
+  }
   @include media-query("medium") {
     // border-left: 1px dashed #000;
     padding: $size-10 $size-18;
@@ -63,12 +65,13 @@
       background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
       background-size: 0 4px, 0 4px, 4px 9px, 4px 9px;
     }
+    &:nth-child(3n) {
+      margin-top: 0;
+    }
   }
 }
 
-.main-footer .column:nth-child(3n) {
-  margin-top: $size-20;
-}
+
 
 // Menu Footer
 // ---------------------

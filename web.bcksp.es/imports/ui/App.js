@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-17 12:01:50
+  @Last Modified time: 2020-02-17 23:33:04
 \*----------------------------------------*/
 import React, {useState, useRef} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -24,9 +24,11 @@ const App = ({isConnected}) => {
 		setSharePopupOpen(true);
 		quoteRef.current = data;
 	}
+	
 
 	return (
 		<div className="page__content">
+			
 			<BannerBaseline isConnected={isConnected}/>
 			{
 				isConnected &&
@@ -55,6 +57,7 @@ const App = ({isConnected}) => {
 					<SouvenirPannel/>
 			}
 			<SharePopup quote={quoteRef.current} open={sharePopupOpen} setOpen={setSharePopupOpen}/>
+			
 		</div>
 	);
 }

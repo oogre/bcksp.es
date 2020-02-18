@@ -2,7 +2,7 @@
   bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-09 16:23:58
-  @Last Modified time: 2020-01-30 13:13:32
+  @Last Modified time: 2020-02-18 17:42:02
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -22,10 +22,10 @@ if(Meteor.isServer){
 
 	Meteor.publish("devices.i18n", function(){
 		this.added('deviceI18n', 0, {
-			extension : i18n.getTranslations("extension", "en") ,
-			errors : i18n.getTranslations("errors", "en"),
-			userprofile : i18n.getTranslations("userprofile", "en"),
-			forms : i18n.getTranslations("forms", "en"),
+			extension : i18n.getTranslations("extension", "fr") ,
+			errors : i18n.getTranslations("errors", "fr"),
+			userprofile : i18n.getTranslations("userprofile", "fr"),
+			forms : i18n.getTranslations("forms", "fr"),
 		});
 		this.ready();
 		this.onStop(() => {});

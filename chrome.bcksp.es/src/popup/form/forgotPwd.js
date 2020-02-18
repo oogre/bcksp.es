@@ -2,74 +2,70 @@
   bcksp.es - forgotPwd.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-12-26 12:47:44
-  @Last Modified time: 2020-01-26 21:43:40
+  @Last Modified time: 2020-02-18 16:55:27
 \*----------------------------------------*/
 
-import ReactDom from 'react-dom';
-import React, { Component } from 'react';
+import React from 'react';
 import FixeWait from './../fixe/wait.js';
-import MessageError from './../message/error.js';
+import { useForm } from 'react-hook-form';
+import FixeError from './../fixe/error.js';
+import { T } from './../../utilities/tools.js';
 import { sendMessage } from './../../utilities/com.js';
-import { isEmail } from './../../utilities/validation.js';
-import { handleError, T } from './../../utilities/tools.js';
+import { validation } from './../../utilities/validation.js';
 
-export default class ForgotPwdForm extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			'error' : false,
-			'is-loading' : false,
-			'has-success' : false
-		};
-	}
-	handleForgotPwd(event){
-		event.preventDefault();
-		this.setState({
-			'error' : false,
-			'is-loading' : true,
-			'has-success' : false
-		});
-		isEmail(ReactDom.findDOMNode(this.refs.email).value)
-		.then(data => sendMessage("forgotPwd", data))
-		.then(data => this.setState({'has-success' : data.message}))
-		.catch(e => this.setState({ error : handleError(e), 'has-success' : false }))
-		.finally(()=> this.setState({ 'is-loading' : false}));
+const ForgotPwdForm = ({onSuccess}) => {
+	const [loading, setLoading] = React.useState(false);
+	const { register, handleSubmit, errors, setError, watch, triggerValidation} = useForm();
+	const handleForgotPwd = data => {
+		if(loading)return;
+		setLoading(true);
+		sendMessage("forgotPwd", data)
+		.then(onSuccess)
+		.catch(error => setError("main", error.errorType, error.reason) )
+		.finally(() => setLoading(false));
+
 	}
 
-	render() {
-		return (
-	    	<form className="login-user" onSubmit={this.handleForgotPwd.bind(this)}>
-				<div>
-					<div className="field">
-						<label className="field__label" htmlFor="email">
-							<T.span text={{ key : "forms.resetPassword.email" }}/>
-						</label>
-						<input className="input--text" id="email" type = "email" ref="email" name="email"/>
-					</div>
-				</div>
+	return (
+    	<form className="login-user" onSubmit={handleSubmit(handleForgotPwd)}>
+			<div>
 				<div className="field">
+					<label className="field__label" htmlFor="email">
+						<T.span text={{ key : "forms.resetPassword.email" }}/>
+					</label>
+					<input 	className={"input--text"  + (errors && errors.email && errors.email.message ? " error" : "")}
+							id="email" 
+							type="text"
+							ref={register(validation.email())}
+							name="email"
+							autoComplete="off"
+					/>
+					{ 
+						errors && errors.email && errors.email.message && 
+						<span className="input-wrapper--inline">
+							<FixeError>{errors && errors.email && errors.email.message}</FixeError>
+						</span>
+					}
+				</div>
+			</div>
+			<div className="field">
+				{ 
+					!loading && 
 					<input 	className="button button--secondary"
 						type="submit"
 						value={T.translate("forms.resetPassword.action")}
 					/>
-				</div>
-				{
-					this.state.error &&
-					<MessageError
-						messages={this.state.error}
-					/>
 				}
-				{
-					this.state['has-success'] &&
-					<div>
-						{ this.state['has-success'] }
-					</div>
+				{ loading && <FixeWait/> }
+				{ 
+					errors && errors.main && errors.main.message && 
+					<span className="input-wrapper--inline">
+						<FixeError>{errors && errors.main && errors.main.message}</FixeError>
+					</span>
 				}
-				{
-					this.state['is-loading'] &&
-					<FixeWait/>
-				}
-			</form>
-		);
-	}
+			</div>
+			
+		</form>
+	);
 }
+export default ForgotPwdForm;

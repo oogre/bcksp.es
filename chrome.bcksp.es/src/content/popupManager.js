@@ -2,40 +2,62 @@
   bcksp.es - popupManager.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-04-17 12:28:31
-  @Last Modified time: 2019-06-06 23:05:11
+  @Last Modified time: 2020-02-04 16:40:19
 \*----------------------------------------*/
 import { runtimeGetURL } from './../utilities/browser.js';
 import { sendMessage } from './../utilities/com.js';
-
-
-let iframe;
-
+import { config } from './../shared/config.js';
 export function openPopup(){
-	iframe = document.createElement('iframe');
+	let popupIframe = document.createElement('iframe');
 	// Must be declared at web_accessible_resources in manifest.json
-	iframe.src = runtimeGetURL('popup.html');
-	iframe.name = iframe.id = "bcksp_es_frame";
-	iframe.className = "bcksp-frame";
-	iframe.style.cssText = 	"position:fixed;"+
-							"top:10px;"+
-							"right:10px;"+
-							"display:block;"+
-							"width:300px;"+
-							"height:500px;"+
-							"z-index:100000;"+
-							"border: 0;";
-	document.body.appendChild(iframe);
+	popupIframe.src = runtimeGetURL('popup.html');
+	popupIframe.name = popupIframe.id = "bcksp-es-frame";
+	popupIframe.className = "bcksp-es-frame";
+	document.body.prepend(popupIframe);
 }
 
-export function closePopup(){
-	iframe.parentNode.removeChild(iframe);
-	iframe = null;
+export function closePopup(popupIframe = document.querySelector("#bcksp-es-frame")){
+	popupIframe.parentNode.removeChild(popupIframe);
+	popupIframe = null;
 }
 
 export function togglePopup(){
-	if(iframe){
-		closePopup();
+	let popupIframe = document.querySelector("#bcksp-es-frame");
+	if(popupIframe){
+		closePopup(popupIframe);
 	}else{
 		openPopup();
 	}
+}
+
+export function createIcon(){
+	let icon = document.querySelector("#bcksp-es-activity-icon");
+	if(icon){
+		icon.parentNode.removeChild(icon);
+        icon = null;
+	}
+	icon = document.createElement('div');
+	// Must be declared at web_accessible_resources in manifest.json
+	icon.name = icon.id = "bcksp-es-activity-icon";
+	icon.className = "bcksp-es-activity-icon";
+
+	let link = document.createElement('a');
+	link.setAttribute("href", config.getHomeUrl());
+	link.innerText = "Your deletion archive is growing";
+	icon.append(link);
+	document.body.prepend(icon);
+	return icon;
+}
+
+export function closeIcon(){
+	let icon = document.querySelector("#bcksp-es-activity-icon");
+	if(!icon) icon = createIcon();
+	icon.classList.remove("open");
+}
+
+export function setIcon(path){
+	let icon = document.querySelector("#bcksp-es-activity-icon");
+	if(!icon) icon = createIcon();
+	icon.classList.add("open");
+	icon.style.backgroundImage = "url('"+path+"')";
 }

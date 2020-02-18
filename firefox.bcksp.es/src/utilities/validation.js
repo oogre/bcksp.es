@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 15:16:34
-  @Last Modified time: 2019-06-07 16:55:02
+  @Last Modified time: 2020-02-18 16:16:00
 \*----------------------------------------*/
 
 import Data from "./Data.js";
@@ -11,6 +11,38 @@ import { setDefaultIcon } from './icon.js';
 import { isString, isEmpty, isFunction, isArray } from 'underscore';
 import { getContentEditableInParent, intersection, T } from "./tools.js";
 export { isString, isEmpty, isFunction, isUndefined, isNull, isArray, isBoolean, isObject } from 'underscore';
+
+export const regexp = {
+	email : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+}
+
+export const validation = {
+	email : () => ({
+		required: {
+			message: T.translate("errors.email.required")
+		},
+		pattern: {
+			value: regexp.email,
+			message: T.translate("errors.email.not-an-email")
+		}
+	}),
+	password : () => ({
+		required: {
+			message: T.translate("errors.password.required")
+		},
+		maxLength: {
+			value : config.user.password.length.max,
+			message : T.translate("errors.password.max-string", {length : config.user.password.length.max})
+		}, 
+		minLength: {
+			value : config.user.password.length.min,
+			message : T.translate("errors.password.min-string", {length : config.user.password.length.min})
+		}
+	}),
+	passwordConfirm : getPassword => ({
+		validate: value => value === getPassword() || T.translate("errors.passwordConfirm.no-match")
+	})
+}
 
 export async function checkConnected(){
 	if(!Data.state.connected){

@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-02-17 13:54:17
+  @Last Modified time: 2020-02-18 13:30:19
 \*----------------------------------------*/
 
 import React, { useState } from 'react';
@@ -100,10 +100,10 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 					</div>
 					<div className="column">
 						<div className="column__content">
-							<p className="menu--footer__title">
-								<T>supportedBy</T>
-							</p>
 							<ul className="menu menu--footer">
+								<li className="menu__item ">
+									<T>supportedBy</T>
+								</li>
 								<li className="menu__item ">
 									<a className="menu__item-link" target="_blank" href="http://www.arts-numeriques.culture.be/">
 										fwb

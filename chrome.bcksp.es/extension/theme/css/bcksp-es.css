@@ -1,0 +1,33 @@
+/*
+* @Author: Evrard Vincent
+* @Date:   2020-02-04 15:15:56
+* @Last Modified by:   oogre
+* @Last Modified time: 2020-02-04 16:32:42
+*/
+#bcksp-es-frame {
+	position : fixed;
+	top : 10px;
+	right : 10px;
+	display : block;
+	width : 300px;
+	height : 500px;
+	z-index : 100000;
+	border : 0;
+}
+#bcksp-es-activity-icon.open {
+	height: 20px !important;
+}
+
+#bcksp-es-activity-icon {
+	transition: height 1s;
+	position: relative;
+	display: block !important;
+	background-repeat: no-repeat !important;
+	background-position-y: center !important;
+	background-position-x: calc(100% - 11px) !important;
+	overflow: hidden;
+	width: 100% !important;
+	height: 0;
+	left: 0 !important;
+	top: 0 !important;	
+}
