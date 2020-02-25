@@ -2,7 +2,7 @@
   bcksp.es - sharePopup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-05 13:57:46
-  @Last Modified time: 2020-02-05 15:44:20
+  @Last Modified time: 2020-02-20 12:15:41
 \*----------------------------------------*/
 import React from 'react';
 import ReactModal from 'react-modal';// https://reactcommunity.org/react-modal/
@@ -14,7 +14,7 @@ import {
 
 ReactModal.setAppElement('body');
 
-const SharePopup = ({open, setOpen, quote}) => {
+const SharePopup = ({closeRequested, quote}) => {
 
 	quote = "We archive your deletion : " + quote;
 
@@ -52,9 +52,9 @@ const SharePopup = ({open, setOpen, quote}) => {
 	
 	return (
 		<ReactModal
-			isOpen={open}
+			isOpen={true}
 			style={modalStyle}
-			onRequestClose={ () => setOpen(false) }
+			onRequestClose={ closeRequested }
 		>
 			<ul>
 				<li>

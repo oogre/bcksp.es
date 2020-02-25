@@ -2,7 +2,7 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2020-01-26 21:16:04
+  @Last Modified time: 2020-02-24 19:33:58
 \*----------------------------------------*/
 i18n.addTranslation('fr', "souvenir", {
 	title : 	"Rendez-vous à la boutique",
@@ -44,7 +44,7 @@ i18n.addTranslation('fr', "souvenir", {
 				continue : "valider ce livre",
 				buy : "commander votre livre"
 			},
-			price : "à partir de ... €",
+			price : "à partir de {$amount}€<br/><small>frais de port inclus</small>",
 			form : {
 				author : {
 					label : "nom de l'auteur",
@@ -96,7 +96,7 @@ i18n.addTranslation('fr', "souvenir", {
 				continue : "valider ce poster",
 				buy : "commander votre poster"
 			},
-			price : "10€",
+			price : "{$amount}€<br/><small>frais de port inclus</small>",
 			text : 	"L'effondrement, la divination,<br/>"+
 					"cet instant fragile et ténu qui<br/>"+
 					"en lui seul révèle tout de quelqu'un.<br/>"+

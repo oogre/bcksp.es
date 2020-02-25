@@ -2,7 +2,7 @@
   bcksp.es - souvenirs.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:35
-  @Last Modified time: 2020-01-29 12:36:38
+  @Last Modified time: 2020-02-24 18:58:12
 \*----------------------------------------*/
 import './methods.js';
 import './publications.js';
@@ -39,7 +39,7 @@ Souvenirs.Type = EasyEnum({
 Souvenirs.Finishing = EasyEnum({
 	BASIC : 0,
 	PREMIUM : 1,
-})
+});
 
 Souvenirs.Licence = EasyEnum({
 	OPEN_ACCESS : 0,

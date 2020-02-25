@@ -2,10 +2,9 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-02-16 13:30:49
+  @Last Modified time: 2020-02-24 23:07:53
 \*----------------------------------------*/
 
-import ArchiveBook from './book.js';
 import React, { useEffect, useRef } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';

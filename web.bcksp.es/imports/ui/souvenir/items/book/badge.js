@@ -2,7 +2,7 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:27:09
-  @Last Modified time: 2020-01-28 22:37:30
+  @Last Modified time: 2020-02-24 20:00:31
 \*----------------------------------------*/
 
 import React, { useEffect } from 'react';
@@ -38,7 +38,7 @@ const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
 					<img src="/images/souvenirs/book.png"/>
 				</Progress>
 				<span className="souvenir__link-title"><T>title</T></span>
-				<span className="souvenir__link-badge"><T>price</T></span>
+				<span className="souvenir__link-badge"><T amount={config.souvenir.book.basic.price.amount}>price</T></span>
 			</a>
 		</li>
 

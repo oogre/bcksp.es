@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-17 23:33:04
+  @Last Modified time: 2020-02-20 12:21:13
 \*----------------------------------------*/
 import React, {useState, useRef} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -14,17 +14,13 @@ import HowtoList from './howto/list.js';
 import AboutPrivacy from './about/privacy.js';
 import SouvenirPannel from './souvenir/pannel.js';
 import SharePopup from './shared/sharePopup.js';
+import ButtonShare from './shared/shareButton.js';
+
 // App component - represents the whole app
 
 const App = ({isConnected}) => {
 	const [sharePopupOpen, setSharePopupOpen] = useState(false);
-	const quoteRef = useRef("");
-
-	const onShare = data => {
-		setSharePopupOpen(true);
-		quoteRef.current = data;
-	}
-	
+	const [selection, setSelection] = useState(false);
 
 	return (
 		<div className="page__content">
@@ -39,7 +35,7 @@ const App = ({isConnected}) => {
 					</div>
 			}
 			{
-				<ArchiveWrapper type="home" onShare={onShare}/>
+				<ArchiveWrapper type="home" onSelect={setSelection}/>
 			}
 			<div className="about-parallax">
 				<div id="aboutParallaxContainer" className="about-parallax__background"></div>
@@ -56,7 +52,19 @@ const App = ({isConnected}) => {
 				isConnected &&
 					<SouvenirPannel/>
 			}
-			<SharePopup quote={quoteRef.current} open={sharePopupOpen} setOpen={setSharePopupOpen}/>
+			{
+				_.isObject(selection) && 
+					<ButtonShare 	
+						left={selection.position[0]}
+						top={selection.position[1]}
+						content={selection.content}
+						onShare={()=>setSharePopupOpen(true)}
+					/>
+			}
+			{
+				_.isObject(selection) && sharePopupOpen && 
+					<SharePopup quote={selection.content} closeRequested={()=>{setSharePopupOpen(false);setSelection(false)}}/>
+			}
 			
 		</div>
 	);

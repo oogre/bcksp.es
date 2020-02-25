@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-02-07 21:09:49
+  @Last Modified time: 2020-02-24 23:06:19
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import { Meteor } from 'meteor/meteor';
@@ -20,209 +20,152 @@ import { Souvenirs, Orders } from './souvenirs.js';
 import { config } from './../../startup/config.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 import { getMail } from './../../ui/template/mail.js';
+import paypal from '@paypal/checkout-server-sdk';
 
-
+const environment = new paypal.core.SandboxEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_SECRET);
+const client = new paypal.core.PayPalHttpClient(environment);
 
 export const CreatePoster  = new ValidatedMethod({
 	name: 'Souvenir.methods.create.poster',
-	validate(data) {
-		checkObject(data, 'data');
-		checkArray(data.shapes, 'shapes');
-		checkString(data.sentence, 'sentence');
-		checkNumber(data.fontSize, 'fontSize');
-		checkNumber(data.lineHeight, 'lineHeight');
-	},
-	mixins: [RateLimiterMixin],
-	rateLimit: config.methods.rateLimit.low,
-	applyOptions: {
-		noRetry: true,
-	},
-	run(data) {
-		if (this.isSimulation)return;
-		let itemID = Souvenirs.insert({
-			type : Souvenirs.Type.POSTER,
-			data : data,
-			createdAt : new Date(),
-			updatedAt : new Date()
-		});
-		return {
-			success : true,
-			data : itemID
-		};
-	}
-});
-
-export const CreateBook = new ValidatedMethod({
-	name: 'Souvenir.methods.create.book',
-	validate(data) {
-		checkUserLoggedIn();
-		checkObject(data, 'data');
-		try{
-			checkString(data.author, 'author');	
-		}catch(e){
-			const T2 = i18n.createTranslator("souvenir.item.book.form.author");
-			data.author = T2("placeholder");
-		}
-		Souvenirs.Finishing.checkValid(data.finishing, 'finishing');
-		Souvenirs.Licence.checkValid(data.licence, 'licence');
-	},
-	mixins: [RateLimiterMixin],
-	rateLimit: config.methods.rateLimit.low,
-	applyOptions: {
-		noRetry: true,
-	},
-	run({author, finishing, licence}) {
+	validate({order, poster}) {
+		checkObject(order, 'data');
+		checkString(order.id, 'order.id');
 		
-		if (this.isSimulation)return;
-		let itemID = Souvenirs.insert({
-			type : Souvenirs.Type.BOOK,
-			author : author,
-			licence : licence,
-			finishing : finishing,
-			owner : Meteor.userId(),
-			createdAt : new Date(),
-			updatedAt : new Date()
-		});
-		return {
-			success : true,
-			data : itemID
-		};
-	}
-});
-
-export const OrderPoster = new ValidatedMethod({
-	name: 'Souvenir.methods.order.poster',
-	validate({souvenir}) {
-		checkObject(souvenir);
-		checkString(souvenir._id);
-		checkDBReference({
-			_id : souvenir._id,
-			type : Souvenirs.Type.POSTER
-		}, Souvenirs);
-		try{
-			checkUserLoggedIn();
-			souvenir.email = getMainEmail(Meteor.user().emails);
-		}catch(e){
-			checkValidEmail(souvenir.email, false, 'souvenir.email');
-		}
-		checkString(souvenir.fullname, 'souvenir.fullname');	
-		checkString(souvenir.address, 'souvenir.address');
-		checkString(souvenir.city, 'souvenir.city');
-		checkString(souvenir.zip, 'souvenir.zip');
-		checkString(souvenir.country, 'souvenir.country');
+		checkObject(poster, 'poster');
+		checkArray(poster.shapes, 'poster.shapes');
+		checkString(poster.sentence, 'poster.sentence');
+		checkNumber(poster.fontSize, 'poster.fontSize');
+		checkNumber(poster.lineHeight, 'poster.lineHeight');
 	},
 	mixins: [RateLimiterMixin],
 	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
-	run({souvenir}) {
-		let orderID = Orders.insert({
-			souvenir : souvenir._id,
-			contact : souvenir.email,
-			delivery : {
-				fullname : souvenir.fullname,
-				address : souvenir.address,
-				city : souvenir.city,
-				zip : souvenir.zip,
-				country : souvenir.country,
-			},
-			createdAt : new Date(),
-			updatedAt : new Date(),
-			status : Orders.State.RESERVED
-		});
-		
-		if (!this.isSimulation){
+	async run({order, poster}) {
+		if (this.isSimulation)return;
+		const request = new paypal.orders.OrdersCaptureRequest(order.id);
+  		request.requestBody({});
+		return client.execute(request)
+		.then(({result})=>{
+			let itemID = Souvenirs.insert({
+				type : Souvenirs.Type.POSTER,
+				data : poster,
+				createdAt : new Date(),
+				updatedAt : new Date()
+			});
+			let orderID = Orders.insert({
+				souvenir : itemID,
+				order : {
+					payer : result.payer,
+					status : result.status,
+					shipping : result.purchase_units[0].shipping,
+					payments : result.purchase_units[0].payments.captures[0]
+				},
+				status : Orders.State.PAYED,
+				createdAt : new Date(),
+				updatedAt : new Date()
+			});
+			
 			Email.send({
 				from : process.env.MAIL_ADDRESS,
 				to : process.env.MAIL_ADDRESS,
 				subject : "[" + orderID + "] : Commande de poster", 
 				text : "", 
 			});
+			
 			Email.send({
 				from : process.env.MAIL_ADDRESS,
-				to : souvenir.email,
+				to : Meteor.user() ? getMainEmail(Meteor.user().emails) : result.payer.email_address,
 				subject : i18n.createTranslator("email.posterConfirm")("subject"), 
 				html : getMail("posterConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
 			});
-		}
-		const T2 = i18n.createTranslator("souvenir.item.poster.confirmation");
-		return {
-			success : true,
-			message : {
-				title : T2("title"),
-				content : T2("content", {orderID : orderID})
-			}
-		};
+
+			const T2 = i18n.createTranslator("souvenir.item.poster.confirmation");
+			return {
+				success : true,
+				message : {
+					title : T2("title"),
+					content : T2("content", {orderID : orderID})
+				}
+			};
+		})
+		.catch(error=>{
+			return {
+				success : false,
+				error : error
+			};
+		});
 	}
-	
 });
 
-export const OrderBook = new ValidatedMethod({
-	name: 'Souvenir.methods.order.book',
-	validate({souvenir}) {
-		checkObject(souvenir);
-		checkString(souvenir._id);
-		checkDBReference({
-			_id : souvenir._id,
-			type : Souvenirs.Type.BOOK
-		}, Souvenirs);
-		try{
-			checkUserLoggedIn();
-			souvenir.email = getMainEmail(Meteor.user().emails);
-		}catch(e){
-			checkValidEmail(souvenir.email, false, 'souvenir.email');
-		}
-		checkString(souvenir.fullname, 'souvenir.fullname');	
-		checkString(souvenir.address, 'souvenir.address');
-		checkString(souvenir.city, 'souvenir.city');
-		checkString(souvenir.zip, 'souvenir.zip');
-		checkString(souvenir.country, 'souvenir.country');
+export const CreateBook = new ValidatedMethod({
+	name: 'Souvenir.methods.create.book',
+	validate({order, book}) {
+		checkUserLoggedIn();
+		checkObject(order, 'data');
+		checkString(order.id, 'order.id');
+		checkObject(book, 'book');
+		
+		Souvenirs.Finishing.checkValid(book.finishing, 'book.finishing');
+		Souvenirs.Licence.checkValid(book.licence, 'book.licence');
 	},
 	mixins: [RateLimiterMixin],
 	rateLimit: config.methods.rateLimit.low,
 	applyOptions: {
 		noRetry: true,
 	},
-	run({souvenir}) {
-		let orderID = Orders.insert({
-			souvenir : souvenir._id,
-			contact : souvenir.email,
-			delivery : {
-				fullname : souvenir.fullname,
-				address : souvenir.address,
-				city : souvenir.city,
-				zip : souvenir.zip,
-				country : souvenir.country,
-			},
-			createdAt : new Date(),
-			updatedAt : new Date(),
-			status : Orders.State.RESERVED
-		});
-		
-		if (!this.isSimulation){
+	run({order, book}) {
+		if (this.isSimulation)return;
+		const T = i18n.createTranslator("souvenir.item.book.form.author");
+		book.author = book.author || T("placeholder");
+		const request = new paypal.orders.OrdersCaptureRequest(order.id);
+  		request.requestBody({});
+		return client.execute(request)
+		.then(({result})=>{
+			let itemID = Souvenirs.insert({
+				type : Souvenirs.Type.BOOK,
+				data : book,
+				owner : Meteor.userId(),
+				createdAt : new Date(),
+				updatedAt : new Date()
+			});
+			let orderID = Orders.insert({
+				souvenir : itemID,
+				order : {
+					payer : result.payer,
+					status : result.status,
+					shipping : result.purchase_units[0].shipping,
+					payments : result.purchase_units[0].payments.captures[0]
+				},
+				status : Orders.State.PAYED,
+				createdAt : new Date(),
+				updatedAt : new Date()
+			});
+
 			Email.send({
 				from : process.env.MAIL_ADDRESS,
 				to : process.env.MAIL_ADDRESS,
 				subject : "[" + orderID + "] : Commande de livre", 
 				text : "", 
 			});
-
+			
 			Email.send({
 				from : process.env.MAIL_ADDRESS,
-				to : souvenir.email,
+				to : getMainEmail(Meteor.user().emails),
 				subject : i18n.createTranslator("email.bookConfirm")("subject"),
 				html : getMail("bookConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
 			});
-		}
-		const T2 = i18n.createTranslator("souvenir.item.book.confirmation");
-		return {
-			success : true,
-			message : {
-				title : T2("title"),
-				content : T2("content", {orderID : orderID})
-			}
-		};
+			
+			const T2 = i18n.createTranslator("souvenir.item.book.confirmation");
+			return {
+				success : true,
+				message : {
+					title : T2("title"),
+					content : T2("content", {orderID : orderID})
+				}
+			};
+		});
 	}
 });
 

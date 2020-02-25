@@ -2,11 +2,28 @@
   web.bitRepublic - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-02-07 21:08:52
+  @Last Modified time: 2020-02-24 19:57:37
 \*----------------------------------------*/
 export const config = {
 	souvenir : {
-		almanach : false
+		almanach : false,
+		poster : {
+			price : {
+				amount : 15
+			}
+		},
+		book : {
+			basic : {
+				price : {
+					amount : 20
+				}
+			},
+			premium : {
+				price : {
+					amount : 80
+				}
+			}
+		}
 	},
 	book : {
 		page : {

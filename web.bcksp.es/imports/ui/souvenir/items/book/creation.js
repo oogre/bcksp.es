@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-02-14 11:28:10
+  @Last Modified time: 2020-02-24 23:33:40
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -11,46 +11,68 @@
   @Last Modified time: 2019-12-21 14:19:52
 \*----------------------------------------*/
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Paypal from "./../../paypal.js";
 import { useForm } from 'react-hook-form';
 import FixeWait from './../../../fixe/wait.js'
-import FixeError from './../../../fixe/error.js'
+import TextInput from './../../../shared/textInput.js';
+import GeneratorBook from './../../../generator/book.js';
+import RadioInput from './../../../shared/radioInput.js';
 import { config } from "./../../../../startup/config.js";
 import { errorHandler } from './../../../../utilities/ui.js';
+import { successHandler } from './../../../../utilities/ui.js';
 import { CreateBook } from "./../../../../api/souvenirs/methods.js";
 import { Souvenirs } from "./../../../../api/souvenirs/souvenirs.js";
 import PrivateArchiveWrapper from './../../../archive/privateArchiveWrapper.js';
 import { intro, preface } from './../../../../api/books/intro.js';
-import ArchiveBook from './../../../archive/book.js';
 
 
 
 const SouvenirItemBookCreation = () => {
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	const [ loading, setLoading ] = useState(false);
-	const { register, watch, handleSubmit, errors, setError} = useForm();
-  	const T2 = i18n.createTranslator("souvenir.item.book");
-  	const T = i18n.createComponent(T2);
-  	
-  	const Terror = i18n.createTranslator("errors");
-  	const author = watch("author", T2("form.author.placeholder"));
-  	
-  	useEffect(() => {//componentDidMount
+	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-
-	const onSubmitHandler = data => {
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const [ loading, setLoading ] = React.useState(false);
+	const values = React.useRef(false);
+	const { register, triggerValidation, watch, errors, getValues} = useForm();
+  	const T2 = i18n.createTranslator("souvenir.item.book");
+  	const T = i18n.createComponent(T2);
+  	const Terror = i18n.createTranslator("errors");
+  	const author = watch("author", T2("form.author.placeholder"));
+  	const finishing = watch("finishing", 0);
+  	const amount = config.souvenir.book[Souvenirs.Finishing.getName(finishing)].price.amount;
+	const onCreateOrder = () => {
+		values.current = getValues();
+  	}
+  	const onCancel = () => {
+		setLoading(false);
+		values.current = false;
+  	}
+  	const onError = () => {
+  		setLoading(false);
+  		values.current = false;
+  	}
+	const onApproved = ({order}) => {
 		if(loading)return;
 		setLoading(true);
-		CreateBook.call(data, (error, res) => {
+		CreateBook.call({
+			book : values.current,
+			order : {
+				...order
+			}
+		}, (error, data) => {
+			setProcessing(false);
 			setLoading(false);
-			if (errorHandler(error, setError)) return;
-			FlowRouter.go('bookOrder', {id : res.data});
+			if (errorHandler(error)) return;
+			if(successHandler(data)){
+				FlowRouter.go('home');
+			}
 		});
-  	};
+	}
 
 	return (
 		<div className="page__content">
@@ -61,155 +83,76 @@ const SouvenirItemBookCreation = () => {
 					</h1>
 				</div>
 				<div className="shop">
-					<form className="shop-creation" onSubmit={handleSubmit(onSubmitHandler)}>
-						<div className="shop-creation__order">
-							<PrivateArchiveWrapper {...other} Renderer={ArchiveBook} author={author} intro={intro} preface={preface}/> 
-						</div>
+					<form className="shop-creation">
 						<ul className="toggle-list">
 							<li>
 								<span className="input-wrapper--inline">
 									<h2 className="page__subtitle">
 										<T>form.finishing.label</T>
 									</h2>
-									
 								</span>
 							</li>
 							<li>
 								<span className="input-wrapper--inline">
-									<div className="field">
-										<label 
-											htmlFor="author"
-											className="field__label"
-										>
-											<T>form.author.label</T>
-										</label>
-										<input 
-											id="author"
-											className="input--text" 
-											type="text"
-											name="author"
-											ref={
-												register({
-													maxLength: {
-														value : config.book.page.line.char.count,
-														message : Terror("author.max-string", {length : config.book.page.line.char.count})
-													}
-												})
+									<TextInput 
+										name="author"
+										validator={register({
+														maxLength: {
+															value : config.book.page.line.char.count,
+															message : Terror("author.max-string", {length : config.book.page.line.char.count})
+														}
+													})}
+										onChange={ async () => triggerValidation("author")}
+										label={T2("form.author.label")}
+										error={errors?.author?.message}
+										defaultValue={author}
+									/>
+								</span>
+							</li>
+							<li>
+								<span className="input-wrapper--inline">
+									<RadioInput 
+										radios={Souvenirs.Finishing} 
+										labels={T2("form.finishing")} 
+										name="finishing"
+										validator={register({ 
+											required: {
+												value : true,
+												message : Terror("default.required")
 											}
-											defaultValue={author}
-										/>
-									</div>
+										})}
+										error={errors?.finishing?.message}
+									/>
 								</span>
 							</li>
-							{ 
-								errors?.author?.message && 
-								<li>
-									<span className="input-wrapper--inline">
-										<FixeError>{errors.author.message}</FixeError>
-									</span>
-								</li>
-							}
 							<li>
 								<span className="input-wrapper--inline">
-									<div className="field">
-										{
-											Souvenirs.Finishing.each((value, key) => (
-												<label 
-													key={key}
-													className="input--radio"
-													htmlFor={T2("form.finishing."+key+".label")}
-												>
-													<input 
-														className="input--radio__input" 
-														type="radio" 
-														id={T2("form.finishing."+key+".label")} 
-														name="finishing" 
-														defaultChecked={value==0}
-														ref={register({ 
-															required: {
-																value : true,
-																message : Terror("default.required")
-															}
-														})}
-														value={value}
-													/>
-													<span className="input--radio__label">
-														{T2("form.finishing."+key+".label")}
-														<div><small>{T2("form.finishing."+key+".description")}</small></div>
-													</span>
-													
-	      										</label>
-	      										
-											))
-										}
-									</div>
+									<RadioInput 
+										radios={Souvenirs.Licence} 
+										labels={T2("form.licence")} 
+										name="licence"
+										validator={register({ 
+											required: {
+												value : true,
+												message : Terror("default.required")
+											}
+										})}
+										error={errors?.licence?.message}
+									/>
 								</span>
 							</li>
-							{ 
-								errors?.finishing?.message && 
-								<li>
-									<span className="input-wrapper--inline">
-										<FixeError>{errors.finishing.message}</FixeError>
-									</span>
-								</li>
-							}
-							<li>
-								<span className="input-wrapper--inline">
-									<div className="field">
-										<label 
-											htmlFor="author"
-											className="field__label"
-										>
-											<T>form.licence.label</T>
-										</label>
-										{
-											Souvenirs.Licence.each((value, k) => (
-												<label 
-													key={k}
-													htmlFor={T2("form.licence."+k+".label")}
-													className="input--radio"
-												>
-													<input 
-														className="input--radio__input" 
-														type="radio" 
-														id={T2("form.licence."+k+".label")} 
-														name="licence" 
-														defaultChecked={value==0}
-														ref={register({ 
-															required: {
-																value : true,
-																message : Terror("default.required")
-															}
-														})}
-														value={value}
-													/>
-													<span className="input--radio__label">
-														{T2("form.licence."+k+".label")}
-														<div>
-															<small>{T2("form.licence."+k+".description")}</small>
-														</div>
-													</span>
-	      										</label>
-											))
-										}
-									</div>
-								</span>
-							</li>
-							{ 
-								errors?.licence?.message && 
-								<li>
-									<span className="input-wrapper--inline">
-										<FixeError>{errors.licence.message}</FixeError>
-									</span>
-								</li>
-							}
 							<li>
 								<span className="input-wrapper--inline">
 									{ loading && <FixeWait/>}
-									{ !loading && <input type="submit" value={T2("button.continue")} className="button button--primary"/>}
+									{ _.isEmpty(errors) && !loading &&
+										<Paypal amount={amount} onApproved={onApproved} onCreateOrder={onCreateOrder} onCancel={onCancel} onError={onError}/>
+									}
 								</span>
 							</li>
 						</ul>
+						<div className="shop-creation__order">
+							<PrivateArchiveWrapper Renderer={GeneratorBook} author={author} intro={intro} preface={preface}/> 
+						</div>
 					</form>
 				</div>
 			</div>

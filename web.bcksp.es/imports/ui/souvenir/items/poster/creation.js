@@ -2,48 +2,60 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-01-28 22:49:45
+  @Last Modified time: 2020-02-24 23:33:52
 \*----------------------------------------*/
 
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import Paypal from "./../../paypal.js";
 import FixeWait from './../../../fixe/wait.js'
-import React, { useState, useEffect } from 'react';
+import { config } from './../../../../startup/config.js';
 import ArchiveWrapper from './../../../archive/wrapper.js';
 import GeneratorPoster from './../../../generator/poster.js';
 import { errorHandler } from './../../../../utilities/ui.js';
+import { successHandler } from './../../../../utilities/ui.js';
 import { CreatePoster } from "./../../../../api/souvenirs/methods.js";
 
 
+
+
 const SouvenirItemPosterCreation  = () => {
-	const [ sentence, setSentence ] = useState(false);
-	const [ shapes, setShapes ] = useState({});
-	const [ loading, setLoading ] = useState(false);
-	const { register, watch, handleSubmit } = useForm();
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	
+	const posterGeneratorRef = React.useRef()
+	const [ loading, setLoading ] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
 	const T = i18n.createComponent("souvenir.item.poster");
   	const T2 = i18n.createTranslator("souvenir.item.poster");
-  	
-  	useEffect(() => {//componentDidMount
+  	const setSelection = (selection)=> {
+		if(!_.isEmpty(selection.content)){
+			posterGeneratorRef.current.setSentence(selection.content);	
+		}
+	};
+
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-
-	const onSubmitHandler = data => {
+  	const onCancel = () => {
+		setLoading(false);
+  	}
+  	const onError = () => {
+  		setLoading(false);
+  	}
+	const onApproved = ({order}) => {
 		if(loading)return;
 		setLoading(true);
-		let designData = JSON.parse($("[data-design-poster]").attr("data-design-poster"));
-		data.sentence = sentence;
-		data.shapes = shapes;
-		data.fontSize=designData.fontSize;
-		data.lineHeight=designData.lineHeight;
-		
-		CreatePoster.call(data, (error, res) => {
+		CreatePoster.call({
+			poster : posterGeneratorRef.current.getPosterVar(),
+			order : {
+				...order
+			}
+		}, (error, data) => {
 			setLoading(false);
 			if (errorHandler(error)) return;
-			FlowRouter.go('posterOrder', {id : res.data});
+			if(successHandler(data)){
+				FlowRouter.go('home');
+			}
 		});
 	}
 
@@ -56,21 +68,26 @@ const SouvenirItemPosterCreation  = () => {
 					</h1>
 				</div>
 				<div className="shop">
-					<form className="shop-creation" onSubmit={handleSubmit(onSubmitHandler)}>
+					<div className="shop-creation">
 						<div className="shop-creation__order">
 							<ArchiveWrapper
 								type="shop"
 								fullscreenAvailable={false}
-								onSelect={sentence=>setSentence(sentence)}
-								onLoad={sentence=>setSentence(sentence)}
+								onSelect={setSelection}
+								autoSelect={{
+									startAt : 0,
+									stopAt : 30
+								}}
 							/>
 						</div>
 						<div>
-							<GeneratorPoster sentence={sentence} onShapes={shapes=>setShapes(shapes)}/>
+							<GeneratorPoster ref={posterGeneratorRef}/>
 							{ loading && <FixeWait/> }
-							{ !loading && <input type="submit" value={T2("button.continue")} className="button button--primary"/> }
+							{ 
+								!loading && <Paypal amount={config.souvenir.poster.price.amount} onApproved={onApproved} onCancel={onCancel} onError={onError}/>
+							}
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
