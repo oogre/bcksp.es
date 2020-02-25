@@ -2,13 +2,15 @@
   bcksp.es - paypal.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-17 23:23:50
-  @Last Modified time: 2020-02-24 23:34:14
+  @Last Modified time: 2020-02-25 14:32:50
 \*----------------------------------------*/
 
 import React from 'react';
+import { GetPaypalClientID } from "./../../api/souvenirs/methods.js";
 
 const Paypal = ({amount, onCreateOrder=()=>{}, onApproved=()=>{}, onCancel=()=>{}, onError=()=>{}}) => {
-	React.useEffect(() => {//componentDidMount
+	const onPaypalLoaded = event => {
+		event?.target?.removeEventListener("load", onPaypalLoaded, false);
 		paypal.Buttons({
 			createOrder: (data, actions) => {
 				onCreateOrder();
@@ -34,8 +36,21 @@ const Paypal = ({amount, onCreateOrder=()=>{}, onApproved=()=>{}, onCancel=()=>{
 				})
 			}
 		}).render('#paypal-button-container');
-		return () => {//componentWillUnmount
-			
+	}
+
+	const injectPaypalScript = PAYPAL_CLIENT_ID => {
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = "https://www.paypal.com/sdk/js?client-id="+PAYPAL_CLIENT_ID+"&currency=EUR&debug=true";
+		document.querySelector("head").appendChild(script);
+		script.addEventListener("load", onPaypalLoaded, false);
+	}
+
+	React.useEffect(() => {//componentDidMount
+		if(!document.querySelector("script[src^='https://www.paypal.com/sdk/js?client-id=']")){
+			GetPaypalClientID.call((error, PAYPAL_CLIENT_ID)=> injectPaypalScript(PAYPAL_CLIENT_ID));	
+		}else{
+			onPaypalLoaded();
 		}
 	}, []); 
 

@@ -2,7 +2,7 @@
   web.bitRepublic - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-20 12:21:13
+  @Last Modified time: 2020-02-25 15:11:34
 \*----------------------------------------*/
 import React, {useState, useRef} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -48,10 +48,7 @@ const App = ({isConnected}) => {
 				!isConnected &&
 					<AboutPrivacy/>
 			}
-			{
-				isConnected &&
-					<SouvenirPannel/>
-			}
+			<SouvenirPannel/>
 			{
 				_.isObject(selection) && 
 					<ButtonShare 	

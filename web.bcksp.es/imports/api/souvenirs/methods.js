@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-02-24 23:06:19
+  @Last Modified time: 2020-02-25 14:00:19
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import { Meteor } from 'meteor/meteor';
@@ -24,6 +24,20 @@ import paypal from '@paypal/checkout-server-sdk';
 
 const environment = new paypal.core.SandboxEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_SECRET);
 const client = new paypal.core.PayPalHttpClient(environment);
+
+export const GetPaypalClientID  = new ValidatedMethod({
+	name: 'Souvenir.methods.getPaypalClientID',
+	validate() {},
+	mixins: [RateLimiterMixin],
+	rateLimit: config.methods.rateLimit.low,
+	applyOptions: {
+		noRetry: true,
+	},
+	run() {
+		if (this.isSimulation)return;
+		 return process.env.PAYPAL_CLIENT_ID
+	}
+});
 
 export const CreatePoster  = new ValidatedMethod({
 	name: 'Souvenir.methods.create.poster',

@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-02-17 13:30:31
+  @Last Modified time: 2020-02-25 14:38:57
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -18,28 +18,28 @@ i18n.addTranslation('fr', "about", {
 				"<p>"+
 					"<ul>"+
 						"<li>"+
-							"bcksp.es tire son nom de la touche «Backspace» du clavier informatique. "+
+							"Bcksp.es tire son nom de la touche «Backspace» du clavier informatique. "+
 							"Celle-ci est située au-dessus de la touche «Enter». Elle est utilisée "+
 							"pour effacer les derniers caractères saisis, ceux situés à gauche "+
 							"du curseur d’écriture."+
 						"</li>"+
 						"<li>"+
-							"bcksp.es archive les mots que vous supprimez en appuyant sur la touche «Backspace»."+
+							"Bcksp.es archive les mots que vous supprimez en appuyant sur la touche «Backspace»."+
 						"</li>"+
 						"<li>"+
-							"bcksp.es vous propose d'éditer <a href='{$editor}'>le livre de votre archive</a>."+
+							"Bcksp.es vous propose de <a href='{$souvenir}'>matérialiser vos ratures</a>."+
 						"</li>"+
 						"<li>"+
-							"bcksp.es organise votre archive dans l'ordre dans laquelle elle s'écrit, <a href='{$editor}'>erreur après erreur</a>."+
+							"Bcksp.es organise votre archive dans l'ordre dans laquelle elle s'écrit, <a href='{$editor}'>erreur après erreur</a>."+
 						"</li>"+
 						"<li>"+
-							"bcksp.es considére <a href='{$privacy}'>ses utilisateurs comme auteurs</a>."+
+							"Bcksp.es considére <a href='{$privacy}'>ses utilisateurs comme auteurs</a>."+
 						"</li>"+
 						"<li>"+
-							"bcksp.es <a href='{$security}'>chiffre vos données</a> sur tout le chemin et au-delà."+
+							"Bcksp.es <a href='{$security}'>chiffre vos données</a> sur toute la ligne."+
 						"</li>"+
 						"<li>"+
-							"bcksp.es est une porte vers un espace intérieur où l'erreur et le doute "+
+							"Bcksp.es est une porte vers un espace intérieur où l'erreur et le doute "+
 							"sont vêtu des aprêts d'une poésie brutaliste <a href='{$about}'>non moins dénuée de sens</a>."+
 						"</li>"+
 						"<li>"+

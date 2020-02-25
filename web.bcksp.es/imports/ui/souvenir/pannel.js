@@ -2,7 +2,7 @@
   bcksp.es - pannel.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-11 13:53:56
-  @Last Modified time: 2020-01-28 22:52:04
+  @Last Modified time: 2020-02-25 15:15:34
 \*----------------------------------------*/
 
 import React from 'react';
@@ -24,14 +24,12 @@ const SouvenirPannel = () => {
 	const T2 = i18n.createComponent("menus");
 
 	return (
-		<div className="souvenir-pannel" /*onClick={()=>FlowRouter.go("souvenir")}*/>
-			<div className="container">
+		<div className="souvenir-pannel">
+			<div className="container souvenir-pannel__container">
 				<div className="souvenir-pannel__intro">
-					<h3><T>title</T></h3>
-					<div>
-						<p>
-							<T>short</T>
-						</p>
+					<h2 className="souvenir-pannel__title"><T>title</T></h2>
+					<div className="souvenir-pannel__content">
+						<T>short</T>
 						<a className="button button--secondary" href={FlowRouter.path("souvenir")}>
 							<T2>souvenir</T2>
 						</a>
@@ -39,6 +37,8 @@ const SouvenirPannel = () => {
 				</div>
 			</div>
 			<div className="slider">
+				{
+				false &&
 				<Slider {...settings}>
 					<div className="slider__slide">
 						<div className="slider__slide-content">
@@ -66,7 +66,9 @@ const SouvenirPannel = () => {
 						</div>
 					</div>
 				</Slider>
+				}
 			</div>
+
 		</div>
 	);
 }
