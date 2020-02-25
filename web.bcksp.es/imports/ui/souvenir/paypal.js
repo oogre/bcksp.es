@@ -2,11 +2,12 @@
   bcksp.es - paypal.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-17 23:23:50
-  @Last Modified time: 2020-02-25 14:32:50
+  @Last Modified time: 2020-02-25 17:03:13
 \*----------------------------------------*/
 
 import React from 'react';
-import { GetPaypalClientID } from "./../../api/souvenirs/methods.js";
+
+
 
 const Paypal = ({amount, onCreateOrder=()=>{}, onApproved=()=>{}, onCancel=()=>{}, onError=()=>{}}) => {
 	const onPaypalLoaded = event => {
@@ -48,7 +49,7 @@ const Paypal = ({amount, onCreateOrder=()=>{}, onApproved=()=>{}, onCancel=()=>{
 
 	React.useEffect(() => {//componentDidMount
 		if(!document.querySelector("script[src^='https://www.paypal.com/sdk/js?client-id=']")){
-			GetPaypalClientID.call((error, PAYPAL_CLIENT_ID)=> injectPaypalScript(PAYPAL_CLIENT_ID));	
+			Meteor.call("Souvenir.methods.getPaypalClientID", (error, PAYPAL_CLIENT_ID)=>injectPaypalScript(PAYPAL_CLIENT_ID));
 		}else{
 			onPaypalLoaded();
 		}

@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-02-24 23:33:52
+  @Last Modified time: 2020-02-25 17:04:02
 \*----------------------------------------*/
 
 import React from 'react';
@@ -13,8 +13,6 @@ import ArchiveWrapper from './../../../archive/wrapper.js';
 import GeneratorPoster from './../../../generator/poster.js';
 import { errorHandler } from './../../../../utilities/ui.js';
 import { successHandler } from './../../../../utilities/ui.js';
-import { CreatePoster } from "./../../../../api/souvenirs/methods.js";
-
 
 
 
@@ -45,7 +43,7 @@ const SouvenirItemPosterCreation  = () => {
 	const onApproved = ({order}) => {
 		if(loading)return;
 		setLoading(true);
-		CreatePoster.call({
+		Meteor.call("Souvenir.methods.create.poster", {
 			poster : posterGeneratorRef.current.getPosterVar(),
 			order : {
 				...order

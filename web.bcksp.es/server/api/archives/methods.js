@@ -2,7 +2,7 @@
   web.bitRepublic - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-02-16 21:11:24
+  @Last Modified time: 2020-02-25 17:09:46
 \*----------------------------------------*/
 import { Blocks } from './archives.js';
 import { Meteor } from 'meteor/meteor';
@@ -16,8 +16,8 @@ import {
 } from './../../../imports/utilities/validation.js';
 import { log } from './../../../imports/utilities/log.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { genSecurizedBlock, cleanInput } from './utilities.archive.js';
 import { config } from './../../../imports/startup/config.js';
+import { genSecurizedBlock, cleanInput } from './utilities.archive.js';
 import { Archives } from './../../../imports/api/archives/archives.js';
 import { Settings } from './../../../imports/api/settings/settings.js';
 

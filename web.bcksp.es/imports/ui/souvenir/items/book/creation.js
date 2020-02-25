@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-02-24 23:33:40
+  @Last Modified time: 2020-02-25 17:06:26
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -21,7 +21,6 @@ import RadioInput from './../../../shared/radioInput.js';
 import { config } from "./../../../../startup/config.js";
 import { errorHandler } from './../../../../utilities/ui.js';
 import { successHandler } from './../../../../utilities/ui.js';
-import { CreateBook } from "./../../../../api/souvenirs/methods.js";
 import { Souvenirs } from "./../../../../api/souvenirs/souvenirs.js";
 import PrivateArchiveWrapper from './../../../archive/privateArchiveWrapper.js';
 import { intro, preface } from './../../../../api/books/intro.js';
@@ -59,7 +58,7 @@ const SouvenirItemBookCreation = () => {
 	const onApproved = ({order}) => {
 		if(loading)return;
 		setLoading(true);
-		CreateBook.call({
+		Meteor.call("Souvenir.methods.create.book", {
 			book : values.current,
 			order : {
 				...order

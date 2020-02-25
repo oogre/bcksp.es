@@ -2,10 +2,11 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-02-25 14:00:19
+  @Last Modified time: 2020-02-25 17:09:27
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import { Meteor } from 'meteor/meteor';
+import paypal from '@paypal/checkout-server-sdk';
 import {
 	checkDBReference, 
 	checkValidEmail,
@@ -14,13 +15,12 @@ import {
 	checkString,
 	checkObject,
 	checkArray
-} from './../../utilities/validation.js';
-import { getMainEmail } from './../../utilities/meteor.js';
-import { Souvenirs, Orders } from './souvenirs.js';
-import { config } from './../../startup/config.js';
+} from './../../../imports/utilities/validation.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
-import { getMail } from './../../ui/template/mail.js';
-import paypal from '@paypal/checkout-server-sdk';
+import { config } from './../../../imports/startup/config.js';
+import { getMail } from './../../../imports/ui/template/mail.js';
+import { getMainEmail } from './../../../imports/utilities/meteor.js';
+import { Souvenirs, Orders } from './../../../imports/api/souvenirs/souvenirs.js';
 
 const environment = new paypal.core.SandboxEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_SECRET);
 const client = new paypal.core.PayPalHttpClient(environment);
@@ -34,7 +34,6 @@ export const GetPaypalClientID  = new ValidatedMethod({
 		noRetry: true,
 	},
 	run() {
-		if (this.isSimulation)return;
 		 return process.env.PAYPAL_CLIENT_ID
 	}
 });
@@ -57,7 +56,6 @@ export const CreatePoster  = new ValidatedMethod({
 		noRetry: true,
 	},
 	async run({order, poster}) {
-		if (this.isSimulation)return;
 		const request = new paypal.orders.OrdersCaptureRequest(order.id);
   		request.requestBody({});
 		return client.execute(request)
@@ -130,7 +128,6 @@ export const CreateBook = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({order, book}) {
-		if (this.isSimulation)return;
 		const T = i18n.createTranslator("souvenir.item.book.form.author");
 		book.author = book.author || T("placeholder");
 		const request = new paypal.orders.OrdersCaptureRequest(order.id);
@@ -201,8 +198,6 @@ export const Contact = new ValidatedMethod({
 		noRetry: true,
 	},
 	run({email, subject, message}) {
-		if (this.isSimulation)return;
-		
 		Email.send({
 			from : process.env.MAIL_ADDRESS,
 			to : process.env.MAIL_ADDRESS,

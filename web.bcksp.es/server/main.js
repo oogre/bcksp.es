@@ -9,6 +9,7 @@ import '../imports/api/settings/settings.js';
 import '../imports/api/devices/devices.js';
 // SERVER ONLY
 import './api/archives/archives.js';
+import './api/souvenirs/souvenirs.js';
 
 import '../imports/api/books/generator.js';
 import './../imports/i18n/index.js';

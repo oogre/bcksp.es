@@ -2,10 +2,8 @@
   bcksp.es - souvenirs.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:35
-  @Last Modified time: 2020-02-24 18:58:12
+  @Last Modified time: 2020-02-25 16:55:44
 \*----------------------------------------*/
-import './methods.js';
-import './publications.js';
 import EasyEnum from "./../EasyEnum.js";
 
 export const Souvenirs = new Mongo.Collection('souvenir');

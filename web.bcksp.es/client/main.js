@@ -7,6 +7,8 @@ import { isExtensionInstalled } from './../imports/utilities/ui.js';
 
 Session.set("extensionInstalled", isExtensionInstalled());
 
+
+
 Meteor.startup(()=>{
 	new MutationObserver(eventArray=>{
 		eventArray.map(event=>{
