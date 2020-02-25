@@ -6,10 +6,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
-    "bcrypt": "^3.0.8",
     "@paypal/checkout-server-sdk": "^1.0.2",
+    "bcrypt": "^3.0.8",
     "bezier-easing": "^2.1.0",
     "bowser": "^2.8.1",
+    "buffer": "^5.4.3",
     "caret-pos": "https://github.com/oogre/caret-pos/tarball/4bf70ecec5c71c80690539c1df45ede60530adde",
     "crypto-js": "^3.1.9-1",
     "cryptojs": "^2.5.3",
