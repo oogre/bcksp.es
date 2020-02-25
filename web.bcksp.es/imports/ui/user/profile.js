@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - profile.js
+  bcksp.es - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2020-01-28 23:06:11
+  @Last Modified time: 2020-02-25 22:21:39
 \*----------------------------------------*/
 import React from 'react';
 import Blacklist from "./blacklist.js";

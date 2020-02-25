@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - App.js
+  bcksp.es - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-25 15:11:34
+  @Last Modified time: 2020-02-25 22:21:34
 \*----------------------------------------*/
 import React, {useState, useRef} from 'react';
 import { withTracker } from 'meteor/react-meteor-data';

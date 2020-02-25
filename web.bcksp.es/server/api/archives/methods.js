@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - methods.js
+  bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-02-25 17:09:46
+  @Last Modified time: 2020-02-25 22:22:26
 \*----------------------------------------*/
 import { Blocks } from './archives.js';
 import { Meteor } from 'meteor/meteor';

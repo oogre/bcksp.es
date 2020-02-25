@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - config.js
+  bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-02-24 19:57:37
+  @Last Modified time: 2020-02-25 22:21:29
 \*----------------------------------------*/
 export const config = {
 	souvenir : {

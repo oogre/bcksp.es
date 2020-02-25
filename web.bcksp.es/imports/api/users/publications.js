@@ -1,12 +1,11 @@
 /*----------------------------------------*\
-  web.bitRepublic - publications.js
+  bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:29
-  @Last Modified time: 2020-01-29 19:12:02
+  @Last Modified time: 2020-02-25 22:21:05
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random'
-import { streamer } from './../streamer.js';
 import { config } from './../../startup/config.js';
 import { Archives } from './../../api/archives/archives.js';
 import { checkUserLoggedIn, checkUserRole } from './../../utilities/validation.js';

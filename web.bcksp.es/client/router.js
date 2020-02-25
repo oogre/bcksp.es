@@ -1,9 +1,9 @@
 /*----------------------------------------*\
-  bitRepublic - router.js
+  bcksp.es - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-24 19:45:19
-  \*----------------------------------------*/
+  @Last Modified time: 2020-02-25 22:16:54
+\*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
   import App from './../imports/ui/App.js';

@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - startup.js
+  bcksp.es - startup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:39
-  @Last Modified time: 2020-02-16 00:34:15
+  @Last Modified time: 2020-02-25 22:22:35
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { Archives } from '../../../imports/api/archives/archives.js';

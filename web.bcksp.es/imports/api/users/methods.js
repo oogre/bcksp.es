@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - methods.js
+  bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-02-07 21:11:18
+  @Last Modified time: 2020-02-25 22:20:59
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 

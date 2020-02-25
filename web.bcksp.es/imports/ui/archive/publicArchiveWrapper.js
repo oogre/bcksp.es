@@ -2,11 +2,10 @@
   bcksp.es - publicArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:24:29
-  @Last Modified time: 2020-02-14 11:36:54
+  @Last Modified time: 2020-02-25 22:16:26
 \*----------------------------------------*/
 
 import React, { useState, useEffect } from 'react';
-import { streamer } from './../../api/streamer.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
 

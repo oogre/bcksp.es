@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  bitRepublic - account-config.js
+  bcksp.es - account-config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-01-30 01:13:47
-  @Last Modified time: 2020-01-29 12:42:48
+  @Last Modified time: 2020-02-25 22:21:22
 \*----------------------------------------*/
 import React from 'react';
 import { render } from 'react-dom';

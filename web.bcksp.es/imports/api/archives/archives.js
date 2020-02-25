@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - backspaces.js
+  bcksp.es - backspaces.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:01
-  @Last Modified time: 2020-01-29 12:34:21
+  @Last Modified time: 2020-02-25 22:20:55
 \*----------------------------------------*/
 import EasyEnum from "./../EasyEnum.js";
 

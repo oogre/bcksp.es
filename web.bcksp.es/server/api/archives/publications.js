@@ -1,8 +1,8 @@
 /*----------------------------------------*\
-  web.bitRepublic - publications.js
+  bcksp.es - publications.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:30
-  @Last Modified time: 2020-02-15 21:27:12
+  @Last Modified time: 2020-02-25 22:22:31
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import * as ArchiveTools from './utilities.archive.js';
