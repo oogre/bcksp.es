@@ -2,9 +2,9 @@
   runtime-examples - content.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-28 03:12:11
-  @Last Modified time: 2020-02-04 15:59:40
+  @Last Modified time: 2020-02-20 20:04:29
 \*----------------------------------------*/
-import { jQuery } from './../utilities/jQuery.js';
+import {onReady} from './../utilities/onReady.js';
 import BackspaceListener from './BackspaceListener.js';
 import { on, sendMessage } from './../utilities/com.js';
 import { runtimeGetURL } from './../utilities/browser.js';
@@ -62,7 +62,7 @@ on("hideIcon", (data, resolve) =>{
 	resolve(true);
 });
 
-jQuery.fn.ready(()=>{
+onReady(()=>{
 	BackspaceListener.start();
 	createIcon();
 });

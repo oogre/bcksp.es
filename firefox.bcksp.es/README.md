@@ -9,3 +9,8 @@ This is Sources of http://bcksp.es add'on to firefox browser
 
 npm install
 npm run build & npm run start
+
+login with 
+user : demo@bcksp.es
+pasword : I'm a simple demonstrator!"
+
