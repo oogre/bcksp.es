@@ -4,19 +4,34 @@
 	@Date:   2019-02-10 15:11:10
 	@Last Modified time: 2020-01-28 21:47:14
 \*----------------------------------------*/
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { lerp } from "./../../utilities/math.js";
 
-const GeneratorPoster = ({ className, shapes, onShapes, sentence="", disallowRegenerate }) => {
-	const [width, setWidth] = useState(210 * 2);
-	const [height, setHeight] = useState(297 * 2);
-	const [_shapes, setShapes] = useState(shapes||[]);
+const GeneratorPoster = React.forwardRef(({ className, shapes, disallowRegenerate }, ref) => {
+
+	React.useImperativeHandle(ref, () => ({
+		setSentence: sentence => {
+			setSentence(sentence);
+		},
+		getPosterVar:() => {
+			return {
+				fontSize : size,
+				lineHeight : size,
+				shapes : _shapes,
+				sentence : sentence
+			}
+		}
+	}));
+
+	const [sentence, setSentence] = React.useState("");
+	const [width, setWidth] = React.useState(210 * 2);
+	const [height, setHeight] = React.useState(297 * 2);
+	const [_shapes, setShapes] = React.useState(shapes||[]);
 	const ratio = sentence.length / 200;
 	const size = lerp(50, 10, Math.pow(ratio, 0.35));
 	const T = i18n.createComponent("souvenir.item.poster");
-	
 
-	useEffect(() => {//componentDidMount
+	React.useEffect(() => {//componentDidMount
 		setShapes(shapes || createShapes(width, height));
 	}, []); 
 
@@ -36,7 +51,6 @@ const GeneratorPoster = ({ className, shapes, onShapes, sentence="", disallowReg
 				rotate : 180 * sx * sy
 			}
 		});
-		_.isFunction(onShapes) && onShapes(shapes);
 		return shapes;
 	}
 
@@ -50,12 +64,6 @@ const GeneratorPoster = ({ className, shapes, onShapes, sentence="", disallowReg
 		<div className={className + " generator"}>
 			<div className="generator__preview">
 				<div className="generator__preview-img"
-					data-design-poster={JSON.stringify({
-						fontSize : size,
-						lineHeight : size,
-						shapes : _shapes,
-						sentence : sentence
-					})}
 					style={{
 						position:"relative",
 						width : width,
@@ -119,6 +127,6 @@ const GeneratorPoster = ({ className, shapes, onShapes, sentence="", disallowReg
 			</div>
 		</div>
 	);
-}
+});
 
 export default GeneratorPoster;

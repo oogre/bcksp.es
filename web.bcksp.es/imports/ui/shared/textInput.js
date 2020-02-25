@@ -2,12 +2,12 @@
   bcksp.es - textInput.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-05-19 14:49:06
-  @Last Modified time: 2020-01-31 12:57:37
+  @Last Modified time: 2020-02-24 20:50:38
 \*----------------------------------------*/
 import React from 'react';
 import FixeError from './../fixe/error.js'
 
-const TextInput = ({name, validator, label, error, defaultValue}) => {
+const TextInput = ({name, validator, label, error, defaultValue, onChange=()=>{}}) => {
 	return (
 		<div className="field">
 			<label 
@@ -21,6 +21,7 @@ const TextInput = ({name, validator, label, error, defaultValue}) => {
 				className={"input--text"  + (error ? " error" : "")}
 				type="text"
 				name={ name }
+				onChange={onChange}
 				ref={validator}
 				defaultValue={defaultValue}
 			/>

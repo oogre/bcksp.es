@@ -2,16 +2,18 @@
   bcksp.es - paypal.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-17 23:23:50
-  @Last Modified time: 2020-02-17 23:33:25
+  @Last Modified time: 2020-02-25 14:32:50
 \*----------------------------------------*/
 
 import React from 'react';
+import { GetPaypalClientID } from "./../../api/souvenirs/methods.js";
 
-const Paypal = ({amount}) => {
-	React.useEffect(() => {//componentDidMount
+const Paypal = ({amount, onCreateOrder=()=>{}, onApproved=()=>{}, onCancel=()=>{}, onError=()=>{}}) => {
+	const onPaypalLoaded = event => {
+		event?.target?.removeEventListener("load", onPaypalLoaded, false);
 		paypal.Buttons({
 			createOrder: (data, actions) => {
-				// This function sets up the details of the transaction, including the amount and line item details.
+				onCreateOrder();
 				return actions.order.create({
 					purchase_units: [{
 						amount: {
@@ -20,20 +22,44 @@ const Paypal = ({amount}) => {
 					}]
 				});
 			},
+			onError: err => {
+				onError(err);
+			},
+			onCancel: data => {
+				onCancel(data);
+			},
 			onApprove: (data, actions) => {
-				// This function captures the funds from the transaction.
-				return actions.order.capture().then( details => {
-					// This function shows a transaction success message to your buyer.
-					alert('Transaction completed by ' + details.payer.name.given_name);
-				});
+				onApproved({
+					order : {
+						id : data.orderID
+					}
+				})
 			}
 		}).render('#paypal-button-container');
-		return () => {//componentWillUnmount
-			
+	}
+
+	const injectPaypalScript = PAYPAL_CLIENT_ID => {
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = "https://www.paypal.com/sdk/js?client-id="+PAYPAL_CLIENT_ID+"&currency=EUR&debug=true";
+		document.querySelector("head").appendChild(script);
+		script.addEventListener("load", onPaypalLoaded, false);
+	}
+
+	React.useEffect(() => {//componentDidMount
+		if(!document.querySelector("script[src^='https://www.paypal.com/sdk/js?client-id=']")){
+			GetPaypalClientID.call((error, PAYPAL_CLIENT_ID)=> injectPaypalScript(PAYPAL_CLIENT_ID));	
+		}else{
+			onPaypalLoaded();
 		}
 	}, []); 
 
 	return (
-		<div id="paypal-button-container"></div>
+		<div>
+			{amount}
+			<div id="paypal-button-container"></div>
+		</div>
 	)
 }
+
+export default Paypal;

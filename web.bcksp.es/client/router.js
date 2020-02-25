@@ -2,7 +2,7 @@
   bitRepublic - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-16 14:09:36
+  @Last Modified time: 2020-02-24 19:45:19
   \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -17,8 +17,6 @@
   import TemplateFull from './../imports/ui/template/full.js';
   import TemplateMini from './../imports/ui/template/mini.js';
   import ArchiveWrapper from './../imports/ui/archive/wrapper.js';
-  import SouvenirItemBookOrder from './../imports/ui/souvenir/items/book/order.js';
-  import SouvenirItemPosterOrder from './../imports/ui/souvenir/items/poster/order.js';
   import SouvenirItemBookCreation from './../imports/ui/souvenir/items/book/creation.js';
   import SouvenirItemPosterCreation from './../imports/ui/souvenir/items/poster/creation.js';
   import SouvenirItemBookDescription from './../imports/ui/souvenir/items/book/description.js';
@@ -157,17 +155,6 @@ FlowRouter.route( '/souvenir/poster/creation', {
 	}
 });
 
-FlowRouter.route( '/souvenir/poster/order/:id', {
-	name: 'posterOrder',
-	action( params ) {
-		render(<TemplateFull><SouvenirItemPosterOrder id={params.id}/></TemplateFull>, document.getElementById('render-target'));
-		setupView();
-	},
-	subscriptions( params, queryParams ) {
-		this.register('souvenir.get.poster', Meteor.subscribe('souvenir.get.poster',  params.id));
-	}
-});
-
 FlowRouter.route( '/order/:id', {
 	name: 'orderDetail',
 	action( params ) {
@@ -232,17 +219,6 @@ loginRoutes.route( '/souvenir/book/creation', {
 	},
 	subscriptions( params, queryParams ) {
 	
-	}
-});
-
-loginRoutes.route( '/souvenir/book/order/:id', {
-	name: 'bookOrder',
-	action( params ) {
-		render(<TemplateFull><SouvenirItemBookOrder id={params.id}/></TemplateFull>, document.getElementById('render-target'));
-		setupView();
-	},
-	subscriptions( params, queryParams ) {
-		this.register('souvenir.get.book', Meteor.subscribe('souvenir.get.book',  params.id));
 	}
 });
 

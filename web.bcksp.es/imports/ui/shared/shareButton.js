@@ -2,7 +2,7 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 17:45:05
-  @Last Modified time: 2020-02-05 15:38:06
+  @Last Modified time: 2020-02-20 12:10:29
 \*----------------------------------------*/
 import React from 'react';
 
@@ -22,7 +22,8 @@ const ButtonShare = ({onShare, content, top, left}) => {
 		<div	className="livefeed-share"
 				style={{
 					left: left+"px",
-					top: top+"px"
+					top: top+"px",
+					zIndex: "1000"
 				}}
 		>
 			<button className="button livefeed-share__button" onClick={ onClickHandler }>

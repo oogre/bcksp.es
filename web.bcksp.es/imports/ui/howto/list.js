@@ -2,7 +2,7 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:56:40
-  @Last Modified time: 2020-01-28 21:57:57
+  @Last Modified time: 2020-02-25 15:16:09
 \*----------------------------------------*/
 
 
@@ -62,7 +62,6 @@ const HowtoList = ({}) => {
 							<h3 className="step__title"><span className="step__number">4.</span> <T>step.souvenir.title</T></h3>
 							<div className="step__content">
 								<p><T>step.souvenir.desc</T></p>
-								<a href={FlowRouter.path("souvenir")} ><T2>souvenir</T2></a>
 							</div>
 						</div>
 					</HowtoStep>
