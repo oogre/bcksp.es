@@ -2,14 +2,14 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2020-02-25 15:10:53
+  @Last Modified time: 2020-02-27 00:57:06
 \*----------------------------------------*/
 i18n.addTranslation('fr', "souvenir", {
 	title : 	"Rendez-vous à la boutique",
 	title2 : 	"matérialiser vos ratures",
 	subtitle : 	"la boutique",
-	short : 	"Faites vivre bcksp.es et ses créateurs, en faisant produire via notre boutique \
-				tout sorte de goodies personnalisés de vos meilleurs mots supprimés.",
+	short : 	"Faites vivre bcksp.es et ses créateurs, en faisant produire via notre boutique "+
+					"tout sorte de goodies personnalisés de vos meilleurs mots supprimés.",
 	item : {
 		download : {
 			title : "télécharger mon archive",
@@ -35,10 +35,10 @@ i18n.addTranslation('fr', "souvenir", {
 		book : {
 			title : "imprimer mon livre",
 			img : "/images/logo-animated.gif",
-			description : 	"C'est ici que «bcksp.es» prend tout son sens. \
-							En participant à cette étape-ci que nous allons publier votre archive. \
-							Cette publication ne sera imprimée qu'à deux exemplaires, un pour vous, un pour nous.\
-							Le contenu de votre archive sera supprimé de nos serveurs après imprimession.",
+			description : 	"C'est ici que «bcksp.es» prend tout son sens. "+
+							"En participant à cette étape-ci que nous allons publier votre archive. "+
+							"Cette publication ne sera imprimée qu'à deux exemplaires, un pour vous, un pour nous. "+
+							"Le contenu de votre archive sera supprimé de nos serveurs après imprimession.",
 			button : {
 				create : "créez votre livre",
 				continue : "valider ce livre",
@@ -146,34 +146,6 @@ i18n.addTranslation('fr', "souvenir", {
 			description : "",
 			button : "passer commande",
 			price : "...€"
-		}
-	},
-	delivery : {
-		label : "adresse de livraison",
-		form : {
-			email : {
-				label : "adress email"
-			},
-			adress : {
-				fullname : {
-					label : "nom complet"
-				},
-				fulladdress : {
-					label : "adresse et numéros"
-				},
-				city : {
-					label : "ville"
-				},
-				state : {
-					label : "état"
-				},
-				zip : {
-					label : "code postal"
-				},
-				country : {
-					label : "pays"
-				}
-			}
 		}
 	}
 });

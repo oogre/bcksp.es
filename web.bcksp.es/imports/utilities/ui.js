@@ -2,7 +2,7 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2020-02-15 19:05:41
+  @Last Modified time: 2020-02-26 17:35:19
 \*----------------------------------------*/
 import { Session } from "meteor/session";
 import { config } from './../startup/config.js';
@@ -16,6 +16,29 @@ export async function needConfirmation(context){
 	}
 }
 
+export function getDate(){
+	const dt = new Date();
+	return `${
+    (dt.getMonth()+1).toString().padStart(2, '0')}-${
+    dt.getDate().toString().padStart(2, '0')}-${
+    dt.getFullYear().toString().padStart(4, '0')} ${
+    dt.getHours().toString().padStart(2, '0')}:${
+    dt.getMinutes().toString().padStart(2, '0')}:${
+    dt.getSeconds().toString().padStart(2, '0')}`;
+}
+
+export function buildObjectFromStringKey(obj, is, value){
+	if (typeof is == 'string')
+		return buildObjectFromStringKey(obj, is.split('.'), value);
+	else if (is.length==1 && value!==undefined)
+		return obj[is[0]] = value;
+	else if (is.length==0)
+		return obj;
+	else{
+		obj[is[0]] = obj[is[0]] || {};
+		return buildObjectFromStringKey(obj[is[0]], is.slice(1), value);
+	}
+}
 
 export function isVisible(elem) {
     if (!(elem instanceof Element)) throw Error('DomUtil: elem is not an element.');

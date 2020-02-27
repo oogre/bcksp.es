@@ -2,7 +2,7 @@
   bcksp.es - errors.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2020-01-27 10:37:04
+  @Last Modified time: 2020-02-26 17:10:35
 \*----------------------------------------*/
 i18n.addTranslation('fr', "errors", {
 	server : {
@@ -47,6 +47,7 @@ i18n.addTranslation('fr', "errors", {
 		"not-recognize": "nous ne connaissons pas la langue requise, il semble y avoir un problème",
 	},
 	type : {
+		"not-recognize" : "nous ne connaissons la valeur requise, il semble y avoir un problème : '{$value}'",
 		"not-a-function" : "nous avons besoin que cette donnée soit une fonction : '{$value}'",
 		"not-recognize": "nous ne comprenons pas ces informations, il semble y avoir un problème",
 		"not-a-string" : "nous avons besoin que cette donnée soit du texte : '{$value}'",

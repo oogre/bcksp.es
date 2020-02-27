@@ -2,8 +2,9 @@
   bcksp.es - fr.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-14 07:48:09
-  @Last Modified time: 2020-01-15 07:09:19
+  @Last Modified time: 2020-02-27 00:49:22
 \*----------------------------------------*/
+
 import './fr/errors.js';
 import './fr/menus.js';
 import './fr/email.js';

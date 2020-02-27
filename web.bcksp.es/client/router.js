@@ -2,7 +2,7 @@
   bcksp.es - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-25 22:16:54
+  @Last Modified time: 2020-02-26 12:49:14
 \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -14,6 +14,7 @@
   import Souvenir from './../imports/ui/souvenir/list.js';
   import UserProfile from './../imports/ui/user/profile.js';
   import OrderDetail from './../imports/ui/order/detail.js';
+  import Translations from './../imports/ui/translations.js';
   import TemplateFull from './../imports/ui/template/full.js';
   import TemplateMini from './../imports/ui/template/mini.js';
   import ArchiveWrapper from './../imports/ui/archive/wrapper.js';
@@ -69,6 +70,17 @@ FlowRouter.route( '/dev', {
 	name: 'home',
 	action( params ) {
 		render(<TemplateFull><App/></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});	
+
+FlowRouter.route( '/translations', {
+	name: 'home',
+	action( params ) {
+		render(<TemplateFull><Translations/></TemplateFull>, document.getElementById('render-target'));
 		setupView();
 	},
 	subscriptions( params, queryParams ) {

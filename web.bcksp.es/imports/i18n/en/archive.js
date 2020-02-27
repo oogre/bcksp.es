@@ -2,7 +2,7 @@
   bcksp.es - archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:31:44
-  @Last Modified time: 2020-01-30 12:23:00
+  @Last Modified time: 2020-02-26 15:37:00
 \*----------------------------------------*/
 i18n.addTranslation('en', "archive", {
 	jauge : {
@@ -19,15 +19,15 @@ i18n.addTranslation('en', "archive", {
 	},
 	counter : "{$count} recorded characters",
 	public : {
-		tooltip : 	"<strong> 🔴 LIVE FEED 🔴 </strong><br/>\
-					Live deletion assembly<br/>\
-					from all the authors of bcksp.es<br/>\
-					<small> nothing stays here long</small>",
+		tooltip : 	"<strong> 🔴 LIVE FEED 🔴 </strong><br/>"+
+					"Live deletion assembly<br/>"+
+					"from all the authors of bcksp.es<br/>"+
+					"<small> nothing stays here long</small>",
 		button : "public archive"
 	},
 	private : {
-		tooltip : 	"<strong> 🔴 LIVE FEE 🔴 </strong><br/>\
-					Your deleted text archive",
+		tooltip : 	"<strong> 🔴 LIVE FEE 🔴 </strong><br/>"+
+					"Your deleted text archive",
 		button : "private archive"
 	},
 	fullscreen : {

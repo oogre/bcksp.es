@@ -2,7 +2,7 @@
   bcksp.es - archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:31:44
-  @Last Modified time: 2020-01-26 21:13:22
+  @Last Modified time: 2020-02-26 15:35:35
 \*----------------------------------------*/
 i18n.addTranslation('fr', "archive", {
 	jauge : {
@@ -19,15 +19,15 @@ i18n.addTranslation('fr', "archive", {
 	},
 	counter : "{$count} charactèrs enregistré",
 	public : {
-		tooltip : 	"<strong> 🔴 FLUX DIRECT 🔴 </strong><br/>\
-					Assemblage en direct des suppressions<br/>\
-					de tous les auteurs de bcksp.es<br/>\
-					<small>rien ne reste bien longtemps ici</small>",
+		tooltip : 	"<strong> 🔴 FLUX DIRECT 🔴 </strong><br/>"+
+					"Assemblage en direct des suppressions<br/>"+
+					"de tous les auteurs de bcksp.es<br/>"+
+					"<small>rien ne reste bien longtemps ici</small>",
 		button : "archive publique"
 	},
 	private : {
-		tooltip : 	"<strong> 🔴 FLUX DIRECT 🔴 </strong><br/>\
-					Votre archive de texte supprimé",
+		tooltip : 	"<strong> 🔴 FLUX DIRECT 🔴 </strong><br/>"+
+					"Votre archive de texte supprimé",
 		button : "archive privée"
 	},
 	fullscreen : {

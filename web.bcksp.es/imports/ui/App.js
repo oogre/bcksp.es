@@ -2,9 +2,9 @@
   bcksp.es - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-25 22:21:34
+  @Last Modified time: 2020-02-26 12:44:06
 \*----------------------------------------*/
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import ArchiveWrapper from './archive/wrapper.js';
 import ArchiveCounter from './archive/counter.js';
@@ -19,8 +19,8 @@ import ButtonShare from './shared/shareButton.js';
 // App component - represents the whole app
 
 const App = ({isConnected}) => {
-	const [sharePopupOpen, setSharePopupOpen] = useState(false);
-	const [selection, setSelection] = useState(false);
+	const [sharePopupOpen, setSharePopupOpen] = React.useState(false);
+	const [selection, setSelection] = React.useState(false);
 
 	return (
 		<div className="page__content">

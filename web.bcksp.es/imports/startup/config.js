@@ -2,9 +2,23 @@
   bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-02-25 22:21:29
+  @Last Modified time: 2020-02-27 00:50:22
 \*----------------------------------------*/
 export const config = {
+	langues : [
+		"af","am","ar","arn","as","az","ba","be","bg","bn",
+		"bo","br","bs","ca","co","cs","cy","da","de","dsb",
+		"dv","el","en","es","et","eu","fa","fi","fil","fo",
+		"fr","fy","ga","gd","gl","gsw","gu","ha","he","hi",
+		"hr","hsb","hu","hy","id","ig","ii","is","it","iu",
+		"ja","ka","kk","kl","km","kn","ko","kok","ky","lb",
+		"lo","lt","lv","mi","mk","ml","mn","moh","mr","ms",
+		"mt","nb","ne","nl","nn","no","oc","or","pa","pl",
+		"prs","ps","pt","qut","quz","rm","ro","ru","rw","sa",
+		"sah","se","si","sk","sl","sma","smj","smn","sms","sq",
+		"sr","sv","sw","syr","ta","te","tg","th","tk","tn","tr",
+		"tt","tzm","ug","uk","ur","uz","vi","wo","xh","yo","zh","zu"
+	],
 	souvenir : {
 		almanach : false,
 		poster : {
