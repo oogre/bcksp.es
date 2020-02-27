@@ -2,15 +2,15 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 15:37:26
-  @Last Modified time: 2020-02-03 15:26:18
+  @Last Modified time: 2020-02-27 20:37:18
 \*----------------------------------------*/
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SelfWritten from "./../shared/selfwritten.js";
 
 const BannerBaseline = ({isConnected}) => {
 	
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	useEffect(() => {//componentDidMount
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
@@ -20,7 +20,6 @@ const BannerBaseline = ({isConnected}) => {
 	
 	const T2 = i18n.createTranslator("baseline");
 	const T = i18n.createComponent(T2);
-	
 	return (
 		<div className="punchline">
 			<div className="container">	

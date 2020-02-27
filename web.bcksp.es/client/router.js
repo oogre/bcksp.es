@@ -2,7 +2,7 @@
   bcksp.es - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-26 12:49:14
+  @Last Modified time: 2020-02-27 19:49:00
 \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -78,7 +78,7 @@ FlowRouter.route( '/dev', {
 });	
 
 FlowRouter.route( '/translations', {
-	name: 'home',
+	name: 'translations',
 	action( params ) {
 		render(<TemplateFull><Translations/></TemplateFull>, document.getElementById('render-target'));
 		setupView();

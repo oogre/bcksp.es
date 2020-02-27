@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-26 16:34:13
-  @Last Modified time: 2020-02-27 00:51:22
+  @Last Modified time: 2020-02-27 19:52:34
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -43,18 +43,20 @@ export const LanguagesAddTranslation = new ValidatedMethod({
 								.replace(/\[CREATED_AT\]/g, getDate())
 								.replace(/\[UPDATED_AT\]/g, getDate())
 								;//.replace(/\[AUTHOR_EMAIL\]/g, getMainEmail(Meteor.user().emails));
-		const fs = Npm.require('fs');
 		
+		const fs = Npm.require('fs');
 		fs.mkdir(process.env.TRAD_PATH+"/"+local, { recursive: true },  (err) => {
   			if (err) throw err;
   			fs.writeFile(process.env.TRAD_PATH+"/"+local+"/"+namespace+" "+getDate()+'.js', file, (err) => {
 				if (err) throw err;
-				console.log('The file has been saved!');
 			});
 		});
-
 		return {
-			local, namespace,  translation
-		}
+			success : true,
+			message : {
+				title : "merci",
+				content : "les données ont été enregistrée"
+			}
+		};
 	}
 });

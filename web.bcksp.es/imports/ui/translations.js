@@ -2,13 +2,14 @@
   bcksp.es - translations.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-26 12:43:46
-  @Last Modified time: 2020-02-27 00:50:30
+  @Last Modified time: 2020-02-27 19:50:58
 \*----------------------------------------*/
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { buildObjectFromStringKey } from "./../utilities/ui.js";
 import { config } from './../startup/config.js'
 import { getTranslationKeys } from "./../i18n/index.js";
+import { errorHandler, successHandler } from './../utilities/ui.js';
 
 // App component - represents the whole app
 
@@ -32,8 +33,6 @@ const Translations = () => {
 		autoSizeTextarea();
 	}, [namespace, inputLocale]); 
 
-	
-	
 	const save = (targets) => {
 		const translation = {};
 		const local = outputLocale;
@@ -44,8 +43,9 @@ const Translations = () => {
 			local, 
 			namespace, 
 			translation : translation[namespace]
-		}, (error, result) => {
-			console.log(error, result);
+		}, (error, data) => {
+			if (errorHandler(error)) return;
+			successHandler(data)
 		})
 	}
 

@@ -2,10 +2,10 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-02-18 13:30:19
+  @Last Modified time: 2020-02-27 19:57:47
 \*----------------------------------------*/
 
-import React, { useState } from 'react';
+import React from 'react';
 import FixeWait from './../fixe/wait.js'
 import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
@@ -13,7 +13,7 @@ import { HardDisconnect } from "./../../api/users/methods.js";
 import { errorHandler, successHandler } from './../../utilities/ui.js';
 
 const MenuFooter = ({isConnected, extensionInstalled}) => {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = React.useState(false);
 	
 	const T = i18n.createComponent("menus");
 	const T2 = i18n.createComponent("forms");

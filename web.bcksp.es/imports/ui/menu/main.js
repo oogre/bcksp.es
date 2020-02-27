@@ -2,21 +2,21 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2020-02-02 23:20:24
+  @Last Modified time: 2020-02-27 19:56:51
 \*----------------------------------------*/
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
 import { SetUserLang } from "./../../api/users/methods.js";
 import { successHandler, errorHandler } from './../../utilities/ui.js';
 
 const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
-	const [loading, setLoading] = useState(false);
-	const [mobileMenu, setMobileMenu] = useState(false);
-	const [langMenu, setLangMenu] = useState(false);
+	const [loading, setLoading] = React.useState(false);
+	const [mobileMenu, setMobileMenu] = React.useState(false);
+	const [langMenu, setLangMenu] = React.useState(false);
 	const T = i18n.createComponent("menus");
 
-	useEffect(() => {//componentDidMount
+	React.useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
 			handle.stop();
 		}

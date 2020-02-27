@@ -2,9 +2,9 @@
   bcksp.es - contact.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-27 13:15:16
-  @Last Modified time: 2020-02-25 17:06:58
+  @Last Modified time: 2020-02-27 19:59:28
 \*----------------------------------------*/
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import FixeWait from './../fixe/wait.js';
 import { useForm } from 'react-hook-form';
 import FixeError from './../fixe/error.js';
@@ -12,11 +12,11 @@ import TextInput from './../shared/textInput.js';
 import { errorHandler, successHandler } from './../../utilities/ui.js';
 
 const FormContact = ({type}) => {
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	const [loading, setLoading] = useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const [loading, setLoading] = React.useState(false);
 	const { register, handleSubmit, errors, setError} = useForm();
 
-  	useEffect(() => {//componentDidMount
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
