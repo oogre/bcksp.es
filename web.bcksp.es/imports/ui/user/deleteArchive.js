@@ -2,30 +2,27 @@
   bcksp.es - deleteArchive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:43:12
-  @Last Modified time: 2020-01-28 23:10:38
+  @Last Modified time: 2020-03-04 18:51:29
 \*----------------------------------------*/
 
 
+import React from 'react';
 import FixeWait from "./../fixe/wait.js";
-import React, {useState, useEffect} from 'react';
+import { getTranslations } from "./../../i18n/index.js";
 import { needConfirmation } from './../../utilities/ui.js';
 import { successHandler, errorHandler } from './../../utilities/ui.js';
 
 
 const DeleteArchive  = () => {
-	const [ loading, setLoading ] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	
-	const T = i18n.createComponent("userprofile.danger.deleteArchive");
-  	const T2 = i18n.createTranslator("userprofile.danger.deleteArchive");
-  	
-  	useEffect(() => {//componentDidMount
+	const [ loading, setLoading ] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());	
+	const {C, T} = getTranslations("userprofile.danger.deleteArchive");
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-
 	const handleDeleteArchive = event => {
 		event.preventDefault();
 		if(loading)return;
@@ -46,14 +43,14 @@ const DeleteArchive  = () => {
 	return (
 		<form  onSubmit={handleDeleteArchive}>
 			<h2>
-				<T>label</T>
+				<C>label</C>
 			</h2>
 			<ul className="toggle-list">
 				<li>
 					<span className="input-wrapper--inline">
 						{ loading && <FixeWait/> }
 						{ !loading && 
-							<input className="button button--secondary" type="submit" value={T2("submit")}/>
+							<input className="button button--secondary" type="submit" value={T("submit")}/>
 						}
 					</span>
 				</li>

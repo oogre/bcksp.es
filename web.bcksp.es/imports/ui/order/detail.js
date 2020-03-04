@@ -2,7 +2,7 @@
   bcksp.es - detail.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-11 16:15:12
-  @Last Modified time: 2020-01-24 14:24:40
+  @Last Modified time: 2020-03-02 18:16:54
 \*----------------------------------------*/
 
 import React from 'react';
@@ -13,9 +13,6 @@ import GeneratorPoster from './../generator/poster.js';
 const OrderDetail = ({orders, isReady}) => {
 	if(!isReady)return (null);
 	
-
-	console.log(orders)
-
 	return (
 		<div className="page__content">
 			<div className="container">

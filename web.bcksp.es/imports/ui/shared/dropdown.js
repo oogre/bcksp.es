@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ClickOutHandler from 'react-onclickout';
 
 const Dropdown = (props) => {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = React.useState(false);
  
 	const handleDropdownClick = event => {
 		event.preventDefault();

@@ -2,32 +2,28 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2020-02-14 11:17:29
+  @Last Modified time: 2020-03-03 15:27:50
 \*----------------------------------------*/
 
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Tooltip from './../shared/tooltip.js';
 import { lerp, nf } from './../../utilities/math.js';
 import { config } from './../../startup/config.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
+import { getTranslations } from "./../../i18n/index.js";
 
 const ArchiveCounter = ({handle, archive, isReady}) => {
-	
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	useEffect(() => {//componentDidMount
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const {T, C} = getTranslations("archive");
+	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 			handle && handle.stop();
 		}
 	}, []); 
-
-	const T2 = i18n.createTranslator("archive");
-	const T = i18n.createComponent(T2);
-	
-
 	const getCharCount = () => {
 		if(!archive || !isReady || archive.count < 0)return 0 ;
 		return archive.count;
@@ -37,20 +33,20 @@ const ArchiveCounter = ({handle, archive, isReady}) => {
 		return (getCharCount() / config.book.getMaxChar()) * 100 ;
 	}
 	const getJaugeTooltipText = () => {
-		let jaugeTextAbailable = Object.values(T2("jauge.tooltip.custom"));
+		let jaugeTextAbailable = Object.values(T("jauge.tooltip.custom"));
 		let r = getCharCount() / config.book.getMaxChar();
 		let id = Math.floor(lerp(0, jaugeTextAbailable.length-1, r));
 		return (
 			<span>
 				<strong>
-					<T>{"jauge.tooltip.custom."+id}</T>
+					<C>{"jauge.tooltip.custom."+id}</C>
 				</strong>
 				<br/>
-				<T 	current={nf(getCharCount())} 
+				<C 	current={nf(getCharCount())} 
 					target={nf(config.book.getMaxChar())}
 				>
 					jauge.tooltip.default
-				</T>
+				</C>
 			</span>
 		);
 	}
@@ -58,7 +54,7 @@ const ArchiveCounter = ({handle, archive, isReady}) => {
 	return (
 		<div className="counter">
 			<span className="counter__total-character">
-				<T count={nf(getCharCount())}>counter</T>
+				<C count={nf(getCharCount())}>counter</C>
 			</span>
 			<span className="counter__total-percentage">
 				{

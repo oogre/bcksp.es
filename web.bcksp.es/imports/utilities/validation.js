@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-02-26 17:10:38
+  @Last Modified time: 2020-03-03 14:55:57
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
@@ -196,8 +196,7 @@ export function checkValidDevice(value, origin="main"){
 			}]);
 	return value;	
 }
-
-export function checkValidEmail(value, hasToExist = true, origin="main"){
+export function checkEmail(value, origin="main"){
 	if(_.isEmpty(value)) throw new ValidationError([{
 				name: 'email',
 				type: 'required',
@@ -222,6 +221,10 @@ export function checkValidEmail(value, hasToExist = true, origin="main"){
 				  origin : origin
 				}
 			}]);
+}
+
+export function checkValidEmail(value, hasToExist = true, origin="main"){
+	checkEmail(value, origin);
 
 	let userExistance = !!Meteor.users.findOne({"emails.address" : value});
 

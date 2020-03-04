@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-02-25 17:06:26
+  @Last Modified time: 2020-03-04 18:32:23
 \*----------------------------------------*/
 /*----------------------------------------*\
   bcksp.es - download.js
@@ -19,6 +19,7 @@ import TextInput from './../../../shared/textInput.js';
 import GeneratorBook from './../../../generator/book.js';
 import RadioInput from './../../../shared/radioInput.js';
 import { config } from "./../../../../startup/config.js";
+import { getTranslations } from "./../../../../i18n/index.js";
 import { errorHandler } from './../../../../utilities/ui.js';
 import { successHandler } from './../../../../utilities/ui.js';
 import { Souvenirs } from "./../../../../api/souvenirs/souvenirs.js";
@@ -35,13 +36,11 @@ const SouvenirItemBookCreation = () => {
 		}
 	}, []); 
 	const [ locale, setLocale ] = React.useState(i18n.getLocale());
-	const [ loading, setLoading ] = React.useState(false);
+	const {C, T, E} = getTranslations("souvenir.item.book");
+  	const [ loading, setLoading ] = React.useState(false);
 	const values = React.useRef(false);
 	const { register, triggerValidation, watch, errors, getValues} = useForm();
-  	const T2 = i18n.createTranslator("souvenir.item.book");
-  	const T = i18n.createComponent(T2);
-  	const Terror = i18n.createTranslator("errors");
-  	const author = watch("author", T2("form.author.placeholder"));
+	const author = watch("author", T("form.author.placeholder"));
   	const finishing = watch("finishing", 0);
   	const amount = config.souvenir.book[Souvenirs.Finishing.getName(finishing)].price.amount;
 	const onCreateOrder = () => {
@@ -78,7 +77,7 @@ const SouvenirItemBookCreation = () => {
 			<div className="container">
 				<div className="page__header">
 					<h1 className="page__title">
-						<T>title</T>
+						<C>title</C>
 					</h1>
 				</div>
 				<div className="shop">
@@ -87,7 +86,7 @@ const SouvenirItemBookCreation = () => {
 							<li>
 								<span className="input-wrapper--inline">
 									<h2 className="page__subtitle">
-										<T>form.finishing.label</T>
+										<C>form.finishing.label</C>
 									</h2>
 								</span>
 							</li>
@@ -98,11 +97,11 @@ const SouvenirItemBookCreation = () => {
 										validator={register({
 														maxLength: {
 															value : config.book.page.line.char.count,
-															message : Terror("author.max-string", {length : config.book.page.line.char.count})
+															message : E("author.max-string", {length : config.book.page.line.char.count})
 														}
 													})}
 										onChange={ async () => triggerValidation("author")}
-										label={T2("form.author.label")}
+										label={T("form.author.label")}
 										error={errors?.author?.message}
 										defaultValue={author}
 									/>
@@ -112,12 +111,12 @@ const SouvenirItemBookCreation = () => {
 								<span className="input-wrapper--inline">
 									<RadioInput 
 										radios={Souvenirs.Finishing} 
-										labels={T2("form.finishing")} 
+										labels={T("form.finishing")} 
 										name="finishing"
 										validator={register({ 
 											required: {
 												value : true,
-												message : Terror("default.required")
+												message : E("default.required")
 											}
 										})}
 										error={errors?.finishing?.message}
@@ -128,12 +127,12 @@ const SouvenirItemBookCreation = () => {
 								<span className="input-wrapper--inline">
 									<RadioInput 
 										radios={Souvenirs.Licence} 
-										labels={T2("form.licence")} 
+										labels={T("form.licence")} 
 										name="licence"
 										validator={register({ 
 											required: {
 												value : true,
-												message : Terror("default.required")
+												message : E("default.required")
 											}
 										})}
 										error={errors?.licence?.message}

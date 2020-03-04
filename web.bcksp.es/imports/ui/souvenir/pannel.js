@@ -2,11 +2,12 @@
   bcksp.es - pannel.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-11 13:53:56
-  @Last Modified time: 2020-02-25 15:15:34
+  @Last Modified time: 2020-03-04 18:46:03
 \*----------------------------------------*/
 
 import React from 'react';
 import Slider from "react-slick";
+import { getTranslations } from "./../../i18n/index.js";
 
 // App component - represents the whole app
 const SouvenirPannel = () => {
@@ -20,18 +21,16 @@ const SouvenirPannel = () => {
 		autoplay : false,
 		arrows : true
 	};
-	const T = i18n.createComponent("souvenir");
-	const T2 = i18n.createComponent("menus");
-
+	const {C, C1} = getTranslations("souvenir", "menus");
 	return (
 		<div className="souvenir-pannel">
 			<div className="container souvenir-pannel__container">
 				<div className="souvenir-pannel__intro">
-					<h2 className="souvenir-pannel__title"><T>title</T></h2>
+					<h2 className="souvenir-pannel__title"><C>title</C></h2>
 					<div className="souvenir-pannel__content">
-						<T>short</T>
+						<C>short</C>
 						<a className="button button--secondary" href={FlowRouter.path("souvenir")}>
-							<T2>souvenir</T2>
+							<C1>souvenir</C1>
 						</a>
 					</div>
 				</div>

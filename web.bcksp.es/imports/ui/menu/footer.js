@@ -2,11 +2,12 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-02-27 19:57:47
+  @Last Modified time: 2020-03-04 18:45:57
 \*----------------------------------------*/
 
 import React from 'react';
 import FixeWait from './../fixe/wait.js'
+import { getTranslations } from "./../../i18n/index.js";
 import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
 import { HardDisconnect } from "./../../api/users/methods.js";
@@ -14,11 +15,7 @@ import { errorHandler, successHandler } from './../../utilities/ui.js';
 
 const MenuFooter = ({isConnected, extensionInstalled}) => {
 	const [loading, setLoading] = React.useState(false);
-	
-	const T = i18n.createComponent("menus");
-	const T2 = i18n.createComponent("forms");
-	
-
+	const {C, C1} = getTranslations("menus", "forms");
 	const handleLogout = () => {
 		if(loading)return;
 		setLoading(true);
@@ -41,22 +38,22 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 							<ul className="menu menu--footer">
 								<li className="menu__item">
 									<a className="menu__item-link" href={FlowRouter.path("about")}>
-										<T>about</T>
+										<C>about</C>
 									</a>
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link" href={FlowRouter.path("contact", {type : "salut"})}>
-										<T>contact</T>
+										<C>contact</C>
 									</a>
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link" href={FlowRouter.path("about")+"#auteurs"}>
-										<T>authors</T>
+										<C>authors</C>
 									</a>
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link" href="#" onClick={installExtension}>
-										<T>download</T>
+										<C>download</C>
 									</a>
 								</li>
 								{
@@ -65,7 +62,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 											<a 	className="menu__item-link"
 												href={ FlowRouter.path("userProfile") }
 											>
-												<T>profile</T>
+												<C>profile</C>
 											</a>
 										</li>
 								}
@@ -75,7 +72,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 											{ loading && <FixeWait/> }
 											{ !loading && 
 												<a className="menu__item-link" href="#" onClick={handleLogout}>
-													<T2>logout.action</T2>
+													<C1>logout.action</C1>
 												</a>
 											}
 										</li>
@@ -102,7 +99,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 						<div className="column__content">
 							<ul className="menu menu--footer">
 								<li className="menu__item ">
-									<T>supportedBy</T>
+									<C>supportedBy</C>
 								</li>
 								<li className="menu__item ">
 									<a className="menu__item-link" target="_blank" href="http://www.arts-numeriques.culture.be/">
@@ -111,7 +108,7 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 								</li>
 								<li className="menu__item">
 									<a className="menu__item-link " target="_blank" href="https://www.patreon.com/bckspes">
-										<T>helpUs</T>
+										<C>helpUs</C>
 									</a>
 								</li>
 							</ul>

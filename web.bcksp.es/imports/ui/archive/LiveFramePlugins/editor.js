@@ -2,7 +2,7 @@
   bcksp.es - editor.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 16:35:54
-  @Last Modified time: 2020-02-16 15:16:54
+  @Last Modified time: 2020-03-02 18:06:42
 \*----------------------------------------*/
 
 import React from 'react';
@@ -10,14 +10,12 @@ import { successHandler, errorHandler } from './../../../utilities/ui.js';;
 
 export default ArchiveEditor = ({reload, children, caret, blocks, available, debug=false}) => {
 	const [ loading, setLoading ] = React.useState(false);
-	
 	React.useEffect(() => {//componentDidMount
 		document.querySelector(".bckspes-archive-editor").addEventListener("keydown", bckspEditHandler, true);
 		return () => {//componentWillUnmount
 			document.querySelector(".bckspes-archive-editor").removeEventListener("keydown", bckspEditHandler, true);
 		}
 	}, []);
-
 	const handleArchiveEdit = data => {
 		if(loading)return;
 		setLoading(true);
@@ -31,7 +29,6 @@ export default ArchiveEditor = ({reload, children, caret, blocks, available, deb
 
 		});
 	}
-
 	const getBlockRepresentation = ({text, startAt, stopAt}) => {
 		let selectedBlocks = [];
 		let charCounter = 0;
@@ -64,7 +61,6 @@ export default ArchiveEditor = ({reload, children, caret, blocks, available, deb
 		selectedBlocks = selectedBlocks.map(selectedBlock => _.omit(selectedBlock, "expend"));
 		return selectedBlocks;
 	}
-
 	const bckspEditHandler = event => {
 		if(		available
 			&&	event.keyCode == 8 // BACKSPACE

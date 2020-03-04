@@ -2,9 +2,9 @@
   bcksp.es - useAnimationFrame.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 16:45:02
-  @Last Modified time: 2020-02-02 20:21:28
+  @Last Modified time: 2020-03-02 17:27:42
 \*----------------------------------------*/
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 const useAnimationFrame = callback => {
 	// Use useRef for mutable variables that we want to persist
@@ -18,7 +18,7 @@ const useAnimationFrame = callback => {
 			let wait = callback(time);
 			nextRef.current = _.isNumber(wait) ? wait : 0; 
 		}
-		requestRef.current = requestAnimationFrame(animate);
+		requestRef.current = requestAnimationFrame(animate);	
 	}
 
 	React.useEffect(() => {

@@ -2,7 +2,7 @@
   bcksp.es - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2020-02-25 22:21:39
+  @Last Modified time: 2020-03-04 18:54:36
 \*----------------------------------------*/
 import React from 'react';
 import Blacklist from "./blacklist.js";
@@ -13,13 +13,13 @@ import BlindfieldType from "./blindfieldType.js";
 import Identification from "./identification.js";
 import ResetPasswordUI from "./resetPassword.js";
 import BlindfieldClass from "./blindfieldClass.js";
+import { getTranslations } from "./../../i18n/index.js";
 import { withTracker } from 'meteor/react-meteor-data';
 import PublishToPublicFeed from "./publishToPublicFeed.js";
 import { Settings } from './../../api/settings/settings.js';
 
 const UserProfile = ({isSettingsReady, settings})=>{
-	const T = i18n.createComponent("userprofile");
-
+	const {C} = getTranslations("userprofile");
 	const displaySetting = ()=>(
 		<div>
 			<PublishToPublicFeed settings={settings}/>
@@ -37,16 +37,24 @@ const UserProfile = ({isSettingsReady, settings})=>{
 		<div className="page__content">
 			<div className="container">
 				<div className="page__header">
-					<h1 className="page__title"><T>title</T></h1>
+					<h1 className="page__title">
+						<C>title</C>
+					</h1>
 				</div>
-				<h2 className="page__subtitle"><T>settings.title</T></h2>
+				<h2 className="page__subtitle">
+					<C>settings.title</C>
+				</h2>
 				{ isSettingsReady ? displaySetting() : <FixeWait/> }
-				<h2 className="page__subtitle"><T>identification.title</T></h2>
+				<h2 className="page__subtitle">
+					<C>identification.title</C>
+				</h2>
 				<Identification/>
 				<hr className="field-separator" />
 				<ResetPasswordUI/>
 				<hr className="field-separator" />
-				<h2 className="page__subtitle"><T>danger.title</T></h2>
+				<h2 className="page__subtitle">
+					<C>danger.title</C>
+				</h2>
 				<DeleteArchive/>
 				<hr className="field-separator" />
 				<DeleteAccount/>

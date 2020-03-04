@@ -2,11 +2,12 @@
   bcksp.es - blindfieldClass.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:16:39
-  @Last Modified time: 2020-01-29 13:30:00
+  @Last Modified time: 2020-03-04 18:49:21
 \*----------------------------------------*/
 
+import React from 'react';
 import FixeWait from "./../fixe/wait.js";
-import React, { useState, useEffect } from 'react';
+import { getTranslations } from "./../../i18n/index.js";
 import MyToggleButton from "./../shared/MyToggleButton.js";
 import { successHandler, errorHandler } from '../../utilities/ui.js';
 import {
@@ -15,19 +16,15 @@ import {
 } from '../../api/settings/methods.js';
 
 const BlindfieldClass = ({settings}) => {
-	const [ loading, setLoading ] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	
-	const T = i18n.createComponent("userprofile.settings.blindfield.class");
-  	const T2 = i18n.createTranslator("userprofile.settings.blindfield.class");
-  	
-  	useEffect(() => {//componentDidMount
+	const [ loading, setLoading ] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const {C, T} = getTranslations("userprofile.settings.blindfield.class");
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-
 	const handleToggleBlindfield = (type, classFlag, toggle) => {
 		if(loading)return;
 		setLoading(true);
@@ -39,7 +36,6 @@ const BlindfieldClass = ({settings}) => {
 		});
 		return false;
 	};
-
 	const handleBlindfieldClassSubmit = (event) => {
 		event.preventDefault();
 		let value;;
@@ -61,11 +57,11 @@ const BlindfieldClass = ({settings}) => {
 	
 	return (
 		<div>
-			<h2><T>title</T></h2>
+			<h2><C>title</C></h2>
 			<ul className="toggle-list">
 				<li>
 					<span className="input-wrapper--inline">
-						<T>desc</T>
+						<C>desc</C>
 					</span>
 				</li>
 				{ 
@@ -80,8 +76,8 @@ const BlindfieldClass = ({settings}) => {
 									<MyToggleButton
 										value={ true }
 										onToggle={ flag => handleToggleBlindfield(type, true, flag) }
-										activeLabel={T2("activeLabel")}
-										inactiveLabel={T2("inactiveLabel")}
+										activeLabel={T("activeLabel")}
+										inactiveLabel={T("inactiveLabel")}
 									/>
 								}
 							</span>

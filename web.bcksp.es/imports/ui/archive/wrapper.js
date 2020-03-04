@@ -2,27 +2,26 @@
   bcksp.es - wrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-12 21:36:19
-  @Last Modified time: 2020-02-14 11:23:21
+  @Last Modified time: 2020-03-03 15:29:55
 \*----------------------------------------*/
 
-
+import React from 'react';
 import LiveFrame from './LiveFrame.js';
-
-import React, { useEffect, useState } from 'react';
 import Tooltip from './../shared/tooltip.js';
 import Dropdown from './../shared/dropdown.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import PrivateArchiveWrapper from './privateArchiveWrapper.js';
 import PublicArchiveWrapper from './publicArchiveWrapper.js';
 import { Archives } from './../../api/archives/archives.js';
+import { getTranslations } from "./../../i18n/index.js";
 
 const ArchiveWrapper = ({ isConnected, type, ...other }) => {
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	const [flux, setFlux] = useState(Archives.Type.PUBLIC);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const {C, T} = getTranslations("archive");
+	const [flux, setFlux] = React.useState(Archives.Type.PUBLIC);
 	const fluxName = Archives.Type.getName(flux);
 	const otherFluxName = Archives.Type.getName(1-flux);
 	const fullScreen = FlowRouter.getRouteName() == "livefeed";
-
 	const switchFlux = event => {
 		event.preventDefault();
 		if(flux == Archives.Type.PRIVATE){
@@ -32,27 +31,24 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 		}
 		return false;
 	}
-
-	useEffect(() => {//componentDidMount
+	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-	const T2 = i18n.createTranslator("archive");
-	const T = i18n.createComponent(T2);
 	
 
 	return (
 		<div className={ `livestream-container ${(type ? " livestream-container--" + type : "")} ${(fullScreen ? " fullscreen" : "")} ${(isConnected ? " livestream-container--connected" : "")}` }>
 			<div className={ `livestream ${(type ? "livestream--" + type : "") }` }>
 				<div className="livestream__content">
-					<Dropdown active={isConnected} className="dropdown--livestream" label={T2(fluxName+".button")} data-tip data-for="dropdown-tooltip">
+					<Dropdown active={isConnected} className="dropdown--livestream" label={T(fluxName+".button")} data-tip data-for="dropdown-tooltip">
 						<ul className="dropdown__list">
 							<li className="dropdown__list-item">
 								<button className="dropdown__list-button" onClick={switchFlux}>
 									<span className="dropdown__list-button-label">
-										<T>{otherFluxName+".button"}</T>
+										<C>{otherFluxName+".button"}</C>
 									</span>
 								</button>
 							</li>
@@ -77,7 +73,7 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 
 			</div>
 			<Tooltip id="dropdown-tooltip">
-				<T>{fluxName+".tooltip"}</T>
+				<C>{fluxName+".tooltip"}</C>
 			</Tooltip>
 		</div>
 	);

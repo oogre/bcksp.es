@@ -2,7 +2,7 @@
   bcksp.es - confirm.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 15:35:04
-  @Last Modified time: 2020-02-26 17:35:19
+  @Last Modified time: 2020-02-29 15:46:10
 \*----------------------------------------*/
 import { Session } from "meteor/session";
 import { config } from './../startup/config.js';
@@ -26,6 +26,13 @@ export function getDate(){
     dt.getMinutes().toString().padStart(2, '0')}:${
     dt.getSeconds().toString().padStart(2, '0')}`;
 }
+export function propertiesToObject (properties){
+	const obj = {};
+	properties.map(k=>{
+		buildObjectFromStringKey(obj, k, k);	
+	});
+	return obj;
+}
 
 export function buildObjectFromStringKey(obj, is, value){
 	if (typeof is == 'string')
@@ -38,6 +45,22 @@ export function buildObjectFromStringKey(obj, is, value){
 		obj[is[0]] = obj[is[0]] || {};
 		return buildObjectFromStringKey(obj[is[0]], is.slice(1), value);
 	}
+}
+
+export function propertiesToArray(obj) {
+	const isObject = val => typeof val === 'object' && !Array.isArray(val);
+	const addDelimiter = (a, b) => a ? `${a}.${b}` : b;
+	const paths = (obj = {}, head = '') => {
+		return Object.entries(obj)
+				.reduce((product, [key, value]) => {
+					let fullPath = addDelimiter(head, key)
+					return isObject(value) ? 
+						product.concat(paths(value, fullPath))
+					: 
+						product.concat(fullPath)
+				}, []);
+	}
+	return paths(obj);
 }
 
 export function isVisible(elem) {

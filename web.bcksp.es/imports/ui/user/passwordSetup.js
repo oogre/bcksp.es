@@ -2,27 +2,25 @@
   dev - enrollment.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-20 13:29:36
-  @Last Modified time: 2020-02-05 13:57:13
+  @Last Modified time: 2020-03-04 18:53:43
 \*----------------------------------------*/
 
+import React from 'react';
 import ReactModal from 'react-modal';// https://reactcommunity.org/react-modal/
 import FixeWait from '../fixe/wait.js';
 import FixeError from '../fixe/error.js';
 import { useForm } from 'react-hook-form';
 import { config } from '../../startup/config.js';
-import React, { useState, useEffect } from 'react';
+import { getTranslations } from "./../../i18n/index.js";
 import { successHandler, errorHandler } from './../../utilities/ui.js';
 
 ReactModal.setAppElement('body');
 
 const UserPasswordSetup = ({token, onComplete}) => {
-	const [ loading, setLoading ] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
+	const [ loading, setLoading ] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
 	const { register, handleSubmit, errors, setError, triggerValidation, watch} = useForm();
-	const T = i18n.createComponent("forms.resetPassword");
-	const T2 = i18n.createTranslator("forms.resetPassword");
-	const Terror = i18n.createTranslator("errors");
-	
+	const {C, T, E} = getTranslations("forms.resetPassword");
 	const onSubmitHandler = ({password}) => {
   		if(loading)return;
 		setLoading(true);
@@ -40,7 +38,7 @@ const UserPasswordSetup = ({token, onComplete}) => {
 		})
   	};
 
-  	useEffect(() => {//componentDidMount
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
@@ -95,7 +93,7 @@ const UserPasswordSetup = ({token, onComplete}) => {
 										htmlFor="password"
 										className="field__label"
 									>
-										<T>password</T>
+										<C>password</C>
 									</label>
 									<input 
 										autoComplete="off"
@@ -105,15 +103,15 @@ const UserPasswordSetup = ({token, onComplete}) => {
 										name="password"
 										ref={register({
 											required: {
-												message: Terror("password.required")
+												message: E("password.required")
 											},
 											maxLength: {
 												value : config.user.password.length.max,
-												message : Terror("password.max-string", {length : config.user.password.length.max})
+												message : E("password.max-string", {length : config.user.password.length.max})
 											}, 
 											minLength: {
 												value : config.user.password.length.min,
-												message : Terror("password.min-string", {length : config.user.password.length.min})
+												message : E("password.min-string", {length : config.user.password.length.min})
 											}
 										})}
 									/>
@@ -131,7 +129,7 @@ const UserPasswordSetup = ({token, onComplete}) => {
 											htmlFor="passwordConfirm"
 											className="field__label"
 										>
-											<T>passwordConfirm</T>
+											<C>passwordConfirm</C>
 										</label>
 										<input 
 											autoComplete="off"
@@ -140,7 +138,7 @@ const UserPasswordSetup = ({token, onComplete}) => {
 											type="password"
 											name="passwordConfirm"
 											ref={register({
-												validate: value => value === watch('password') || Terror("passwordConfirm.no-match")
+												validate: value => value === watch('password') || E("passwordConfirm.no-match")
 											})}
 										/>
 										{ 
@@ -152,7 +150,7 @@ const UserPasswordSetup = ({token, onComplete}) => {
 									</div>
 							</div>
 							<div className="fields-row">
-								{ !loading && <input type="submit" className="button button--primary" name="submit" value={T2("submit")}/> }
+								{ !loading && <input type="submit" className="button button--primary" name="submit" value={T("submit")}/> }
 								{ loading && <FixeWait/> }
 							</div>
 						</form>

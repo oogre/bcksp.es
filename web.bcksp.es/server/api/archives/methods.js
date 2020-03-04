@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:30:22
-  @Last Modified time: 2020-02-25 22:22:26
+  @Last Modified time: 2020-03-04 19:28:40
 \*----------------------------------------*/
 import { Blocks } from './archives.js';
 import { Meteor } from 'meteor/meteor';
@@ -139,12 +139,12 @@ export const ArchiveClear = new ValidatedMethod({
 			}
 		});
 		
-		const T2 = i18n.createTranslator("userprofile.danger.deleteArchive.confirmation");
+		const T = i18n.createTranslator("methods.user.deleteArchive.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}
@@ -182,13 +182,13 @@ export const ArchiveDownload = new ValidatedMethod({
 				count : data.count
 			})
 		];
-		const T2 = i18n.createTranslator("souvenir.item.download.confirmation");
+		const T = i18n.createTranslator("methods.archive.download.success");
 		return {
 			success : true,
 			data : file,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}
@@ -286,12 +286,12 @@ export const ArchiveEdit = new ValidatedMethod({
 			});
 		}
 
-		const T2 = i18n.createTranslator("archive.edit.confirmation");
+		const T = i18n.createTranslator("methods.archive.edit.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}

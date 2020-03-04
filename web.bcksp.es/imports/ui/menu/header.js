@@ -2,11 +2,10 @@
   bcksp.es - header.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:19:59
-  @Last Modified time: 2020-01-28 22:04:23
+  @Last Modified time: 2020-03-02 17:56:51
 \*----------------------------------------*/
-import MenuMain from './main.js';
 import React from 'react';
-
+import MenuMain from './main.js';
 
 const MenuHeader = ({noMain}) => {
 	return (

@@ -2,10 +2,10 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-02-24 23:07:53
+  @Last Modified time: 2020-03-02 17:58:56
 \*----------------------------------------*/
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
 import { config } from './../../startup/config.js';
@@ -19,9 +19,8 @@ const PrivateArchiveWrapper = ({Renderer, resetSubscription, seeMore, handle, ar
 	archive.blocks = archive?.blocks || [];
 	archive.blockIds = archive?.blockIds || [];
 	archive.blockLength = archive?.blockLength || 0;
-	
-	const blocksRef = useRef([]);
-	const streamRef = useRef([]);
+	const blocksRef = React.useRef([]);
+	const streamRef = React.useRef([]);
 	//const timerRef = useRef([]);
 	const reload = () => {
 		blocksRef.current = [];
@@ -35,16 +34,13 @@ const PrivateArchiveWrapper = ({Renderer, resetSubscription, seeMore, handle, ar
 					.sort(function(a, b) {
 							return archive.blockIds.indexOf(a._id) - archive.blockIds.indexOf(b._id);
 					});
-
-	useEffect(() => {//componentDidMount
+	React.useEffect(() => {//componentDidMount
 		resetSubscription();
 		return () => {//componentWillUnmount
 			handle.stop();
 			//Meteor.clearTimeout(timerRef.current);
 		}
 	}, []); 
-
-
 	
 	return (
 		<Renderer	

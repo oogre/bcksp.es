@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-02-25 17:04:02
+  @Last Modified time: 2020-03-04 18:37:45
 \*----------------------------------------*/
 
 import React from 'react';
@@ -12,6 +12,7 @@ import { config } from './../../../../startup/config.js';
 import ArchiveWrapper from './../../../archive/wrapper.js';
 import GeneratorPoster from './../../../generator/poster.js';
 import { errorHandler } from './../../../../utilities/ui.js';
+import { getTranslations } from "./../../../../i18n/index.js";
 import { successHandler } from './../../../../utilities/ui.js';
 
 
@@ -20,14 +21,12 @@ const SouvenirItemPosterCreation  = () => {
 	const posterGeneratorRef = React.useRef()
 	const [ loading, setLoading ] = React.useState(false);
 	const [ locale, setLocale ] = React.useState(i18n.getLocale());
-	const T = i18n.createComponent("souvenir.item.poster");
-  	const T2 = i18n.createTranslator("souvenir.item.poster");
+	const {C} = getTranslations("souvenir.item.poster");
   	const setSelection = (selection)=> {
 		if(!_.isEmpty(selection.content)){
 			posterGeneratorRef.current.setSentence(selection.content);	
 		}
 	};
-
   	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
@@ -62,7 +61,7 @@ const SouvenirItemPosterCreation  = () => {
 			<div className="container">
 				<div className="page__header">
 					<h1 className="page__title">
-						<T>title</T>
+						<C>title</C>
 					</h1>
 				</div>
 				<div className="shop">

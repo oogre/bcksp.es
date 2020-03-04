@@ -2,7 +2,7 @@
   bcksp.es - meteor.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 16:12:39
-  @Last Modified time: 2020-01-29 12:47:16
+  @Last Modified time: 2020-03-02 18:00:54
 \*----------------------------------------*/
 import {checkUserLoggedIn} from "./validation.js";
 

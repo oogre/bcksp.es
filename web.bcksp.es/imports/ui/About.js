@@ -2,42 +2,44 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-02-17 13:31:08
+  @Last Modified time: 2020-03-03 15:21:48
 \*----------------------------------------*/
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AboutPress from './about/press.js';
 import AboutArtists from './about/artists.js';
 import { config } from './../startup/config.js'
+import { nf } from "./../utilities/math.js";
 import YoutubeEmbed from './shared/youtubeEmbed.js';
 import GalleryKenBurns from './gallery/kenBurns.js';
 import { scrollTo } from './../utilities/ui.js';
-
+import { getTranslations } from "./../i18n/index.js";
 // App component - represents the whole app
 const About = () => {
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	
-	useEffect(() => {//componentDidMount
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const {C, T} = getTranslations("about");
+	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
 
-	const T2 = i18n.createTranslator("about");
-	const T = i18n.createComponent(T2);
+	
 	return (
 		<div className="page__content">
 			<div className="container">
 				<div className="page__header">
-					<h1 className="page__title"><T>title</T></h1>
+					<h1 className="page__title">
+						<C>title</C>
+					</h1>
 				</div>
 			
 				<div className="about--long">
 					<div className="about__content">
 						<YoutubeEmbed youtubeID="hGB58ybRoJU" className="container"/>
 						{
-							Object.values(T2("long")).map((article, k) => (
+							Object.values(T("long")).map((article, k) => (
 								<div key={k} className="text-block">
 									{
 										article?.title &&
@@ -60,15 +62,15 @@ const About = () => {
 												{
 													subarticle?.text &&
 													<p>
-														<T 	bookMaxChar={config.book.getMaxChar()} 
-															bookMaxPage={config.book.page.count} 
+														<C 	bookMaxChar={nf(config.book.getMaxChar())} 
+															bookMaxPage={nf(config.book.page.count)} 
 															download={FlowRouter.path("downloadArchive")}
 															money={FlowRouter.path("about")+"#money"}
 															deletion={FlowRouter.path("about")+"#deletion"}
 															souvenir={FlowRouter.path("souvenir")}
 														>
 															{"long."+k+".content."+k2+".text"}
-														</T>
+														</C>
 													</p>
 												}
 											</div>

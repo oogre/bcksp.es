@@ -2,29 +2,27 @@
   bcksp.es - blacklist.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:12:11
-  @Last Modified time: 2020-01-28 22:59:29
+  @Last Modified time: 2020-03-04 18:48:34
 \*----------------------------------------*/
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import FixeWait from "./../fixe/wait.js";
+import { getTranslations } from "./../../i18n/index.js";
 import MyToggleButton from "./../shared/MyToggleButton.js";
 import { successHandler, errorHandler } from '../../utilities/ui.js';
 import { SettingsBlacklistRemove } from '../../api/settings/methods.js';
 
 
 const Blacklist = ({settings}) => {
-	const [ loading, setLoading ] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
+	const [ loading, setLoading ] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
 	
-	const T = i18n.createComponent("userprofile.settings");
-  	const T2 = i18n.createTranslator("userprofile.settings");
-  	
-  	useEffect(() => {//componentDidMount
+	const {C, T} = getTranslations("userprofile.settings");
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
-	}, []); 
-
+	}, []);
 	const handleToggleBlacklist = (url) => {
 		if(loading)return;
 		setLoading(true);
@@ -40,13 +38,13 @@ const Blacklist = ({settings}) => {
 		<div>
 			<h2>
 			{
-				_.isEmpty(settings.blacklist) ? <T>noBlacklist.title</T> : <T>blacklist.title</T>
+				_.isEmpty(settings.blacklist) ? <C>noBlacklist.title</C> : <C>blacklist.title</C>
 			}
 			</h2>
 			<ul className="toggle-list">
 				<li>
 					<span className="input-wrapper--inline">
-						<T>noBlacklist.desc</T>
+						<C>noBlacklist.desc</C>
 					</span>
 				</li>
 				{ 
@@ -67,8 +65,8 @@ const Blacklist = ({settings}) => {
 								<MyToggleButton
 									value={ true }
 									onToggle={flag=>handleToggleBlacklist(url, flag)}
-									activeLabel={T2("blacklist.activeLabel")}
-									inactiveLabel={T2("blacklist.inactiveLabel")}
+									activeLabel={T("blacklist.activeLabel")}
+									inactiveLabel={T("blacklist.inactiveLabel")}
 								/>
 							</span>
 						</li>

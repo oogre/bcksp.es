@@ -2,10 +2,10 @@
   bcksp.es - fullscreen.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 18:08:36
-  @Last Modified time: 2020-02-16 15:28:21
+  @Last Modified time: 2020-03-03 15:28:59
 \*----------------------------------------*/
 import React from 'react';
-
+import { getTranslations } from "./../../../i18n/index.js";
 export default ArchiveFullscreen = ({children, available}) => {
 
 	React.useEffect(() => {//componentDidMount
@@ -16,11 +16,9 @@ export default ArchiveFullscreen = ({children, available}) => {
 			document.removeEventListener("keyup", closeFullScreenHandler, true);
 		}
 	}, []);
-
-	const T = i18n.createComponent("archive");
+	const {C} = getTranslations("archive");
 	const isFullscreenActivated = FlowRouter.getRouteName() == "livefeed";
 	const path = FlowRouter.path(isFullscreenActivated ? "home" : "livefeed");
-
 	const closeFullScreenHandler = event => {
 		if(		available
 			&& 	isFullscreenActivated
@@ -39,7 +37,7 @@ export default ArchiveFullscreen = ({children, available}) => {
 				className="liveframe__fullscreen button--unstyled" 
 			>
 				<span className="sr-only">
-					<T>fullscreen.button</T>
+					<C>fullscreen.button</C>
 				</span>
 				<svg className="liveframe__fullscreen-icon" width="30" height="30" viewBox="0 0 41 40" xmlns="http://www.w3.org/2000/svg">
 					<g fill="#000" fillRule="nonzero">

@@ -2,20 +2,18 @@
   bcksp.es - share.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 17:16:05
-  @Last Modified time: 2020-02-20 21:09:19
+  @Last Modified time: 2020-03-02 18:07:38
 \*----------------------------------------*/
 import React from 'react';
 
 export default ArchiveSelector = React.forwardRef( ({caret, onSelect, autoSelect, children, available}, ref) => {
 	const fullySelectedRef = React.useRef(false);
-
 	React.useImperativeHandle(ref, () => ({
 		setCaret: caret => {
 			if(!available) return;
 			caret.onCaretChange( caretChangeHandler );
 		}
 	}));
-
 	React.useEffect(() => {//componentDidMount
 		if(!available) return;
 		if(!_.isObject(autoSelect))return;
@@ -32,7 +30,6 @@ export default ArchiveSelector = React.forwardRef( ({caret, onSelect, autoSelect
 			position : [0, 0]
 		});
 	}, [children]);
-
 	const caretChangeHandler = event => {
 		if(!available) return;
 		let content = event.selectedText || "";

@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-26 16:34:13
-  @Last Modified time: 2020-02-27 19:52:34
+  @Last Modified time: 2020-03-04 19:31:34
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -51,11 +51,13 @@ export const LanguagesAddTranslation = new ValidatedMethod({
 				if (err) throw err;
 			});
 		});
+
+		const T = i18n.createTranslator("methods.languages.translation.add.success");
 		return {
 			success : true,
 			message : {
-				title : "merci",
-				content : "les données ont été enregistrée"
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}

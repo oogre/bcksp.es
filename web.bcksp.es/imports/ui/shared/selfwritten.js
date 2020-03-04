@@ -2,10 +2,10 @@
   bcksp.es - selfwritten.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 16:45:02
-  @Last Modified time: 2020-02-27 21:42:27
+  @Last Modified time: 2020-03-02 17:47:57
 \*----------------------------------------*/
 import React from 'react';
-import { lerp } from './../../utilities/math.js';
+import { random } from './../../utilities/math.js';
 import useAnimationFrame from './useAnimationFrame.js';
 
 
@@ -52,6 +52,10 @@ const FakeInput = ({ value }) => {
 }
 
 const SelfWritten = ({ textArray }) => {
+	React.useEffect(() => {
+		cursorRef.current = 0;
+		contentRef.current = textArray[cursorRef.current];
+	}, [textArray]); 
 	const [step, setStep] = React.useState(0)
 	const cursorRef = React.useRef(0);
 	const waitRef = React.useRef(200);
@@ -62,13 +66,14 @@ const SelfWritten = ({ textArray }) => {
 	const currentDist = contentRef.current.indexOf("^");
 	const nextDist = getNext().indexOf("^");
 	const deltaCaretPos = currentDist - nextDist;
+	
 	waitRef.current = 200;
 	if(deltaCaretPos > 0){ // goLeft
 		const currentDistToEnd = contentRef.current.length - currentDist;
 		const nextDistToEnd = getNext().length - nextDist;
 		if(currentDistToEnd == nextDistToEnd){
 			contentRef.current = backspace(contentRef.current);
-			waitRef.current = 250 * lerp(1.0, 1.5, Math.random());
+			waitRef.current = 250 * random(1.0, 1.5);
 		}else{
 			contentRef.current = goLeft(contentRef.current);
 		}
@@ -77,12 +82,12 @@ const SelfWritten = ({ textArray }) => {
 			contentRef.current = goRight(contentRef.current);
 		}else{
 			contentRef.current = write(contentRef.current, getNext().charAt(currentDist));
-			waitRef.current = 250 * lerp(0.5, 1.5, Math.random());
+			waitRef.current = 250 * random(0.5, 1.5);
 		}
 	}else{ // next
 		cursorRef.current += 1;
 		cursorRef.current %= textArray.length;
-		waitRef.current = 2000 * lerp(0.5, 1.5, Math.random());
+		waitRef.current = 2000 * random(0.5, 1.5);
 	}
 
 	useAnimationFrame(time => {

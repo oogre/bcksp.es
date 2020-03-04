@@ -2,13 +2,13 @@
   bcksp.es - indentification.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:25:59
-  @Last Modified time: 2020-01-28 23:10:16
+  @Last Modified time: 2020-03-04 18:52:27
 \*----------------------------------------*/
-
+import React from 'react';
 import FixeWait from "./../fixe/wait.js";
 import { useForm } from 'react-hook-form';
 import FixeError from './../fixe/error.js';
-import React, { useEffect, useState } from 'react';
+import { getTranslation } from "./../../i18n/index.js";
 import { regexp } from './../../utilities/validation.js';
 import { UpdateEmail } from './../../api/users/methods.js';
 import { getEmailOfCurrentUser } from './../../utilities/meteor.js';
@@ -17,24 +17,18 @@ import { successHandler, errorHandler } from './../../utilities/ui.js';
 let defaultEmail;
 
 const Identification = () => {
-	const [ loading, setLoading ] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	
-	const T = i18n.createComponent("userprofile.identification.email");
-  	const T2 = i18n.createTranslator("userprofile.identification.email");
-  	const Terror = i18n.createTranslator("errors");
-  	
+	const [ loading, setLoading ] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const {C, T, E} = getTranslations("userprofile.identification.email");
 	const { register, watch, handleSubmit, errors, setError, triggerValidation} = useForm();
   	const email = watch("email", getEmailOfCurrentUser());
-  	
-  	useEffect(() => {//componentDidMount
+  	React.useEffect(() => {//componentDidMount
   		i18n.onChangeLocale(setLocale);
   		defaultEmail = getEmailOfCurrentUser();
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-  	
 	const updateEmailHandler = data => {
 		if(loading)return;
 		setLoading(true);
@@ -53,7 +47,7 @@ const Identification = () => {
 		<form  onSubmit={handleSubmit(updateEmailHandler)}>
 			<div className="field field--profile">
 				<label className="field__label" htmlFor="email">
-					<T>label</T>
+					<C>label</C>
 				</label>
 				
 				<div>
@@ -68,11 +62,11 @@ const Identification = () => {
 							onChange={async () => triggerValidation("email") }
 							ref={register({
 								required: {
-									message: Terror("email.required")
+									message: E("email.required")
 								},
 								pattern: {
 									value: regexp.email,
-									message: Terror("email.not-an-email")
+									message: E("email.not-an-email")
 								}
 							})}
 						/>

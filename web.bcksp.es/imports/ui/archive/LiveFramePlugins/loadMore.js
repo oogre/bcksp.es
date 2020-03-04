@@ -2,32 +2,28 @@
   bcksp.es - loadMore.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-15 17:51:35
-  @Last Modified time: 2020-02-21 19:44:17
+  @Last Modified time: 2020-03-02 18:07:26
 \*----------------------------------------*/
 import React from 'react';
 import { isVisible } from './../../../utilities/ui.js';
 
 export const ArchiveLoadMoreButton = React.forwardRef( ({seeMore}, ref) => {
 	const loadMoreElement = React.useRef();
-	
 	const loadMoreHandler = event => {
 		event.preventDefault();
 		seeMore();
 		return false;
 	}
-
 	React.useEffect(() => {//componentDidMount
 		loadMoreElement.current = document.querySelector(".bcksp-load-more");
 		return () => {//componentWillUnmount
 		}
 	}, []);
-
 	React.useImperativeHandle(ref, () => ({
 		isVisible: () => {
 			return !(loadMoreElement.current) || isVisible(loadMoreElement.current)
 		}
 	}));
-
 	return (
 		<button className="bcksp-load-more" onClick={loadMoreHandler}> >>> </button>
 	);

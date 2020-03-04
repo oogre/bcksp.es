@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-26 12:10:54
-  @Last Modified time: 2020-02-07 21:08:21
+  @Last Modified time: 2020-03-04 19:18:01
 \*----------------------------------------*/
 
 import { Meteor } from 'meteor/meteor';
@@ -48,12 +48,12 @@ export const SettingsTogglePublishToPublicFeed = new  ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.settings.publishToPublicFeed.confirmation");
+		const T = i18n.createTranslator("methods.settings.publicFeed.success");
 		return {
 			success : true,
 			message : {
-				title : T2((mySettings.publishToPublicFeed ? "disactive" : "active") +".title"),
-				content : T2((mySettings.publishToPublicFeed ? "disactive" : "active") +".content")
+				title : T((mySettings.publishToPublicFeed ? "disactive" : "active") +".title"),
+				content : T((mySettings.publishToPublicFeed ? "disactive" : "active") +".content")
 			}
 		};
 	}
@@ -94,12 +94,12 @@ export const SettingsBlindFieldAdd = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.settings.blindfield.confirmation.add");
+		const T = i18n.createTranslator("methods.settings.blindfield.add.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content", {field : type})
+				title : T("title"),
+				content : T("content", {field : type})
 			}
 		};
 	}
@@ -140,12 +140,12 @@ export const SettingsBlindFieldRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.settings.blindfield.confirmation.remove");
+		const T = i18n.createTranslator("methods.settings.blindfield.remove.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content", {field : type})
+				title : T("title"),
+				content : T("content", {field : type})
 			}
 		};
 	}
@@ -183,12 +183,12 @@ export const SettingsBlacklistAdd = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.settings.blacklist.confirmation.add");
+		const T = i18n.createTranslator("methods.settings.blacklist.add.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content", {URL : url})
+				title : T("title"),
+				content : T("content", {URL : url})
 			}
 		};
 	}
@@ -226,12 +226,12 @@ export const SettingsBlacklistRemove = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.settings.blacklist.confirmation.remove");
+		const T = i18n.createTranslator("methods.settings.blacklist.remove.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content", {URL : url})
+				title : T("title"),
+				content : T("content", {URL : url})
 			}
 		};
 	}

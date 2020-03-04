@@ -2,14 +2,14 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-02-23 14:04:02
-  @Last Modified time: 2020-02-25 17:09:27
+  @Last Modified time: 2020-03-04 19:34:47
 \*----------------------------------------*/
 import { Email } from 'meteor/email'
 import { Meteor } from 'meteor/meteor';
 import paypal from '@paypal/checkout-server-sdk';
 import {
 	checkDBReference, 
-	checkValidEmail,
+	checkEmail,
 	checkUserLoggedIn,
 	checkNumber,
 	checkString,
@@ -93,12 +93,12 @@ export const CreatePoster  = new ValidatedMethod({
 				html : getMail("posterConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
 			});
 
-			const T2 = i18n.createTranslator("souvenir.item.poster.confirmation");
+			const T = i18n.createTranslator("methods.souvenir.poster.order.success");
 			return {
 				success : true,
 				message : {
-					title : T2("title"),
-					content : T2("content", {orderID : orderID})
+					title : T("title"),
+					content : T("content", {orderID : orderID})
 				}
 			};
 		})
@@ -168,12 +168,12 @@ export const CreateBook = new ValidatedMethod({
 				html : getMail("bookConfirm", {orderID : orderID, link : FlowRouter.path("orderDetail", {id : orderID})})
 			});
 			
-			const T2 = i18n.createTranslator("souvenir.item.book.confirmation");
+			const T = i18n.createTranslator("methods.souvenir.book.order.success");
 			return {
 				success : true,
 				message : {
-					title : T2("title"),
-					content : T2("content", {orderID : orderID})
+					title : T("title"),
+					content : T("content", {orderID : orderID})
 				}
 			};
 		});
@@ -187,7 +187,7 @@ export const Contact = new ValidatedMethod({
 			checkUserLoggedIn();
 			data.email = getMainEmail(Meteor.user().emails);
 		}catch(e){
-			checkValidEmail(data.email, false, 'email');
+			checkEmail(data.email, 'email');
 		}
 		checkString(data.subject, 'subject');
 		checkString(data.message, 'message');
@@ -204,12 +204,12 @@ export const Contact = new ValidatedMethod({
 			subject : "NOUVEAU MESSAGE : " + email + " : " + subject, 
 			text : message, 
 		});
-		const T2 = i18n.createTranslator("souvenir.item.contact.confirmation");
+		const T = i18n.createTranslator("methods.souvenir.contact.order.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}

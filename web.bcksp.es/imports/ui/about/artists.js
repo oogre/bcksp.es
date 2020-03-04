@@ -2,15 +2,14 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2020-02-17 13:11:52
+  @Last Modified time: 2020-03-03 15:23:41
 \*----------------------------------------*/
 import React from 'react';
+import { getTranslations } from "./../../i18n/index.js";
 
 // App component - represents the whole app
 const AboutArtists = () => {
-	const T2 = i18n.createTranslator("artists");
-	const T = i18n.createComponent(T2);
-
+	const {C, T} = getTranslations("artists");
 	return (
 		<div className="artists">
 			<div className="container">
@@ -18,15 +17,17 @@ const AboutArtists = () => {
 
 				</div>
 				<div className="artists__column">
-					<a id={T2("title")} href={"#"+T2("title")} className="text-block__link--title">
+					<a id={T("title")} href={"#"+T("title")} className="text-block__link--title">
 						<h3 className="text-block__title artists__title">
-							<T>title</T>
+							<C>title</C>
 						</h3>
 					</a>
-					<p className="artists__intro"><T>intro</T></p>
+					<p className="artists__intro">
+						<C>intro</C>
+					</p>
 					<ul className="artists-list">
 						{
-							Object.values(T2("list")).map((artist, k) =>(
+							Object.values(T("list")).map((artist, k) =>(
 								<li className="artist" key={k} >
 									<h3 className="artist__name">{artist.name}</h3>
 									<ul className="artist__picture">
@@ -40,9 +41,9 @@ const AboutArtists = () => {
 										}
 									</ul>
 									<p className="artist__description">
-										<T>
+										<C>
 											{"list."+k+".bio"}
-										</T>
+										</C>
 									</p>
 									<ul className="artist__social-list">
 										{
@@ -52,7 +53,7 @@ const AboutArtists = () => {
 													<a className="artist__social-link" href={link} target="_blank">
 														<img alt="" src="/images/icons/icon-globe.svg"/>
 														<div className="sr-only">
-															<T>{"list."+k+".links."+k2}</T>
+															<C>{"list."+k+".links."+k2}</C>
 														</div>
 													</a>
 												</li>

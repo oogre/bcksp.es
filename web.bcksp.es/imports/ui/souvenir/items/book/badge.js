@@ -2,21 +2,21 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:27:09
-  @Last Modified time: 2020-02-24 20:00:31
+  @Last Modified time: 2020-03-04 18:30:43
 \*----------------------------------------*/
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Progress from "./../../../shared/progress.js";
 import { withTracker } from 'meteor/react-meteor-data';
 import { config } from './../../../../startup/config.js';
+import { getTranslations } from "./../../../../i18n/index.js";
 import { Archives } from './../../../../api/archives/archives.js';
 
 
 // App component - represents the whole app
 const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
-	const T = i18n.createComponent("souvenir.item.book");
-
-	useEffect(() => {//componentDidMount
+	const {C} = getTranslations("souvenir.item.book");
+	React.useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
 			handle && handle.stop();
 		}
@@ -37,8 +37,8 @@ const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
 				>
 					<img src="/images/souvenirs/book.png"/>
 				</Progress>
-				<span className="souvenir__link-title"><T>title</T></span>
-				<span className="souvenir__link-badge"><T amount={config.souvenir.book.basic.price.amount}>price</T></span>
+				<span className="souvenir__link-title"><C>title</C></span>
+				<span className="souvenir__link-badge"><C amount={config.souvenir.book.basic.price.amount}>price</C></span>
 			</a>
 		</li>
 

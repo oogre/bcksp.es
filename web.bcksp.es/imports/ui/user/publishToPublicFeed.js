@@ -2,31 +2,29 @@
   bcksp.es - publishToPublicFeed.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 19:51:28
-  @Last Modified time: 2020-01-28 23:43:53
+  @Last Modified time: 2020-03-04 18:55:19
 \*----------------------------------------*/
 
+import React from 'react';
 import FixeWait from "./../fixe/wait.js";
-import { config } from '../../startup/config.js'
-import React, { useState, useEffect } from 'react';
+import { nf } from "./../../utilities/math.js";
+import { config } from './../../startup/config.js'
+import { getTranslations } from "./../../i18n/index.js";
 import MyToggleButton from "./../shared/MyToggleButton.js";
-import { successHandler, errorHandler } from '../../utilities/ui.js';
-import { SettingsTogglePublishToPublicFeed } from '../../api/settings/methods.js';
+import { successHandler, errorHandler } from './../../utilities/ui.js';
+import { SettingsTogglePublishToPublicFeed } from './../../api/settings/methods.js';
 
 
 const PublishToPublicFeed = ({settings})=> {
-	const [loading, setLoading] = useState(false);
-	const [ locale, setLocale ] = useState(i18n.getLocale());
-	
-	const T = i18n.createComponent("userprofile.settings.publishToPublicFeed");
-  	const T2 = i18n.createTranslator("userprofile.settings.publishToPublicFeed");
-  	
-  	useEffect(() => {//componentDidMount
+	const [loading, setLoading] = React.useState(false);
+	const [ locale, setLocale ] = React.useState(i18n.getLocale());
+	const {C, T} = getTranslations("userprofile.settings.publishToPublicFeed");
+  	React.useEffect(() => {//componentDidMount
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-
 	const handleTogglePublishToPublicFeed = ()=>{
 		if(loading)return;
 		setLoading(true);
@@ -39,7 +37,9 @@ const PublishToPublicFeed = ({settings})=> {
 	}
 	return (
 		<div>
-			<h2><T>title</T></h2>
+			<h2>
+				<C>title</C>
+			</h2>
 			<ul className="toggle-list">
 				<li>
 					<span className="input-wrapper--inline">
@@ -48,15 +48,15 @@ const PublishToPublicFeed = ({settings})=> {
 							<MyToggleButton
 								value={ !settings.publishToPublicFeed }
 								onToggle={()=>handleTogglePublishToPublicFeed()}
-								activeLabel={T2("activeLabel")}
-								inactiveLabel={T2("inactiveLabel")}
+								activeLabel={T("activeLabel")}
+								inactiveLabel={T("inactiveLabel")}
 							/>
 						}
 					</span>
 				</li>
 				<li>
 					<span className="input-wrapper--inline">
-						<T maxCounter={config.archives.public.longBuffer.maxMaxLen}>desc</T>
+						<C maxCounter={nf(config.archives.public.longBuffer.maxMaxLen)}>desc</C>
 					</span>
 				</li>
 			</ul>

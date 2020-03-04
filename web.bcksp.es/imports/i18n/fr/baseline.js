@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2020-02-27 21:31:46
+  @Last Modified time: 2020-02-27 22:11:48
 \*----------------------------------------*/
 i18n.addTranslation('fr', "baseline", {
 	online : {

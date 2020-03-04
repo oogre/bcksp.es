@@ -2,7 +2,7 @@
   bcksp.es - paypal.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-17 23:23:50
-  @Last Modified time: 2020-02-25 17:03:13
+  @Last Modified time: 2020-03-04 19:01:09
 \*----------------------------------------*/
 
 import React from 'react';
@@ -11,6 +11,7 @@ import React from 'react';
 
 const Paypal = ({amount, onCreateOrder=()=>{}, onApproved=()=>{}, onCancel=()=>{}, onError=()=>{}}) => {
 	const onPaypalLoaded = event => {
+		if(!paypal)return;
 		event?.target?.removeEventListener("load", onPaypalLoaded, false);
 		paypal.Buttons({
 			createOrder: (data, actions) => {

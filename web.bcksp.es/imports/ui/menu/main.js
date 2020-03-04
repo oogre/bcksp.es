@@ -2,9 +2,11 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2020-02-27 19:56:51
+  @Last Modified time: 2020-03-04 18:29:16
 \*----------------------------------------*/
 import React from 'react';
+
+import { getTranslations } from "./../../i18n/index.js";
 import { withTracker } from 'meteor/react-meteor-data';
 import { installExtension } from "./../../utilities/ui.js";
 import { SetUserLang } from "./../../api/users/methods.js";
@@ -14,46 +16,37 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 	const [loading, setLoading] = React.useState(false);
 	const [mobileMenu, setMobileMenu] = React.useState(false);
 	const [langMenu, setLangMenu] = React.useState(false);
-	const T = i18n.createComponent("menus");
-
+	const {C} = getTranslations("menus");
 	React.useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
 			handle.stop();
 		}
 	}, []); 
-
 	const handleOpenMobileMenu = () => {
 		setMobileMenu(!this.state.mobileMenu);
 	}
-
 	const hasToDisplayDownloadBtn = () => {
 		return !extensionInstalled;
 	}
-
 	const hasToDisplayProfileBtn = ()=>{
 		return isConnected && extensionInstalled;
 	}
-
 	const isActive = route => {
 		if(FlowRouter.current().route.name == route)return " active";
 		return "";
 	}
-
 	const isMobile = () => {
 		if(mobileMenu)return " visible";
 		return "";
 	}
-
 	const toggleLangMenu = event => {
 		event.preventDefault();
 		setLangMenu(!langMenu);
 		return false;
 	}
-
 	const closeLangMenu = () =>{
 		setLangMenu(false);
 	}
-
 	const setLangHandler = event => {
 		event.preventDefault();
 		const lang = event.target.getAttribute("data-lang");
@@ -75,7 +68,7 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 				<div className="bar"></div>
 				<div className="bar"></div>
 				<span className="sr-only">
-					<T>open</T>
+					<C>open</C>
 				</span>
 			</button>
 			<ul className={"menu menu--header" + isMobile()}>
@@ -83,14 +76,14 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 					<a 	className={"menu__item-link " + isActive("about")}
 						href={FlowRouter.path("about")}
 					>
-						<T>about</T>
+						<C>about</C>
 					</a>
 				</li>
 				<li className="menu__item">
 					<a 	className={"menu__item-link" + isActive("souvenir")}
 						href={FlowRouter.path("souvenir")}
 					>
-						<T>souvenir</T>
+						<C>souvenir</C>
 					</a>
 				</li>
 				{
@@ -99,7 +92,7 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 							<a 	className={"button button--primary" + isActive("download")}
 								onClick={installExtension}
 							>
-								<T>download</T>
+								<C>download</C>
 							</a>
 						</li>
 				}
@@ -109,7 +102,7 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 							<a 	className={"menu__item-link" + isActive("userProfile")}
 								href={ FlowRouter.path("userProfile") }
 							>
-								<T>profile</T>
+								<C>profile</C>
 							</a>
 						</li>
 				}
@@ -118,7 +111,7 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 						href="#"
 						onClick={toggleLangMenu}
 					>
-						<T>language</T>
+						<C>language</C>
 					</a>
 					{ 
 						langMenu && 

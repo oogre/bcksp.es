@@ -6,6 +6,7 @@
 \*----------------------------------------*/
 import React from 'react';
 import { lerp } from "./../../utilities/math.js";
+import { getTranslations } from "./../../i18n/index.js";
 
 const GeneratorPoster = React.forwardRef(({ className, shapes, disallowRegenerate }, ref) => {
 
@@ -22,15 +23,13 @@ const GeneratorPoster = React.forwardRef(({ className, shapes, disallowRegenerat
 			}
 		}
 	}));
-
+	const {C} = getTranslations("souvenir.item.poster");
 	const [sentence, setSentence] = React.useState("");
 	const [width, setWidth] = React.useState(210 * 2);
 	const [height, setHeight] = React.useState(297 * 2);
 	const [_shapes, setShapes] = React.useState(shapes||[]);
 	const ratio = sentence.length / 200;
 	const size = lerp(50, 10, Math.pow(ratio, 0.35));
-	const T = i18n.createComponent("souvenir.item.poster");
-
 	React.useEffect(() => {//componentDidMount
 		setShapes(shapes || createShapes(width, height));
 	}, []); 
@@ -114,7 +113,7 @@ const GeneratorPoster = React.forwardRef(({ className, shapes, disallowRegenerat
 							overflowWrap: "break-word",
 						}}
 					>
-						<T>text</T>
+						<C>text</C>
 					</div>
 				</div>
 				{

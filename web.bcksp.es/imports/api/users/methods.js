@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-02-25 22:20:59
+  @Last Modified time: 2020-03-04 19:22:52
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -85,12 +85,12 @@ export const HardDisconnect = new ValidatedMethod({
 				"services.resume.loginTokens" : null
 			}
 		});
-		const T2 = i18n.createTranslator("methods.user.HardDisconnect");
+		const T = i18n.createTranslator("methods.user.HardDisconnect.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : "",
+				title : T("title"),
+				content : T("content"),
 			}
 		};
 	}
@@ -127,12 +127,12 @@ export const ResetPassword = new ValidatedMethod({
 				"services.resume.loginTokens" : null
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.identification.password.confirmation");
+		const T = i18n.createTranslator("methods.user.resetPassword.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}
@@ -154,12 +154,12 @@ export const UpdateEmail = new ValidatedMethod({
 		Accounts.addEmail(Meteor.userId(), email);
 		Accounts.sendVerificationEmail(Meteor.userId(), email);
 
-		const T2 = i18n.createTranslator("userprofile.identification.email.confirmation");
+		const T = i18n.createTranslator("methods.user.updateEmail.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}
@@ -198,15 +198,13 @@ export const DestroyUser = new ValidatedMethod({
 	},
 	run() {
 		if (this.isSimulation)return;
-
 		Meteor.users.remove(Meteor.userId());
-		
-		const T2 = i18n.createTranslator("userprofile.danger.deleteAccount.confirmation");
+		const T = i18n.createTranslator("methods.user.deleteAccount.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}
@@ -264,12 +262,12 @@ export const SetUserLang = new ValidatedMethod({
 				updatedAt : new Date()
 			}
 		});
-		const T2 = i18n.createTranslator("userprofile.settings.language.confirmation");
+		const T = i18n.createTranslator("methods.user.language.success");
 		return {
 			success : true,
 			message : {
-				title : T2("title"),
-				content : T2("content")
+				title : T("title"),
+				content : T("content")
 			}
 		};
 	}

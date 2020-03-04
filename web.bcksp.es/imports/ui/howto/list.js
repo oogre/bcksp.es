@@ -2,7 +2,7 @@
   bcksp.es - list.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 18:56:40
-  @Last Modified time: 2020-02-25 15:16:09
+  @Last Modified time: 2020-03-04 18:45:37
 \*----------------------------------------*/
 
 
@@ -10,13 +10,12 @@
 import React from 'react';
 import HowtoStep from './step.js';
 import HowtoBadge from './badge.js';
+import { getTranslations } from "./../../i18n/index.js";
 import { installExtension } from "./../../utilities/ui.js";
 
 // App component - represents the whole app
 const HowtoList = ({}) => {
-	const T = i18n.createComponent("howto");
-	const T2 = i18n.createComponent("menus");
-
+	const {C, C1} = getTranslations("howto", "menus");
 	return (
 		<div className="container">
 			<ul id="howto" className="howto">
@@ -24,10 +23,10 @@ const HowtoList = ({}) => {
 					<HowtoStep k={0}>
 						<HowtoBadge url="/images/download.light.gif"/>
 						<div>
-							<h3 className="step__title"><span className="step__number">1.</span> <T>step.download.title</T></h3>
+							<h3 className="step__title"><span className="step__number">1.</span> <C>step.download.title</C></h3>
 							<div className="step__content">
-								<p><T>step.download.desc</T></p>
-								<button onClick={installExtension} className="button button--primary"><T2>download</T2></button>
+								<p><C>step.download.desc</C></p>
+								<button onClick={installExtension} className="button button--primary"><C1>download</C1></button>
 							</div>
 						</div>
 					</HowtoStep>
@@ -36,9 +35,9 @@ const HowtoList = ({}) => {
 					<HowtoStep k={1}>
 						<HowtoBadge url="/images/login.3.light.gif"/>
 						<div>
-							<h3 className="step__title"><span className="step__number">2.</span> <T>step.connect.title</T></h3>
+							<h3 className="step__title"><span className="step__number">2.</span> <C>step.connect.title</C></h3>
 							<div className="step__content">
-								<p><T>step.connect.desc</T></p>
+								<p><C>step.connect.desc</C></p>
 							</div>
 						</div>
 					</HowtoStep>
@@ -48,9 +47,9 @@ const HowtoList = ({}) => {
 					<HowtoStep k={2}>
 						<HowtoBadge url="/images/bcksp.es.gif"/>
 						<div className="step__content">
-							<h3 className="step__title"><span className="step__number">3.</span> <T>step.continue.title</T></h3>
+							<h3 className="step__title"><span className="step__number">3.</span> <C>step.continue.title</C></h3>
 							<div className="step__content">
-								<p><T>step.continue.desc</T></p>
+								<p><C>step.continue.desc</C></p>
 							</div>
 						</div>
 					</HowtoStep>
@@ -59,9 +58,9 @@ const HowtoList = ({}) => {
 					<HowtoStep k={3}>
 						<HowtoBadge url="/images/backsapce.2.light.gif"/>
 						<div>
-							<h3 className="step__title"><span className="step__number">4.</span> <T>step.souvenir.title</T></h3>
+							<h3 className="step__title"><span className="step__number">4.</span> <C>step.souvenir.title</C></h3>
 							<div className="step__content">
-								<p><T>step.souvenir.desc</T></p>
+								<p><C>step.souvenir.desc</C></p>
 							</div>
 						</div>
 					</HowtoStep>

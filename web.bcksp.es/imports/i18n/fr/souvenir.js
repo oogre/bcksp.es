@@ -2,7 +2,7 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2020-02-27 00:57:06
+  @Last Modified time: 2020-03-04 19:35:54
 \*----------------------------------------*/
 i18n.addTranslation('fr', "souvenir", {
 	title : 	"Rendez-vous à la boutique",
@@ -26,10 +26,6 @@ i18n.addTranslation('fr', "souvenir", {
 			file : {
 				name : "archive.bcksp.es",
 				content : "Date de création de votre archive : {$createdAt}\nDate de la dernière mise à jour de votre archive : {$updatedAt}\nQuantité de text de votre archive : {$count}\nVotre archive : \n{$content}"
-			},
-			confirmation : {
-				title : "Merci!",
-				content : "Votre demande de téléchargement à été prise en compte"
 			}
 		},
 		book : {
@@ -75,15 +71,9 @@ i18n.addTranslation('fr', "souvenir", {
 						label : "aucun accès possible",
 						description : "détruit après fabrication"
 					},
-				},
-				
-			},
-			confirmation : {
-				title : "Merci!",
-				content : "Votre commande à pour identifiant : {$orderID}"
+				}
 			}
 		},
-
 		poster : {
 			title : "créer un poster",
 			img : "/images/souvenirs/poster.jpg",
@@ -111,13 +101,8 @@ i18n.addTranslation('fr', "souvenir", {
 					"que l'on jette et nous observons<br/>"+
 					"les mouvements, les positions d'arrêt.<br/>"+
 					"De là, s'ouvre à nous un point de vue,<br/>"+
-					"nous accédons aux forces en présence.",
-			confirmation : {
-				title : "Merci!",
-				content : "Votre commande à pour identifiant : {$orderID}"
-			}
+					"nous accédons aux forces en présence."
 		},
-
 		contact : {
 			title : "Une demande particulière?",
 			img : "/images/souvenirs/contact.1.jpg",
@@ -133,13 +118,8 @@ i18n.addTranslation('fr', "souvenir", {
 				message : {
 					label : "Votre demande"
 				}
-			},
-			confirmation : {
-				title : "Merci!",
-				content : "Votre demande à été envoyé"
 			}
 		},
-		
 		almanach : {
 			title : "enchérir sur un almanach",
 			img : "/images/logo-animated.gif",
