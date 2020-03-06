@@ -43,19 +43,23 @@
   }
 
   &:before {
-    content: "#";
-    position: absolute;
-    left: -#{$size-48};
-    line-height: .5;
-    opacity: 0;
-    font-size: $size-48;
-    font-family: $font-title;
-    transition: opacity .2s $easeInOutCubic;
+    @include media-query("desktop") {
+      content: "#";
+      position: absolute;
+      left: -#{$size-48};
+      line-height: .5;
+      opacity: 0;
+      font-size: $size-48;
+      font-family: $font-title;
+      transition: opacity .2s $easeInOutCubic;
+    }
   }
 
   &:hover::before,
   &:focus::before {
-    opacity: 1;
+    @include media-query("desktop") {
+      opacity: 1;
+    }
   }
 }
 
