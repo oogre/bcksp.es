@@ -5,7 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.7",
+    "@babel/runtime": "^7.8.7",
     "@paypal/checkout-server-sdk": "^1.0.2",
     "bcrypt": "^3.0.8",
     "bezier-easing": "^2.1.0",
@@ -21,13 +21,14 @@
     "pdfkit": "^0.9.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-hook-form": "^4.4.8",
+    "react-hook-form": "^4.10.2",
     "react-html-email": "^3.0.0",
     "react-modal": "^3.11.1",
     "react-share": "^4.0.1",
     "react-slick": "^0.25.2",
     "react-toggle-button": "^2.2.0",
     "react-tooltip": "^3.11.2",
+    "rect-crop": "0.0.0",
     "underscore": "^1.9.2"
   },
   "devDependencies": {

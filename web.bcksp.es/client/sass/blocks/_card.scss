@@ -29,4 +29,12 @@
   padding: $size-30 $size-46;
   border: 1px solid #000;
   background: #fff;
+  display: flex;
+  align-items: center;
+}
+
+// Card step variation
+// ---------------------
+.card--step .card__content {
+  min-height: $size-318;
 }
