@@ -26,11 +26,15 @@
 .card__content {
   position: relative;
   z-index: z("card");
-  padding: $size-30 $size-46;
+  padding: $size-30 $size-20;
   border: 1px solid #000;
   background: #fff;
-  display: flex;
-  align-items: center;
+
+  @include media-query("medium") {
+    display: flex;
+    align-items: center;
+    padding: $size-30 $size-46;
+  }
 }
 
 // Card step variation
