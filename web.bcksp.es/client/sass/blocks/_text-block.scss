@@ -23,8 +23,11 @@
 
 .text-block__title {
   font-size: $size-48;
-  line-height: 0.5;
   text-transform: uppercase;
+
+  @include media-query("desktop") {
+    line-height: 0.5;
+  }
 
   // Small underline decoration
   @include titleDecoration();
