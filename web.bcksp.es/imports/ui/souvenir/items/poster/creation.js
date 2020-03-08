@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-03-04 18:37:45
+  @Last Modified time: 2020-03-08 22:26:43
 \*----------------------------------------*/
 
 import React from 'react';
@@ -17,7 +17,7 @@ import { successHandler } from './../../../../utilities/ui.js';
 
 
 
-const SouvenirItemPosterCreation  = () => {
+const SouvenirItemPosterCreation  = ({selectionRange}) => {
 	const posterGeneratorRef = React.useRef()
 	const [ loading, setLoading ] = React.useState(false);
 	const [ locale, setLocale ] = React.useState(i18n.getLocale());
@@ -28,6 +28,9 @@ const SouvenirItemPosterCreation  = () => {
 		}
 	};
   	React.useEffect(() => {//componentDidMount
+  		if(selectionRange?.quote){
+  			posterGeneratorRef.current.setSentence(selectionRange.quote);		
+  		}
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
@@ -72,8 +75,8 @@ const SouvenirItemPosterCreation  = () => {
 								fullscreenAvailable={false}
 								onSelect={setSelection}
 								autoSelect={{
-									startAt : 0,
-									stopAt : 30
+									startAt : selectionRange?.startOffset || 0,
+									stopAt : selectionRange?.endOffset || 30
 								}}
 							/>
 						</div>

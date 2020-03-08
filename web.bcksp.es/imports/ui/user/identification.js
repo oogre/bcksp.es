@@ -2,13 +2,13 @@
   bcksp.es - indentification.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:25:59
-  @Last Modified time: 2020-03-04 18:52:27
+  @Last Modified time: 2020-03-06 18:48:30
 \*----------------------------------------*/
 import React from 'react';
 import FixeWait from "./../fixe/wait.js";
 import { useForm } from 'react-hook-form';
 import FixeError from './../fixe/error.js';
-import { getTranslation } from "./../../i18n/index.js";
+import { getTranslations } from "./../../i18n/index.js";
 import { regexp } from './../../utilities/validation.js';
 import { UpdateEmail } from './../../api/users/methods.js';
 import { getEmailOfCurrentUser } from './../../utilities/meteor.js';
@@ -82,7 +82,7 @@ const Identification = () => {
 							<span className="input-wrapper--inline">
 								{ loading && <FixeWait/> }
 								{ !loading && 
-									<input className="button button--primary" type="submit" value={T2("submit")}/>
+									<input className="button button--primary" type="submit" value={T("submit")}/>
 								}
 							</span>
 					}

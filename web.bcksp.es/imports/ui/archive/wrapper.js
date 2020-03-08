@@ -2,7 +2,7 @@
   bcksp.es - wrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-12 21:36:19
-  @Last Modified time: 2020-03-03 15:29:55
+  @Last Modified time: 2020-03-08 20:41:14
 \*----------------------------------------*/
 
 import React from 'react';
@@ -15,19 +15,20 @@ import PublicArchiveWrapper from './publicArchiveWrapper.js';
 import { Archives } from './../../api/archives/archives.js';
 import { getTranslations } from "./../../i18n/index.js";
 
-const ArchiveWrapper = ({ isConnected, type, ...other }) => {
+const ArchiveWrapper = ({ isConnected, type, flux, ...other }) => {
 	const [ locale, setLocale ] = React.useState(i18n.getLocale());
 	const {C, T} = getTranslations("archive");
-	const [flux, setFlux] = React.useState(Archives.Type.PUBLIC);
 	const fluxName = Archives.Type.getName(flux);
 	const otherFluxName = Archives.Type.getName(1-flux);
 	const fullScreen = FlowRouter.getRouteName() == "livefeed";
 	const switchFlux = event => {
 		event.preventDefault();
 		if(flux == Archives.Type.PRIVATE){
-			setFlux(Archives.Type.PUBLIC)
+			//setFlux(Archives.Type.PUBLIC);
+			Session.set("flux", Archives.Type.PUBLIC)
 		}else if(isConnected && flux == Archives.Type.PUBLIC){
-			setFlux(Archives.Type.PRIVATE)
+			//setFlux(Archives.Type.PRIVATE)
+			Session.set("flux", Archives.Type.PRIVATE)
 		}
 		return false;
 	}
@@ -37,7 +38,6 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 			i18n.offChangeLocale(setLocale);
 		}
 	}, []); 
-	
 
 	return (
 		<div className={ `livestream-container ${(type ? " livestream-container--" + type : "")} ${(fullScreen ? " fullscreen" : "")} ${(isConnected ? " livestream-container--connected" : "")}` }>
@@ -59,7 +59,7 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 							<PublicArchiveWrapper {...other} Renderer={LiveFrame}/> 
 					}
 					{
-						flux == Archives.Type.PRIVATE && isConnected && 
+						flux == Archives.Type.PRIVATE && 
 							<PrivateArchiveWrapper {...other} Renderer={LiveFrame}/> 
 					}
 				</div>
@@ -77,11 +77,15 @@ const ArchiveWrapper = ({ isConnected, type, ...other }) => {
 			</Tooltip>
 		</div>
 	);
-	
 }
 
 export default withTracker(self => {
+	const isConnected = !!Meteor.userId();
+	_.isUndefined(Session.get("flux")) && Session.set("flux", Archives.Type.PUBLIC);
+	!isConnected && Session.get("flux") == Archives.Type.PRIVATE && Session.set("flux", Archives.Type.PUBLIC);
+	const flux = Session.get("flux");
 	return {
-		isConnected : !!Meteor.userId(),
+		flux : flux,
+		isConnected : isConnected,
 	};
 })(ArchiveWrapper);

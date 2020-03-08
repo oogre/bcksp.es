@@ -2,7 +2,7 @@
   bcksp.es - Stat.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 00:31:09
-  @Last Modified time: 2020-01-28 23:15:28
+  @Last Modified time: 2020-03-07 10:44:24
 \*----------------------------------------*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -57,15 +57,15 @@ const Stat = ({isReady, usersCounter, usersConnectedCounter, archive, orders}) =
 						</thead>
 						<tbody>
 						{
-						orders.map((order, k) => (
-							<tr key={k}>
-								<td><a href={FlowRouter.path("orderDetail", {id : order._id})}>{ order._id }</a></td>
-								<td>{ order.souvenir?._id || "undefined" }</td>
-								<td>{ order.souvenir?.type || "undefined" }</td>
-								<td>{ order.status }</td>
-							</tr>
-						))
-					}
+							orders.map((order, k) => (
+								<tr key={k}>
+									<td><a href={FlowRouter.path("orderDetail", {id : order._id})}>{ order._id }</a></td>
+									<td>{ order.souvenir?._id || "undefined" }</td>
+									<td>{ order.souvenir?.type || "undefined" }</td>
+									<td>{ order.status }</td>
+								</tr>
+							))
+						}
 					</tbody>
 				</table>
 			</div>
@@ -75,7 +75,7 @@ const Stat = ({isReady, usersCounter, usersConnectedCounter, archive, orders}) =
 
 export default withTracker(self => {
 	return {
-		isReady : Meteor.userId() && FlowRouter.subsReady("users.counter") && FlowRouter.subsReady("archive.public.counter") && FlowRouter.subsReady("order.all"),
+		isReady : FlowRouter.subsReady("users.counter") && FlowRouter.subsReady("archive.public.counter") && FlowRouter.subsReady("order.all"),
 		usersCounter : Counts.get("users.counter"),
 		usersConnectedCounter : Counts.get("users.connected.counter"),
 		orders : Orders.find({}).fetch().map(order=>order.populate()),

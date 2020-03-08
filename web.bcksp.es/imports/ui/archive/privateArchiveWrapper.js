@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-03-02 17:58:56
+  @Last Modified time: 2020-03-08 20:39:44
 \*----------------------------------------*/
 
 import React from 'react';
@@ -38,7 +38,6 @@ const PrivateArchiveWrapper = ({Renderer, resetSubscription, seeMore, handle, ar
 		resetSubscription();
 		return () => {//componentWillUnmount
 			handle.stop();
-			//Meteor.clearTimeout(timerRef.current);
 		}
 	}, []); 
 	

@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2020-03-04 18:29:16
+  @Last Modified time: 2020-03-07 10:28:51
 \*----------------------------------------*/
 import React from 'react';
 
@@ -12,16 +12,11 @@ import { installExtension } from "./../../utilities/ui.js";
 import { SetUserLang } from "./../../api/users/methods.js";
 import { successHandler, errorHandler } from './../../utilities/ui.js';
 
-const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
+const MenuMain = ( {extensionInstalled, isConnected} ) => {
 	const [loading, setLoading] = React.useState(false);
 	const [mobileMenu, setMobileMenu] = React.useState(false);
 	const [langMenu, setLangMenu] = React.useState(false);
 	const {C} = getTranslations("menus");
-	React.useEffect(() => {//componentDidMount
-		return () => {//componentWillUnmount
-			handle.stop();
-		}
-	}, []); 
 	const handleOpenMobileMenu = () => {
 		setMobileMenu(!this.state.mobileMenu);
 	}
@@ -138,10 +133,8 @@ const MenuMain = ( {extensionInstalled, isConnected, handle} ) => {
 	);
 }
 export default withTracker(self => {
-	let handle = Meteor.subscribe('user.language');
-	if(handle.ready()) i18n.setLocale(Meteor.user().lang);
+	Meteor.user()?.lang && i18n.setLocale(Meteor.user().lang);
 	return {
-		handle : handle,
 		isConnected : !!Meteor.userId(),
 		extensionInstalled : Session.get("extensionInstalled")
 	};

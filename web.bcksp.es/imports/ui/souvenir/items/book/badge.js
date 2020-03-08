@@ -2,7 +2,7 @@
   bcksp.es - badge.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 14:27:09
-  @Last Modified time: 2020-03-04 18:30:43
+  @Last Modified time: 2020-03-07 10:34:40
 \*----------------------------------------*/
 
 import React from 'react';
@@ -18,7 +18,7 @@ const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
 	const {C} = getTranslations("souvenir.item.book");
 	React.useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
-			handle && handle.stop();
+			handle.stop();
 		}
 	}, []);
 
@@ -46,10 +46,10 @@ const SouvenirItemBookBadge = ({isReady, handle, archive}) => {
 }
 
 export default withTracker(self => {
-	let handle = Meteor.userId() && Meteor.subscribe('archive.private.counter');
+	let handle = Meteor.subscribe('archive.private.counter');
 	return {
 		handle : handle,
-		isReady : handle && handle.ready(),
+		isReady : handle.ready(),
 		archive : Archives.findOne({
 			type : Archives.Type.PRIVATE,
 			owner : Meteor.userId()

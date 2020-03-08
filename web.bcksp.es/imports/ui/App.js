@@ -2,7 +2,7 @@
   bcksp.es - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-02-26 12:44:06
+  @Last Modified time: 2020-03-08 20:41:58
 \*----------------------------------------*/
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -34,19 +34,17 @@ const App = ({isConnected}) => {
 						</div>
 					</div>
 			}
-			{
-				<ArchiveWrapper type="home" onSelect={setSelection}/>
-			}
+			<ArchiveWrapper type="home" onSelect={setSelection}/>
 			<div className="about-parallax">
-				<div id="aboutParallaxContainer" className="about-parallax__background"></div>
-					<AboutShort/>
-					{
-						!isConnected && <HowtoList/>
-					}
+				<div id="aboutParallaxContainer" className="about-parallax__background">
+				</div>
+				<AboutShort/>
+				{
+					!isConnected && <HowtoList/>
+				}
 			</div>
 			{
-				!isConnected &&
-					<AboutPrivacy/>
+				!isConnected && <AboutPrivacy/>
 			}
 			<SouvenirPannel/>
 			{
@@ -60,9 +58,8 @@ const App = ({isConnected}) => {
 			}
 			{
 				_.isObject(selection) && sharePopupOpen && 
-					<SharePopup quote={selection.content} closeRequested={()=>{setSharePopupOpen(false);setSelection(false)}}/>
+					<SharePopup quote={selection} closeRequested={()=>{setSharePopupOpen(false);setSelection(false)}}/>
 			}
-			
 		</div>
 	);
 }

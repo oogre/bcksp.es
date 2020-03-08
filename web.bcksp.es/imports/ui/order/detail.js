@@ -2,7 +2,7 @@
   bcksp.es - detail.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-11 16:15:12
-  @Last Modified time: 2020-03-02 18:16:54
+  @Last Modified time: 2020-03-07 10:40:46
 \*----------------------------------------*/
 
 import React from 'react';
@@ -46,7 +46,7 @@ const OrderDetail = ({orders, isReady}) => {
 
 export default withTracker(self => {
 	return {
-		isReady : Meteor.userId() && FlowRouter.subsReady("order.get"),
+		isReady : FlowRouter.subsReady("order.get"),
 		orders : Orders.find({}).fetch().map(order=>order.populate())[0]
 	};
 })(OrderDetail);

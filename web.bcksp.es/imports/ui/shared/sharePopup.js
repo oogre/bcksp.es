@@ -2,7 +2,7 @@
   bcksp.es - sharePopup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-05 13:57:46
-  @Last Modified time: 2020-02-20 12:15:41
+  @Last Modified time: 2020-03-08 22:27:33
 \*----------------------------------------*/
 import React from 'react';
 import ReactModal from 'react-modal';// https://reactcommunity.org/react-modal/
@@ -16,7 +16,7 @@ ReactModal.setAppElement('body');
 
 const SharePopup = ({closeRequested, quote}) => {
 
-	quote = "We archive your deletion : " + quote;
+	const content = "We archive your deletion : " + quote.content;
 
 	const modalStyle = {
 		overlay : {
@@ -49,30 +49,53 @@ const SharePopup = ({closeRequested, quote}) => {
 			padding                    : '20px'
 		}
 	}
-	
+	console.log(quote);
 	return (
 		<ReactModal
 			isOpen={true}
 			style={modalStyle}
 			onRequestClose={ closeRequested }
 		>
-			<ul>
-				<li>
-					<FacebookShareButton url="https://bcksp.es" quote={quote}>
-						<FacebookIcon size={32} round={true}/>
-					</FacebookShareButton>
-				</li>
-				<li>
-					<RedditShareButton url="https://bcksp.es"  title={quote}>
-						<RedditIcon size={32} round={true}/>
-					</RedditShareButton>
-				</li>
-				<li>
-					<TwitterShareButton url="https://bcksp.es" title={quote}>
-						<TwitterIcon size={32} round={true}/>
-					</TwitterShareButton>
-				</li>
-			</ul>
+			<div className="page__content">
+				<div className="container">
+					<div className="page__header">
+						<h3 className="">
+							Passez le mot
+						</h3>
+					</div>
+					<div className="share">
+						<div className="share__content">
+							<p>
+								«{quote.content}»
+							</p>
+							<ul>
+								<li>
+									<a 	className={"menu__item-link"}
+										href={FlowRouter.path("posterCreation", {quote : quote.content , startOffset:quote.startOffset, endOffset:quote.endOffset})}
+									>
+										poster
+									</a>
+								</li>
+								<li>
+									<FacebookShareButton url="https://bcksp.es" quote={content}>
+										<FacebookIcon size={32} round={true}/>
+									</FacebookShareButton>
+								</li>
+								<li>
+									<RedditShareButton url="https://bcksp.es"  title={content}>
+										<RedditIcon size={32} round={true}/>
+									</RedditShareButton>
+								</li>
+								<li>
+									<TwitterShareButton url="https://bcksp.es" title={content}>
+										<TwitterIcon size={32} round={true}/>
+									</TwitterShareButton>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</ReactModal>
 	);
 }

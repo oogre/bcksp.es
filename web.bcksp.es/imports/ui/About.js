@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-03-03 15:21:48
+  @Last Modified time: 2020-03-06 18:45:49
 \*----------------------------------------*/
 
 import React from 'react';
@@ -68,6 +68,7 @@ const About = () => {
 															money={FlowRouter.path("about")+"#money"}
 															deletion={FlowRouter.path("about")+"#deletion"}
 															souvenir={FlowRouter.path("souvenir")}
+															userProfile={FlowRouter.path("userProfile")}
 														>
 															{"long."+k+".content."+k2+".text"}
 														</C>

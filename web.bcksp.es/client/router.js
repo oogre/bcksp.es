@@ -2,7 +2,7 @@
   bcksp.es - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-02-27 19:49:00
+  @Last Modified time: 2020-03-08 22:35:32
 \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -26,7 +26,8 @@
   
 FlowRouter.wait();
 Tracker.autorun(() => {
-    const subscribtion = Meteor.subscribe('getRoles');    
+    const subscribtion = Meteor.subscribe('getRoles'); 
+    const subscribtion2 = Meteor.subscribe('user.language');
     const shouldInitializeRouter = subscribtion.ready() && Roles.subscription.ready() && !FlowRouter._initialized; // eslint-disable-line no-underscore-dangle
     if (shouldInitializeRouter) {
         FlowRouter.initialize();
@@ -42,10 +43,10 @@ const loginRoutes = FlowRouter.group({
 	}]
 });
 
-const adminRoutes = FlowRouter.group({
+const adminRoutes = loginRoutes.group({
 	name : 'adminRoutes',
 	triggersEnter: [(context, redirect)=>{
-		if(!Meteor.userId() ||!Roles.userIsInRole(Meteor.userId(),['admin'])) {
+		if(!Roles.userIsInRole(Meteor.userId(),['admin'])) {
 			redirect(FlowRouter.path("home"));
 		}
 	}]
@@ -156,10 +157,18 @@ FlowRouter.route( '/souvenir/poster', {
 	}
 });
 
-FlowRouter.route( '/souvenir/poster/creation', {
+FlowRouter.route( '/souvenir/poster/creation/:startOffset?/:endOffset?/:quote?', {
 	name: 'posterCreation',
 	action( params ) {
-		render(<TemplateFull><SouvenirItemPosterCreation/></TemplateFull>, document.getElementById('render-target'));
+		let selectionRange;
+		if(params?.quote && params?.startOffset && params?.endOffset){
+			selectionRange = {
+				quote : params.quote, 
+				startOffset : params.startOffset, 
+				endOffset : params.endOffset
+			};
+		}
+		render(<TemplateFull><SouvenirItemPosterCreation selectionRange={selectionRange} /></TemplateFull>, document.getElementById('render-target'));
 		setupView();
 	},
 	subscriptions( params, queryParams ) {
@@ -171,7 +180,7 @@ FlowRouter.route( '/order/:id', {
 	name: 'orderDetail',
 	action( params ) {
 		render(<TemplateFull><OrderDetail id={params.id}/></TemplateFull>, document.getElementById('render-target'));
-		setupView();
+		FlowRouter.subsReady("order.get") && setupView();
 	},
 	subscriptions( params, queryParams ) {
 		this.register('order.get', Meteor.subscribe('order.get',  params.id));
@@ -194,7 +203,9 @@ loginRoutes.route("/profile", {
 	name: "userProfile",
 	action( params ) {
 		render(<TemplateFull><UserProfile/></TemplateFull>, document.getElementById('render-target'));
-		setupView();
+		Tracker.autorun(()=>{
+			FlowRouter.subsReady("settings.private") && setupView();	
+		});
 	},
 	subscriptions( params, queryParams ) {
 		this.register('settings.private', Meteor.subscribe('settings.private'));
@@ -242,6 +253,9 @@ adminRoutes.route("/stat", {
 	name: "stat",
 	action( params ) {
 		render(<TemplateFull><Stat/></TemplateFull>, document.getElementById('render-target'));
+		FlowRouter.subsReady("archive.public.counter") && 
+		FlowRouter.subsReady("users.counter") && 
+		FlowRouter.subsReady("order.all") && 
 		setupView();
 	},
 	subscriptions( params, queryParams ) {

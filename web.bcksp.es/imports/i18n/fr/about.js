@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-02-25 14:38:57
+  @Last Modified time: 2020-03-07 09:26:02
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -139,37 +139,63 @@ i18n.addTranslation('fr', "about", {
 			}]
 		}, { 
 			title : {
-				value : "sécurité",
+				value : "concrètement",
 				id : "security"
 			},
 			content : [{
-				text : 	"Nous garantissons que tout est fait "+
+				text :  "<ul>"+
+							"<li>"+
+								"Lorsque vous appuyez sur la touche backspace, avant que le texte ne soit supprimé, "+
+								"le code de l'extension se déclanche. Dans un premier temps, il vérifie si du texte sélectionné, "+
+								"à défaut il regarde le caractère se trouvant à gauche du curseur d'écriture. "+
+								"Dans les deux cas le texte qui va disparaitre est stocké dans une file d'attente. "+
+								"Six seconde après le dernier relachement de la touche backspace, la file d'attente "+
+								"est convertie en un bloc et est envoyée au serveur."+
+							"</li>"+
+							"<li>"+
+								"Toutes les données gérée par bcksp.es sont transférées de façon chiffrées "+
+								"via les protocols <a traget='_blank' href='https://fr.wikipedia.org/wiki/HyperText_Transfer_Protocol_Secure'>HTTPS</a> "+
+								"et <a traget='_blank' href='https://fr.wikipedia.org/wiki/WS-Security'>WSS</a>. "+
+								"Notre certificat SSL est produit par <a href='https://letsencrypt.org/fr/' target=\"_blank\">Let's Encryp</a> "+
+								"et est renouvelé tous les 3 mois."+
+							"</li>"+
+							"<li>"+
+								"Bcksp.es est hébergé chez <a traget='_blank' href='https://www.phpnet.org//'>phpnet</a> (rue Général Mangin 97-97 bis, 38100 GRENOBLE - France). "+
+								"Cette entreprise respecte la norme ISO 27001 en ce qui concerne la sécurité informatique. "+
+								"Elle prend également des engagements écologiques en respectant la norme ISO 14001. Par exemple, "+
+								"leur datacenter est climatisé en «free cooling» qui permet de refroidir la salle d'hébergement avec l'air extérieur. "+
+								"Donc à moindre frais énergétique et sans émission de gaz poluant."+
+							"</li>"+
+							"<li>"+
+								"Bcksp.es tourne sur un serveur privé virtuel. Celui-ci n'est dédié qu'au bon fonctionnement de ce projet. "+
+								"Le système d'exploitation de cet ordinateur virtuel est Debian et est régulièrement mis-à-jour."+
+							"</li>"+
+							"<li>"+
+								"L'accès au service de bcksp.es se fait au travers du logiciel Nginx (porte d'entrée des données dans notre système) et "+
+								"meteor (gestionnaire du traitement de l'information entrante et sortante de bcksp.es)."+
+							"</li>"+
+							"<li>"+
+								"Les données utilisateur sont stockée également chez <a traget='_blank' href='https://www.phpnet.org//'>phpnet</a>, "+
+								"sur une base de donnée MongoDB dont l'accès est réservé aux seuls processus locaux du serveur. "+
+								"En base de donnée, les archives sont chiffrées par l'implémentation de l'algorithme "+
+								"<a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES-256-ctr</a>, "+
+								"de la librairie <a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>. "+
+								"Les archives sont stockées par blocs dans l'ordre de leur arrivée dans la base de donnée. "+
+							"</li>"+
+							"<li>"+
+								"Avez-vous réfléchit aux conditions de conservation de votre livre d'archive une fois imprimé?"+
+							"</li>"+
+						"</ul>"
+			},{
+				subtitle : "Open Source",
+				text: 	"Le code source est accessible, de ce fait nous garantissons que tout est fait "+
 						"pour sécurisé vos données de manière optimal. "+
 						"Tous les algorithmes nécéssaire à la capture, "+
 						"au transfert et au stockage de vos données sont Open Source. "+
-						"De ce fait, nos activité sont donc potentiellement soumis "+
-						"à un audit permanant de toutes personnes désireuses de s'assurer "+
-						"de notre sérieux. Si une faille devait être signalée, "+
+						"Grâce à cela, nos activités sont donc potentiellement soumises "+
+						"à l'audit permanant de toutes personnes désireuses de s'assurer "+
+						"de notre sérieux. Si une faille devait être <a target='_blank' href='https://github.com/oogre/bcksp.es/issues' >signalée</a>, "+
 						"soyez certains qu'elle sera corrigée dans les plus brefs délais."
-			},{
-				subtitle:"chiffrement sur toute la ligne",
-				text :  "<ul>"+
-							"<li>"+
-								"Toutes les données gérée par bcksp.es sont transférées de façon chiffré "+
-								"via les protocols HTTPS et WSS. Notre certificat SSL est produit par "+
-								"<a href='https://letsencrypt.org/fr/' target=\"_blank\">Let's Encryp</a> et "+
-								"est renouvelé tous les 3 mois."+
-							"</li>"+
-							"<li>"+
-								"Sur nos serveurs, les archives sont chiffrées par l'implémentation de l'algorithme "+
-								"<a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES</a>, "+
-								"de la librairie <a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>. "+
-								"De plus, chaque archive est sécurisée par une clef unique."+
-							"</li>"+
-							"<li>"+
-								"Avez-vous réfléchit aux conditions de conservation de votre livre d'archive à votre domicile?"+
-							"</li>"+
-						"</ul>"
 			}],
 		}, {
 			title:{
@@ -180,13 +206,13 @@ i18n.addTranslation('fr', "about", {
 				text: 	"Les données que vous sotockez sur nos serveur sont votre propriété. "+
 						"Vous avez la possibilité de consulter et de <a href=\"{$download}\">télécharger vos données</a> "+
 						"sans frais et dans la forme que nous possédons. "+
-						"Vous avez aussi à tout moment la possibilité de <a href='{$deletion}'>supprimer partiellement ou entièrement</a> "+
+						"À tout moment, vous avez la possibilité de <a href='{$deletion}'>supprimer partiellement ou entièrement</a> "+
 						"toute donnée vous appartenant et étant présente sur nos serveurs. "+
 						"Néanmoins, vous cédez à «bcksp.es» le droit d'imprimer "+
 						"votre archive suivant le protocol décrit dans la section <a href='{$money}'>financement</a>."
 			},{
 				subtitle:"Licence",
-				text: 	"Le <a target=\"_blank\" href=\"https://github.com/oogre/bcksp.es\">code source</a> de l'application web et des extensions est sous licence «creative commons» <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\" rel=\"nofollow\"><img src=\"https://camo.githubusercontent.com/6dcc300ab83c479af6c1c1f004b6f9dad77e7736/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d434325323042592d2d5341253230342e302d6c69676874677265792e737667\" alt=\"License: CC BY-SA 4.0\" data-canonical-src=\"https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg\" style=\"max-width:100%;\"></a>. "+
+				text: 	"Le <a target=\"_blank\" href=\"https://github.com/oogre/bcksp.es\">code source</a> de l'application web client/serveur et des extensions est sous licence «creative commons» <a href=\"https://creativecommons.org/licenses/by-sa/4.0/\" rel=\"nofollow\"><img src=\"https://camo.githubusercontent.com/6dcc300ab83c479af6c1c1f004b6f9dad77e7736/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d434325323042592d2d5341253230342e302d6c69676874677265792e737667\" alt=\"License: CC BY-SA 4.0\" data-canonical-src=\"https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg\" style=\"max-width:100%;\"></a>. "+
 						"Cela signifie que vous êtes autorisé à <strong>partager</strong> — copier, distribuer et communiquer le code source par tous moyens et sous tous formats. "+
 						"Vous pouvez également <strong>adapter</strong> — remixer, transformer et créer à partir du code source pour toute utilisation, y compris commerciale. "+
 						"Bcksp.es ne peut retirer les autorisations concédées par la licence tant que vous appliquez les termes de cette licence. "+
@@ -218,10 +244,12 @@ i18n.addTranslation('fr', "about", {
 			},
 			content : [{
 				subtitle:"partiellement",
-				text: 	""
+				text: 	"Lorsque vous êtes sur la page d'acceuil et que vous visualisez votre archive privée. "+
+						"Il suffit de sélectionner le texte que vous souhaitez supprimer de votre archive, "+
+						"en suite rien de plus simple, appuyez sur la touche backspace de votre clavier. "
 			},{
 				subtitle:"entièrement",
-				text: 	""
+				text: 	"Rendez-vous dans vos parametres section <a href='{$userProfile}#danger'>espace dangereux</a>."
 			}]
 		}, {
 			title:{
@@ -229,14 +257,17 @@ i18n.addTranslation('fr', "about", {
 				id : "money"
 			},
 			content : [{
-				text: 	"La capture et l'archivage de vos textes supprimés sont gratuite. "+
-						"Le montant qui vous est demandé dans <a href='{$souvenir}'>la boutique souvenir</a> "+
-						"correspond au budget nécéssaire pour la production de deux exemplaires, "+
-						"une pour vous (numéroté 1/2), une pour nous (numéroté 2/2). Les frais relatif à l'envoi "+
-						"sont égallement à votre charge."
+				text: 	"Le service de capture et d'archivage est gratuit. "+
+						"Néanmoins, vous avez la possibilité faire vivre ce projet via notre <a href='{$souvenir}'>boutique souvenir</a>. "+
+						"Vous y trouverez, livres, posters et autre goodies personnalisables. "+
+						"Les prix d'achat correspondent au budget nécéssaire pour la production de deux exemplaires, "+
+						"un pour vous (numéroté 1/2), un pour nous (numéroté 2/2). Les frais relatif à l'envoi "+
+						"sont égallement inclus. Chaque achat est accompagné d'un certificat d'autanticité."
 			},{
 				subtitle:"exemplaire n°1/2",
-				text :  "Bcksp.es abandonne tout droit de paternité sur l'exemplaire en votre possession n°1/2."
+				text :  "Bcksp.es abandonne tout droit de paternité sur l'exemplaire en votre possession n°1/2. "+
+						"Comme annoncé vos droits d'auteurs comptes pour nous. Cet exemplaire est entièrement vôtre, "+
+						"vous en jouissez comme bon vous semble."
 			},{
 				subtitle:"exemplaire n°2/2",
 				text :  "Nous avons pour ambition d'exposer comme objet d'art l'exemplaire en notre possession n°2/2. "+
@@ -247,17 +278,21 @@ i18n.addTranslation('fr', "about", {
 						"Cet exemplaire n°2/2 à la condition que vous n'ayez pas réclamé sa destruction, "+
 						"aura le potentiel d'être acheté pour ses valeurs intrinsèques. Dans ce cas, vous serez convié "+
 						"à participer à une négociation sur ses conditions de vente et de conservation. Vous jouirez "+
-						"en tant que co-auteur d'une partie -à définir ensemble- des bénéfices engendré."
+						"en tant que co-auteur d'une partie - à définir ensemble - des bénéfices engendré. "+
+						"Participer à notre succès pourra vous rapporter gros."
 			},{
 				subtitle:"exposition",
-				text :  "Notre projet bcksp.es ne génère de bénéfice qu'au travers de la transformation "+
+				text :  "Bcksp.es ne génère de bénéfice qu'au travers de la transformation "+
 						"de votre archive en objet d'art. Nous sommes donc financé par les invitations "+
-						"à exposer ce projets, ainsi que par la ventes des exemplaires n°2/2."
+						"à exposer ce projets au travers des pièces issues de la boutique souvenir, ainsi que par la ventes des exemplaires n°2/2."
 			},{
 				subtitle:"subsides et donations",
-				text :  "De plus bcksp.es est financé également au travers de dont ou de subsides. "+
-						"Nous avons d'ores et déjà bénéficié d'un subside de 3.000€ via la Commision "+
-						"des Arts Numériques de la Fédération Wallonie-Bruxelles."
+				text :  "Bcksp.es est financé également au travers de dons ou de subsides. "+
+						"Nous avons d'ores et déjà bénéficié d'un subside d'aide à la conception de 3.000€ via la Commision "+
+						"des Arts Numériques de la Fédération Wallonie-Bruxelles. "+
+						"Vous pouvez nous soutenir financièrement via patreon, visitiez "+
+						"<a traget='_blank' href='https://www.patreon.com/bckspes'>notre page</a> "+
+						"pour y découvrir les contre-parties exclusives que nous vous réservons. "
 				}
 			],
 		}

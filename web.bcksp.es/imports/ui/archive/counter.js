@@ -2,7 +2,7 @@
   bcksp.es - counter.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-25 22:28:53
-  @Last Modified time: 2020-03-03 15:27:50
+  @Last Modified time: 2020-03-07 10:35:23
 \*----------------------------------------*/
 
 
@@ -21,7 +21,7 @@ const ArchiveCounter = ({handle, archive, isReady}) => {
 		i18n.onChangeLocale(setLocale);
 		return () => {//componentWillUnmount
 			i18n.offChangeLocale(setLocale);
-			handle && handle.stop();
+			handle.stop();
 		}
 	}, []); 
 	const getCharCount = () => {
@@ -79,10 +79,10 @@ const ArchiveCounter = ({handle, archive, isReady}) => {
 }
 
 export default withTracker(self => {
-	let handle = Meteor.userId() && Meteor.subscribe('archive.private.counter');
+	let handle = Meteor.subscribe('archive.private.counter');
 	return {
-		isReady : 	handle && handle.ready() && Meteor.userId(),
 		handle : 	handle,
+		isReady : 	handle.ready(),
 		archive : 	Archives.findOne({ type : Archives.Type.PRIVATE, owner :  Meteor.userId() })
 	};
 })(ArchiveCounter);

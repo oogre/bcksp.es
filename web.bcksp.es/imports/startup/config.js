@@ -2,7 +2,7 @@
   bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-02-27 00:50:22
+  @Last Modified time: 2020-03-07 10:45:16
 \*----------------------------------------*/
 export const config = {
 	langues : [
@@ -20,13 +20,17 @@ export const config = {
 		"tt","tzm","ug","uk","ur","uz","vi","wo","xh","yo","zh","zu"
 	],
 	souvenir : {
-		almanach : false,
+		almanach : {
+			visible : false
+		},
 		poster : {
+			visible : false,
 			price : {
 				amount : 15
 			}
 		},
 		book : {
+			visible : false,
 			basic : {
 				price : {
 					amount : 20

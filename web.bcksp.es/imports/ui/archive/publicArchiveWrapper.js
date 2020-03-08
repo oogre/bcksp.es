@@ -2,7 +2,7 @@
   bcksp.es - publicArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:24:29
-  @Last Modified time: 2020-03-02 17:58:20
+  @Last Modified time: 2020-03-07 10:33:30
 \*----------------------------------------*/
 
 import React from 'react';
@@ -11,6 +11,13 @@ import { Archives } from './../../api/archives/archives.js';
 
 const PublicArchiveWrapper = ({ Renderer, handle, isReady, archive, ...other}) => {
 	if(!isReady)return (null);
+	
+	React.useEffect(() => {//componentDidMount
+		return () => {//componentWillUnmount
+			handle.stop();
+		}
+	}, []); 
+
 	return (
 		<Renderer	
 			editionAvailable={false}

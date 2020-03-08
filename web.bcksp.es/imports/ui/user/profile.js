@@ -2,7 +2,7 @@
   bcksp.es - profile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-21 00:58:47
-  @Last Modified time: 2020-03-04 18:54:36
+  @Last Modified time: 2020-03-07 10:39:30
 \*----------------------------------------*/
 import React from 'react';
 import Blacklist from "./blacklist.js";
@@ -41,20 +41,26 @@ const UserProfile = ({isSettingsReady, settings})=>{
 						<C>title</C>
 					</h1>
 				</div>
-				<h2 className="page__subtitle">
-					<C>settings.title</C>
-				</h2>
+				<a id="settings" href="#settings" className="text-block__link--title">
+					<h2 className="page__subtitle">
+						<C>settings.title</C>
+					</h2>
+				</a>
 				{ isSettingsReady ? displaySetting() : <FixeWait/> }
-				<h2 className="page__subtitle">
-					<C>identification.title</C>
-				</h2>
+				<a id="identification" href="#identification" className="text-block__link--title">
+					<h2 className="page__subtitle">
+						<C>identification.title</C>
+					</h2>
+				</a>
 				<Identification/>
 				<hr className="field-separator" />
 				<ResetPasswordUI/>
 				<hr className="field-separator" />
-				<h2 className="page__subtitle">
-					<C>danger.title</C>
-				</h2>
+				<a id="danger" href="#danger" className="text-block__link--title">
+					<h2 className="page__subtitle">
+						<C>danger.title</C>
+					</h2>
+				</a>
 				<DeleteArchive/>
 				<hr className="field-separator" />
 				<DeleteAccount/>
@@ -65,7 +71,7 @@ const UserProfile = ({isSettingsReady, settings})=>{
 
 export default withTracker(self => {
 	return {
-		isSettingsReady : Meteor.userId() && FlowRouter.subsReady("settings.private"),
+		isSettingsReady : FlowRouter.subsReady("settings.private"),
 		settings : Settings.findOne({owner : Meteor.userId()})
 	};
 })(UserProfile);
