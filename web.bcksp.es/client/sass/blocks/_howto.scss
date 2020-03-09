@@ -96,4 +96,11 @@
 // howto__item-picture
 .howto__item-picture {
   margin: 0 auto;
+  max-width: 246px !important;
+  max-height: 246px !important;
+
+  @include media-query("medium") {
+    max-width: auto !important;
+    max-height: auto !important;
+  }
 }

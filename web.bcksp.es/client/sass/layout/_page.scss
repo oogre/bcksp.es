@@ -20,12 +20,17 @@
 .page__title,
 .page__subtitle {
   text-transform: uppercase;
+  max-width: 100%;
 }
 
 .page__title {
-  font-size: $size-70;
+  font-size: $size-40;
   line-height: .95;
   margin-bottom: 0;
+
+  @include media-query("desktop") {
+    font-size: $size-70;
+  }
 
   // Small "underline" decoration
   @include titleDecoration();
