@@ -2,10 +2,11 @@
   bcksp.es - sharePopup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-02-05 13:57:46
-  @Last Modified time: 2020-03-08 22:27:33
+  @Last Modified time: 2020-03-09 15:01:06
 \*----------------------------------------*/
 import React from 'react';
 import ReactModal from 'react-modal';// https://reactcommunity.org/react-modal/
+import { config } from './../../startup/config.js';
 import {
   FacebookShareButton, FacebookIcon,
   RedditShareButton, RedditIcon,
@@ -49,7 +50,6 @@ const SharePopup = ({closeRequested, quote}) => {
 			padding                    : '20px'
 		}
 	}
-	console.log(quote);
 	return (
 		<ReactModal
 			isOpen={true}
@@ -69,13 +69,22 @@ const SharePopup = ({closeRequested, quote}) => {
 								«{quote.content}»
 							</p>
 							<ul>
-								<li>
-									<a 	className={"menu__item-link"}
-										href={FlowRouter.path("posterCreation", {quote : quote.content , startOffset:quote.startOffset, endOffset:quote.endOffset})}
-									>
-										poster
-									</a>
-								</li>
+								{ 
+									config.souvenir.poster.visible && 
+									<li>
+										<a 	className={"menu__item-link"}
+											href={
+												FlowRouter.path("posterCreation", {
+													quote : quote.content , 
+													startOffset:quote.startOffset, 
+													endOffset:quote.endOffset
+												})
+											}
+										>
+											poster
+										</a>
+									</li>
+								}
 								<li>
 									<FacebookShareButton url="https://bcksp.es" quote={content}>
 										<FacebookIcon size={32} round={true}/>
