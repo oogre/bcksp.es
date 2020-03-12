@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:18:03
-  @Last Modified time: 2020-03-04 19:22:52
+  @Last Modified time: 2020-03-12 13:11:15
 \*----------------------------------------*/
 import { Meteor } from 'meteor/meteor';
 import { 
@@ -14,7 +14,7 @@ import {
 	checkValidLanguage
 } from './../../utilities/validation.js';
 import { config } from './../../startup/config.js';
-import {getMainEmail} from './../../utilities/meteor.js';
+import { getMainEmail } from './../../utilities/meteor.js';
 import { RateLimiterMixin } from 'ddp-rate-limiter-mixin';
 
 
@@ -62,14 +62,9 @@ export const GetLoginTokenUser = new ValidatedMethod({
 	}
 });
 
-
-
-
-
 export const HardDisconnect = new ValidatedMethod({
 	name: 'Users.methods.hard.disconnect',
 	validate() {
-		
 	},
 	mixins: [RateLimiterMixin],
 	rateLimit: config.methods.rateLimit.low,
@@ -96,14 +91,11 @@ export const HardDisconnect = new ValidatedMethod({
 	}
 });
 
-
-
-
 export const ResetPassword = new ValidatedMethod({
 	name: 'Users.methods.reset.password',
 	validate({device, email}) {
 		try{
-			checkUserLoggedIn();	
+			checkUserLoggedIn();
 		}catch(error){
 			checkValidDevice(device);
 			checkValidEmail(email, true);
@@ -119,14 +111,6 @@ export const ResetPassword = new ValidatedMethod({
 		if (this.isSimulation)return;
 		let user = Meteor.user() || Meteor.users.findOne({"emails.address" : email});
 		Accounts.sendResetPasswordEmail(user._id, getMainEmail(user.emails));
-		Meteor.users.update({
-			_id : user._id
-		}, {
-			$unset : {
-				"services.accessTokens.tokens" : null,
-				"services.resume.loginTokens" : null
-			}
-		});
 		const T = i18n.createTranslator("methods.user.resetPassword.success");
 		return {
 			success : true,
@@ -238,8 +222,6 @@ export const Login = new ValidatedMethod({
 		});
 	}
 });
-
-
 
 export const SetUserLang = new ValidatedMethod({
 	name: 'Users.methods.user.Language.Setter',

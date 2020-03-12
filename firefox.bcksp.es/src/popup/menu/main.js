@@ -2,7 +2,7 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2020-02-18 17:00:16
+  @Last Modified time: 2020-03-12 11:58:51
 \*----------------------------------------*/
 
 import React from 'react';
@@ -47,7 +47,7 @@ const MainMenu = ({onLoginStatusChange}) => {
 	}
 
 	const handleMyFeed = event => {
-		sendMessage("openTab", config.getHomeUrl())
+		sendMessage("openTab", config.getMyFeedUrl())
 		.then(data => info(data))
 		.catch(e => error(e));
 	}
@@ -105,7 +105,7 @@ const MainMenu = ({onLoginStatusChange}) => {
 					<button className="button button--secondary bcksp-popup__user-menu-button logout"
 							onClick={handleLogout}
 					>
-							<T.span text={{ key: "forms.logout.action" }}/>
+							<T.span text={{ key: "extension.links.logout" }}/>
 					</button>
 				</li>
 			</ul>

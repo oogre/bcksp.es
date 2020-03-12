@@ -11,6 +11,7 @@ const conf = {
 	about : "/about",
 	login : "/login",
 	logout : "/logout",
+	myFeed : "/myfeed",
 	profile : "/profile",
 	websocket : "/websocket",
 	user : {
@@ -45,6 +46,9 @@ config.getLoginUrl = function(key){
 };
 config.getHomeUrl = function(){
 	return config.protocol+config.address+config.home;
+};
+config.getMyFeedUrl = function(){
+	return config.protocol+config.address+config.myFeed;
 };
 config.getProfileUrl = function(){
 	return config.protocol+config.address+config.profile;

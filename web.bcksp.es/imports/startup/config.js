@@ -2,7 +2,7 @@
   bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-03-07 10:45:16
+  @Last Modified time: 2020-03-10 22:02:11
 \*----------------------------------------*/
 export const config = {
 	langues : [
@@ -24,13 +24,13 @@ export const config = {
 			visible : false
 		},
 		poster : {
-			visible : false,
+			visible : true,
 			price : {
 				amount : 15
 			}
 		},
 		book : {
-			visible : false,
+			visible : true,
 			basic : {
 				price : {
 					amount : 20

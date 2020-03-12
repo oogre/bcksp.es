@@ -2,7 +2,7 @@
   dev - enrollment.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-20 13:29:36
-  @Last Modified time: 2020-03-04 18:53:43
+  @Last Modified time: 2020-03-12 12:51:22
 \*----------------------------------------*/
 
 import React from 'react';
@@ -20,7 +20,8 @@ const UserPasswordSetup = ({token, onComplete}) => {
 	const [ loading, setLoading ] = React.useState(false);
 	const [ locale, setLocale ] = React.useState(i18n.getLocale());
 	const { register, handleSubmit, errors, setError, triggerValidation, watch} = useForm();
-	const {C, T, E} = getTranslations("forms.resetPassword");
+	const {C, T, E, T2} = getTranslations("forms.resetPassword", "forms.resetPassword");
+	console.log(T2);
 	const onSubmitHandler = ({password}) => {
   		if(loading)return;
 		setLoading(true);
@@ -30,7 +31,7 @@ const UserPasswordSetup = ({token, onComplete}) => {
 			successHandler({
 				success : true,
 				message : {
-					title : i18n.createTranslator("forms.resetPassword")("success"),
+					title : T2("success"),
 					content : ""
 				}
 			});

@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-03-08 20:39:44
+  @Last Modified time: 2020-03-12 12:19:27
 \*----------------------------------------*/
 
 import React from 'react';
@@ -10,8 +10,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Archives } from './../../api/archives/archives.js';
 import { config } from './../../startup/config.js';
 import { ReactiveVar } from 'meteor/reactive-var';
-
-
 
 const PrivateArchiveWrapper = ({Renderer, resetSubscription, seeMore, handle, archive = {}, ...other}) => {
 	archive.count = archive?.count || 0;
@@ -34,6 +32,15 @@ const PrivateArchiveWrapper = ({Renderer, resetSubscription, seeMore, handle, ar
 					.sort(function(a, b) {
 							return archive.blockIds.indexOf(a._id) - archive.blockIds.indexOf(b._id);
 					});
+
+	// load from the archive at least 200 char if available
+	React.useEffect(() => {//blocksUpdate
+		const loadedLength = blocks.map(({content})=>content).join(" ").length;
+		if(loadedLength < 200 && loadedLength < archive.count){
+			seeMore();
+		}
+	}, [blocks]); 
+
 	React.useEffect(() => {//componentDidMount
 		resetSubscription();
 		return () => {//componentWillUnmount
@@ -76,6 +83,8 @@ export default withTracker(self => {
 		type : Archives.Type.PRIVATE,
 		owner : Meteor.userId()
 	}).fetch().pop();
+
+
 	return {
 		resetSubscription : resetSubscription,
 		seeMore : seeMore,

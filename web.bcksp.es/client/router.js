@@ -2,7 +2,7 @@
   bcksp.es - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-03-08 22:35:32
+  @Last Modified time: 2020-03-12 12:45:12
 \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -12,12 +12,14 @@
   import FormContact from './../imports/ui/form/contact';
   import {setupView} from './../imports/utilities/ui.js';
   import Souvenir from './../imports/ui/souvenir/list.js';
+  import TermesOfUse from './../imports/ui/termesOfUse.js';
   import UserProfile from './../imports/ui/user/profile.js';
   import OrderDetail from './../imports/ui/order/detail.js';
   import Translations from './../imports/ui/translations.js';
   import TemplateFull from './../imports/ui/template/full.js';
   import TemplateMini from './../imports/ui/template/mini.js';
   import ArchiveWrapper from './../imports/ui/archive/wrapper.js';
+  import { Archives } from './../imports/api/archives/archives.js';
   import SouvenirItemBookCreation from './../imports/ui/souvenir/items/book/creation.js';
   import SouvenirItemPosterCreation from './../imports/ui/souvenir/items/poster/creation.js';
   import SouvenirItemBookDescription from './../imports/ui/souvenir/items/book/description.js';
@@ -92,7 +94,6 @@ FlowRouter.route( '/translations', {
 FlowRouter.route( '/livefeed', {
 	name: 'livefeed',
 	action( params ) {
-		
 		render(<TemplateMini><ArchiveWrapper fullscreen={true}/></TemplateMini>, document.getElementById('render-target'));
 		setupView();
 	},
@@ -111,6 +112,19 @@ FlowRouter.route( '/about', {
 		
 	}
 });
+
+FlowRouter.route( '/termes-of-use', {
+	name: 'termesOfUse',
+	action( params ) {
+		render(<TemplateFull><TermesOfUse /></TemplateFull>, document.getElementById('render-target'));
+		setupView();
+	},
+	subscriptions( params, queryParams ) {
+		
+	}
+});
+
+
 
 FlowRouter.route( '/souvenir', {
 	name: 'souvenir',
@@ -195,6 +209,14 @@ loginRoutes.route( '/logout', {
 	name: 'logout',
 	action( params ) {
 		Meteor.logout();
+		FlowRouter.go("home");
+	}
+});
+
+loginRoutes.route( '/myfeed', {
+	name: 'myFeed',
+	action( params ) {
+		Session.set("flux", Archives.Type.PRIVATE);
 		FlowRouter.go("home");
 	}
 });

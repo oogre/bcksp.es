@@ -2,41 +2,38 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2020-02-27 22:11:48
+  @Last Modified time: 2020-03-12 12:39:42
 \*----------------------------------------*/
 i18n.addTranslation('fr', "baseline", {
 	online : {
 		baseline: [
-			"Salut! Qu'as-tu supprimé aujourd'hui?^",
-			"^ Qu'as-tu supprimé aujourd'hui?",
-			"Bonjour, Qu'as-tu supprimé^ aujourd'hui?",
-			"Bonjour, Qu'as-tu ^ aujourd'hui?",
-			"Bonjour, Qu'as-tu affacé aujourd'hui?^",
-			"Bonjour, Qu'as-tu affacé ^",
-			"Bonjour, Qu'as-tu affacé dernièrement?^",
-			"Bonjour, ^s-tu affacé dernièrement?",
-			"Bonjour, As-tu affacé^ dernièrement?",
-			"Bonjour, As-tu ^ dernièrement?",
-			"Bonjour, As-tu pensé à nous^ dernièrement?",
-			"^ As-tu pensé à nous dernièrement?",
-			"Hey! As-tu pensé à nous dernièrement?^",
-			"Hey! As-tu pensé à nous ^",
-			"Hey! As-tu pensé à nous ne t'avons pas oublié^",
-			"Hey! ^ous ne t'avons pas oublié",
-			"Hey! Nous ne t'avons pas oublié^",
-			"Hey! ^",
-			"Hey! T'efface plus que t'écris!^",
+			"Salut [USER_NAME]! Qu'as-tu supprimé?^",
+			"^ Qu'as-tu supprimé?",
+			"Bonjour [USER_NAME], Qu'as-tu supprimé^?",
+			"Bonjour [USER_NAME], Qu'as-tu ^?",
+			"Bonjour [USER_NAME], Qu'as-tu effacé?^",
+			"Bonjour [USER_NAME], ^s-tu effacé?",
+			"Bonjour [USER_NAME], As-tu effacé^?",
+			"Bonjour [USER_NAME], As-tu ^?",
+			"Bonjour [USER_NAME], As-tu pensé à nous^?",
+			"^ As-tu pensé à nous?",
+			"Hey [USER_NAME]! As-tu pensé à nous?^",
+			"Hey [USER_NAME]! As-tu pensé à nous^",
+			"Hey [USER_NAME]! ^",
+			"Hey [USER_NAME]! Nous ne t'avons pas oublié^",
+			"Hey [USER_NAME]! ^",
+			"Hey [USER_NAME]! T'efface plus que t'écris!^",
 			"^! T'efface plus que t'écris!",
-			"Salut! T'efface plus que t'écris!^",
-			"Salut! T'efface ^",
-			"Salut! T'efface aujourd'hui?^",
-			"Salut! T'effac^ aujourd'hui?",
-			"Salut! T'effacé^ aujourd'hui?",
-			"Salut! ^effacé aujourd'hui?",
-			"Salut! As-tu effac^é aujourd'hui?",
-			"Salut! As-tu ^é aujourd'hui?",
-			"Salut! As-tu supprim^é aujourd'hui?",
-			"Salut! ^s-tu supprimé aujourd'hui?"
+			"Salut [USER_NAME]! T'efface plus que t'écris!^",
+			"Salut [USER_NAME]! T'efface^",
+			"Salut [USER_NAME]! T'efface?^",
+			"Salut [USER_NAME]! T'effac^?",
+			"Salut [USER_NAME]! T'effacé^?",
+			"Salut [USER_NAME]! ^effacé?",
+			"Salut [USER_NAME]! As-tu effac^é?",
+			"Salut [USER_NAME]! As-tu ^é?",
+			"Salut [USER_NAME]! As-tu supprim^é?",
+			"Salut [USER_NAME]! ^s-tu supprimé?"
 		]
 	},
 	offline : {

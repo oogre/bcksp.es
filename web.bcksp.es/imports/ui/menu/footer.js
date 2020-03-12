@@ -2,7 +2,7 @@
   bcksp.es - footer.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:15:55
-  @Last Modified time: 2020-03-04 18:45:57
+  @Last Modified time: 2020-03-09 18:59:35
 \*----------------------------------------*/
 
 import React from 'react';
@@ -54,6 +54,11 @@ const MenuFooter = ({isConnected, extensionInstalled}) => {
 								<li className="menu__item">
 									<a className="menu__item-link" href="#" onClick={installExtension}>
 										<C>download</C>
+									</a>
+								</li>
+								<li className="menu__item">
+									<a className="menu__item-link" href={FlowRouter.path("termesOfUse")} >
+										<C>termesOfUse</C>
 									</a>
 								</li>
 								{

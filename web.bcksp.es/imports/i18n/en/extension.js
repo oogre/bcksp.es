@@ -2,7 +2,7 @@
   bcksp.es - extension.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:38:50
-  @Last Modified time: 2020-01-30 12:22:57
+  @Last Modified time: 2020-03-12 11:55:28
 \*----------------------------------------*/
 i18n.addTranslation('en', "extension", {
 	devmode : "DEV MODE",
@@ -17,8 +17,9 @@ i18n.addTranslation('en', "extension", {
 	},
 	links : {
 		visit : "https://bcksp.es",
-		security : "security",
-		archive : "archive"
+		security : "sett-ings",
+		archive : "arch-ive",
+		logout : "log-out"
 	},
 	learnmore : "About bcksp.es"
 });

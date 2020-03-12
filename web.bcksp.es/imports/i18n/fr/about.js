@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-03-07 09:26:02
+  @Last Modified time: 2020-03-11 00:15:31
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -203,7 +203,7 @@ i18n.addTranslation('fr', "about", {
 				id : "licence"
 			},
 			content : [{
-				text: 	"Les données que vous sotockez sur nos serveur sont votre propriété. "+
+				text: 	"Les données que vous stockez sur nos serveur sont votre propriété. "+
 						"Vous avez la possibilité de consulter et de <a href=\"{$download}\">télécharger vos données</a> "+
 						"sans frais et dans la forme que nous possédons. "+
 						"À tout moment, vous avez la possibilité de <a href='{$deletion}'>supprimer partiellement ou entièrement</a> "+
