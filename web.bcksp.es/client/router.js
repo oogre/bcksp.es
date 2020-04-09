@@ -2,7 +2,7 @@
   bcksp.es - router.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-02-01 23:36:59
-  @Last Modified time: 2020-03-12 12:45:12
+  @Last Modified time: 2020-04-09 13:34:52
 \*----------------------------------------*/
   import React from 'react';
   import { render } from 'react-dom';
@@ -94,7 +94,7 @@ FlowRouter.route( '/translations', {
 FlowRouter.route( '/livefeed', {
 	name: 'livefeed',
 	action( params ) {
-		render(<TemplateMini><ArchiveWrapper fullscreen={true}/></TemplateMini>, document.getElementById('render-target'));
+		render(<TemplateMini><ArchiveWrapper charToLoad={2000} fullscreen={true}/></TemplateMini>, document.getElementById('render-target'));
 		setupView();
 	},
 	subscriptions( params, queryParams ) {

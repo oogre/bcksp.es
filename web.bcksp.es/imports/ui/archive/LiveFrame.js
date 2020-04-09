@@ -23,13 +23,13 @@ const LiveFrame = ({reload, seeMore, onSelect, autoSelect, fullscreenAvailable =
 		return () => {//componentWillUnmount
 		}
 	}, []);
-
+	
 	return (
 		<div className="liveframe">
 			<ArchiveFullscreen available={fullscreenAvailable}>
 				<ArchiveSelector ref={childRef} available={_.isFunction(onSelect)} caret={getCarret} onSelect={onSelect} autoSelect={autoSelect}>
 					<ArchiveEditor available={_.isFunction(reload)} caret={getCarret} blocks={getBlocks} reload={reload}>
-						<ArchiveLoadMore available={_.isFunction(seeMore) && blocksRef.current && blocksRef.current.length < blockMaxLength} seeMore={seeMore} >
+						<ArchiveLoadMore available={ _.isFunction(seeMore) && blocksRef.current && blocksRef.current.length < blockMaxLength} seeMore={seeMore} >
 							<div className="liveframe__stream stream bcksp-es-disabled"
 								contentEditable={ (!mobileAndTabletcheck()) }
 								suppressContentEditableWarning={true}
