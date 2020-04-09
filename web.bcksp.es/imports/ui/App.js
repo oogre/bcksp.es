@@ -2,7 +2,7 @@
   bcksp.es - App.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-19 22:10:37
-  @Last Modified time: 2020-03-08 20:41:58
+  @Last Modified time: 2020-04-09 13:49:02
 \*----------------------------------------*/
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -34,7 +34,7 @@ const App = ({isConnected}) => {
 						</div>
 					</div>
 			}
-			<ArchiveWrapper type="home" onSelect={setSelection}/>
+			<ArchiveWrapper charToLoad={500} type="home" onSelect={setSelection}/>
 			<div className="about-parallax">
 				<div id="aboutParallaxContainer" className="about-parallax__background">
 				</div>

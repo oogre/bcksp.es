@@ -2,7 +2,7 @@
   bcksp.es - creation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-21 15:16:52
-  @Last Modified time: 2020-03-08 22:26:43
+  @Last Modified time: 2020-04-09 13:48:16
 \*----------------------------------------*/
 
 import React from 'react';
@@ -72,6 +72,7 @@ const SouvenirItemPosterCreation  = ({selectionRange}) => {
 						<div className="shop-creation__order">
 							<ArchiveWrapper
 								type="shop"
+								charToLoad={2000} 
 								fullscreenAvailable={false}
 								onSelect={setSelection}
 								autoSelect={{
