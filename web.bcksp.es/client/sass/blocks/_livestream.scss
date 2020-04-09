@@ -86,9 +86,10 @@
   }
 }
 
-// Livestream Home Variation
+// Livestream Home and shop Variation
 // ---------------------
-.livestream--home {
+.livestream--home,
+.livestream--shop {
   margin: 0 auto $size-60;
   max-width: 942px;
   z-index: z("livestream") + 1;
@@ -99,7 +100,8 @@
   }
 }
 
-.livestream--home .livestream__content {
+.livestream--home .livestream__content,
+.livestream--shop .livestream__content {
   padding: $size-20;
 
   @include media-query("medium") {
@@ -108,11 +110,14 @@
 }
 
 .livestream--home .livestream__border-decoration,
-.livestream--home .livestream__content {
+.livestream--shop .livestream__border-decoration,
+.livestream--home .livestream__content,
+.livestream--shop .livestream__content {
   max-width: calc(100% - #{$size-12});
 }
 
-.livestream--home .livestream__border-decoration {
+.livestream--home .livestream__border-decoration,
+.livestream--shop .livestream__border-decoration {
   display: block;
   position: absolute;
   width: 100%;
@@ -122,22 +127,26 @@
   z-index: z("card") - 1;
 }
 
-.livestream--home .livestream__border-decoration:nth-child(1) {
+.livestream--home .livestream__border-decoration:nth-child(1),
+.livestream--shop .livestream__border-decoration:nth-child(1) {
   top: 12px;
   left: -12px;
 }
 
-.livestream--home .livestream__border-decoration:nth-child(2) {
+.livestream--home .livestream__border-decoration:nth-child(2),
+.livestream--shop .livestream__border-decoration:nth-child(2) {
   top: 9px;
   left: -9px;
 }
 
-.livestream--home .livestream__border-decoration:nth-child(3) {
+.livestream--home .livestream__border-decoration:nth-child(3),
+.livestream--shop .livestream__border-decoration:nth-child(3) {
   top: 6px;
   left: -6px;
 }
 
-.livestream--home .livestream__border-decoration:nth-child(4) {
+.livestream--home .livestream__border-decoration:nth-child(4),
+.livestream--shop .livestream__border-decoration:nth-child(4) {
   top: 3px;
   left: -3px;
 }
@@ -158,6 +167,10 @@
     top: 214px;
     background: $grey-thunder url("/images/backgrounds/eraser-background.png") repeat-x 0 0;
   }
+}
+
+.livestream-container--connected.livestream-container--shop::after {
+  top: 305px;
 }
 
 // Fullscreen

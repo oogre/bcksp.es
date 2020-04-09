@@ -18,7 +18,7 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 	const [langMenu, setLangMenu] = React.useState(false);
 	const {C} = getTranslations("menus");
 	const handleOpenMobileMenu = () => {
-		setMobileMenu(!this.state.mobileMenu);
+		setMobileMenu(!mobileMenu);
 	}
 	const hasToDisplayDownloadBtn = () => {
 		return !extensionInstalled;
@@ -58,7 +58,7 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 
 	return (
 		<nav className="main-navigation">
-			<button type="button" className="menu--header__mobile-trigger" onClick={handleOpenMobileMenu}>
+			<button type="button" className={"menu--header__mobile-trigger" + isMobile()} onClick={handleOpenMobileMenu}>
 				<div className="bar"></div>
 				<div className="bar"></div>
 				<div className="bar"></div>
@@ -108,8 +108,8 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 					>
 						<C>language</C>
 					</a>
-					{ 
-						langMenu && 
+					{
+						langMenu &&
 							<ul style={{
 								position:"absolute",
 								listStyleType: "none",
