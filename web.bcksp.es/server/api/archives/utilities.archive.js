@@ -2,7 +2,7 @@
   bcksp.es - utilities.archive.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 16:30:37
-  @Last Modified time: 2020-04-09 16:17:26
+  @Last Modified time: 2020-04-09 19:23:28
 \*----------------------------------------*/
 import CryptoJS from 'crypto-js';
 import { htmlDecode } from'htmlencode';
@@ -17,16 +17,39 @@ const genIV = () =>(
 	)
 );
 
+
+export const testEncryptDecrypt = ()=>{
+	let max = 16 * 16 * 16 * 16;
+	let warnings = [];
+	for(let i = 0 ; i < max ; i ++){
+		let t = " "+String.fromCharCode(i);
+		try{
+			const cryptedContent = encrypt(t);
+			const block = {
+				ct : cryptedContent.toString(),
+				iv : cryptedContent.iv.toString(),
+				createdAt : new Date(),
+			}
+			const result = decrypt(block);
+			//if(t != result) throw new Error("");
+		}catch(e){
+			warnings.push(i);
+			console.log("WARNING with charCode : ", i);
+		}
+	}
+	console.log("DONE");
+	console.log(JSON.stringify(warnings));
+}
+
+
+
 export const genSecurizedBlock = (content)=>{
-	console.log(content);
 	const cryptedContent = encrypt(content);
-	const blockId = Blocks.insert({
+	return Blocks.insert({
 		ct : cryptedContent.toString(),
 		iv : cryptedContent.iv.toString(),
 		createdAt : new Date(),
 	});
-	console.log(blockId);
-	return blockId;
 }
 
 export const encrypt = txt => (

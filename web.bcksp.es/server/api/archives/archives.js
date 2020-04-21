@@ -2,13 +2,14 @@
   bcksp.es - archives.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-26 19:07:03
-  @Last Modified time: 2020-04-09 13:27:13
+  @Last Modified time: 2020-04-21 15:09:58
 \*----------------------------------------*/
 import './methods.js';
 import './startup.js';
 import './publications.js';
 import { Archives } from './../../../imports/api/archives/archives.js';
 import { decrypt } from './utilities.archive.js';
+//import { testEncryptDecrypt } from './utilities.archive.js';
 
 export const Blocks = new Mongo.Collection('blocks');
 
@@ -23,7 +24,7 @@ Blocks.helpers({
 
 Archives.helpers({
 	populateBlocks : function (fisrtBlockId=0, count=Infinity) {
-		this.blockIds = this.blocks.map(id=>id);
+		this.blockIds = (this.blocks||[]).map(id=>id);
 		this.blocks = 	Blocks.find({ 
 							_id : { 
 								$in : this.blockIds.map(id=>id).splice(fisrtBlockId, count)
@@ -42,3 +43,6 @@ Archives.helpers({
 		return this;
  	}
 });
+
+
+//testEncryptDecrypt();
