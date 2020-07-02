@@ -19,8 +19,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.4.8",
-    "web-ext": "3.2.1",
-    "webpack": "3.10.0"
+    "web-ext": "4.3.0",
+    "webpack": "4.43.0"
   },
   "dependencies": {
     "asteroid": "https://github.com/oogre/asteroid/tarball/df69c5171dcca1c13009f33a774ca628801314da",
@@ -28,6 +28,7 @@
     "diff-match-patch": "^1.0.1",
     "htmlencode": "0.0.4",
     "i18n-react": "0.7.0",
+    "inherits": "2.0.4",
     "react-toggle-button": "2.2.0",
     "underscore": "^1.9.0"
   }

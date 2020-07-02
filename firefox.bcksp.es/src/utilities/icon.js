@@ -2,7 +2,7 @@
   bcksp.es - icon.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-04 14:32:08
-  @Last Modified time: 2020-02-04 15:06:58
+  @Last Modified time: 2020-07-01 16:16:44
 \*----------------------------------------*/
 
 import Data from "./Data.js";

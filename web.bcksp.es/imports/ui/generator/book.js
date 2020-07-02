@@ -2,7 +2,7 @@
   bcksp.es - book.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 20:06:21
-  @Last Modified time: 2020-02-24 23:12:07
+  @Last Modified time: 2020-06-23 12:06:10
 \*----------------------------------------*/
 
 import React from 'react';
@@ -149,24 +149,29 @@ const GeneratorBook = ({intro=false, preface=false, content=false, blocks, autho
 	if(intro){
 		intro = intro.replace("[          NUMBER+DATE         ]", (moment().format('MM-YYYY')+" 1/2").symetricPad(config.book.page.line.char.count));
 		intro = intro.replace("[         AUTHOR NAME          ]", author.substr(0, config.book.page.line.char.count).symetricPad(config.book.page.line.char.count));	
-		// cut intro into 2 pages block
+		// cut into 2 pages block
 		intro = intro.debit(2*config.book.page.getMaxChar());
 	}
 
 	if(preface){
-		// cut intro into 2 pages block
+		// cut into 2 pages block
 		preface = preface.debit(2*config.book.page.getMaxChar());
 	}
 	
 	content = _.isArray(blocks) ? _.pluck(blocks, 'content').join(" ") : content;
 	if(content!==false && !_.isEmpty(content)){
-		// cut intro into 2 pages block
+		// cut into 2 pages block
 		content = content.debit(2*config.book.page.getMaxChar());
 		//limit content to 64 double pages
 		content = content.slice(0, config.book.page.count/2);
-		//load at least 1 double page
-		if(content.length<2)seeMore();
 	}
+
+	React.useEffect(() => {//blocksUpdate
+		if(content!==false && !_.isEmpty(content) && content.length<2 && seeMore){
+			//load at least 1 double page
+			seeMore(10);
+		}
+	}, [seeMore]);
 
 	return (
 		<div className="book" style={{

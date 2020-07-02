@@ -2,7 +2,7 @@
   bcksp.es - PrivateArchiveWrapper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-13 15:22:27
-  @Last Modified time: 2020-04-09 13:39:03
+  @Last Modified time: 2020-06-23 11:57:07
 \*----------------------------------------*/
 
 import React from 'react';
@@ -57,7 +57,8 @@ const PrivateArchiveWrapper = ({Renderer, charToLoad = 200, resetSubscription, s
 	}, []); 
 
 	return (
-		<Renderer	
+		<Renderer
+			bonjour="hello"
 			loading={!handle.ready()}
 			blockMaxLength={ archive.blockIds.length }
 			blocks={ blocks }
