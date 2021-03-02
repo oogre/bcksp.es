@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-06-22 15:22:17
+  @Last Modified time: 2020-07-02 21:31:51
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -133,7 +133,7 @@ i18n.addTranslation('fr', "about", {
 				text :  "L'archivage de vos suppression est un processus dévoilant des questions sensibles "+
 						"relatives au «Big Data» et à la protection des données. "+
 						"Nous ne prétendons pas apporter de solutions à ces questions. "+
-						"Tout du moins, «<i>bcksp.es»</i> offre un point de vue "+
+						"Tout du moins, <i>bcksp.es</i> offre un point de vue "+
 						"sur un de vos flux de données privées. Cela afin de montrer, de rendre sensible "+
 						"donc pensable ce monstre informe mal perçue, angoissant ou simplement ignorée."
 			}]

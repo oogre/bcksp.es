@@ -2,16 +2,17 @@
   bcksp.es - termesOfUse.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-03-09 19:01:21
-  @Last Modified time: 2020-06-04 18:05:38
+  @Last Modified time: 2020-07-02 23:41:33
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "termesOfUse", {
+
 	title : 	"Conditions d'utilisation",
 	website : [{
 			content : [{
 				subtitle:"Préambule",
 				text:	"Le présent site est accessible par le biais du nom de domaine "+
-						"bcksp.es et est exploité dans le respect de la législation belge. "+
+						"<i>bcksp.es</i> et est exploité dans le respect de la législation belge. "+
 						"L’utilisation de ce site est régie par les présentes conditions générales. "+
 						"En utilisant le site, vous reconnaissez avoir pris connaissance de ces conditions "+
 						"et les avoir acceptées sans réserve. Nous ne pourrions être tenus responsables "+
@@ -39,7 +40,7 @@ i18n.addTranslation('fr', "termesOfUse", {
 								"Les présentes conditions générales d’utilisation (ci-après <b>Conditions générales</b>) "+
 								"indiquent les droits, obligations et limitations qui vous sont applicables en tant "+
 								"qu’utilisateur (ci-après <b>Utilisateur</b>) lors de vos accès à notre site internet "+
-								"bcksp.es (ci-après <b>le Site</b>) et de tous les services offerts via celui-ci "+
+								"<i>bcksp.es</i> (ci-après <b>le Site</b>) et de tous les services offerts via celui-ci "+
 								"(ci-après <b>les Services</b>)."+
 							"</li>"+
 							"<li>"+
@@ -60,7 +61,7 @@ i18n.addTranslation('fr', "termesOfUse", {
 								"les changements y ayant été apportés."+
 							"</li>"+
 							"<li>"+
-								"Pour toute question concernant le projet bcksp.es, concernant <b>le Site</b>, concernant <b>les Services</b>, "+
+								"Pour toute question concernant le projet <i>bcksp.es</i>, concernant <b>le Site</b>, concernant <b>les Services</b>, "+
 								"nous pouvons être contactée par e-mail à l’adresse : info@bcksp.es."+
 							"</li>"+
 						"</ul>"
@@ -250,6 +251,14 @@ i18n.addTranslation('fr', "termesOfUse", {
 				text:	"<p></p>"
 			}]
 		}
-	]
-
+	],
+	cookie : {
+		call : {
+			title : "Ce site utilise des cookies",
+			message : 	"Nous utilisons des cookies pour personnaliser le contenu de ce site. "+
+						"Ceux-ci sont utilés pour vous identifier, pour retenir que vous avez fermé ce panneau ou "+
+						"que vous avez lu ou non les conditions générales d'utilisation. Ces informations "+
+						"ne serons en aucun cas partagées à un service tiers sans une demande explicite d'accord."
+		}
+	}
 });

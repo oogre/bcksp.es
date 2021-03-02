@@ -3,24 +3,50 @@
   Callt o action display on top of the page if the user has the extension but is not connect
 \*------------------------------------*/
 
+.page--call {
+  position: fixed;
+  width: 100%;
+  z-index: 10000;
+}
+
+
 .call-to-connect {
+  position: relative;
   padding: $size-40 0;
   background: $primary;
   display: none;
   &.success {
     background: $functional-success;
-    position: fixed;
-    width: 100%;
-    z-index: 10000;
   }
   &.error {
     background: $functional-error;
-    position: fixed;
-    width: 100%;
-    z-index: 10000;
   }
   @include media-query("medium") {
     display: block;
+  }
+  &.cookie {
+    background: $grey-thunder;
+    color: $grey-94;
+    .bar{
+      background: $grey-94;
+    }
+  }
+
+  .close-button{
+    position: absolute;
+    right: 0;
+    top: 15px;
+    background: transparent;
+    border: none;
+    .bar:nth-child(1) {
+      transform: rotate(45deg) translate(0, 4px);
+      transform-origin: 50% 50%;
+    }
+
+    .bar:nth-child(2) {
+      transform: rotate(-45deg) translate(-1px, -4px);
+      transform-origin: 50% 50%;
+    }
   }
 }
 

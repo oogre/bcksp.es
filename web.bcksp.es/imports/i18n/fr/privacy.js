@@ -2,12 +2,12 @@
   bcksp.es - privacy.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:38:13
-  @Last Modified time: 2020-02-25 15:44:02
+  @Last Modified time: 2020-07-02 21:40:52
 \*----------------------------------------*/
 i18n.addTranslation('fr', "privacy", {
 	title : 	"Note de l'équipe",
 	short : 	"<p>"+
-					"Nous avons créé bcksp.es dans le cadre d'une recherche artisitque. "+
+					"Nous avons créé <i>bcksp.es</i> dans le cadre d'une recherche artisitque. "+
 					"Une de nos première ambition est de concidérer ses utilisateurs comme auteurs! "+
 					"Suivez ce lien pour en savoir plus sur <a href=\"{$about}\">notre philosophie</a>."+
 				"</p>"+

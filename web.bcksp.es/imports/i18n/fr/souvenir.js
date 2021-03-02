@@ -2,13 +2,13 @@
   bcksp.es - souvenir.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:27:52
-  @Last Modified time: 2020-03-04 19:35:54
+  @Last Modified time: 2020-07-02 21:41:09
 \*----------------------------------------*/
 i18n.addTranslation('fr', "souvenir", {
 	title : 	"Rendez-vous à la boutique",
 	title2 : 	"matérialiser vos ratures",
 	subtitle : 	"la boutique",
-	short : 	"Faites vivre bcksp.es et ses créateurs, en faisant produire via notre boutique "+
+	short : 	"Faites vivre <i>bcksp.es</i> et ses créateurs, en faisant produire via notre boutique "+
 					"tout sorte de goodies personnalisés de vos meilleurs mots supprimés.",
 	item : {
 		download : {
@@ -31,7 +31,7 @@ i18n.addTranslation('fr', "souvenir", {
 		book : {
 			title : "imprimer mon livre",
 			img : "/images/logo-animated.gif",
-			description : 	"C'est ici que «bcksp.es» prend tout son sens. "+
+			description : 	"C'est ici que <i>bcksp.es</i> prend tout son sens. "+
 							"En participant à cette étape-ci que nous allons publier votre archive. "+
 							"Cette publication ne sera imprimée qu'à deux exemplaires, un pour vous, un pour nous. "+
 							"Le contenu de votre archive sera supprimé de nos serveurs après imprimession.",

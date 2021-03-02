@@ -2,13 +2,13 @@
   bcksp.es - emails.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:24:27
-  @Last Modified time: 2020-01-30 13:06:39
+  @Last Modified time: 2020-07-02 21:40:16
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "email", {
 	
 	posterConfirm : {
-		subject : "votre commande d'un poster bcksp.es",
+		subject : "votre commande d'un poster <i>bcksp.es</i>",
 		content : 
 			"Bonjour et merci.<br/>"+
 			"Voici l'identifiant de votre commande : {$orderID}<br/>"+
@@ -16,7 +16,7 @@ i18n.addTranslation('fr', "email", {
 			"produite dans les meilleurs délais.<br/>"
 	},
 	bookConfirm : {
-		subject : "votre commande d'un livre bcksp.es",
+		subject : "votre commande d'un livre <i>bcksp.es</i>",
 		content : 
 			"Bonjour et merci.<br/>"+
 			"Voici l'identifiant de votre commande : {$orderID}<br/>"+
@@ -24,7 +24,7 @@ i18n.addTranslation('fr', "email", {
 			"produite dans les meilleurs délais.<br/>"
 	},
 	contactConfirm : {
-		subject : "votre demande à bien été envoyée à bcksp.es",
+		subject : "votre demande à bien été envoyée à <i>bcksp.es</i>",
 		content : 
 			"Bonjour et merci.<br/>"+
 			"Voici l'identifiant de votre demande : {$orderID}<br/>"+
@@ -32,10 +32,10 @@ i18n.addTranslation('fr', "email", {
 			"traitée dans les meilleurs délais.<br/>"
 	},
 	resetPassword : {
-		subject : "Redéfinnez votre mot de passe bcksp.es",
+		subject : "Redéfinnez votre mot de passe <i>bcksp.es</i>",
 		content : 
 			"Bonjour.<br/>"+
-			"Voici un lien pour redéfinir votre mot de passe bcksp.es : <br/>"+
+			"Voici un lien pour redéfinir votre mot de passe <i>bcksp.es</i> : <br/>"+
 			"{$url}<br/>"
 	},
 	verifyEmail : {

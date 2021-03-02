@@ -4,7 +4,6 @@
 
 .main-header {
   padding: $size-20 0;
-
   @include media-query("medium") {
     padding: $size-40 $size-60;
   }

@@ -2,14 +2,13 @@
   bcksp.es - errorMessage.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-01-19 19:16:33
-  @Last Modified time: 2020-02-27 20:00:46
+  @Last Modified time: 2020-07-02 17:07:30
 \*----------------------------------------*/
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
 let timeout;
 const ErrorMessage = ({error}) => {
-
 	React.useEffect(() => {//componentDidMount
 		return () => {//componentWillUnmount
 			Meteor.clearTimeout(timeout);

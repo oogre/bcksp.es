@@ -2,7 +2,7 @@
   bcksp.es - userprofile.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:32:25
-  @Last Modified time: 2020-03-04 19:37:21
+  @Last Modified time: 2020-07-02 21:43:38
 \*----------------------------------------*/
 i18n.addTranslation('fr', "userprofile", {
 	title: "mon profile",
@@ -28,19 +28,19 @@ i18n.addTranslation('fr', "userprofile", {
 		noBlacklist : {
 			title : "aucun site web privé",
 			desc :  "Cliquez sur l'icone <img rel=\"icon\" src=\"/images/favicons/favicon-16x16.png\"> dans votre browser toolbar </br>"+
-					"selectionnez «Blacklisted» pour signaler à «bcksp.es» de ne pas archiver </br>"+
+					"selectionnez <b>blacklisted</b> pour signaler à <i>bcksp.es</i> de ne pas archiver </br>"+
 					"vos ratrues sur le site web courrant."
 		},
 		blindfield : {
 			type : {
 				title : "champs de formulaire privés",
-				desc : "Signalez ici les champs de formulaire dans lesquels «bcksp.es» ne doit pas archiver vos ratures.",
+				desc : "Signalez ici les champs de formulaire dans lesquels <i>bcksp.es</i> ne doit pas archiver vos ratures.",
 				activeLabel : "whitelisted",
 				inactiveLabel : "blacklisted"
 			},
 			class : {
 				title :  "class HTML privées",
-				desc : "Pour plus de précision, signalez ici les class portées par les éléments HTML dans lesquels «bcksp.es» ne doit pas archiver vos ratures.",
+				desc : "Pour les développeurs, ajoutez la class <b>bcksp-es-disabled</b> dans le body ou dans n'importe quelle balise HTML pour désactiver <i>bcksp.es</i> sur tout un site web ou en partie.",
 				activeLabel : "whitelisted",
 				inactiveLabel : "blacklisted"
 			}

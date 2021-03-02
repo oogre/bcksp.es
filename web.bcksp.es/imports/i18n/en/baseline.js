@@ -2,7 +2,7 @@
   bcksp.es - baseline.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:22:17
-  @Last Modified time: 2020-03-02 17:09:15
+  @Last Modified time: 2020-07-02 22:20:26
 \*----------------------------------------*/
 /*
 i18n.addTranslation('en', "baseline", {
@@ -35,6 +35,38 @@ i18n.addTranslation('en', "baseline", {
 });
 */
 i18n.addTranslation('en', 'baseline', {
+	"online":{
+		"baseline":{
+			"0" :"Hi! What did you delete today?^",
+			"1" :"^ What did you delete today?",
+			"2" :"Hello! What did you delete^ today?",
+			"3" :"Hello! What did you ^ today?",
+			"4" :"Hello! What did you erase today?^",
+			"5" :"Hello! What did you erase ^",
+			"6" :"Hello! What did you erase recently?^",
+			"7" :"Hello! ^you erase recently?",
+			"8" :"Hello! Have-you erase^ recently?",
+			"9" :"Hello! Have-you ^ recently?",
+			"10":"Hello! Have-you think about us^ recently?",
+			"11":"^ Have-you think about us recently?",
+			"12":"Hey! Have-you think about us recently?^",
+			"13":"Hey! Have-you think about us ^",
+			"14":"Hey! Have-you think about us we haven't forgotten you^",
+			"15":"Hey! ^e haven't forgotten you",
+			"16":"Hey! We haven't forgotten you^",
+			"17":"Hey! ^",
+			"18":"Hey! Erase you more than you write!^",
+			"19":"^! Erase you more than you write!",
+			"20":"Hello! Erase you more than you write!^",
+			"21":"Hello! Erase you ^",
+			"22":"Hello! Erase you today?^",
+			"23":"Hello! ^ you today?",
+			"24":"Hello! Delete you today?^",
+			"25":"Hello! ^ today?",
+			"26":"Hello! What did you delete today?^",
+			"27":"^! What did you delete today?"
+		}
+	},
 	"offline":{
 		"baseline":{
 			"0":"a place thought for your deleted words^",
@@ -50,40 +82,6 @@ i18n.addTranslation('en', 'baseline', {
 			"10":"a place thought for your erasing^",
 			"11":"a place thought for your ^",
 			"12":"a place thought for your ^"
-		}
-	},
-	"online":{
-		"baseline":{
-			"0":"Hi! What did you delete today?^",
-			"1":"^ What did you delete today?",
-			"2":"Hello! What did you delete^ today?",
-			"3":"Hello! What did you ^ today?",
-			"4":"Hello! What did you erase today?^",
-			"5":"Hello! What did you erase ^",
-			"6":"Hello! What did you erase recently?^",
-			"7":"Hello! ^you erase recently?",
-			"8":"Hello! Have-you erase^ recently?",
-			"9":"Hello! Have-you ^ recently?",
-			"10":"Hello! Have-you think about us^ recently?",
-			"11":"^ Have-you think about us recently?",
-			"12":"Hey! Have-you think about us recently?^",
-			"13":"Hey! Have-you think about us ^",
-			"14":"Hey! Have-you think about us we haven't forgotten you^",
-			"15":"Hey! ^e haven't forgotten you",
-			"16":"Hey! We haven't forgotten you^",
-			"17":"Hey! ^",
-			"18":"Hey! Erase you more than you write!^",
-			"19":"^! Erase you more than you write!",
-			"20":"Hello! Erase you more than you write!^",
-			"21":"Hello! Erase you ^",
-			"22":"Hello! Erase you today?^",
-			"23":"Hello! ^ you today?",
-			"24":"Hello! Delete^ you today?",
-			"25":"Hello! ^elete you today?",
-			"26":"Hello! What did you d^elete you today?",
-			"27":"^! What did you delete you today?",
-			"28":"Hi! What did you delete you^ today?",
-			"28":"Hi! What did you delete^ today?",
 		}
 	}
 });

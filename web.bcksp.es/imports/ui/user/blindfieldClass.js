@@ -2,7 +2,7 @@
   bcksp.es - blindfieldClass.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-12-19 20:16:39
-  @Last Modified time: 2020-03-04 18:49:21
+  @Last Modified time: 2020-07-02 18:10:17
 \*----------------------------------------*/
 
 import React from 'react';
@@ -84,13 +84,16 @@ const BlindfieldClass = ({settings}) => {
 						</li>
 					))
 				}
-				<li>
-					<div className="field field--profile">
-						<form onSubmit={handleBlindfieldClassSubmit}>
-							<input className="input--text" type="text" onBlur={ handleBlindfieldClassSubmit }/>
-						</form>
-					</div>
-				</li>
+				{ 
+					false && 
+					<li>
+						<div className="field field--profile">
+							<form onSubmit={handleBlindfieldClassSubmit}>
+								<input className="input--text" type="text" onBlur={ handleBlindfieldClassSubmit }/>
+							</form>
+						</div>
+					</li>
+				}
 			</ul>
 		</div>
 	);

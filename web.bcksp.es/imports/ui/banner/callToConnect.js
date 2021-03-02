@@ -2,7 +2,7 @@
   bcksp.es - callToConnect.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-11-24 19:41:50
-  @Last Modified time: 2020-03-04 18:59:07
+  @Last Modified time: 2020-07-02 16:39:50
 \*----------------------------------------*/
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';

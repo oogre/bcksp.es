@@ -2,11 +2,11 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:35:25
-  @Last Modified time: 2020-02-10 14:38:53
+  @Last Modified time: 2020-07-02 21:33:04
 \*----------------------------------------*/
 i18n.addTranslation('fr', "artists", {
 	title : "auteurs",
-	intro : "La réalisation de bcksp.es "+ 
+	intro : "La réalisation de <i>bcksp.es</i> "+ 
 			"a nécésité la participation de plusieurs collaborateurs.<br/>"+
 			"Je profite de ces lignes pour les remercier chaleureusement." ,
 	list : [{
@@ -15,7 +15,7 @@ i18n.addTranslation('fr', "artists", {
 				"/images/photos/vincent.B.1.jpg",
 				"/images/photos/vincent.C.1.jpg",
 		],
-		bio : 	"Vincent est l'instigateur de bcksp.es, "+
+		bio : 	"Vincent est l'instigateur de <i>bcksp.es</i>, "+
 				"son travail questionnent "+ 
 				"notre relation aux données privées comme au travers de ce projet, "+
 				"le statut des objets technique (<a target='_blank' href='https://www.youtube.com/watch?v=t7F3SY2zaOk'>Lighthouses</a>), "+ 

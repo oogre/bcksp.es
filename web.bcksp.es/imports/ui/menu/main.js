@@ -2,7 +2,7 @@
   bcksp.es - main.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 14:03:42
-  @Last Modified time: 2020-03-07 10:28:51
+  @Last Modified time: 2020-07-02 17:36:12
 \*----------------------------------------*/
 import React from 'react';
 
@@ -19,6 +19,13 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 	const {C} = getTranslations("menus");
 	const handleOpenMobileMenu = () => {
 		setMobileMenu(!mobileMenu);
+	}
+	const handleCloseMobileMenu = () => {
+		setMobileMenu(false);
+	}
+	const handleInstallExtension = () => {
+		handleCloseMobileMenu();
+		installExtension();
 	}
 	const hasToDisplayDownloadBtn = () => {
 		return !extensionInstalled;
@@ -47,6 +54,7 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 		const lang = event.target.getAttribute("data-lang");
 		i18n.setLocale(lang);
 		closeLangMenu();
+		handleCloseMobileMenu();
 		if(Meteor.userId()){
 			SetUserLang.call({lang}, (error, res) =>{
 				if(errorHandler(error))return;
@@ -66,10 +74,11 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 					<C>open</C>
 				</span>
 			</button>
-			<ul className={"menu menu--header" + isMobile()}>
+			<ul className={"menu menu--header" + isMobile()} onMouseLeave={handleCloseMobileMenu}>
 				<li className="menu__item">
 					<a 	className={"menu__item-link " + isActive("about")}
 						href={FlowRouter.path("about")}
+						onClick={handleCloseMobileMenu}
 					>
 						<C>about</C>
 					</a>
@@ -77,6 +86,7 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 				<li className="menu__item">
 					<a 	className={"menu__item-link" + isActive("souvenir")}
 						href={FlowRouter.path("souvenir")}
+						onClick={handleCloseMobileMenu}
 					>
 						<C>souvenir</C>
 					</a>
@@ -85,7 +95,7 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 					hasToDisplayDownloadBtn() &&
 						<li className="menu__item">
 							<a 	className={"button button--primary" + isActive("download")}
-								onClick={installExtension}
+								onClick={handleInstallExtension}
 							>
 								<C>download</C>
 							</a>
@@ -96,6 +106,7 @@ const MenuMain = ( {extensionInstalled, isConnected} ) => {
 						<li className="menu__item">
 							<a 	className={"menu__item-link" + isActive("userProfile")}
 								href={ FlowRouter.path("userProfile") }
+								onClick={handleCloseMobileMenu}
 							>
 								<C>profile</C>
 							</a>
