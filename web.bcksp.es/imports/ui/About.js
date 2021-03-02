@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2020-03-09 18:00:36
+  @Last Modified time: 2021-03-02 21:38:47
 \*----------------------------------------*/
 
 import React from 'react';
@@ -11,7 +11,7 @@ import AboutArtists from './about/artists.js';
 import { config } from './../startup/config.js'
 import { nf } from "./../utilities/math.js";
 import YoutubeEmbed from './shared/youtubeEmbed.js';
-import GalleryKenBurns from './gallery/kenBurns.js';
+//import GalleryKenBurns from './gallery/kenBurns.js';
 import { getTranslations } from "./../i18n/index.js";
 // App component - represents the whole app
 const About = () => {

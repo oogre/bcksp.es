@@ -2,7 +2,7 @@
   bcksp.es - methods.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:36:54
-  @Last Modified time: 2020-03-04 19:35:21
+  @Last Modified time: 2021-03-02 22:42:14
 \*----------------------------------------*/
 i18n.addTranslation('fr', "methods", {
 	user : {
@@ -74,13 +74,13 @@ i18n.addTranslation('fr', "methods", {
 			add : {
 				success : {
 					title : "Ajout d'un champ inaccessible",
-					content : "le champ : ({$field}) a été ajouté aux champs inaccessible par bcksp.es"	
+					content : "bcksp.es est maintenant aveugle au contenu des champs : {$field}"	
 				}
 			},	
 			remove : {
 				success : {
-					title : "Retrait d'un champ accessible",
-					content : "le champ : ({$field}) a été retiré des champs accessible par bcksp.es"	
+					title : "Ajout d'un champ accessible",
+					content : "bcksp.es est maintenant à l'écoute de vos suppressions dans les champs : {$field}"	
 				}
 			}
 		}

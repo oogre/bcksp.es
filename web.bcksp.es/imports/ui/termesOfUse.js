@@ -2,7 +2,7 @@
   bcksp.es - TermesOfUse.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2020-03-09 17:59:41
-  @Last Modified time: 2020-03-10 17:51:42
+  @Last Modified time: 2021-03-02 21:40:00
 \*----------------------------------------*/
 
 
@@ -10,7 +10,7 @@ import React from 'react';
 import { config } from './../startup/config.js'
 import { nf } from "./../utilities/math.js";
 import YoutubeEmbed from './shared/youtubeEmbed.js';
-import GalleryKenBurns from './gallery/kenBurns.js';
+//import GalleryKenBurns from './gallery/kenBurns.js';
 import { getTranslations } from "./../i18n/index.js";
 // App component - represents the whole app
 const TermesOfUse = () => {
