@@ -2,7 +2,7 @@
   bcksp.es - artists.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-23 18:51:56
-  @Last Modified time: 2020-03-03 15:23:41
+  @Last Modified time: 2021-03-03 13:45:06
 \*----------------------------------------*/
 import React from 'react';
 import { getTranslations } from "./../../i18n/index.js";
@@ -50,7 +50,7 @@ const AboutArtists = () => {
 											artist.links && 
 											Object.values(artist.links).map((link, k2) =>(
 												<li className="artist__social-list-item" key={k2} >
-													<a className="artist__social-link" href={link} target="_blank">
+													<a className="artist__social-link" href={link} rel="noopener noreferrer" target="_blank">
 														<img alt="" src="/images/icons/icon-globe.svg"/>
 														<div className="sr-only">
 															<C>{"list."+k+".links."+k2}</C>
