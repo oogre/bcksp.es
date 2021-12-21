@@ -2,7 +2,7 @@
   bcksp.es - about.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-03-02 17:28:49
-  @Last Modified time: 2020-07-02 21:31:51
+  @Last Modified time: 2021-03-08 18:11:25
 \*----------------------------------------*/
 
 i18n.addTranslation('fr', "about", {
@@ -64,18 +64,18 @@ i18n.addTranslation('fr', "about", {
 							"nous nous sommes fait déposséder d'une certaine subtilité. "+
 						"</p>"+
 						"<p>"+
-							"Nous avons perdu la capacité et le droit d'imaginer ce que l'autre/auteur voulait "+
+							"Nous avons perdu, entre autre, le droit d'imaginer ce que l'autre/auteur voulait "+
 							"nous dire avant de se rétracter en gommant, en barrant, en recouvrant, en arrachant "+
-							"ces mystérieux mots. Nous n'avons plus la liberté d'entrer dans son esprit pour "+
-							"y découvrir ce mot masqué, avec plus ou moins d'adresse"+
+							"ses mots. Nous n'avons plus la liberté d'entrer dans son esprit pour "+
+							"y découvrir ses mots masqués, avec plus ou moins d'adresse"+
 						"</p>"+
 						"<p>"+
-							"Pire, ces objets techniques ont fait émerger dans la pratique de l'écriture "+
+							"Pire, les claviers ont fait émerger dans la pratique de l'écriture "+
 							"de multiples erreurs, hésitations, reformulations et corrections. "+
 							"Celles-çi, bien que plus nombreuses qu'à l'époque de la plume, "+
 							"se sont faites radicalement plus discrète. Face aux écrans, "+
 							"rien ne dépasse, la performance est sans accroche, lisse et sans sueur. "+
-							"Mais lorsqu'il s'agit de rédiger sur un clavier le doute, les cocquilles et l'auto-sensure "+
+							"Lorsqu'il s'agit de taper sur un clavier le doute, les cocquilles et l'auto-sensure "+
 							"dirigent nos doigts sans tarder vers cette fameuse touche «backspace»."+
 						"</p>"+
 						"<p>"+
@@ -91,15 +91,15 @@ i18n.addTranslation('fr', "about", {
 			},
 			content : [{
 				text: 	"<i>bcksp.es</i> est concu pour être un dispositif "+
-						"d'édition de livres intimes. Le contenu de ces livres "+
+						"d'édition de livres intimes. Leur contenu "+
 						"est constitué du texte que vous supprimez durant "+
-						"vos navigations dans les espaces numériques. Votre archive compile "+
+						"vos navigations sur le web. Ils compilent "+
 						"dans l'ordre d'arrivée chaque caratères que vous supprimez "+
 						"en appuyant sur la touche backspace."
 			},{
 				text: 	"<i>bcksp.es</i> vous considére comme auteur et donc "+
 						"en tant que maison d'édition notre rôle est de vous publier dans les limites de votre volonté. "+
-						"Vous restez propriétaire de vos suppressions. <i>bcksp.es</i> vous offre de ce fait les outils "+
+						"Vous restez propriétaire de vos suppressions. <i>bcksp.es</i> vous offre les outils "+
 						"de collecte, de suppression, de publication et de partage de vos ratures."
 			},{
 				subtitle:"votre archive",
@@ -108,7 +108,7 @@ i18n.addTranslation('fr', "about", {
 						"à la touche backspace de votre clavier évoluera. "+
 						"À certain moment méfiant, vous développerez des astuces "+
 						"pour supprimer vos mots sans qu'ils ne soient capturé. "+
-						"À d'autre vous serez confiant et ne penserez plus à nous. "+
+						"À d'autre moment, vous serez confiant et ne penserez plus à nous. "+
 						"C'est alors que les parties les plus belles et sensibles "+
 						"de votre archive se constitueront."
 			},{
@@ -125,17 +125,17 @@ i18n.addTranslation('fr', "about", {
 				id : "privacy"
 			},
 			content : [{
-				text : 	"Nous vous garrantissons que dans notre projet, vous n'êtes pas "+
-						"le produit. Aucun profilage n'a cours sur nos serveurs. "+
-						"Nous avons la certitude que les paradigmes qui font "+
-						"vivre les gros du web sont inéquitable et donc périmé."
-			},{
-				text :  "L'archivage de vos suppression est un processus dévoilant des questions sensibles "+
+				text :  "L'archivage de vos suppression pose des questions sensibles "+
 						"relatives au «Big Data» et à la protection des données. "+
 						"Nous ne prétendons pas apporter de solutions à ces questions. "+
 						"Tout du moins, <i>bcksp.es</i> offre un point de vue "+
 						"sur un de vos flux de données privées. Cela afin de montrer, de rendre sensible "+
 						"donc pensable ce monstre informe mal perçue, angoissant ou simplement ignorée."
+			},{
+				text : 	"Nous vous garrantissons que dans notre projet, vous n'êtes pas "+
+						"le produit. Aucun profilage n'a cours sur nos serveurs. "+
+						"Nous avons la certitude que les paradigmes qui font "+
+						"vivre les gros du web sont inéquitable et donc périmé."
 			}]
 		}, { 
 			title : {
@@ -172,18 +172,16 @@ i18n.addTranslation('fr', "about", {
 							"</li>"+
 							"<li>"+
 								"L'accès au service de <i>bcksp.es</i> se fait au travers du logiciel Nginx (porte d'entrée des données dans notre système) et "+
-								"meteor (gestionnaire du traitement de l'information entrante et sortante de <i>bcksp.es</i>)."+
+								"meteor (gestionnaire du traitement de l'information entrante et sortante de <i>bcksp.es</i>). Nous utilisons exculsivement des "+
+								"solutions Open Source, actuelle, fiable et auditeée en parmanance par des communautés de développeurs passionnées."+
 							"</li>"+
 							"<li>"+
 								"Les données utilisateur sont stockée également chez <a traget='_blank' href='https://www.phpnet.org//'>phpnet</a>, "+
 								"sur une base de donnée MongoDB dont l'accès est réservé aux seuls processus locaux du serveur. "+
-								"En base de donnée, les archives sont chiffrées par l'implémentation de l'algorithme "+
+								"Les archives sont stockées par blocs dans l'ordre de leur arrivée. Ils sont chiffrées par l'implémentation de l'algorithme "+
 								"<a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Advanced_Encryption_Standard\">AES-256-ctr</a>, "+
-								"de la librairie <a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>. "+
-								"Les archives sont stockées par blocs dans l'ordre de leur arrivée dans la base de donnée. "+
-							"</li>"+
-							"<li>"+
-								"Avez-vous réfléchit aux conditions de conservation de votre livre d'archive <i>bcksp.es</i> une fois imprimé?"+
+								"de la librairie <a target=\"_blank\" href=\"https://www.npmjs.com/package/crypto-js\">CryptoJS</a>."+
+								" "+
 							"</li>"+
 						"</ul>"
 			},{
@@ -207,7 +205,7 @@ i18n.addTranslation('fr', "about", {
 						"Vous avez la possibilité de consulter et de <a href=\"{$download}\">télécharger vos données</a> "+
 						"sans frais et dans la forme que nous possédons. "+
 						"À tout moment, vous avez la possibilité de <a href='{$deletion}'>supprimer partiellement ou entièrement</a> "+
-						"toute donnée vous appartenant et étant présente sur nos serveurs. "+
+						"toute donné vous appartenant et étant présente sur nos serveurs. "+
 						"Néanmoins, vous cédez à <i>bcksp.es</i> le droit d'imprimer "+
 						"votre archive suivant le protocol décrit dans la section <a href='{$money}'>financement</a>."
 			},{
@@ -272,7 +270,7 @@ i18n.addTranslation('fr', "about", {
 				subtitle:"exemplaire n°2/2",
 				text :  "Nous avons pour ambition d'exposer comme objet d'art l'exemplaire en notre possession n°2/2. "+
 						"Au moment de la commande, vous avez l'oportunité "+
-						"de faire jouer vos droit de paternité sur cet l'exemplaire. "+
+						"de faire jouer vos droit de paternité sur cet exemplaire. "+
 						"Cela en réclamant que celui-ci ne puise qu'être vu, "+
 						"ou qu'il puisse être lu, ou qu'il soit détruit, tout cela dans un context d'exposition. "+
 						"Cet exemplaire n°2/2 à la condition que vous n'ayez pas réclamé sa destruction, "+

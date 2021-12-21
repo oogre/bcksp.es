@@ -2,11 +2,12 @@
   bcksp.es - logedin.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-10-03 11:35:44
-  @Last Modified time: 2020-03-12 11:58:51
+  @Last Modified time: 2021-03-08 17:32:40
 \*----------------------------------------*/
 
 import React from 'react';
 import Blacklist from './../blacklist.js';
+import PublishToPublicFeed from './../publishToPublicFeed.js';
 import { T } from './../../utilities/tools.js';
 import { config } from './../../shared/config.js';
 import { sendMessage, on } from './../../utilities/com.js';
@@ -65,9 +66,11 @@ const MainMenu = ({onLoginStatusChange}) => {
 	return (
 		<div className="bcksp-popup__content">
 			<div className="bcksp-popup__body">
+			
 				{
 					<Blacklist/>
 				}
+				
 				<div>
 					<div className="bcksp-popup__goal">
 						<T.p text={{ key : "extension.archive.length", value : archiveSize }} />

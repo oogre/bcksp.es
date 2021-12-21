@@ -2,7 +2,7 @@
   runtime-examples - background.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-27 23:11:57
-  @Last Modified time: 2020-02-04 16:41:55
+  @Last Modified time: 2021-03-08 17:28:22
 \*----------------------------------------*/
 
 import Data from "./../utilities/Data.js";
@@ -191,6 +191,17 @@ on("openTab", (data, resolve, reject) => {
 	.then(tab => tabsUpdate({ url : data }))
 	.catch(() => tabsCreate({ url : data }))
 	.finally(() => resolve("ok"));
+});
+
+on("getPublishToPublicFeed", (data, resolve, reject) => {
+	resolve(Data.state.publishToPublicFeed);
+});
+
+on("togglePublishToPublicFeed", (data, resolve, reject) => {
+	checkConnected()
+	.then(() => AsteroidHelper.call("Settings.Toggle.Publish.To.Public.Feed"))
+	.then(data => resolve(data))
+	.catch(e => reject(e));
 });
 
 on("getUrlStatus", (data, resolve, reject) => {

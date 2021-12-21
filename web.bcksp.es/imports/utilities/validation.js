@@ -2,7 +2,7 @@
   bcksp.es - validation.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2019-01-03 14:22:19
-  @Last Modified time: 2020-03-03 14:55:57
+  @Last Modified time: 2021-03-08 12:58:35
 \*----------------------------------------*/
 import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
@@ -186,7 +186,7 @@ export function checkValidDevice(value, origin="main"){
 			  origin : origin,
 			}
 		}]);
-	if(!_.values(config.devices).includes(value)) throw new ValidationError([{
+	if(!_.values(config.devices.keys).includes(value)) throw new ValidationError([{
 				name: 'device',
 				type: 'no-match',
 				details: {

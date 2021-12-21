@@ -5,7 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
+    "@babel/runtime": "^7.13.9",
     "@paypal/checkout-server-sdk": "^1.0.2",
     "bcrypt": "^5.0.1",
     "bezier-easing": "^2.1.0",

@@ -2,7 +2,7 @@
   bcksp.es - config.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-18 16:23:13
-  @Last Modified time: 2020-03-10 22:02:11
+  @Last Modified time: 2021-03-08 12:58:30
 \*----------------------------------------*/
 export const config = {
 	langues : [
@@ -61,11 +61,13 @@ export const config = {
 		}
 	},
 	devices : {
-		firefox : "jid1-P1oHEt4FsKJNoA@jetpack",
-		firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
-		"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
-		"acr-chrome" : "fnkkmpbdnhbapbmbcpdfenolnbkbplob",
-		chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb",
+		keys :{
+			firefox : "jid1-P1oHEt4FsKJNoA@jetpack",
+			firefoxUUID: "480bcc24-04ca-a942-a09b-cbdd2735fa88",
+			"dev-chrome" : "ieiinhiiecccpepemfpeikdclbiicbmg",
+			"acr-chrome" : "fnkkmpbdnhbapbmbcpdfenolnbkbplob",
+			chrome : "gbfblhjcfcoodfjhmcaejjbppkajgleb",
+		}, 
 		pingInterval : 10 * 60 * 1000
 	},
 	archives : {

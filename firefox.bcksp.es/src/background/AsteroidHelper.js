@@ -2,7 +2,7 @@
   bcksp.es - asteroidHelper.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-22 12:50:28
-  @Last Modified time: 2020-02-15 20:55:47
+  @Last Modified time: 2021-03-08 17:16:56
 \*----------------------------------------*/
 import { createClass } from "asteroid";
 import { onLogin } from "asteroid/lib/common/login-method";
@@ -42,7 +42,8 @@ class AsteroidHelper{
 		this.asteroid.on("loggedOut", () => {
 			Data.setState({
 				loggedStatus : false,
-				currentURLBlacklisted : false
+				currentURLBlacklisted : false,
+				publishToPublicFeed : false,
 			});
 			this.stopSubsribtion();
 			this.startSubsribtionNoLogged();
@@ -68,6 +69,7 @@ class AsteroidHelper{
 				if(isArray(settings.blacklist)){
 					Data.setState({ blacklist : settings.blacklist });
 				}
+				Data.setState({ publishToPublicFeed : settings.publishToPublicFeed });
 			}
 		});
 		this.on("added", {
@@ -84,6 +86,7 @@ class AsteroidHelper{
 				if(isArray(settings.blacklist)){
 					Data.setState({ blacklist : settings.blacklist });
 				}
+				Data.setState({ publishToPublicFeed : settings.publishToPublicFeed });
 			}
 		});
 	}

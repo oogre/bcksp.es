@@ -2,7 +2,7 @@
   bcksp.es - About.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-09-13 19:21:49
-  @Last Modified time: 2021-03-02 21:38:47
+  @Last Modified time: 2021-12-21 17:00:59
 \*----------------------------------------*/
 
 import React from 'react';
@@ -10,7 +10,8 @@ import AboutPress from './about/press.js';
 import AboutArtists from './about/artists.js';
 import { config } from './../startup/config.js'
 import { nf } from "./../utilities/math.js";
-import YoutubeEmbed from './shared/youtubeEmbed.js';
+import VimeoEmbed from './shared/vimeoEmbed.js';
+
 //import GalleryKenBurns from './gallery/kenBurns.js';
 import { getTranslations } from "./../i18n/index.js";
 // App component - represents the whole app
@@ -36,7 +37,7 @@ const About = () => {
 			
 				<div className="about--long">
 					<div className="about__content">
-						<YoutubeEmbed youtubeID="hGB58ybRoJU" className="container"/>
+						<VimeoEmbed vimeoID="659004167" className="container"/>
 						{
 							Object.values(T("long")).map((article, k) => (
 								<div key={k} className="text-block">

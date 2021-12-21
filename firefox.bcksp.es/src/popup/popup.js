@@ -2,7 +2,7 @@
   bcksp.es - popup.js
   @author Evrard Vincent (vincent@ogre.be)
   @Date:   2018-05-29 00:52:06
-  @Last Modified time: 2020-02-22 15:03:59
+  @Last Modified time: 2021-12-21 17:13:08
 \*----------------------------------------*/
 
 import React from 'react';
@@ -17,19 +17,27 @@ import { log, info, warn, error } from './../utilities/log.js';
 import { T } from './../utilities/tools.js';
 
 //T.setTexts(JSON.parse(localStorage.getItem("translation")), { MDFlavor: 1 });
+let closeTimeOut;
 
 const Popup = ({connected, loggedIn}) => {
 	React.useEffect(() => {//componentDidMount
 		document.querySelector(".bcksp-popup").addEventListener("mouseleave", mouseLeavePopupHandler);
+		document.querySelector(".bcksp-popup").addEventListener("mouseenter", mouseEnterPopupHandler);
 		return () => {//componentWillUnmount
 			document.querySelector(".bcksp-popup").removeEventListener("mouseleave", mouseLeavePopupHandler);
+			document.querySelector(".bcksp-popup").removeEventListener("mouseenter", mouseEnterPopupHandler);
 		}
 	}, []); 
 	
+	const mouseEnterPopupHandler = event => {
+		clearTimeout(closeTimeOut);
+	}
 	const mouseLeavePopupHandler = event => {
-		sendMessage("closePopup")
-		.then(() => { })
-		.catch(e => error(e));
+		closeTimeOut = setTimeout(()=>{
+			sendMessage("closePopup")
+			.then(() => { })
+			.catch(e => error(e));
+		}, 500);
 	}
 
 	const handleLoginStatusChange = isLoggedIn => {
